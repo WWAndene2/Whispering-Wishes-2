@@ -1,12 +1,11 @@
 name: Build APK
 
-# Only ever builds from main — either automatically on a push that touches
-# the app, or manually via workflow_dispatch (the ref dropdown defaults to
-# main; the guard below hard-stops the job if someone runs it from another
-# branch anyway, so main is enforced regardless of what's picked there).
+# Fork-only change: this fork is used for one-off APK builds from whatever
+# branch is being worked on (not just main), so unlike the upstream repo's
+# main-only restriction, this builds on a push to any branch or a manual
+# workflow_dispatch from any ref.
 on:
   push:
-    branches: [main]
     paths:
       - 'app/**'
       - '.github/workflows/build-apk.yml'
@@ -20,12 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Refuse to run off main
-        if: github.ref != 'refs/heads/main'
-        run: |
-          echo "This workflow only builds from main (got $GITHUB_REF) — aborting." >&2
-          exit 1
-
       - name: Checkout repository
         uses: actions/checkout@v4
 

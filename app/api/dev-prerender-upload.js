@@ -22,6 +22,7 @@
 //   PRERENDER_REPO            → owner/name override (defaults to VERCEL_GIT_REPO_*)
 //   PRERENDER_BRANCH          → branch override (defaults to VERCEL_GIT_COMMIT_REF)
 
+import crypto from 'node:crypto';
 import { rateLimit } from './_common.js';
 
 const ALLOWED_ORIGINS = [
@@ -85,6 +86,14 @@ async function gh(method, url, token, body) {
   return r.json();
 }
 
+// Constant-time compare (same approach as push/send.js) — this token gates commits to the repo.
+function isValidBearer(header, token) {
+  const a = Buffer.from(header || '');
+  const b = Buffer.from(`Bearer ${token}`);
+  if (a.length !== b.length) return false;
+  return crypto.timingSafeEqual(a, b);
+}
+
 export default async function handler(req, res) {
   const origin = req.headers.origin || '';
   if (!isAllowedOrigin(origin)) return res.status(403).json({ error: 'Origin not allowed' });
@@ -109,14 +118,14 @@ export default async function handler(req, res) {
 
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
+  // 200/min covers a 65-file batch + commit comfortably while still throttling
+  // a runaway loop. Per-IP, in-memory bucket from _common.js. Checked before auth
+  // so failed token guesses are throttled too.
+  if (!rateLimit(req, res, { key: 'prerender_upload', max: 200, windowMs: 60_000 })) return;
+
   const adminToken = process.env.PRERENDER_ADMIN_TOKEN;
   if (!adminToken) return res.status(503).json({ error: 'PRERENDER_ADMIN_TOKEN not configured on server' });
-  const auth = req.headers.authorization || '';
-  if (auth !== `Bearer ${adminToken}`) return res.status(401).json({ error: 'Unauthorized' });
-
-  // 200/min covers a 65-file batch + commit comfortably while still throttling
-  // a runaway loop. Per-IP, in-memory bucket from _common.js.
-  if (!rateLimit(req, res, { key: 'prerender_upload', max: 200, windowMs: 60_000 })) return;
+  if (!isValidBearer(req.headers.authorization, adminToken)) return res.status(401).json({ error: 'Unauthorized' });
 
   const ghToken = process.env.GITHUB_TOKEN;
   if (!ghToken) return res.status(503).json({ error: 'GITHUB_TOKEN not configured on server' });

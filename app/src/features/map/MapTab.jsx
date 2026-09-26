@@ -1162,17 +1162,28 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       if (start && start.dist > 0 && scale !== 1) {
         const targetZoom = start.zoom + Math.log2(scale);
         const clamped = Math.min(map.getMaxZoom(), Math.max(map.getMinZoom(), targetZoom));
-        // setZoom() swaps the tile pane to the new zoom's tiles immediately.
-        // Resetting the CSS preview scale to 1 in that same tick (the old
-        // behavior) meant that swap AND the scale reset landed on the same
-        // frame, which read as a hard "clip and refresh" pop — direct user
-        // report. Instead, leave the container at its live pinch scale
-        // through the tile swap (so the swap itself is invisible - the new,
-        // sharper tiles appear at the same apparent size as the outgoing
-        // preview) and only then ease the extra scale back down to 1, so the
-        // settle into the final framing is a smooth glide instead of a snap.
-        map.setZoom(clamped, { animate: false });
+        // map.setZoom() snaps to the nearest zoomSnap increment internally
+        // (Leaflet's setView -> _limitZoom), so the zoom it actually commits
+        // to is rarely exactly `clamped` — replicating that rounding here
+        // lets the CSS handoff below start from the SAME final zoom Leaflet
+        // lands on. Direct user report: without this, resetting straight to
+        // scale 1 assumed no snap rounding happened, so the tile swap could
+        // land up to half a zoom step off from where the fingers actually
+        // were, and the 180ms ease then had to visibly correct for that
+        // mismatch — read as a "bounce" rather than a clean settle.
+        const snap = map.options.zoomSnap || 0;
+        const finalZoom = snap
+          ? Math.min(map.getMaxZoom(), Math.max(map.getMinZoom(), Math.round(clamped / snap) * snap))
+          : clamped;
+        map.setZoom(finalZoom, { animate: false });
         if (container) {
+          // Land, uneased, on the residual gap between what the fingers
+          // asked for and what snapping actually committed (at most half a
+          // zoom step either way) — this coincides with the tile swap, so
+          // it's invisible. Only THIS small residual eases away below,
+          // instead of the full pinch scale.
+          pinchScaleRef.current = 2 ** (targetZoom - finalZoom);
+          applyMapTransform();
           container.style.transition = 'transform 180ms ease-out';
           void container.offsetHeight; // force reflow so the transition applies to the change below
         }

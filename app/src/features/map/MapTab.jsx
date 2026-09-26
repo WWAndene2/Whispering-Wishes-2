@@ -1113,6 +1113,10 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         // by our own pinch-zoom (around the map's current center) combined
         // with the twist-to-rotate, instead of just disabling zoom outright.
         if (map.touchZoom?.enabled()) map.touchZoom.disable();
+        // Cancel any still-running ease-back transition from a previous
+        // pinch's commitPinchZoom so this new gesture's live preview tracks
+        // fingers instantly instead of lagging behind a leftover transition.
+        if (container.style.transition) container.style.transition = '';
         rotateTouchRef.current = {
           angle: touchAngle(e.touches[0], e.touches[1]),
           rotation: rotationRef.current,
@@ -1154,13 +1158,34 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const commitPinchZoom = () => {
       const start = rotateTouchRef.current;
       const scale = pinchScaleRef.current;
+      const container = containerRef.current;
       if (start && start.dist > 0 && scale !== 1) {
         const targetZoom = start.zoom + Math.log2(scale);
         const clamped = Math.min(map.getMaxZoom(), Math.max(map.getMinZoom(), targetZoom));
+        // setZoom() swaps the tile pane to the new zoom's tiles immediately.
+        // Resetting the CSS preview scale to 1 in that same tick (the old
+        // behavior) meant that swap AND the scale reset landed on the same
+        // frame, which read as a hard "clip and refresh" pop — direct user
+        // report. Instead, leave the container at its live pinch scale
+        // through the tile swap (so the swap itself is invisible - the new,
+        // sharper tiles appear at the same apparent size as the outgoing
+        // preview) and only then ease the extra scale back down to 1, so the
+        // settle into the final framing is a smooth glide instead of a snap.
         map.setZoom(clamped, { animate: false });
+        if (container) {
+          container.style.transition = 'transform 180ms ease-out';
+          void container.offsetHeight; // force reflow so the transition applies to the change below
+        }
       }
       pinchScaleRef.current = 1;
       applyMapTransform();
+      if (container && container.style.transition) {
+        const clearTransition = () => {
+          container.style.transition = '';
+          container.removeEventListener('transitionend', clearTransition);
+        };
+        container.addEventListener('transitionend', clearTransition);
+      }
     };
     const onTouchEnd = (e) => {
       if (e.touches.length < 2) {

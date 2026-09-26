@@ -125,7 +125,7 @@ function ProfileTab({
   const {
     googleUser, handleGoogleSignIn, handleGoogleSignOut,
     handleCloudBackup, handleCloudRestore, handleCloudDelete, handleLeaderboardDelete, cloudBackupStatus,
-    getFirebaseAuth, firebaseUrl, firebaseFetch,
+    getFirebaseAuth, firebaseFetch,
   } = useCloudStorage();
 
   // ── Tab-local state ──────────────────────────────────────────────────────

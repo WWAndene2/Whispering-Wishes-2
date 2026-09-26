@@ -159,8 +159,6 @@ export function CloudStorageProvider({ children, getBackupPayload, onRestoreData
     return firebaseAuthRef.current.uid;
   }, [getFirebaseAuth]);
 
-  const firebaseUrl = useCallback((path) => `${FIREBASE_DB}/${path}.json`, []);
-
   const firebaseFetch = useCallback((path, authToken, options = {}) => {
     // Without VITE_FIREBASE_DB the URL would resolve to "null/<path>.json" against the app's own origin.
     if (!FIREBASE_AVAILABLE) return Promise.reject(new Error('[WW] Firebase not configured'));
@@ -489,13 +487,12 @@ export function CloudStorageProvider({ children, getBackupPayload, onRestoreData
     // Firebase helpers (shared with AnalyticsTab, AdminPanel, etc.)
     getFirebaseAuth,
     getFirebaseAuthUid,
-    firebaseUrl,
     firebaseFetch,
     FIREBASE_AVAILABLE,
   }), [
     googleUser, handleGoogleSignIn, handleGoogleSignOut, cloudBackupStatus,
     handleCloudBackup, handleCloudRestore, handleCloudDelete, handleLeaderboardDelete,
-    getFirebaseAuth, getFirebaseAuthUid, firebaseUrl, firebaseFetch,
+    getFirebaseAuth, getFirebaseAuthUid, firebaseFetch,
   ]);
 
   return (

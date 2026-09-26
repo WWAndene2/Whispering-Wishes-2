@@ -64,7 +64,7 @@ function AnalyticsTab({
   headerPadding,
   navPadding,
 }) {
-  const { getFirebaseAuth, getFirebaseAuthUid, firebaseUrl, firebaseFetch, FIREBASE_AVAILABLE } = useCloudStorage();
+  const { getFirebaseAuth, getFirebaseAuthUid, firebaseFetch, FIREBASE_AVAILABLE } = useCloudStorage();
   // ── Analytics-only state ──────────────────────────────────────────────────
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [selectedTrophy, setSelectedTrophy] = useState(null);

@@ -1113,10 +1113,6 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         // by our own pinch-zoom (around the map's current center) combined
         // with the twist-to-rotate, instead of just disabling zoom outright.
         if (map.touchZoom?.enabled()) map.touchZoom.disable();
-        // Cancel any still-running ease-back transition from a previous
-        // pinch's commitPinchZoom so this new gesture's live preview tracks
-        // fingers instantly instead of lagging behind a leftover transition.
-        if (container.style.transition) container.style.transition = '';
         rotateTouchRef.current = {
           angle: touchAngle(e.touches[0], e.touches[1]),
           rotation: rotationRef.current,
@@ -1158,7 +1154,6 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const commitPinchZoom = () => {
       const start = rotateTouchRef.current;
       const scale = pinchScaleRef.current;
-      const container = containerRef.current;
       if (start && start.dist > 0 && scale !== 1) {
         const targetZoom = start.zoom + Math.log2(scale);
         const clamped = Math.min(map.getMaxZoom(), Math.max(map.getMinZoom(), targetZoom));
@@ -1169,33 +1164,24 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         // restoring it) keeps scroll/button zoom snapped to their usual 0.5
         // steps, while the pinch itself stops exactly where the fingers left
         // off.
+        //
+        // No CSS easing on the handoff here (tried and reverted — direct
+        // user report of an "overshoot then bounce back"): holding the
+        // container at its live pinch scale and animating it down to 1 only
+        // looks seamless for a tiny scale change. For a real pinch (e.g. 3x)
+        // it means showing 3x too zoomed in for an instant and then visibly
+        // shrinking back to the correct framing — an actual overshoot, not
+        // a hidden tile swap. The remaining flash at release is tile-load
+        // latency, which a CSS transform can't paper over; fixing it for
+        // real would mean prefetching the target zoom's tiles during the
+        // gesture, not animating the handoff.
         const prevSnap = map.options.zoomSnap;
         map.options.zoomSnap = 0;
         map.setZoom(clamped, { animate: false });
         map.options.zoomSnap = prevSnap;
-        // setZoom() swaps in the new zoom's tiles immediately. Direct user
-        // report: resetting the CSS preview scale to 1 in that same tick
-        // still visibly "clipped" at release, because the tile swap and the
-        // scale reset landed on the same frame. Leave the container at its
-        // live pinch scale through the swap instead — since we stopped
-        // exactly on the pinch's own position (no snapping now), the new
-        // tiles land at exactly the apparent size the outgoing preview was
-        // already showing, so the swap itself is invisible — and only then
-        // ease that scale down to 1, turning the settle into a glide.
-        if (container) {
-          container.style.transition = 'transform 180ms ease-out';
-          void container.offsetHeight; // force reflow so the transition applies to the change below
-        }
       }
       pinchScaleRef.current = 1;
       applyMapTransform();
-      if (container && container.style.transition) {
-        const clearTransition = () => {
-          container.style.transition = '';
-          container.removeEventListener('transitionend', clearTransition);
-        };
-        container.addEventListener('transitionend', clearTransition);
-      }
     };
     const onTouchEnd = (e) => {
       if (e.touches.length < 2) {

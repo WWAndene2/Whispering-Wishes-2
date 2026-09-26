@@ -162,6 +162,8 @@ export function CloudStorageProvider({ children, getBackupPayload, onRestoreData
   const firebaseUrl = useCallback((path) => `${FIREBASE_DB}/${path}.json`, []);
 
   const firebaseFetch = useCallback((path, authToken, options = {}) => {
+    // Without VITE_FIREBASE_DB the URL would resolve to "null/<path>.json" against the app's own origin.
+    if (!FIREBASE_AVAILABLE) return Promise.reject(new Error('[WW] Firebase not configured'));
     const url = `${FIREBASE_DB}/${path}.json`;
     const headers = { ...(options.headers || {}) };
     if (authToken) headers['Authorization'] = `Bearer ${authToken}`;

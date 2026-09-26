@@ -68,6 +68,8 @@ export function usePresenceTracking() {
   }, []);
 
   const firebaseFetch = useCallback((path, authToken, options = {}) => {
+    // Without VITE_FIREBASE_DB the URL would resolve to "null/<path>.json" against the app's own origin.
+    if (!FIREBASE_AVAILABLE) return Promise.reject(new Error('[WW] Firebase not configured'));
     const url = `${FIREBASE_DB}/${path}.json`;
     const headers = { ...(options.headers || {}) };
     if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
@@ -99,6 +101,7 @@ export function usePresenceTracking() {
 
   // Start heartbeat on mount, clean up on unmount
   useEffect(() => {
+    if (!FIREBASE_AVAILABLE) return undefined;
     sendPresenceHeartbeat();
     const interval = setInterval(sendPresenceHeartbeat, PRESENCE_INTERVAL_MS);
     return () => {

@@ -41,9 +41,20 @@ const _extraOrigins = (process.env.EXTRA_ALLOWED_ORIGINS || '')
   .split(',').map(s => s.trim()).filter(Boolean);
 const ALL_ALLOWED_ORIGINS = [...BASE_ALLOWED_ORIGINS, ..._extraOrigins];
 
+// A Vercel preview calls its own /api routes, so its Origin is always this same deployment's
+// URL — Vercel injects it at runtime (VERCEL_URL = per-deployment host, VERCEL_BRANCH_URL = the
+// stable per-branch alias). Matching those exactly replaces a /whispering-wishes[a-z0-9-]*\.vercel\.app/
+// pattern, which any third party could satisfy by naming their own Vercel project
+// "whispering-wishes-<anything>".
+export function isOwnVercelDeployment(origin) {
+  if (!origin) return false;
+  return [process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL]
+    .some(host => host && origin === `https://${host}`);
+}
+
 export function isAllowedOrigin(origin) {
   if (!origin) return false;
-  return ALL_ALLOWED_ORIGINS.includes(origin) || /^https:\/\/whispering-wishes[a-z0-9-]*\.vercel\.app$/.test(origin);
+  return ALL_ALLOWED_ORIGINS.includes(origin) || isOwnVercelDeployment(origin);
 }
 
 export function isServiceDisabled(res, serviceKey) {

@@ -23,7 +23,7 @@
 //   PRERENDER_BRANCH          → branch override (defaults to VERCEL_GIT_COMMIT_REF)
 
 import crypto from 'node:crypto';
-import { rateLimit } from './_common.js';
+import { rateLimit, isOwnVercelDeployment } from './_common.js';
 
 const ALLOWED_ORIGINS = [
   'https://whispering-wishes.vercel.app',
@@ -32,7 +32,7 @@ const ALLOWED_ORIGINS = [
   'http://localhost:5173',
 ];
 const isAllowedOrigin = (o) =>
-  !o || ALLOWED_ORIGINS.includes(o) || /^https:\/\/whispering-wishes[a-z0-9-]*\.vercel\.app$/.test(o);
+  !o || ALLOWED_ORIGINS.includes(o) || isOwnVercelDeployment(o);
 
 // Same allowlist the Vite plugin enforces — captures must land at one of the
 // dev-panel output paths, never anywhere else in the repo.

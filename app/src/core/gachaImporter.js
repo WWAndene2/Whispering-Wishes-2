@@ -3,7 +3,7 @@
 // Extracted from WuwaImporter-6.jsx.txt (utility logic only, no UI)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { apiUrl } from './apiBase.js';
+import { apiUrl } from '../utils/apiBase.js';
 
 // Name normalization: maps game API / tracker names to internal names used in this app
 export const IMPORT_NAME_ALIASES = {

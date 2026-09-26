@@ -44,7 +44,7 @@
 // same SKILL_MULTIPLIERS-per-hit migration PHASE2_PLAN.md already tracks as separate, larger work).
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { createStats, applyBuff } from '../../../features/teams/calcEngine.js';
+import { createStats, applyBuff } from '../../math/index.js';
 import { simulateRotation } from './rotationSimulator.js';
 import { triggerFired, conditionHolds } from '../gating/triggerEngine.js';
 // buildBlockWindows is used for every continuous-uptime buff/debuff below (shared with

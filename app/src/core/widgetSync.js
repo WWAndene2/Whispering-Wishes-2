@@ -42,7 +42,7 @@ import { Preferences } from '@capacitor/preferences';
 import { DEFAULT_COLLECTION_IMAGES, getConveneAnimation, getCharacterBannerArt, getWeaponBannerArt, CONVENE_ANIMATIONS, CURRENT_BANNERS } from '../data/banners.js';
 import { STANDARD_5STAR_CHARACTERS, ALL_4STAR_RESONATORS, ALL_5STAR_RESONATORS } from '../data/characters.js';
 import { WEAPON_DATA } from '../data/weapons.js';
-import { DEFAULT_IMAGE_FRAMING } from '../hooks/useImageFraming.js';
+import { DEFAULT_IMAGE_FRAMING } from '../data/imageFraming.js';
 
 // Bumped whenever the shape of the widget_banners_data payload changes.
 // BannerWidget.java checks this before trusting a blob's fields — an

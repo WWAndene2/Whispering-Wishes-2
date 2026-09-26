@@ -33,7 +33,7 @@
 //     modeled here any more than resolveSimulatedRotation.js models them for one character).
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { createStats, applyBuff } from '../../../features/teams/calcEngine.js';
+import { createStats, applyBuff } from '../../math/index.js';
 import { simulateTeamRotation, DEFAULT_STEP_SECONDS } from './rotationSimulator.js';
 import { triggerFired, conditionHolds, actionMatches } from '../gating/triggerEngine.js';
 import { buildBlockWindows, timeWeightedAverageConcurrency } from '../gating/blockWindows.js';

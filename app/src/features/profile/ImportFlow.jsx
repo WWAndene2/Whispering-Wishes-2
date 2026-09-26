@@ -6,7 +6,7 @@
 
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Camera, Check, ClipboardList, Download, Gamepad2, Link, Loader, Monitor, Smartphone, Upload, X } from 'lucide-react';
-import { parseGachaUrl, buildFetchParams, fetchAllPools, convertToImportFormat, compressImage, extractIdsFromImage, prefetchOcrAssets, POOL_LABELS } from '../../utils/gachaImporter.js';
+import { parseGachaUrl, buildFetchParams, fetchAllPools, convertToImportFormat, compressImage, extractIdsFromImage, prefetchOcrAssets, POOL_LABELS } from '../../core/gachaImporter.js';
 import { MAX_IMPORT_SIZE_MB } from '../../data/constants.js';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { ImportGuide } from './ImportGuide.jsx';

@@ -14,7 +14,7 @@
 // from it.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { calcResMult } from '../../../features/teams/calcEngine.js';
+import { calcResMult } from '../../math/index.js';
 import {
   calcFrazzleDmg, calcErosionDmg, calcFusionBurstDmg, calcElectroFlareDmg,
 } from './dotFormulas.js';

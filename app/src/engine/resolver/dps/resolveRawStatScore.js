@@ -17,7 +17,7 @@
 // kit-wide. A real, documented simplification, not a silently dropped value.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { createStats, applyBuff } from '../../../features/teams/calcEngine.js';
+import { createStats, applyBuff } from '../../math/index.js';
 import { projectMainDpsStatPanel } from '../projection/statPanelProjection.js';
 import { gateBlocksBySequence, filterExclusiveModeBlocks } from '../gating/sequenceGating.js';
 

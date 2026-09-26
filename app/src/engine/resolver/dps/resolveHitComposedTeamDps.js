@@ -19,7 +19,7 @@
 // is the one actually on field.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { calcAvgCrit, calcDmgBonus, calcDefMult, calcResMult, applyBuff, createStats } from '../../../features/teams/calcEngine.js';
+import { calcAvgCrit, calcDmgBonus, calcDefMult, calcResMult, applyBuff, createStats } from '../../math/index.js';
 import { simulateTeamRotation, DEFAULT_STEP_SECONDS } from './rotationSimulator.js';
 import { triggerFired, conditionHolds, actionMatches, actionCountOf, blockIdMatches } from '../gating/triggerEngine.js';
 import { buildBlockWindows, activeCountAt } from '../gating/blockWindows.js';

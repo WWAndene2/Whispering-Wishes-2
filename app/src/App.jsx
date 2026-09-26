@@ -27,7 +27,7 @@ import { getCurrentBannerAuto, preloadBannerHistoryArt } from './data/banners.js
 import { APP_VERSION, MAX_IMPORT_SIZE_MB, HEADER_ICON, HARD_PITY, ASTRITE_PER_PULL, BEGINNER_ASTRITE_PER_PULL, SERVERS } from './data/constants.js';
 import { generateUniqueId } from './utils/generateId.js';
 import { calculateLuckRating } from './shared/utils/luckRating.js';
-import { IMPORT_NAME_ALIASES } from './utils/gachaImporter.js';
+import { IMPORT_NAME_ALIASES } from './core/gachaImporter.js';
 // --- extracted hooks ---
 import { useVisualSettings, DEFAULT_VISUAL_SETTINGS } from './hooks/useVisualSettings.js';
 import { useAmbientMusic } from './hooks/useAmbientMusic.js';
@@ -84,7 +84,7 @@ import { hashUidForStorage } from './shared/utils/hashUidForStorage.js';
 import { t, formatDate, useAppLocale } from './utils/i18n.js';
 import { useIsReferenceDevice } from './hooks/useIsReferenceDevice.js';
 import { toCanvasSpace } from './shared/scaling/canvasScale.js';
-import { syncBannerWidget, syncCurrencyWidget } from './utils/widgetSync.js';
+import { syncBannerWidget, syncCurrencyWidget } from './core/widgetSync.js';
 import { initGlassTouch } from './utils/glassTouch.js';
 import { getSigilCard } from './data/sigilCards.js';
 import { getResonatorPortrait, RESONATOR_PORTRAITS } from './data/resonatorPortraits.js';

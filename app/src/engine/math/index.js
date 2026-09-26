@@ -19,3 +19,5 @@ export {
 export { isHealerRole, isSupportRole } from './roleMatch.js';
 
 export { parseSkillMultiplierHits, sumHitsAtkPct } from './hitParser.js';
+
+export { createStats, applyBuff, universalStatApplies } from './statAccumulator.js';

@@ -32,7 +32,7 @@
 // exact equality with the legacy number is explicitly the WRONG verification bar.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { calcAvgCrit, calcDmgBonus, calcDefMult, calcResMult, applyBuff, createStats } from '../../../features/teams/calcEngine.js';
+import { calcAvgCrit, calcDmgBonus, calcDefMult, calcResMult, applyBuff, createStats } from '../../math/index.js';
 import { simulateRotation } from './rotationSimulator.js';
 import { triggerFired, conditionHolds, actionMatches, actionCountOf, blockIdMatches } from '../gating/triggerEngine.js';
 import { buildBlockWindows, activeCountAt } from '../gating/blockWindows.js';

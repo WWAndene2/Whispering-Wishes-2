@@ -12,7 +12,7 @@
 // the parity test in __tests__/triggerEngine-rover-electro.test.js.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { applyBuff } from '../../../features/teams/calcEngine.js';
+import { applyBuff } from '../../math/index.js';
 
 /**
  * @param {import('./triggerBlocks.schema.js').TriggerBlock[]} blocks

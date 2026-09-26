@@ -290,8 +290,8 @@
       --font-2xl: calc(19px * var(--ui-scale, 1));
       --font-3xl: calc(16px * var(--ui-scale, 1));
       --font-4xl: calc(22px * var(--ui-scale, 1));
-      --font-5xl: calc(23px * var(--ui-scale, 1));
-      --font-6xl: calc(25px * var(--ui-scale, 1));
+      --font-5xl: calc(24px * var(--ui-scale, 1));
+      --font-6xl: calc(24px * var(--ui-scale, 1));
       /* §E1-DIM: Architectural dimension tokens — card heights, avatar sizes */
       --height-banner: calc(192px * var(--ui-scale, 1));     /* Banner/Event cards minimum height */
       --height-card-sm: calc(140px * var(--ui-scale, 1));    /* Collection grid cards */

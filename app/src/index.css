@@ -63,7 +63,7 @@ html.dyslexic-font {
      PerfectSuite-compliant (CLAUDE.md): each value is the nearest suite
      number, tie-broken by primary > secondary > tertiary — no longer a
      strict -1px-per-token offset from the base scale. */
-  --font-2xs: calc(9px * var(--ui-scale, 1));
+  --font-2xs: calc(8px * var(--ui-scale, 1));
   --font-sm: calc(8px * var(--ui-scale, 1));
   --font-base: calc(12px * var(--ui-scale, 1));
   --font-md: calc(12px * var(--ui-scale, 1));

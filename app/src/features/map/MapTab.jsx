@@ -292,29 +292,12 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   const rotateTouchRef = useRef(null); // { angle, rotation, dist, zoom } captured at 2-finger touchstart
   const panTouchRef = useRef(null);    // { x, y } for rotation-corrected 1-finger pan
   // Live pinch-zoom preview scale (CSS-only, like Leaflet's own native
-  // touchZoom): updated every touchmove for a smooth, continuous feel.
-  // Periodically folded into a real map.setZoom() (throttled — see
-  // PINCH_REBASE_MS) rather than on every touchmove, which was tried before
-  // and snapped to zoomSnap each frame (felt "stepped") and was heavy enough
-  // to drop touch events mid-gesture (made zooming all the way out feel
-  // stuck).
+  // touchZoom): updated every touchmove for a smooth, continuous feel,
+  // committed to a real map.setZoom() only once the gesture ends — calling
+  // setZoom() on every touchmove instead snapped to zoomSnap each frame
+  // (felt "stepped") and was heavy enough to drop touch events mid-gesture
+  // (made zooming all the way out feel stuck).
   const pinchScaleRef = useRef(1);
-  // Timestamp of the last periodic real-zoom commit during an active pinch —
-  // see PINCH_REBASE_MS below, near where this is used.
-  const pinchLastRebaseRef = useRef(0);
-  // Freeze-frame shown during a pinch's real zoom commit — direct user
-  // request ("garder un poster... sans tiles le temps que ça refresh"): the
-  // flash at each commit is the new zoom's tiles still loading, which no CSS
-  // transform can hide (tried twice, see commitZoomExact's own history). A
-  // cloneNode(true) of the live map container (not a manual canvas redraw —
-  // that version stretched tiles into their axis-aligned bounding box
-  // whenever the view was rotated, a real "déformation" direct user report)
-  // lets the browser itself render the frozen frame with whatever
-  // rotation/scale it already had, pixel-correct, no transform math needed.
-  // See showPinchPoster/hidePinchPoster.
-  const pinchPosterCloneRef = useRef(null);
-  const pinchPosterHideTimerRef = useRef(null);
-  const pinchPosterLoadHandlerRef = useRef(null);
   const applyMapTransform = () => {
     const container = containerRef.current;
     if (!container) return;
@@ -1121,121 +1104,6 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       }
     };
 
-    // Hard, instant removal — used to cancel a still-pending poster cycle
-    // (a new commit starting before the previous one revealed, or unmount).
-    // No fade here: about to show a brand-new poster right after, or leaving
-    // the page entirely, so there's nothing worth easing out of.
-    const hidePinchPoster = () => {
-      const clone = pinchPosterCloneRef.current;
-      if (clone && clone.parentNode) clone.parentNode.removeChild(clone);
-      pinchPosterCloneRef.current = null;
-      if (pinchPosterHideTimerRef.current) {
-        clearTimeout(pinchPosterHideTimerRef.current);
-        pinchPosterHideTimerRef.current = null;
-      }
-      if (pinchPosterLoadHandlerRef.current && tileLayerRef.current) {
-        tileLayerRef.current.off('load', pinchPosterLoadHandlerRef.current);
-        pinchPosterLoadHandlerRef.current = null;
-      }
-    };
-    // The actual reveal, once the new zoom's tiles are ready: direct user
-    // report that removing the poster outright (an instant cut from the
-    // frozen frame to the live one) still read as a visible "refresh",  even
-    // with the clip and deformation both already gone. Cross-fading the
-    // poster out over a short transition instead makes the swap itself
-    // gradual, so there's no single frame where the change is obvious.
-    const fadeOutPinchPoster = () => {
-      const clone = pinchPosterCloneRef.current;
-      if (!clone) return;
-      clone.style.transition = 'opacity 160ms ease-out';
-      clone.style.opacity = '0';
-      const finish = () => {
-        clone.removeEventListener('transitionend', finish);
-        hidePinchPoster();
-      };
-      clone.addEventListener('transitionend', finish);
-      // Belt-and-suspenders in case transitionend never fires (e.g. the
-      // element got detached some other way first).
-      pinchPosterHideTimerRef.current = setTimeout(finish, 220);
-    };
-    // Clones the live map container (tiles, icons/overlay canvas, custom
-    // panes — everything) exactly as it currently renders, including its own
-    // live CSS transform (rotation/scale), and overlays that clone on top.
-    // The browser renders the clone identically to the original with zero
-    // transform math on our part — correct under rotation, unlike a manual
-    // per-tile canvas redraw (tried first, stretched tiles into their
-    // axis-aligned bounding box whenever the view was rotated).
-    // cloneNode(true) copies DOM/attributes/inline styles but NOT canvas
-    // pixel content, so overlayCanvasRef's bitmap (icons + sub-map overlays,
-    // drawn onto one shared canvas) is copied across manually.
-    const showPinchPoster = () => {
-      const container = containerRef.current;
-      if (!container || !container.parentElement) return false;
-      const clone = container.cloneNode(true);
-      clone.style.zIndex = '2';
-      clone.style.pointerEvents = 'none';
-      const originalCanvas = overlayCanvasRef.current;
-      const clonedCanvas = clone.querySelector('canvas');
-      if (originalCanvas && clonedCanvas) {
-        clonedCanvas.width = originalCanvas.width;
-        clonedCanvas.height = originalCanvas.height;
-        try { clonedCanvas.getContext('2d').drawImage(originalCanvas, 0, 0); } catch {}
-      }
-      container.parentElement.insertBefore(clone, container.nextSibling);
-      pinchPosterCloneRef.current = clone;
-      return true;
-    };
-    // Commits `targetZoom` for real, bypassing zoomSnap so it lands exactly
-    // (not rounded to the nearest 0.5 step) — direct user request. Shared by
-    // the periodic rebase below and the final touchend commit. Wraps the
-    // commit in the freeze-frame poster above so its tile-load flash is
-    // hidden instead of visible.
-    const commitZoomExact = (targetZoom) => {
-      hidePinchPoster(); // cancel any still-pending poster cycle from a previous commit
-      const posterShown = showPinchPoster();
-      const clamped = Math.min(map.getMaxZoom(), Math.max(map.getMinZoom(), targetZoom));
-      const prevSnap = map.options.zoomSnap;
-      map.options.zoomSnap = 0;
-      map.setZoom(clamped, { animate: false });
-      map.options.zoomSnap = prevSnap;
-      if (posterShown) {
-        const layer = tileLayerRef.current;
-        const reveal = () => {
-          if (pinchPosterHideTimerRef.current) {
-            clearTimeout(pinchPosterHideTimerRef.current);
-            pinchPosterHideTimerRef.current = null;
-          }
-          if (pinchPosterLoadHandlerRef.current && layer) {
-            layer.off('load', pinchPosterLoadHandlerRef.current);
-            pinchPosterLoadHandlerRef.current = null;
-          }
-          fadeOutPinchPoster();
-        };
-        if (layer && layer.isLoading && layer.isLoading()) {
-          pinchPosterLoadHandlerRef.current = reveal;
-          layer.once('load', reveal);
-          // Safety net: 'load' should fire once the new view's tiles are
-          // ready, but never leave the poster stuck up if it somehow
-          // doesn't (e.g. a tile request errors out).
-          pinchPosterHideTimerRef.current = setTimeout(reveal, 600);
-        } else {
-          // Target zoom's tiles were already cached - still fade out (an
-          // instant cut here was just as visible as the load-wait case).
-          reveal();
-        }
-      }
-      return clamped;
-    };
-    // Minimum spacing between an active pinch's periodic real map.setZoom()
-    // commits — direct user request for progressive zoom (tiles loading
-    // throughout the gesture) instead of one big jump at release. Throttled
-    // rather than per-touchmove: committing on every move was tried before
-    // (see pinchScaleRef's own comment above) and was heavy enough to drop
-    // touch events mid-gesture. This is only a MINIMUM, though — the actual
-    // rebase is also gated on the previous poster cycle having finished (see
-    // its own check below), so a slow tile load naturally spaces rebases out
-    // further than this rather than piling up and interrupting each other.
-    const PINCH_REBASE_MS = 120;
     const onTouchStart = (e) => {
       if (e.touches.length === 2) {
         panTouchRef.current = null;
@@ -1251,7 +1119,6 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           dist: touchDist(e.touches[0], e.touches[1]),
           zoom: map.getZoom(),
         };
-        pinchLastRebaseRef.current = performance.now();
       } else if (e.touches.length === 1) {
         rotateTouchRef.current = null;
         suspendDragging();
@@ -1274,28 +1141,6 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         if (dist > 0 && rotateTouchRef.current.dist > 0) {
           pinchScaleRef.current = dist / rotateTouchRef.current.dist;
           applyMapTransform();
-
-          const now = performance.now();
-          // Also wait for any still-showing poster to have finished its own
-          // fade-out — direct user report of a flicker "entre chaque
-          // palier": rebasing on a fixed timer alone let a new rebase cut
-          // the previous one's poster off mid-fade every ~120ms, which is
-          // shorter than the fade+reveal cycle itself, so poster cycles
-          // piled up and interrupted each other for the whole gesture.
-          // Skipping (not resetting the timestamp) instead of forcing it
-          // through means the next rebase attempt is retried on the very
-          // next touchmove once the previous cycle is actually done.
-          if (now - pinchLastRebaseRef.current >= PINCH_REBASE_MS && !pinchPosterCloneRef.current) {
-            const targetZoom = rotateTouchRef.current.zoom + Math.log2(pinchScaleRef.current);
-            const committed = commitZoomExact(targetZoom);
-            // Rebase: the real zoom now matches the fingers' current
-            // position, so restart the live CSS scale from here — only the
-            // delta since THIS moment needs to show/commit next.
-            rotateTouchRef.current = { ...rotateTouchRef.current, zoom: committed, dist };
-            pinchScaleRef.current = 1;
-            applyMapTransform();
-            pinchLastRebaseRef.current = now;
-          }
         }
       } else if (e.touches.length === 1 && panTouchRef.current) {
         e.preventDefault();
@@ -1310,7 +1155,30 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       const start = rotateTouchRef.current;
       const scale = pinchScaleRef.current;
       if (start && start.dist > 0 && scale !== 1) {
-        commitZoomExact(start.zoom + Math.log2(scale));
+        const targetZoom = start.zoom + Math.log2(scale);
+        const clamped = Math.min(map.getMaxZoom(), Math.max(map.getMinZoom(), targetZoom));
+        // map.setZoom() snaps to the nearest zoomSnap increment internally
+        // (Leaflet's setView -> _limitZoom) — direct user request to land
+        // exactly on the pinch's own continuous position instead. Toggling
+        // the map's zoomSnap option off for just this one call (then
+        // restoring it) keeps scroll/button zoom snapped to their usual 0.5
+        // steps, while the pinch itself stops exactly where the fingers left
+        // off.
+        //
+        // No CSS easing on the handoff here (tried and reverted — direct
+        // user report of an "overshoot then bounce back"): holding the
+        // container at its live pinch scale and animating it down to 1 only
+        // looks seamless for a tiny scale change. For a real pinch (e.g. 3x)
+        // it means showing 3x too zoomed in for an instant and then visibly
+        // shrinking back to the correct framing — an actual overshoot, not
+        // a hidden tile swap. The remaining flash at release is tile-load
+        // latency, which a CSS transform can't paper over; fixing it for
+        // real would mean prefetching the target zoom's tiles during the
+        // gesture, not animating the handoff.
+        const prevSnap = map.options.zoomSnap;
+        map.options.zoomSnap = 0;
+        map.setZoom(clamped, { animate: false });
+        map.options.zoomSnap = prevSnap;
       }
       pinchScaleRef.current = 1;
       applyMapTransform();
@@ -1339,7 +1207,6 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       if (map.touchZoom && !map.touchZoom.enabled()) map.touchZoom.enable();
       resumeDragging();
       container.style.touchAction = prevTouchAction;
-      hidePinchPoster();
     };
   }, [mapReady, editingModeActive]);
 

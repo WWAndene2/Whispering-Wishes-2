@@ -292,12 +292,16 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   const rotateTouchRef = useRef(null); // { angle, rotation, dist, zoom } captured at 2-finger touchstart
   const panTouchRef = useRef(null);    // { x, y } for rotation-corrected 1-finger pan
   // Live pinch-zoom preview scale (CSS-only, like Leaflet's own native
-  // touchZoom): updated every touchmove for a smooth, continuous feel,
-  // committed to a real map.setZoom() only once the gesture ends — calling
-  // setZoom() on every touchmove instead snapped to zoomSnap each frame
-  // (felt "stepped") and was heavy enough to drop touch events mid-gesture
-  // (made zooming all the way out feel stuck).
+  // touchZoom): updated every touchmove for a smooth, continuous feel.
+  // Periodically folded into a real map.setZoom() (throttled — see
+  // PINCH_REBASE_MS) rather than on every touchmove, which was tried before
+  // and snapped to zoomSnap each frame (felt "stepped") and was heavy enough
+  // to drop touch events mid-gesture (made zooming all the way out feel
+  // stuck).
   const pinchScaleRef = useRef(1);
+  // Timestamp of the last periodic real-zoom commit during an active pinch —
+  // see PINCH_REBASE_MS below, near where this is used.
+  const pinchLastRebaseRef = useRef(0);
   const applyMapTransform = () => {
     const container = containerRef.current;
     if (!container) return;
@@ -1104,6 +1108,27 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       }
     };
 
+    // Commits `targetZoom` for real, bypassing zoomSnap so it lands exactly
+    // (not rounded to the nearest 0.5 step) — direct user request. Shared by
+    // the periodic rebase below and the final touchend commit.
+    const commitZoomExact = (targetZoom) => {
+      const clamped = Math.min(map.getMaxZoom(), Math.max(map.getMinZoom(), targetZoom));
+      const prevSnap = map.options.zoomSnap;
+      map.options.zoomSnap = 0;
+      map.setZoom(clamped, { animate: false });
+      map.options.zoomSnap = prevSnap;
+      return clamped;
+    };
+    // How often an active pinch folds its live CSS scale into a real
+    // map.setZoom() while fingers are still down — direct user request for
+    // progressive zoom (tiles loading throughout the gesture) instead of one
+    // big jump at release. Throttled rather than per-touchmove: committing
+    // on every move was tried before (see pinchScaleRef's own comment above)
+    // and was heavy enough to drop touch events mid-gesture. At this
+    // interval, the residual CSS scale left for the final touchend commit
+    // stays small (bounded by how far a pinch travels in ~120ms), so
+    // whatever tile-load flash remains at release is far smaller too.
+    const PINCH_REBASE_MS = 120;
     const onTouchStart = (e) => {
       if (e.touches.length === 2) {
         panTouchRef.current = null;
@@ -1119,6 +1144,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           dist: touchDist(e.touches[0], e.touches[1]),
           zoom: map.getZoom(),
         };
+        pinchLastRebaseRef.current = performance.now();
       } else if (e.touches.length === 1) {
         rotateTouchRef.current = null;
         suspendDragging();
@@ -1141,6 +1167,19 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         if (dist > 0 && rotateTouchRef.current.dist > 0) {
           pinchScaleRef.current = dist / rotateTouchRef.current.dist;
           applyMapTransform();
+
+          const now = performance.now();
+          if (now - pinchLastRebaseRef.current >= PINCH_REBASE_MS) {
+            const targetZoom = rotateTouchRef.current.zoom + Math.log2(pinchScaleRef.current);
+            const committed = commitZoomExact(targetZoom);
+            // Rebase: the real zoom now matches the fingers' current
+            // position, so restart the live CSS scale from here — only the
+            // delta since THIS moment needs to show/commit next.
+            rotateTouchRef.current = { ...rotateTouchRef.current, zoom: committed, dist };
+            pinchScaleRef.current = 1;
+            applyMapTransform();
+            pinchLastRebaseRef.current = now;
+          }
         }
       } else if (e.touches.length === 1 && panTouchRef.current) {
         e.preventDefault();
@@ -1155,30 +1194,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       const start = rotateTouchRef.current;
       const scale = pinchScaleRef.current;
       if (start && start.dist > 0 && scale !== 1) {
-        const targetZoom = start.zoom + Math.log2(scale);
-        const clamped = Math.min(map.getMaxZoom(), Math.max(map.getMinZoom(), targetZoom));
-        // map.setZoom() snaps to the nearest zoomSnap increment internally
-        // (Leaflet's setView -> _limitZoom) — direct user request to land
-        // exactly on the pinch's own continuous position instead. Toggling
-        // the map's zoomSnap option off for just this one call (then
-        // restoring it) keeps scroll/button zoom snapped to their usual 0.5
-        // steps, while the pinch itself stops exactly where the fingers left
-        // off.
-        //
-        // No CSS easing on the handoff here (tried and reverted — direct
-        // user report of an "overshoot then bounce back"): holding the
-        // container at its live pinch scale and animating it down to 1 only
-        // looks seamless for a tiny scale change. For a real pinch (e.g. 3x)
-        // it means showing 3x too zoomed in for an instant and then visibly
-        // shrinking back to the correct framing — an actual overshoot, not
-        // a hidden tile swap. The remaining flash at release is tile-load
-        // latency, which a CSS transform can't paper over; fixing it for
-        // real would mean prefetching the target zoom's tiles during the
-        // gesture, not animating the handoff.
-        const prevSnap = map.options.zoomSnap;
-        map.options.zoomSnap = 0;
-        map.setZoom(clamped, { animate: false });
-        map.options.zoomSnap = prevSnap;
+        commitZoomExact(start.zoom + Math.log2(scale));
       }
       pinchScaleRef.current = 1;
       applyMapTransform();

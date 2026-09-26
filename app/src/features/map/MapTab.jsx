@@ -1118,17 +1118,37 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     // 0..6, a small, bounded set. Plain <img> requests, never added to the
     // DOM — the point is only to populate the cache Leaflet's own tile
     // layer will hit later, not to render anything from these directly.
+    //
+    // Tile range is computed from the CURRENT center projected at nativeZ,
+    // ± half the on-screen container size — NOT from map.getBounds()
+    // (the current, pre-zoom geographic extent). This app's exact-stop zoom
+    // keeps the same center and the same screen size, so this is exactly
+    // the tile range Leaflet will need once the commit lands. Using the
+    // current bounds instead (tried first) reprojects the CURRENT,
+    // wider-when-zoomed-out geographic extent into the denser target zoom -
+    // fine for a small, localized overlay like Tethys Deep, but for a large
+    // base map like Solaris while zoomed out it balloons into far more
+    // tiles than will ever be shown, saturating bandwidth right when the
+    // tiles that actually matter need it most - direct user report that
+    // exactly matched this pattern (small overlay fine, base map still
+    // clips).
+    const PREFETCH_TILE_RADIUS = 8; // hard cap per axis - defends against a huge container size
     const prefetchTilesForZoom = (nativeZ) => {
-      const bounds = map.getBounds();
-      const nw = map.project(bounds.getNorthWest(), nativeZ);
-      const se = map.project(bounds.getSouthEast(), nativeZ);
-      const minX = Math.max(0, Math.floor(nw.x / TILE_SIZE) - 1);
-      const maxX = Math.floor(se.x / TILE_SIZE) + 1;
-      const minY = Math.max(0, Math.floor(nw.y / TILE_SIZE) - 1);
-      const maxY = Math.floor(se.y / TILE_SIZE) + 1;
+      const size = map.getSize();
+      const center = map.project(map.getCenter(), nativeZ);
+      const halfXTiles = Math.min(PREFETCH_TILE_RADIUS, Math.ceil(size.x / 2 / TILE_SIZE) + 1);
+      const halfYTiles = Math.min(PREFETCH_TILE_RADIUS, Math.ceil(size.y / 2 / TILE_SIZE) + 1);
+      const centerTileX = Math.floor(center.x / TILE_SIZE);
+      const centerTileY = Math.floor(center.y / TILE_SIZE);
+      const minX = Math.max(0, centerTileX - halfXTiles);
+      const maxX = centerTileX + halfXTiles;
+      const minY = Math.max(0, centerTileY - halfYTiles);
+      const maxY = centerTileY + halfYTiles;
       for (let x = minX; x <= maxX; x++) {
         for (let y = minY; y <= maxY; y++) {
-          new Image().src = `${BASE}map-tiles/Solaris_3/${nativeZ}/${y}/${x}.webp`;
+          const img = new Image();
+          img.fetchPriority = 'low'; // speculative - never contend with a tile the real commit is actively waiting on
+          img.src = `${BASE}map-tiles/Solaris_3/${nativeZ}/${y}/${x}.webp`;
         }
       }
     };

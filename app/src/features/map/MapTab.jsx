@@ -298,6 +298,9 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   // (felt "stepped") and was heavy enough to drop touch events mid-gesture
   // (made zooming all the way out feel stuck).
   const pinchScaleRef = useRef(1);
+  // Native zoom level (the tile URL's {z}) last warmed in the browser's HTTP
+  // cache during the current pinch — see prefetchTilesForZoom below.
+  const pinchPrefetchedZoomRef = useRef(null);
   const applyMapTransform = () => {
     const container = containerRef.current;
     if (!container) return;
@@ -1104,6 +1107,31 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       }
     };
 
+    // Warms the browser's HTTP cache for the tiles a real zoom commit would
+    // need at native zoom `nativeZ`, for the area currently on screen —
+    // direct user request ("comme Google Maps") to make the tile-load flash
+    // at release actually go away rather than trying to visually hide it
+    // (the poster/rebase approach tried for that was reverted - see this
+    // file's own git history). maxNativeZoom is 6 (tileLayer's own option
+    // above): any commit landing above that reuses the SAME level-6 tiles
+    // Leaflet already scales up, so this only ever needs to fetch levels
+    // 0..6, a small, bounded set. Plain <img> requests, never added to the
+    // DOM — the point is only to populate the cache Leaflet's own tile
+    // layer will hit later, not to render anything from these directly.
+    const prefetchTilesForZoom = (nativeZ) => {
+      const bounds = map.getBounds();
+      const nw = map.project(bounds.getNorthWest(), nativeZ);
+      const se = map.project(bounds.getSouthEast(), nativeZ);
+      const minX = Math.max(0, Math.floor(nw.x / TILE_SIZE) - 1);
+      const maxX = Math.floor(se.x / TILE_SIZE) + 1;
+      const minY = Math.max(0, Math.floor(nw.y / TILE_SIZE) - 1);
+      const maxY = Math.floor(se.y / TILE_SIZE) + 1;
+      for (let x = minX; x <= maxX; x++) {
+        for (let y = minY; y <= maxY; y++) {
+          new Image().src = `${BASE}map-tiles/Solaris_3/${nativeZ}/${y}/${x}.webp`;
+        }
+      }
+    };
     const onTouchStart = (e) => {
       if (e.touches.length === 2) {
         panTouchRef.current = null;
@@ -1119,6 +1147,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           dist: touchDist(e.touches[0], e.touches[1]),
           zoom: map.getZoom(),
         };
+        pinchPrefetchedZoomRef.current = null;
       } else if (e.touches.length === 1) {
         rotateTouchRef.current = null;
         suspendDragging();
@@ -1141,6 +1170,17 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         if (dist > 0 && rotateTouchRef.current.dist > 0) {
           pinchScaleRef.current = dist / rotateTouchRef.current.dist;
           applyMapTransform();
+
+          // Warm the cache for whichever native zoom level the pinch is
+          // currently trending towards, well before release commits to it -
+          // only fires again once the live target crosses into a new
+          // integer level, not on every touchmove.
+          const liveZoom = rotateTouchRef.current.zoom + Math.log2(pinchScaleRef.current);
+          const targetNativeZ = Math.min(6, Math.max(map.getMinZoom(), Math.round(liveZoom)));
+          if (targetNativeZ !== pinchPrefetchedZoomRef.current) {
+            pinchPrefetchedZoomRef.current = targetNativeZ;
+            prefetchTilesForZoom(targetNativeZ);
+          }
         }
       } else if (e.touches.length === 1 && panTouchRef.current) {
         e.preventDefault();

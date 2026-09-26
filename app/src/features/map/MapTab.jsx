@@ -1121,6 +1121,10 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       }
     };
 
+    // Hard, instant removal — used to cancel a still-pending poster cycle
+    // (a new commit starting before the previous one revealed, or unmount).
+    // No fade here: about to show a brand-new poster right after, or leaving
+    // the page entirely, so there's nothing worth easing out of.
     const hidePinchPoster = () => {
       const clone = pinchPosterCloneRef.current;
       if (clone && clone.parentNode) clone.parentNode.removeChild(clone);
@@ -1133,6 +1137,26 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         tileLayerRef.current.off('load', pinchPosterLoadHandlerRef.current);
         pinchPosterLoadHandlerRef.current = null;
       }
+    };
+    // The actual reveal, once the new zoom's tiles are ready: direct user
+    // report that removing the poster outright (an instant cut from the
+    // frozen frame to the live one) still read as a visible "refresh",  even
+    // with the clip and deformation both already gone. Cross-fading the
+    // poster out over a short transition instead makes the swap itself
+    // gradual, so there's no single frame where the change is obvious.
+    const fadeOutPinchPoster = () => {
+      const clone = pinchPosterCloneRef.current;
+      if (!clone) return;
+      clone.style.transition = 'opacity 160ms ease-out';
+      clone.style.opacity = '0';
+      const finish = () => {
+        clone.removeEventListener('transitionend', finish);
+        hidePinchPoster();
+      };
+      clone.addEventListener('transitionend', finish);
+      // Belt-and-suspenders in case transitionend never fires (e.g. the
+      // element got detached some other way first).
+      pinchPosterHideTimerRef.current = setTimeout(finish, 220);
     };
     // Clones the live map container (tiles, icons/overlay canvas, custom
     // panes — everything) exactly as it currently renders, including its own
@@ -1176,18 +1200,28 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       map.options.zoomSnap = prevSnap;
       if (posterShown) {
         const layer = tileLayerRef.current;
+        const reveal = () => {
+          if (pinchPosterHideTimerRef.current) {
+            clearTimeout(pinchPosterHideTimerRef.current);
+            pinchPosterHideTimerRef.current = null;
+          }
+          if (pinchPosterLoadHandlerRef.current && layer) {
+            layer.off('load', pinchPosterLoadHandlerRef.current);
+            pinchPosterLoadHandlerRef.current = null;
+          }
+          fadeOutPinchPoster();
+        };
         if (layer && layer.isLoading && layer.isLoading()) {
-          const onLoad = () => hidePinchPoster();
-          pinchPosterLoadHandlerRef.current = onLoad;
-          layer.once('load', onLoad);
+          pinchPosterLoadHandlerRef.current = reveal;
+          layer.once('load', reveal);
           // Safety net: 'load' should fire once the new view's tiles are
           // ready, but never leave the poster stuck up if it somehow
           // doesn't (e.g. a tile request errors out).
-          pinchPosterHideTimerRef.current = setTimeout(hidePinchPoster, 600);
+          pinchPosterHideTimerRef.current = setTimeout(reveal, 600);
         } else {
-          // Target zoom's tiles were already cached - nothing to hide behind
-          // the poster for, reveal immediately.
-          hidePinchPoster();
+          // Target zoom's tiles were already cached - still fade out (an
+          // instant cut here was just as visible as the load-wait case).
+          reveal();
         }
       }
       return clamped;

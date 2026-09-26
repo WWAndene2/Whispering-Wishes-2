@@ -54,13 +54,13 @@ html.dyslexic-font .flex-wrap > button[class*="text-\[10px\]"] {
 
 /* CardHeader: prevent action buttons from wrapping onto title */
 html.dyslexic-font .kuro-label {
-  font-size: 9px !important;
+  font-size: 8px !important;
   letter-spacing: -0.02em !important;
 }
 
 /* Server selector in header */
 html.dyslexic-font .header-controls button {
-  font-size: 9px !important;
+  font-size: 8px !important;
 }
 
 /* Banner card pity numbers: keep compact */
@@ -78,7 +78,7 @@ html.dyslexic-font .grid-cols-3 button {
 /* Tabs inside cards (category tabs, view switchers) */
 html.dyslexic-font .kuro-tabs button,
 html.dyslexic-font [role="tablist"]:not(nav) button {
-  font-size: 9px !important;
+  font-size: 8px !important;
   letter-spacing: -0.01em !important;
 }
 
@@ -94,7 +94,7 @@ html.dyslexic-font .kuro-input {
 
 /* Stats badges (W/L/G indicators) */
 html.dyslexic-font span[class*="rounded"][class*="px-1"] {
-  font-size: 9px !important;
+  font-size: 8px !important;
   padding-left: 0.25rem !important;
   padding-right: 0.25rem !important;
 }

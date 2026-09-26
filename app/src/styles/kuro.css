@@ -287,9 +287,9 @@
       --font-md: calc(14px * var(--ui-scale, 1));
       --font-lg: calc(16px * var(--ui-scale, 1));
       --font-xl: calc(16px * var(--ui-scale, 1));
-      --font-2xl: calc(19px * var(--ui-scale, 1));
+      --font-2xl: calc(18px * var(--ui-scale, 1));
       --font-3xl: calc(16px * var(--ui-scale, 1));
-      --font-4xl: calc(22px * var(--ui-scale, 1));
+      --font-4xl: calc(24px * var(--ui-scale, 1));
       --font-5xl: calc(24px * var(--ui-scale, 1));
       --font-6xl: calc(24px * var(--ui-scale, 1));
       /* §E1-DIM: Architectural dimension tokens — card heights, avatar sizes */
@@ -1248,7 +1248,7 @@
        for — it's the only reality, and this now always applies. */
     .kuro-calc .kuro-input {
       padding: 8px 8px;
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .kuro-input-sm {
@@ -1549,7 +1549,7 @@
       padding: 12px;
       text-align: center;
       color: var(--color-warning);
-      font-size: 13px;
+      font-size: 12px;
     }
 
     /* MED-36: Chart container with responsive aspect ratio */
@@ -1606,7 +1606,7 @@
       position: absolute;
       z-index: 9999;
       padding: 6px 8px;
-      font-size: 11px;
+      font-size: 12px;
       color: var(--text-heading);
       background: rgba(12, 16, 24, 0.92);
       border: 1px solid rgba(237, 175, 24, 0.3);

@@ -1226,15 +1226,15 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       }
       return clamped;
     };
-    // How often an active pinch folds its live CSS scale into a real
-    // map.setZoom() while fingers are still down — direct user request for
-    // progressive zoom (tiles loading throughout the gesture) instead of one
-    // big jump at release. Throttled rather than per-touchmove: committing
-    // on every move was tried before (see pinchScaleRef's own comment above)
-    // and was heavy enough to drop touch events mid-gesture. At this
-    // interval, the residual CSS scale left for the final touchend commit
-    // stays small (bounded by how far a pinch travels in ~120ms), so
-    // whatever tile-load flash remains at release is far smaller too.
+    // Minimum spacing between an active pinch's periodic real map.setZoom()
+    // commits — direct user request for progressive zoom (tiles loading
+    // throughout the gesture) instead of one big jump at release. Throttled
+    // rather than per-touchmove: committing on every move was tried before
+    // (see pinchScaleRef's own comment above) and was heavy enough to drop
+    // touch events mid-gesture. This is only a MINIMUM, though — the actual
+    // rebase is also gated on the previous poster cycle having finished (see
+    // its own check below), so a slow tile load naturally spaces rebases out
+    // further than this rather than piling up and interrupting each other.
     const PINCH_REBASE_MS = 120;
     const onTouchStart = (e) => {
       if (e.touches.length === 2) {
@@ -1276,7 +1276,16 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           applyMapTransform();
 
           const now = performance.now();
-          if (now - pinchLastRebaseRef.current >= PINCH_REBASE_MS) {
+          // Also wait for any still-showing poster to have finished its own
+          // fade-out — direct user report of a flicker "entre chaque
+          // palier": rebasing on a fixed timer alone let a new rebase cut
+          // the previous one's poster off mid-fade every ~120ms, which is
+          // shorter than the fade+reveal cycle itself, so poster cycles
+          // piled up and interrupted each other for the whole gesture.
+          // Skipping (not resetting the timestamp) instead of forcing it
+          // through means the next rebase attempt is retried on the very
+          // next touchmove once the previous cycle is actually done.
+          if (now - pinchLastRebaseRef.current >= PINCH_REBASE_MS && !pinchPosterCloneRef.current) {
             const targetZoom = rotateTouchRef.current.zoom + Math.log2(pinchScaleRef.current);
             const committed = commitZoomExact(targetZoom);
             // Rebase: the real zoom now matches the fingers' current

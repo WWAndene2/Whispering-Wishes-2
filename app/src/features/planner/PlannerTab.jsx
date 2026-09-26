@@ -35,7 +35,7 @@ import { t, formatNumber, formatDate, getLocale } from '../../utils/i18n.js';
 import { ROLE_FR, WEAPON_VERDICT_REASON_FR, WEAPON_ALT_REASON_FR } from '../../data/characters.fr.js';
 import { calcStats } from '../../core/calcStats.js';
 import { computePullAllocation } from '../../core/pullAllocation.js';
-import { TIER_SCORES } from '../teams/calcEngine.js';
+import { TIER_SCORES } from '../../data/tierScores.js';
 import { isHealerRole, isSupportRole } from '../../engine/math/roleMatch.js';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
 

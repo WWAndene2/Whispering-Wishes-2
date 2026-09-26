@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════════
-// WHISPERING WISHES — features/profile/characterCardRenderer.js
+// WHISPERING WISHES — features/teams/characterCardRenderer.js
 // Single-character "build card" canvas renderer, used by the Teams tab's Damage
 // Calculator — relocated here (Layer 6 of the engine rewrite) alongside its sibling
 // idCardRenderer.js, reusing the exact same drawing primitives (rr/drawPanel/
@@ -19,7 +19,7 @@ import {
   ECHO_MAIN_STAT_VALUES,
   createStats, parsePassive, applyFullEchoSet, applyEchoStats,
   calcEnergyCycles, getSubstatGradeValue, getSubstatTier,
-} from '../teams/calcEngine.js';
+} from './calcEngine.js';
 
 // Real Android launcher icon (same source as idCardRenderer.js's APP_ICON) used as a small
 // brand watermark in this card's header — not the PWA icon or the currency icon.

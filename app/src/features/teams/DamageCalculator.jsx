@@ -18,7 +18,7 @@ import { RELEASE_ORDER } from '../../data/characters.js';
 import { RotationGuideCard } from './RotationGuideCard.jsx';
 import { EnemyTargetCard, EnemyTargetModal } from './EnemyTargetSection.jsx';
 import { calcTeamStats as calcTeamStatsImpl } from './calcTeamStats.js';
-import { renderCharacterCard } from '../profile/characterCardRenderer.js';
+import { renderCharacterCard } from './characterCardRenderer.js';
 import { t, formatNumber, getLocale } from '../../utils/i18n.js';
 import { ROLE_FR, WEAPON_TYPE_FR, STAT_NAME_FR } from '../../data/characters.fr.js';
 import { ECHO_SETS_FR } from '../../data/echoes.fr.js';

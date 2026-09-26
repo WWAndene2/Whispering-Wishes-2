@@ -12,7 +12,7 @@ import { getSonataLoadouts } from '../../data/echoes.js';
 import { DEFAULT_COLLECTION_IMAGES, getConveneAnimation, getCharacterBannerArt } from '../../data/banners.js';
 import { COMMON_MAT_TIERS, FORGERY_MAT_TIERS, RESONATOR_ASCENSION_COSTS, RESONATOR_EXP_COSTS, SKILL_UPGRADE_COSTS } from '../../data/constants.js';
 import { FocusTrapModal } from '../components/FocusTrapModal.jsx';
-import { stepStyle } from '../../features/teams/RotationTimeline.jsx';
+import { stepStyle } from '../constants/rotationStepStyles.js';
 import { calcTeamStats } from '../../features/teams/calcTeamStats.js';
 import { getElementIcon, getWeaponTypeIcon, getStatIcon, getFactionIcon, getRegionIcon, getCombatRoleIcon, getRarityIcon, getRoleIcon } from '../utils/elementVisuals.js';
 import { hideOnError } from '../utils/imageHelpers.js';

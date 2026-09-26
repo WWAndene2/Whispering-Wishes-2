@@ -7,6 +7,7 @@
 import { ECHO_SKILL_BUFFS } from '../../data/echoes.js';
 import { CHARACTER_DATA, CHAR_BUFF_TABLE, RESONANCE_CHAIN_DATA, CHARACTER_ROTATIONS } from '../../data/characters.js';
 import { WEAPON_REFINE_SCALE } from '../../data/constants.js';
+import { TIER_SCORES } from '../../data/tierScores.js';
 // Engine rewrite Layer 2 (shared math primitives): the character-agnostic combat-math
 // constants/formulas, role-substring helpers, and move-type-bucket routing live in
 // engine/math/ — re-exported here so every existing importer of these names from
@@ -480,7 +481,7 @@ const MORNYE_INTERFERED_MARKER_APPLIERS = ['Aemeath', 'Qingxiao', 'Luuk Herssen'
 // (scoring hypothetical [...placed, candidate] teams to rank every possible addition, not just
 // ones that happen to appear in someone's hand-curated `teams` string list) — a single source of
 // truth so the two can never drift the way they did before this was extracted. ──
-export const TIER_SCORES = { 'T0': 40, 'T0.5': 35, 'T1': 28, 'T1.5': 22, 'T2': 16, 'T3': 8, 'T4': 0 };
+export { TIER_SCORES };
 
 // ── Real per-type damage-share weighting ──
 // scoreTeamComposition used to treat every type-specific DMG buff (Basic/Heavy/Skill/Liberation/

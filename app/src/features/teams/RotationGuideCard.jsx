@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ListOrdered } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { useSessionState } from '../../hooks/useSessionState.js';
-import { stepStyle } from './RotationTimeline.jsx';
+import { stepStyle } from '../../shared/constants/rotationStepStyles.js';
 import { splitIntoParagraphs } from '../../shared/utils/textFormat.js';
 import { t, getLocale } from '../../utils/i18n.js';
 import { SKILL_NAME_FR, GENERIC_SKILL_NAME_FR, getGenericSkillNameFr } from '../../data/characters.fr.js';

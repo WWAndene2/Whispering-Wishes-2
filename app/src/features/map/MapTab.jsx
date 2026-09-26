@@ -302,14 +302,17 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   // Timestamp of the last periodic real-zoom commit during an active pinch —
   // see PINCH_REBASE_MS below, near where this is used.
   const pinchLastRebaseRef = useRef(0);
-  // Freeze-frame canvas shown during a pinch's real zoom commit — direct
-  // user request ("garder un poster... sans tiles le temps que ça refresh"):
-  // the flash at each commit is the new zoom's tiles still loading, which no
-  // CSS transform can hide (tried twice, see commitZoomExact's own history).
-  // Painting a snapshot of the current tiles on top, then only revealing the
-  // real map again once the new tiles are loaded, hides that load latency
-  // instead of trying to animate around it. See showPinchPoster/hidePinchPoster.
-  const pinchPosterRef = useRef(null);
+  // Freeze-frame shown during a pinch's real zoom commit — direct user
+  // request ("garder un poster... sans tiles le temps que ça refresh"): the
+  // flash at each commit is the new zoom's tiles still loading, which no CSS
+  // transform can hide (tried twice, see commitZoomExact's own history). A
+  // cloneNode(true) of the live map container (not a manual canvas redraw —
+  // that version stretched tiles into their axis-aligned bounding box
+  // whenever the view was rotated, a real "déformation" direct user report)
+  // lets the browser itself render the frozen frame with whatever
+  // rotation/scale it already had, pixel-correct, no transform math needed.
+  // See showPinchPoster/hidePinchPoster.
+  const pinchPosterCloneRef = useRef(null);
   const pinchPosterHideTimerRef = useRef(null);
   const pinchPosterLoadHandlerRef = useRef(null);
   const applyMapTransform = () => {
@@ -1119,8 +1122,9 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     };
 
     const hidePinchPoster = () => {
-      const canvas = pinchPosterRef.current;
-      if (canvas) canvas.style.opacity = '0';
+      const clone = pinchPosterCloneRef.current;
+      if (clone && clone.parentNode) clone.parentNode.removeChild(clone);
+      pinchPosterCloneRef.current = null;
       if (pinchPosterHideTimerRef.current) {
         clearTimeout(pinchPosterHideTimerRef.current);
         pinchPosterHideTimerRef.current = null;
@@ -1130,34 +1134,31 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         pinchPosterLoadHandlerRef.current = null;
       }
     };
-    // Paints a snapshot of the currently-loaded tiles + sub-map overlay
-    // canvas onto pinchPosterRef, exactly where they appear on screen right
-    // now, and shows it. Called right before a real zoom commit so the
-    // freeze-frame covers the live map while its tiles reload underneath —
-    // same drawImage-at-getBoundingClientRect technique the paint tool's own
-    // blur-stroke snapshot already uses a bit further down in this file.
+    // Clones the live map container (tiles, icons/overlay canvas, custom
+    // panes — everything) exactly as it currently renders, including its own
+    // live CSS transform (rotation/scale), and overlays that clone on top.
+    // The browser renders the clone identically to the original with zero
+    // transform math on our part — correct under rotation, unlike a manual
+    // per-tile canvas redraw (tried first, stretched tiles into their
+    // axis-aligned bounding box whenever the view was rotated).
+    // cloneNode(true) copies DOM/attributes/inline styles but NOT canvas
+    // pixel content, so overlayCanvasRef's bitmap (icons + sub-map overlays,
+    // drawn onto one shared canvas) is copied across manually.
     const showPinchPoster = () => {
       const container = containerRef.current;
-      const canvas = pinchPosterRef.current;
-      const viewport = canvas?.parentElement; // .kuro-card-inner - the visible, unrotated/un-oversized area
-      if (!container || !canvas || !viewport) return false;
-      const rect = viewport.getBoundingClientRect();
-      if (rect.width <= 0 || rect.height <= 0) return false;
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = Math.round(rect.width * dpr);
-      canvas.height = Math.round(rect.height * dpr);
-      const ctx = canvas.getContext('2d');
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, rect.width, rect.height);
-      container.querySelectorAll('.leaflet-tile-pane img.leaflet-tile-loaded').forEach(img => {
-        const r = img.getBoundingClientRect();
-        try { ctx.drawImage(img, r.left - rect.left, r.top - rect.top, r.width, r.height); } catch {}
-      });
-      if (overlayCanvasRef.current) {
-        const r = overlayCanvasRef.current.getBoundingClientRect();
-        try { ctx.drawImage(overlayCanvasRef.current, r.left - rect.left, r.top - rect.top, r.width, r.height); } catch {}
+      if (!container || !container.parentElement) return false;
+      const clone = container.cloneNode(true);
+      clone.style.zIndex = '2';
+      clone.style.pointerEvents = 'none';
+      const originalCanvas = overlayCanvasRef.current;
+      const clonedCanvas = clone.querySelector('canvas');
+      if (originalCanvas && clonedCanvas) {
+        clonedCanvas.width = originalCanvas.width;
+        clonedCanvas.height = originalCanvas.height;
+        try { clonedCanvas.getContext('2d').drawImage(originalCanvas, 0, 0); } catch {}
       }
-      canvas.style.opacity = '1';
+      container.parentElement.insertBefore(clone, container.nextSibling);
+      pinchPosterCloneRef.current = clone;
       return true;
     };
     // Commits `targetZoom` for real, bypassing zoomSnap so it lands exactly
@@ -4102,19 +4103,6 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                 }),
                 background: MAP_BG,
                 zIndex: 1,
-              }}
-            />
-            <canvas
-              ref={pinchPosterRef}
-              aria-hidden="true"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                zIndex: 2,
-                pointerEvents: 'none',
-                opacity: 0,
               }}
             />
             {authorMode && (

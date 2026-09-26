@@ -98,7 +98,6 @@ Each feature tab is loaded via `React.lazy()` in `App.jsx` (code-split).
 | `ww-admin-*` | Admin panel lockout state | `features/profile/ProfileTab.jsx` |
 | Firebase `leaderboard/$uid` | Community leaderboard entry (pity, pulls) | `database.rules.json` |
 | Firebase `community-pulls/$uid` | Aggregated community pull stats | same |
-| Firebase `presence/$sessionId` | Live session presence | same |
 | Firebase `user-history/$uid` | Per-user private pull history backup | same |
 
 Schema migration is scaffolded at `core/storage.js:51` (empty `migrations` object awaiting entries).

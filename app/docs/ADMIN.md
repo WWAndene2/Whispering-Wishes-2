@@ -53,7 +53,7 @@ The app has a **two-tier admin system**. This doc explains why the client-side h
 
 Add a real `/api/admin/verify` endpoint + session tokens if any of these become true:
 
-1. Admin actions affect state shared between users (leaderboard curation, community pull aggregation write, presence moderation)
+1. Admin actions affect state shared between users (leaderboard curation, community pull aggregation write)
 2. Admin can delete or modify server-stored records beyond their own
 3. Multiple admin roles exist with different permissions
 4. The admin password is cycled frequently and you need to revoke specific sessions

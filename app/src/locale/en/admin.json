@@ -39,12 +39,6 @@
     "resetConfirm": "Reset"
   },
   "players": {
-    "live": "Live",
-    "openSession": "Open Session",
-    "openSessions": "Open Sessions",
-    "anyoneBrowsing": "Anyone browsing the app — includes visitors who haven't imported data or submitted to the leaderboard",
-    "updateInterval": "Updates every 30s • Heartbeat: 60s • Timeout: 2min",
-    "sessionActivity": "Session Activity",
     "refreshNow": "Refresh Now",
     "registeredPlayers": "Registered Players",
     "total": "total",
@@ -61,14 +55,7 @@
     "deleteSuccess": "Leaderboard entry deleted.",
     "deleteFailed": "Failed to delete entry: {{message}}",
     "privacyTitle": "Privacy",
-    "privacyOpenSessions": "Open Sessions = every open tab/browser visiting the app. Tracked via anonymous heartbeat. Just a random session ID and a timestamp. No UID, no device info, no IP, no personal data stored. Sessions expire after 2 minutes of inactivity.",
-    "privacyRegistered": "Registered Players = users who submitted their score to the leaderboard. This list shows their full UID and stats, visible only in this admin panel. The public leaderboard always shows masked IDs.",
-    "presenceErrorTitle": "Presence Error",
-    "presenceErrorFix": "Fix: Add this Firebase rule:",
-    "presenceErrorConsole": "Firebase Console → Realtime Database → Rules",
-    "noPresenceData": "No presence data in Firebase. Check that heartbeat writes are succeeding.",
-    "readFailed": "Read failed ({{status}}). Add \"presence\" read/write rule in Firebase.{{detail}}",
-    "fetchError": "Fetch error: {{message}}"
+    "privacyRegistered": "Registered Players = users who submitted their score to the leaderboard. This list shows their full UID and stats, visible only in this admin panel. The public leaderboard always shows masked IDs."
   },
   "echoBg": {
     "title": "Echo Background Removal",

@@ -34,15 +34,6 @@
                       && newData.child('ownerUid').val() == auth.uid"
       }
     },
-    "presence": {
-      ".read": "auth != null",
-      "$sessionId": {
-        ".write": "auth != null",
-        ".validate": "newData.hasChildren(['t'])
-                      && newData.child('t').isNumber()
-                      && newData.child('t').val() <= now + 60000"
-      }
-    },
     "user-history": {
       "$uid": {
         ".read": "auth != null && auth.uid == $uid",

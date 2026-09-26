@@ -34,7 +34,7 @@ import { useAmbientMusic } from './hooks/useAmbientMusic.js';
 import { useBackgroundFraming } from './hooks/useBackgroundFraming.js';
 import { useCollectionImages, COLLECTION_IMAGES_KEY } from './hooks/useCollectionImages.js';
 import { useTabNavigation } from './hooks/useTabNavigation.js';
-import { usePresenceTracking, checkFirebaseRateLimit } from './hooks/usePresenceTracking.js';
+import { checkFirebaseRateLimit } from './utils/firebaseWriteRateLimit.js';
 import { useThemeAccent } from './hooks/useThemeAccent.js';
 import { usePersistedState } from './hooks/usePersistedState.js';
 // --- core ---
@@ -515,10 +515,7 @@ function WhisperingWishesInner() {
   }, [state.profile.featured?.history, state.profile.weapon?.history, state.profile.standardChar?.history, state.profile.standardWeap?.history, state.profile.beginner?.history]);
 
   // Firebase anonymous auth + helpers, and leaderboard logic, live in
-  // CloudStorageProvider / AnalyticsTab. Presence consumes them via useCloudStorage() below.
-
-  // Presence tracking (extracted hook — heartbeat runs internally)
-  usePresenceTracking();
+  // CloudStorageProvider / AnalyticsTab.
 
   // F-015/F-016: Clean up stale localStorage backups and diagnostics on mount (24h TTL)
   useEffect(() => {

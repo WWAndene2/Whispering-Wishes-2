@@ -192,9 +192,6 @@ function ProfileTab({
   // always center-crops to the device's screen aspect otherwise, with no way to pick a different
   // part of the source picture). x/y are 0-100 object-position-style percentages, 50/50 = center.
   const [wallpaperPositionPrompt, setWallpaperPositionPrompt] = useState(null); // { url, target, x, y } | null
-  const [activePlayersCount, setActivePlayersCount] = useState(null);
-  const [activePlayersHistory, setActivePlayersHistory] = useState([]);
-  const [presenceError, setPresenceError] = useState(null);
   const [adminPlayerList, setAdminPlayerList] = useState(null);
 
   // Banner form state
@@ -239,50 +236,6 @@ function ProfileTab({
   const adminTrapRef = useFocusTrap(showAdminPanel && !adminMiniMode);
 
   // ── Admin fetch functions ─────────────────────────────────────────────
-  const FETCH_TIMEOUT_MS = 10000;
-  const PRESENCE_TTL_MS = 120000;
-  const fetchWithTimeout = useCallback((url, options = {}) => {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-    return fetch(url, { ...options, signal: controller.signal })
-      .catch((err) => {
-        if (err.name === 'AbortError') throw new Error(`Request timed out after ${FETCH_TIMEOUT_MS}ms`);
-        throw err;
-      })
-      .finally(() => clearTimeout(timeoutId));
-  }, []);
-
-  const fetchActivePlayersCount = useCallback(async () => {
-    try {
-      const authToken = await getFirebaseAuth();
-      const res = await firebaseFetch('presence', authToken);
-      if (res.ok) {
-        const data = await res.json();
-        if (data) {
-          const now = Date.now();
-          const activeSessions = Object.entries(data).filter(([, v]) => v?.t && (now - v.t) < PRESENCE_TTL_MS);
-          const staleSessions = Object.entries(data).filter(([, v]) => !v?.t || (now - v.t) >= PRESENCE_TTL_MS);
-          for (const [key] of staleSessions.slice(0, 50)) {
-            try { await firebaseFetch(`presence/${key}`, authToken, { method: 'DELETE' }); } catch {}
-          }
-          const count = activeSessions.length;
-          setActivePlayersCount(count);
-          setPresenceError(null);
-          setActivePlayersHistory(prev => {
-            const next = [...prev, { time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), count }];
-            return next.slice(-30);
-          });
-        } else {
-          setActivePlayersCount(0);
-          setPresenceError(t('admin.players.noPresenceData'));
-        }
-      } else {
-        const errText = await res.text().catch(() => '');
-        setPresenceError(t('admin.players.readFailed', { status: res.status, detail: errText ? ' — ' + errText.slice(0, 80) : '' }));
-      }
-    } catch (e) { setPresenceError(t('admin.players.fetchError', { message: e.message })); }
-  }, [getFirebaseAuth, firebaseFetch]);
-
   const fetchAdminPlayerList = useCallback(async () => {
     try {
       const authToken = await getFirebaseAuth();
@@ -492,15 +445,11 @@ function ProfileTab({
   // Fetch admin data when Players tab is open
   useEffect(() => {
     if (adminTab === 'players' && adminUnlocked && showAdminPanel) {
-      fetchActivePlayersCount();
       fetchAdminPlayerList();
-      const interval = setInterval(() => {
-        fetchActivePlayersCount();
-        fetchAdminPlayerList();
-      }, 30000);
+      const interval = setInterval(fetchAdminPlayerList, 30000);
       return () => clearInterval(interval);
     }
-  }, [adminTab, adminUnlocked, showAdminPanel, fetchActivePlayersCount, fetchAdminPlayerList]);
+  }, [adminTab, adminUnlocked, showAdminPanel, fetchAdminPlayerList]);
 
   // ID Card canvas download — rendering logic extracted to idCardRenderer.js
   const downloadIdCard = useCallback(async (format) => {
@@ -1545,11 +1494,10 @@ function ProfileTab({
         adminMiniMode={adminMiniMode} setAdminMiniMode={setAdminMiniMode}
         bannerForm={bannerForm} setBannerForm={setBannerForm}
         trophyJsonInput={trophyJsonInput} setTrophyJsonInput={setTrophyJsonInput}
-        activePlayersCount={activePlayersCount} activePlayersHistory={activePlayersHistory}
-        presenceError={presenceError} adminPlayerList={adminPlayerList}
+        adminPlayerList={adminPlayerList}
         adminLockedUntil={adminLockedUntil}
         trophies={trophies}
-        fetchActivePlayersCount={fetchActivePlayersCount} fetchAdminPlayerList={fetchAdminPlayerList}
+        fetchAdminPlayerList={fetchAdminPlayerList}
         deleteLeaderboardEntry={deleteLeaderboardEntry}
         trophyOverrides={trophyOverrides} setTrophyOverrides={setTrophyOverrides}
         verifyAdminPassword={verifyAdminPassword} saveCustomBanners={saveCustomBanners}

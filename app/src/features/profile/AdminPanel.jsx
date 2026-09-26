@@ -170,11 +170,10 @@ export default function AdminPanel({
   adminMiniMode, setAdminMiniMode,
   bannerForm, setBannerForm,
   trophyJsonInput, setTrophyJsonInput,
-  activePlayersCount, activePlayersHistory,
-  presenceError, adminPlayerList,
+  adminPlayerList,
   adminLockedUntil,
   trophies,
-  fetchActivePlayersCount, fetchAdminPlayerList, deleteLeaderboardEntry,
+  fetchAdminPlayerList, deleteLeaderboardEntry,
   trophyOverrides, setTrophyOverrides,
   verifyAdminPassword, saveCustomBanners,
   buildBannerForm, updateBannerForm,
@@ -355,9 +354,8 @@ export default function AdminPanel({
 
                   {adminTab === 'players' && (
                     <AdminPlayersTab
-                      activePlayersCount={activePlayersCount} activePlayersHistory={activePlayersHistory}
-                      presenceError={presenceError} adminPlayerList={adminPlayerList}
-                      fetchActivePlayersCount={fetchActivePlayersCount} fetchAdminPlayerList={fetchAdminPlayerList}
+                      adminPlayerList={adminPlayerList}
+                      fetchAdminPlayerList={fetchAdminPlayerList}
                       deleteLeaderboardEntry={deleteLeaderboardEntry}
                     />
                   )}

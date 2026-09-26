@@ -39,12 +39,6 @@
     "resetConfirm": "Réinitialiser"
   },
   "players": {
-    "live": "En direct",
-    "openSession": "Session ouverte",
-    "openSessions": "Sessions ouvertes",
-    "anyoneBrowsing": "Toute personne parcourant l'application — inclut les visiteurs qui n'ont pas importé de données ni soumis au classement",
-    "updateInterval": "Mise à jour toutes les 30s • Signal : 60s • Délai : 2min",
-    "sessionActivity": "Activité des sessions",
     "refreshNow": "Actualiser maintenant",
     "registeredPlayers": "Joueurs enregistrés",
     "total": "au total",
@@ -61,14 +55,7 @@
     "deleteSuccess": "Entrée du classement supprimée.",
     "deleteFailed": "Échec de la suppression : {{message}}",
     "privacyTitle": "Confidentialité",
-    "privacyOpenSessions": "Sessions ouvertes = chaque onglet/navigateur ouvert visitant l'application. Suivi via un signal anonyme. Juste un identifiant de session aléatoire et un horodatage. Aucun UID, aucune information sur l'appareil, aucune IP, aucune donnée personnelle stockée. Les sessions expirent après 2 minutes d'inactivité.",
-    "privacyRegistered": "Joueurs enregistrés = utilisateurs ayant soumis leur score au classement. Cette liste affiche leur UID complet et leurs statistiques, visibles uniquement dans ce panneau admin. Le classement public affiche toujours des identifiants masqués.",
-    "presenceErrorTitle": "Erreur de présence",
-    "presenceErrorFix": "Correction : Ajoutez cette règle Firebase :",
-    "presenceErrorConsole": "Console Firebase → Realtime Database → Règles",
-    "noPresenceData": "Aucune donnée de présence dans Firebase. Vérifiez que les écritures de signal aboutissent.",
-    "readFailed": "Échec de lecture ({{status}}). Ajoutez une règle de lecture/écriture « presence » dans Firebase.{{detail}}",
-    "fetchError": "Erreur de récupération : {{message}}"
+    "privacyRegistered": "Joueurs enregistrés = utilisateurs ayant soumis leur score au classement. Cette liste affiche leur UID complet et leurs statistiques, visibles uniquement dans ce panneau admin. Le classement public affiche toujours des identifiants masqués."
   },
   "echoBg": {
     "title": "Suppression du fond des échos",

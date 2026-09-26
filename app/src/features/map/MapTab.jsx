@@ -1113,10 +1113,6 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         // by our own pinch-zoom (around the map's current center) combined
         // with the twist-to-rotate, instead of just disabling zoom outright.
         if (map.touchZoom?.enabled()) map.touchZoom.disable();
-        // Cancel any still-running ease-back transition from a previous
-        // pinch's commitPinchZoom so this new gesture's live preview tracks
-        // fingers instantly instead of lagging behind a leftover transition.
-        if (container.style.transition) container.style.transition = '';
         rotateTouchRef.current = {
           angle: touchAngle(e.touches[0], e.touches[1]),
           rotation: rotationRef.current,
@@ -1158,45 +1154,25 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const commitPinchZoom = () => {
       const start = rotateTouchRef.current;
       const scale = pinchScaleRef.current;
-      const container = containerRef.current;
       if (start && start.dist > 0 && scale !== 1) {
         const targetZoom = start.zoom + Math.log2(scale);
         const clamped = Math.min(map.getMaxZoom(), Math.max(map.getMinZoom(), targetZoom));
         // map.setZoom() snaps to the nearest zoomSnap increment internally
-        // (Leaflet's setView -> _limitZoom), so the zoom it actually commits
-        // to is rarely exactly `clamped` — replicating that rounding here
-        // lets the CSS handoff below start from the SAME final zoom Leaflet
-        // lands on. Direct user report: without this, resetting straight to
-        // scale 1 assumed no snap rounding happened, so the tile swap could
-        // land up to half a zoom step off from where the fingers actually
-        // were, and the 180ms ease then had to visibly correct for that
-        // mismatch — read as a "bounce" rather than a clean settle.
-        const snap = map.options.zoomSnap || 0;
-        const finalZoom = snap
-          ? Math.min(map.getMaxZoom(), Math.max(map.getMinZoom(), Math.round(clamped / snap) * snap))
-          : clamped;
-        map.setZoom(finalZoom, { animate: false });
-        if (container) {
-          // Land, uneased, on the residual gap between what the fingers
-          // asked for and what snapping actually committed (at most half a
-          // zoom step either way) — this coincides with the tile swap, so
-          // it's invisible. Only THIS small residual eases away below,
-          // instead of the full pinch scale.
-          pinchScaleRef.current = 2 ** (targetZoom - finalZoom);
-          applyMapTransform();
-          container.style.transition = 'transform 180ms ease-out';
-          void container.offsetHeight; // force reflow so the transition applies to the change below
-        }
+        // (Leaflet's setView -> _limitZoom) — direct user request to land
+        // exactly on the pinch's own continuous position instead. Toggling
+        // the map's zoomSnap option off for just this one call (then
+        // restoring it) keeps scroll/button zoom snapped to their usual 0.5
+        // steps, while the pinch itself stops exactly where the fingers left
+        // off. That removes the rounding mismatch at its source, so there's
+        // no residual left to ease away (the earlier CSS-transition fix for
+        // that mismatch is gone — nothing left for it to correct).
+        const prevSnap = map.options.zoomSnap;
+        map.options.zoomSnap = 0;
+        map.setZoom(clamped, { animate: false });
+        map.options.zoomSnap = prevSnap;
       }
       pinchScaleRef.current = 1;
       applyMapTransform();
-      if (container && container.style.transition) {
-        const clearTransition = () => {
-          container.style.transition = '';
-          container.removeEventListener('transitionend', clearTransition);
-        };
-        container.addEventListener('transitionend', clearTransition);
-      }
     };
     const onTouchEnd = (e) => {
       if (e.touches.length < 2) {

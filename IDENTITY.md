@@ -205,7 +205,6 @@ The fix:feat ratio is **4:1** — the app spends four times as much effort perfe
 | `ProfileTab.jsx` | 1,623 | User identity — the face |
 | `App.jsx` | 1,494 | Root orchestrator — the skeleton |
 | `PlannerTab.jsx` | 1,169 | Resource planning — the strategist |
-| `bannerThemes.js` | 1,034 | Particle animations — the heartbeat |
 | `AnalyticsTab.jsx` | 873 | Pull statistics — the memory |
 | `CollectionTab.jsx` | 849 | Resonator gallery — the collection |
 

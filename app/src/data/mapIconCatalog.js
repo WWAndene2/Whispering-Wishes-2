@@ -107,11 +107,19 @@ const ENEMY_ICONS = [
   ['the-false-sovereign', 'The False Sovereign'],
   ['threnodian-leviathan', 'Reminiscence: Threnodian - Leviathan'],
   ['thundering-mephis', 'Thundering Mephis'],
+  // Arsinosa is the Lioness of Glory's own name — searchable as an extra tag.
+  ['lioness-of-glory', 'Lioness of Glory', { tags: ['Arsinosa'] }],
+];
+
+// Enemies with no Echo in ECHO_DATA: class (and element when known) given by
+// hand, per the project owner.
+const ENEMY_ICONS_MANUAL = [
+  { slug: 'scar-aberrant-nightmare', name: 'Scar: Aberrant Nightmare', rank: 'Calamity' },
 ];
 
 const ENEMY_CLASS_ORDER = ['Calamity', 'Overlord', 'Elite', 'Common'];
 
-for (const [slug, echoName] of ENEMY_ICONS) {
+for (const [slug, echoName, extra] of ENEMY_ICONS) {
   const echo = ECHO_DATA[echoName];
   if (!echo) throw new Error(`mapIconCatalog: no ECHO_DATA entry named "${echoName}"`);
   MAP_ICON_CATALOG.push({
@@ -122,7 +130,18 @@ for (const [slug, echoName] of ENEMY_ICONS) {
     subcategory: echo.rank,
     imageUrl: `map-icons/enemy/${slug}.png`,
     size: 128,
-    tags: ['boss', 'enemy', echo.rank, echo.element, ...(echo.sets || [])].filter(Boolean),
+    tags: ['boss', 'enemy', echo.rank, echo.element, ...(echo.sets || []), ...(extra?.tags || [])].filter(Boolean),
+  });
+}
+for (const { slug, name, rank, element } of ENEMY_ICONS_MANUAL) {
+  MAP_ICON_CATALOG.push({
+    id: `enemy-${slug}`,
+    name,
+    category: 'Enemy',
+    subcategory: rank,
+    imageUrl: `map-icons/enemy/${slug}.png`,
+    size: 128,
+    tags: ['boss', 'enemy', rank, element].filter(Boolean),
   });
 }
 

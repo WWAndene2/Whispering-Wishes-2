@@ -17,7 +17,7 @@ describe('map icon catalog', () => {
 
   it('enemy entries mirror ECHO_DATA (name, class, element, Sonata sets)', () => {
     expect(enemies.length).toBeGreaterThan(0);
-    for (const k of enemies) {
+    for (const k of enemies.filter(e => e.echoName)) {
       const echo = ECHO_DATA[k.echoName];
       expect(echo, k.echoName).toBeTruthy();
       expect(k.name).not.toMatch(/Reminiscence/);
@@ -33,6 +33,13 @@ describe('map search over enemy icons', () => {
   const icons = enemies.map((k, i) => ({ id: `e${i}`, kind: k.id, zoneId: 'huanglong', x: i, y: i }));
   const index = buildSearchIndex({ icons, zones, getKind: getIconCatalogEntry });
   const keys = (q) => searchMap(index, q).map(r => r.doc.key);
+
+  it('covers hand-entered enemies and alternate names', () => {
+    expect(getIconCatalogEntry('enemy-scar-aberrant-nightmare').subcategory).toBe('Calamity');
+    expect(getIconCatalogEntry('enemy-lioness-of-glory').subcategory).toBe('Overlord');
+    expect(keys('arsinosa')[0]).toBe('kind:enemy-lioness-of-glory');
+    expect(keys('scar')[0]).toBe('kind:enemy-scar-aberrant-nightmare');
+  });
 
   it('finds a boss by name, typo included', () => {
     expect(keys('crownles')[0]).toBe('kind:enemy-crownless');

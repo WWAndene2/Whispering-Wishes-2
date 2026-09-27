@@ -138,6 +138,7 @@
     "presetOff": "Show",
     "deletePreset": "Delete preset {{name}}",
     "viewingPreset": "Preset:",
-    "backToMine": "My map"
+    "backToMine": "My map",
+    "renamePreset": "Rename preset {{name}}"
   }
 }

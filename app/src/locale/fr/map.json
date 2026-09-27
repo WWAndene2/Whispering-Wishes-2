@@ -138,6 +138,7 @@
     "presetOff": "Afficher",
     "deletePreset": "Supprimer le preset {{name}}",
     "viewingPreset": "Preset :",
-    "backToMine": "Ma carte"
+    "backToMine": "Ma carte",
+    "renamePreset": "Renommer le preset {{name}}"
   }
 }

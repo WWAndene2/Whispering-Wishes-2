@@ -10,9 +10,9 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import React, { useEffect, useState } from 'react';
-import { Share2, Download, X, Layers, Trash2 } from 'lucide-react';
+import { Share2, Download, X, Layers, Trash2, Pencil } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
-import { encodeMapShare, decodeMapShare } from './mapShareCode.js';
+import { encodeMapShare, decodeMapShare, containsLink } from './mapShareCode.js';
 import { t } from '../../utils/i18n.js';
 
 /**
@@ -28,13 +28,18 @@ export async function shareCodeText(text, title) {
   try { await navigator.clipboard.writeText(text); return 'copied'; } catch { return 'failed'; }
 }
 
-export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, knownIconIds, presets, activePresetId, onImport, onActivatePreset, onDeletePreset, onClose }) {
+export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, knownIconIds, presets, activePresetId, onImport, onActivatePreset, onDeletePreset, onRenamePreset, onClose }) {
   const [withFound, setWithFound] = useState(false);
   const [code, setCode] = useState('');
   const [status, setStatus] = useState('');
   const [input, setInput] = useState('');
   const [preview, setPreview] = useState(null); // { pins, foundIds, dropped, unknown } | { error }
   const [presetName, setPresetName] = useState('');
+  const [renaming, setRenaming] = useState(null); // { id, name } while a preset name is being edited
+  const commitRename = () => {
+    if (renaming && renaming.name.trim() && !containsLink(renaming.name)) onRenamePreset(renaming.id, renaming.name);
+    setRenaming(null);
+  };
 
   // Decode as the player types / pastes (a code is small; no debounce needed
   // beyond ignoring stale results).
@@ -126,9 +131,11 @@ export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, know
                   placeholder={t('map.share.presetNamePlaceholder')}
                   aria-label={t('map.share.presetName')}
                   onChange={(e) => setPresetName(e.target.value)}
+                  aria-invalid={containsLink(presetName)}
                 />
+                {containsLink(presetName) && <div className="hint map-share-error" role="alert">{t('map.pins.noLinks')}</div>}
                 <div className="map-share-actions is-stacked">
-                  <button type="button" className="kuro-btn kuro-btn-sm is-active" onClick={() => apply('preset')}>
+                  <button type="button" className="kuro-btn kuro-btn-sm is-active" onClick={() => apply('preset')} disabled={containsLink(presetName)}>
                     <Layers size={14} /> {t('map.share.saveAsPreset')}
                   </button>
                   <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => apply('add')} disabled={preview.pins.length === 0}>
@@ -146,7 +153,31 @@ export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, know
                 return (
                   <div key={pr.id} className={`map-preset-row ${on ? 'is-active' : ''}`}>
                     <div className="map-preset-meta">
-                      <div className="map-preset-name">{pr.name}</div>
+                      {renaming && renaming.id === pr.id ? (
+                        <>
+                          <input
+                            type="text"
+                            className="map-share-code map-share-name"
+                            value={renaming.name}
+                            maxLength={32}
+                            autoFocus
+                            aria-label={t('map.share.presetName')}
+                            aria-invalid={containsLink(renaming.name)}
+                            onChange={(e) => { const v = e.target.value; setRenaming(r => ({ ...r, name: v })); }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') { e.preventDefault(); commitRename(); }
+                              else if (e.key === 'Escape') { e.preventDefault(); setRenaming(null); }
+                            }}
+                            onBlur={commitRename}
+                          />
+                          {containsLink(renaming.name) && <div className="hint map-share-error" role="alert">{t('map.pins.noLinks')}</div>}
+                        </>
+                      ) : (
+                        <button type="button" className="map-preset-name" onClick={() => setRenaming({ id: pr.id, name: pr.name })}
+                          aria-label={t('map.share.renamePreset', { name: pr.name })} title={t('map.share.renamePreset', { name: pr.name })}>
+                          {pr.name} <Pencil size={12} aria-hidden="true" />
+                        </button>
+                      )}
                       <div className="hint">{t('map.share.preview', { pins: pr.pins.length, found: pr.foundIds.length })}</div>
                     </div>
                     <button type="button" className={`kuro-btn kuro-btn-sm ${on ? 'is-active' : ''}`} aria-pressed={on}

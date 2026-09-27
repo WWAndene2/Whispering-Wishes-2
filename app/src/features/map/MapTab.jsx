@@ -370,6 +370,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   // own pins, skipping ones already there.
   const importShare = useCallback(({ pins: incoming, foundIds: incomingFound, mode, name }) => {
     const fresh = incoming.map(p => ({ ...p, id: `pin-${generateUniqueId()}` }));
+    if (containsLink(name)) return;
     if (mode === 'add') {
       savePins(prev => {
         const seen = new Set(prev.map(p => `${p.marker}|${p.x}|${p.y}`));
@@ -384,6 +385,11 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     }
     setShareOpen(false);
   }, [savePins, savePresets, activatePreset, presets.length]);
+  const renamePreset = useCallback((id, name) => {
+    const clean = (name || '').trim().slice(0, 32);
+    if (!clean || containsLink(clean)) return;
+    savePresets(prev => prev.map(p => (p.id === id ? { ...p, name: clean } : p)));
+  }, [savePresets]);
   const deletePreset = useCallback((id) => {
     savePresets(prev => prev.filter(p => p.id !== id));
     if (id === activePresetId) activatePreset(null);
@@ -4761,7 +4767,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         .map-preset-meta .hint { font-size: 12px; }
         .map-share-actions.is-stacked { flex-direction: column; }
         .map-share-name { font-family: inherit; height: 32px; }
-        .map-preset-name { font-size: 14px; color: var(--text-primary, #fff); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .map-preset-name { display: inline-flex; align-items: center; gap: 4px; max-width: 100%; padding: 0; border: 0; background: none; cursor: pointer; font: inherit; font-size: 14px; color: var(--text-primary, #fff); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .map-preset-name svg { flex: 0 0 12px; opacity: 0.6; }
         html.left-handed .map-preset-row { flex-direction: row-reverse; text-align: right; }
         html.left-handed .map-share-actions:not(.is-stacked) { flex-direction: row-reverse; }
         html.left-handed .map-icon-card { flex-direction: row-reverse; }
@@ -5322,6 +5329,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                 onImport={importShare}
                 onActivatePreset={activatePreset}
                 onDeletePreset={deletePreset}
+                onRenamePreset={renamePreset}
                 onClose={() => setShareOpen(false)}
               />
             )}

@@ -56,6 +56,19 @@ export const MAP_ICON_CATALOG = [
     size: 256,
   },
   {
+    id: 'sonance-casket-ragunna',
+    name: 'Sonance Casket: Ragunna',
+    category: 'Collectible',
+    group: 'Trinkets',
+    subcategory: 'Sonance Casket: Ragunna',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-3.png): every
+    // background-coloured pixel removed, enclosed ones included (the inner
+    // triangles are see-through in the game); 65% of the canvas height.
+    imageUrl: 'map-icons/Sonance-Casket-Ragunna.png',
+    size: 128,
+  },
+  {
     id: 'viewpoint',
     name: 'Viewpoint',
     category: 'Point of Interest',

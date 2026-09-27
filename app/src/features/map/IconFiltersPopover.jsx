@@ -11,6 +11,7 @@ import React from 'react';
 import { Eye, EyeOff, X } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { t } from '../../utils/i18n.js';
+import { getIconImageUrl } from './iconImageCache.js';
 
 // Explicit priority for known subcategories (Nexus before Beacon); anything
 // else falls back to alphabetical order after these.
@@ -59,17 +60,24 @@ export function IconFiltersPopover({
     const cat = ic.category || kind?.category || 'Uncategorised';
     const sub = ic.subcategory || kind?.subcategory || '';
     const group = kind?.group || '';
-    if (!tree.has(cat)) tree.set(cat, { total: 0, subs: new Map() });
+    if (!tree.has(cat)) tree.set(cat, { total: 0, subs: new Map(), kinds: new Set() });
     const entry = tree.get(cat);
     entry.total++;
+    entry.kinds.add(ic.kind);
     if (group) {
-      if (!entry.subs.has(group)) entry.subs.set(group, { n: 0, subs: new Map() });
+      if (!entry.subs.has(group)) entry.subs.set(group, { n: 0, subs: new Map(), kinds: new Set(), subKinds: new Map() });
       const g = entry.subs.get(group);
       g.n++;
-      if (sub) g.subs.set(sub, (g.subs.get(sub) || 0) + 1);
+      g.kinds.add(ic.kind);
+      if (sub) {
+        g.subs.set(sub, (g.subs.get(sub) || 0) + 1);
+        if (!g.subKinds.has(sub)) g.subKinds.set(sub, new Set());
+        g.subKinds.get(sub).add(ic.kind);
+      }
     } else if (sub) {
-      if (!entry.subs.has(sub)) entry.subs.set(sub, { n: 0 });
+      if (!entry.subs.has(sub)) entry.subs.set(sub, { n: 0, kinds: new Set() });
       entry.subs.get(sub).n++;
+      entry.subs.get(sub).kinds.add(ic.kind);
     }
   }
   // Synthetic "Zone" category — not derived from placed icons at all (L3
@@ -80,6 +88,14 @@ export function IconFiltersPopover({
     tree.set('Zone', { total: l3ZoneCount, subs: new Map([['Names', { n: l3ZoneCount }], ['Area', { n: l3ZoneCount }]]) });
   }
   const cats = [...tree.entries()].sort((a, b) => compareCategories(a[0], b[0]));
+  // A row shows its icon when every icon under it is the same kind (a leaf
+  // like "Nexus", or a group/category holding a single kind); rows mixing
+  // several kinds, and the synthetic Zone layers, have no single icon.
+  const rowIcon = (kinds) => {
+    if (!kinds || kinds.size !== 1) return null;
+    const url = getIconImageUrl([...kinds][0]);
+    return url ? <img src={url} alt="" className="map-filters-icon" /> : null;
+  };
   // Every filter key shown in this panel (categories + their subcategories),
   // for the Hide all / Show all button.
   const allKeys = cats.flatMap(([cat, entry]) => [cat, ...[...entry.subs.entries()].flatMap(([name, node]) => [
@@ -137,7 +153,7 @@ export function IconFiltersPopover({
                 const catOff = iconFiltersOff.has(cat);
                 const subs = [...entry.subs.entries()].sort((a, b) => compareSubcategories(a[0], b[0]));
                 // One toggle row for a group or subcategory, `depth` levels under the category.
-                const renderRow = (name, n, depth, parentOff, parentName) => {
+                const renderRow = (name, n, depth, parentOff, parentName, kinds) => {
                   const key = `${cat}/${name}`;
                   const ownOff = iconFiltersOff.has(key);
                   // Effectively hidden when any parent is hidden — reflected
@@ -156,6 +172,7 @@ export function IconFiltersPopover({
                           : (ownOff ? t('map.legend.show', { name }) : t('map.legend.hide', { name }))}
                       >
                         <span className="zone-selector-caret">{effectiveOff ? '▢' : '▣'}</span>
+                        {rowIcon(kinds)}
                         <span className="zone-selector-name">{name}</span>
                         <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{n}</span>
                       </button>
@@ -173,15 +190,16 @@ export function IconFiltersPopover({
                         title={catOff ? t('map.legend.show', { name: cat }) : t('map.legend.hide', { name: cat })}
                       >
                         <span className="zone-selector-caret">{catOff ? '▢' : '▣'}</span>
+                        {rowIcon(entry.kinds)}
                         <span className="zone-selector-name">{cat}</span>
                         <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{entry.total}</span>
                       </button>
                     </div>
                     {subs.map(([name, node]) => (
                       <React.Fragment key={name}>
-                        {renderRow(name, node.n, 1, catOff, cat)}
+                        {renderRow(name, node.n, 1, catOff, cat, node.kinds)}
                         {node.subs && [...node.subs.entries()].sort((a, b) => compareSubcategories(a[0], b[0]))
-                          .map(([sub, n]) => renderRow(sub, n, 2, catOff || iconFiltersOff.has(`${cat}/${name}`), catOff ? cat : name))}
+                          .map(([sub, n]) => renderRow(sub, n, 2, catOff || iconFiltersOff.has(`${cat}/${name}`), catOff ? cat : name, node.subKinds.get(sub)))}
                       </React.Fragment>
                     ))}
                   </React.Fragment>

@@ -4137,6 +4137,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         .map-filters-popover .zone-selector-item .zone-selector-name {
           padding-right: 0;
         }
+        /* Icon of the kind a filter row controls, between the checkbox and the name. */
+        .map-filters-icon { width: 16px; height: 16px; flex: 0 0 16px; object-fit: contain; }
         .map-filters-popover .kuro-badge {
           font-variant-numeric: tabular-nums;
         }

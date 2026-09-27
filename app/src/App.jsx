@@ -32,7 +32,7 @@ import { IMPORT_NAME_ALIASES } from './core/gachaImporter.js';
 import { useVisualSettings, DEFAULT_VISUAL_SETTINGS } from './hooks/useVisualSettings.js';
 import { useAmbientMusic } from './hooks/useAmbientMusic.js';
 import { useBackgroundFraming } from './hooks/useBackgroundFraming.js';
-import { useCollectionImages, COLLECTION_IMAGES_KEY } from './hooks/useCollectionImages.js';
+import { useCollectionImages } from './hooks/useCollectionImages.js';
 import { useTabNavigation } from './hooks/useTabNavigation.js';
 import { checkFirebaseRateLimit } from './utils/firebaseWriteRateLimit.js';
 import { useThemeAccent } from './hooks/useThemeAccent.js';
@@ -77,7 +77,7 @@ const ProfileTab = lazy(() => import('./features/profile/ProfileTab.jsx'));
 const MapTab = lazy(() => import('./features/map/MapTab.jsx'));
 const TabLoadingFallback = () => <div className="flex items-center justify-center py-20 text-gray-500 text-sm">Loading...</div>;
 
-import { VISUAL_SETTINGS_KEY, IMAGE_FRAMING_KEY, TROPHY_OVERRIDES_KEY } from './shared/constants/appConstants.js';
+import { IMAGE_FRAMING_KEY, TROPHY_OVERRIDES_KEY } from './shared/constants/appConstants.js';
 import { silentCatch } from './utils/silentCatch.js';
 import { gatherAuxData, restoreAuxData, getMergedHistories } from './core/storageKeys.js';
 import { hashUidForStorage } from './shared/utils/hashUidForStorage.js';
@@ -653,6 +653,26 @@ function WhisperingWishesInner() {
 
   // collectionMaskData moved to CollectionTab component
 
+  // Single aux-data restore path for file import, the backup modal and cloud restore: writes each
+  // AUX_EXPORTABLE_KEYS entry independently (restoreAuxData — one failing key, e.g. a quota error
+  // on large collection images, no longer drops every key after it) then syncs the in-memory
+  // mirrors of the settings that have one.
+  const applyAuxRestore = useCallback((aux) => {
+    if (!aux || typeof aux !== 'object') return;
+    restoreAuxData(aux, sanitizeStateObj);
+    const isObj = (v) => v && typeof v === 'object';
+    if (isObj(aux.visualSettings)) {
+      setVisualSettings(prev => {
+        const merged = { ...prev, ...sanitizeStateObj(aux.visualSettings) };
+        if (typeof merged.collectionZoom === 'number') merged.collectionZoom = Math.min(300, Math.max(100, merged.collectionZoom));
+        return merged;
+      });
+    }
+    if (isObj(aux.imageFraming)) setImageFraming(sanitizeStateObj(aux.imageFraming));
+    if (isObj(aux.collectionImages)) setCustomCollectionImages(sanitizeStateObj(aux.collectionImages));
+    if (isObj(aux.trophyOverrides)) setTrophyOverrides(sanitizeStateObj(aux.trophyOverrides));
+  }, [setVisualSettings, setImageFraming, setCustomCollectionImages]);
+
   // Shared import processor for both file and paste methods
   const importInFlightRef = useRef(false);
   const processImportData = useCallback(async (jsonString) => {
@@ -674,40 +694,7 @@ function WhisperingWishesInner() {
         const doRestore = await confirm?.({ title: t('app.confirmRestoreBackupTitle'), message: t('app.confirmRestoreBackupMessage'), confirmLabel: t('app.confirmRestoreBackupConfirmLabel'), destructive: true });
         if (!doRestore) return;
         dispatch({ type: 'LOAD_STATE', state: data.state });
-        // Restore auxiliary data (visual settings, team equipment, etc.)
-        // B4-01: Use correct constant keys (was writing to wrong hardcoded keys)
-        // B4-02: Sanitize aux data to match restore flow (App.jsx:1826-1842)
-        if (data.aux && typeof data.aux === 'object') {
-          try {
-            if (data.aux.visualSettings && typeof data.aux.visualSettings === 'object') {
-              localStorage.setItem(VISUAL_SETTINGS_KEY, JSON.stringify(sanitizeStateObj(data.aux.visualSettings)));
-              setVisualSettings(prev => {
-                const merged = { ...prev, ...sanitizeStateObj(data.aux.visualSettings) };
-                if (typeof merged.collectionZoom === 'number') merged.collectionZoom = Math.min(300, Math.max(100, merged.collectionZoom));
-                return merged;
-              });
-            }
-            if (data.aux.imageFraming && typeof data.aux.imageFraming === 'object') {
-              localStorage.setItem(IMAGE_FRAMING_KEY, JSON.stringify(sanitizeStateObj(data.aux.imageFraming)));
-              setImageFraming(sanitizeStateObj(data.aux.imageFraming));
-            }
-            if (data.aux.collectionImages && typeof data.aux.collectionImages === 'object') {
-              localStorage.setItem(COLLECTION_IMAGES_KEY, JSON.stringify(sanitizeStateObj(data.aux.collectionImages)));
-              setCustomCollectionImages(sanitizeStateObj(data.aux.collectionImages));
-            }
-            if (data.aux.trophyOverrides && typeof data.aux.trophyOverrides === 'object') {
-              localStorage.setItem(TROPHY_OVERRIDES_KEY, JSON.stringify(sanitizeStateObj(data.aux.trophyOverrides)));
-              setTrophyOverrides(sanitizeStateObj(data.aux.trophyOverrides));
-            }
-            if (data.aux.teamEquipment && typeof data.aux.teamEquipment === 'object') {
-              localStorage.setItem('ww-team-equipment', JSON.stringify(sanitizeStateObj(data.aux.teamEquipment)));
-            }
-            // U6-01: Restore calendar notes from backup (import path)
-            if (data.aux.calendarNotes && typeof data.aux.calendarNotes === 'object') {
-              localStorage.setItem('ww-calendar-notes', JSON.stringify(sanitizeStateObj(data.aux.calendarNotes)));
-            }
-          } catch {}
-        }
+        applyAuxRestore(data.aux);
         toast?.addToast?.(t('app.backupRestoredVersion', { version: data.version || '?', date: data.timestamp ? formatDate(new Date(data.timestamp)) : t('app.backupRestoredVersionUnknown') }), 'success');
         return true;
       }
@@ -932,7 +919,7 @@ function WhisperingWishesInner() {
     } finally {
       importInFlightRef.current = false;
     }
-  }, [toast, dispatch, IMPORT_NAME_ALIASES, activeBanners, confirm]);
+  }, [toast, dispatch, IMPORT_NAME_ALIASES, activeBanners, confirm, applyAuxRestore]);
 
   // Export data - includes main state + auxiliary localStorage settings for full round-trip
   const handleExport = useCallback(() => {
@@ -1000,18 +987,8 @@ function WhisperingWishesInner() {
       },
     };
     dispatch({ type: 'LOAD_STATE', state: merged });
-    // Restore auxiliary data if present — localStorage via centralized registry
-    if (data.aux && typeof data.aux === 'object') {
-      restoreAuxData(data.aux, sanitizeStateObj);
-      // Also sync React state for settings that have in-memory mirrors
-      try {
-        if (data.aux.visualSettings) setVisualSettings(prev => ({ ...prev, ...sanitizeStateObj(data.aux.visualSettings) }));
-        if (data.aux.imageFraming) setImageFraming(sanitizeStateObj(data.aux.imageFraming));
-        if (data.aux.collectionImages) setCustomCollectionImages(sanitizeStateObj(data.aux.collectionImages));
-        if (data.aux.trophyOverrides) setTrophyOverrides(sanitizeStateObj(data.aux.trophyOverrides));
-      } catch {}
-    }
-  }, [dispatch, setImageFraming]);
+    applyAuxRestore(data.aux);
+  }, [dispatch, applyAuxRestore]);
 
   // Warm the browser cache for every BANNER_HISTORY banner art on mount, once.
   useEffect(() => { preloadBannerHistoryArt(); }, []);
@@ -1478,10 +1455,7 @@ function WhisperingWishesInner() {
         sanitizeStateObj={sanitizeStateObj}
         sanitizeImportedState={sanitizeImportedState}
         initialState={initialState}
-        setVisualSettings={setVisualSettings}
-        setImageFraming={setImageFraming}
-        setCustomCollectionImages={setCustomCollectionImages}
-        setTrophyOverrides={setTrophyOverrides}
+        onRestoreAux={applyAuxRestore}
       />
 
       {/* Character/Weapon Detail Modal */}

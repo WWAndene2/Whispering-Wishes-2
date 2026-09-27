@@ -14,7 +14,7 @@
 // ── Main app state (single key, managed by reducer + storage.js) ──
 export const STORAGE_KEY = 'whispering-wishes-v2.2';
 
-// ── Versioned settings keys (imported from appConstants.js for consistency) ──
+// ── Versioned settings keys (re-exported by shared/constants/appConstants.js) ──
 export const VISUAL_SETTINGS_KEY = 'whispering-wishes-visual-settings-v3';
 export const IMAGE_FRAMING_KEY = 'whispering-wishes-image-framing-v1';
 export const TROPHY_OVERRIDES_KEY = 'whispering-wishes-trophy-overrides-v1';

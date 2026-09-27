@@ -6,12 +6,10 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { DEFAULT_COLLECTION_IMAGES } from '../data/banners.js';
 import { storageAvailable } from '../core/storage.js';
+import { COLLECTION_IMAGES_KEY } from '../core/storageKeys.js';
 import { ALLOWED_IMAGE_HOSTS } from '../shared/constants/appConstants.js';
 
 const DEBOUNCE_MS = 300;
-const COLLECTION_IMAGES_KEY = 'whispering-wishes-collection-images';
-
-export { COLLECTION_IMAGES_KEY };
 
 export function useCollectionImages() {
   const [customCollectionImages, setCustomCollectionImages] = useState(() => {

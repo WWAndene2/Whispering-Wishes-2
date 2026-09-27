@@ -7,8 +7,6 @@
 import { Download, X } from 'lucide-react';
 import { FocusTrapModal } from './FocusTrapModal.jsx';
 import { APP_VERSION, MAX_IMPORT_SIZE_MB } from '../../data/constants.js';
-import { VISUAL_SETTINGS_KEY, IMAGE_FRAMING_KEY, TROPHY_OVERRIDES_KEY } from '../constants/appConstants.js';
-import { COLLECTION_IMAGES_KEY } from '../../hooks/useCollectionImages.js';
 import { t, formatDate } from '../../utils/i18n.js';
 
 export function BackupRestoreModal({
@@ -24,10 +22,7 @@ export function BackupRestoreModal({
   sanitizeStateObj,
   sanitizeImportedState,
   initialState,
-  setVisualSettings,
-  setImageFraming,
-  setCustomCollectionImages,
-  setTrophyOverrides,
+  onRestoreAux,
 }) {
   return (
     <FocusTrapModal isOpen={isOpen} onClose={onClose} className="" onClick={onClose} ariaLabel={t('modals.backupRestore.ariaLabel')} centered padding="p-3">
@@ -193,38 +188,7 @@ export function BackupRestoreModal({
                   activeTeamIndex: typeof safeParsed.activeTeamIndex === 'number' ? Math.max(0, Math.min(4, safeParsed.activeTeamIndex)) : 0,
                 };
                 dispatch({ type: 'LOAD_STATE', state: restoredState });
-                // Restore auxiliary localStorage data if present in backup
-                if (data.aux && typeof data.aux === 'object') {
-                  try {
-                    if (data.aux.visualSettings && typeof data.aux.visualSettings === 'object') {
-                      localStorage.setItem(VISUAL_SETTINGS_KEY, JSON.stringify(sanitizeStateObj(data.aux.visualSettings)));
-                      setVisualSettings(prev => {
-        const merged = { ...prev, ...sanitizeStateObj(data.aux.visualSettings) };
-        if (typeof merged.collectionZoom === 'number') merged.collectionZoom = Math.min(300, Math.max(100, merged.collectionZoom));
-        return merged;
-      });
-                    }
-                    if (data.aux.imageFraming && typeof data.aux.imageFraming === 'object') {
-                      localStorage.setItem(IMAGE_FRAMING_KEY, JSON.stringify(sanitizeStateObj(data.aux.imageFraming)));
-                      setImageFraming(sanitizeStateObj(data.aux.imageFraming));
-                    }
-                    if (data.aux.collectionImages && typeof data.aux.collectionImages === 'object') {
-                      localStorage.setItem(COLLECTION_IMAGES_KEY, JSON.stringify(sanitizeStateObj(data.aux.collectionImages)));
-                      setCustomCollectionImages(sanitizeStateObj(data.aux.collectionImages));
-                    }
-                    if (data.aux.trophyOverrides && typeof data.aux.trophyOverrides === 'object') {
-                      localStorage.setItem(TROPHY_OVERRIDES_KEY, JSON.stringify(sanitizeStateObj(data.aux.trophyOverrides)));
-                      setTrophyOverrides(sanitizeStateObj(data.aux.trophyOverrides));
-                    }
-                    if (data.aux.teamEquipment && typeof data.aux.teamEquipment === 'object') {
-                      localStorage.setItem('ww-team-equipment', JSON.stringify(sanitizeStateObj(data.aux.teamEquipment)));
-                    }
-                    // U6-01: Restore calendar notes from backup
-                    if (data.aux.calendarNotes && typeof data.aux.calendarNotes === 'object') {
-                      localStorage.setItem('ww-calendar-notes', JSON.stringify(sanitizeStateObj(data.aux.calendarNotes)));
-                    }
-                  } catch {}
-                }
+                onRestoreAux?.(data.aux);
                 toast?.addToast?.(t('modals.backupRestore.restoredSuccess', { version: backupVersion }), 'success');
                 setRestoreText('');
                 onClose();

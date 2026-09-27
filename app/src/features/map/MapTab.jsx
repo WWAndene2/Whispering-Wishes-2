@@ -4063,6 +4063,16 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           background: rgb(var(--color-gold));
         }
 
+        /* Header icon buttons inside the map panels sit side by side in a
+           tight row; kuro.css's global .kuro-btn:hover lift (translateY(-2px))
+           made the hovered one look misaligned with its neighbour. Keep the
+           hover colour/shadow, drop the lift, here only. */
+        .map-filters-popover .kuro-header-action .kuro-btn:hover,
+        .map-zones-popover .kuro-header-action .kuro-btn:hover,
+        .map-downloads-popover .kuro-header-action .kuro-btn:hover {
+          transform: none;
+        }
+
         /* ── Icon filters popover (hexagon button) ────────────────────── */
         .map-filters-popover {
           position: absolute;

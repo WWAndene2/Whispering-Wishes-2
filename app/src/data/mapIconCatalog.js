@@ -63,6 +63,36 @@ export const MAP_ICON_CATALOG = [
     imageUrl: 'map-icons/Supply-Chest.png',
     size: 128,
   },
+  {
+    id: 'tidal-heritage',
+    name: 'Tidal Heritage',
+    category: 'Collectible',
+    group: 'Chest',
+    subcategory: 'Tidal Heritage',
+    // Placeholder image: the empty round frame (no dedicated icon).
+    imageUrl: 'map-icons/frames/round-frame.png',
+    size: 128,
+  },
+  {
+    id: 'triptych-chest',
+    name: 'Triptych Chest',
+    category: 'Collectible',
+    group: 'Chest',
+    subcategory: 'Triptych Chest',
+    // Placeholder image: the empty round frame (no dedicated icon).
+    imageUrl: 'map-icons/frames/round-frame.png',
+    size: 128,
+  },
+  {
+    id: 'treasures-of-perilous-enclave',
+    name: 'Treasures of Perilous Enclave',
+    category: 'Collectible',
+    group: 'Chest',
+    subcategory: 'Treasures of Perilous Enclave',
+    // Placeholder image: the empty round frame (no dedicated icon).
+    imageUrl: 'map-icons/frames/round-frame.png',
+    size: 128,
+  },
 ];
 
 // ── Local specialties ──────────────────────────────────────────────────────

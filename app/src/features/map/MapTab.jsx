@@ -52,9 +52,9 @@ const COLOR_DRAFT = '#38bdf8';   // cyan — session drafts
 const COLOR_ACTIVE = '#edaf18';  // gold dashed — in-progress polygon
 // Map search focus: matched icons drawn at 1.25x with a gold glow breathing over 2.4 s.
 const SEARCH_FOCUS_SCALE = 1.25;
-// Personal pin: dark disc diameter and the marker glyph drawn inside it.
-const PIN_DISC_PX = 32;
-const PIN_GLYPH_PX = 24;
+// Personal pin: on-screen size of the marker glyph (no backdrop; a dark
+// shadow keeps the white glyph readable on light terrain).
+const PIN_PX = 32;
 const SEARCH_BREATH_MS = 2400;
 
 // Icon categories visible by default; every other category starts hidden the
@@ -2325,24 +2325,17 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         ctx.restore();
       });
 
-      // ── Personal pins: white glyph on a dark disc, above every icon.
+      // ── Personal pins: the white glyph alone, above every icon.
       pins.forEach((pin) => {
         if (pin.floor != null && pin.floor !== viewFloor) return;
         const img = getPinImage(pin.marker, trigger);
         const pt = map.latLngToContainerPoint(map.unproject([pin.x, pin.y], NATIVE_ZOOM));
         ctx.save();
         ctx.translate(pt.x, pt.y);
-        ctx.beginPath();
-        ctx.arc(0, 0, PIN_DISC_PX / 2, 0, Math.PI * 2);
-        ctx.fillStyle = '#141416';
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-        ctx.shadowBlur = 4;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = pin.id === pinCardId ? '#edaf18' : 'rgba(240, 240, 242, 0.85)';
-        ctx.stroke();
-        if (img && img.complete && img.naturalWidth) ctx.drawImage(img, -PIN_GLYPH_PX / 2, -PIN_GLYPH_PX / 2, PIN_GLYPH_PX, PIN_GLYPH_PX);
+        // Selected pin (card open) glows gold, like a search-focused icon.
+        ctx.shadowColor = pin.id === pinCardId ? 'rgba(237, 175, 24, 0.9)' : 'rgba(0, 0, 0, 0.8)';
+        ctx.shadowBlur = pin.id === pinCardId ? 8 : 4;
+        if (img && img.complete && img.naturalWidth) ctx.drawImage(img, -PIN_PX / 2, -PIN_PX / 2, PIN_PX, PIN_PX);
         ctx.restore();
       });
     };
@@ -3364,7 +3357,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const map = mapRef.current;
     if (!map) return null;
     let hit = null;
-    let best = PIN_DISC_PX / 2 + 4;
+    let best = PIN_PX / 2 + 4;
     for (const pin of pins) {
       if (pin.floor != null && pin.floor !== viewFloor) continue;
       const pt = map.latLngToContainerPoint(map.unproject([pin.x, pin.y], NATIVE_ZOOM));
@@ -4658,10 +4651,10 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           font-family: var(--font-display); color: var(--text-body);
         }
         .map-icon-card img { width: 48px; height: 48px; object-fit: contain; flex: 0 0 48px; }
-        .map-icon-card img.map-pin-disc { background: #141416; border-radius: 50%; padding: 8px; box-sizing: border-box; }
+        .map-icon-card img.map-pin-thumb { background: #141416; border-radius: 12px; padding: 8px; box-sizing: border-box; }
         .map-pin-editor { flex-wrap: wrap; }
         .map-pin-editor-markers { display: flex; gap: 8px; width: 100%; justify-content: space-between; }
-        .map-pin-editor-marker { width: 48px; height: 48px; border-radius: 50%; background: #141416; border: 2px solid transparent; padding: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .map-pin-editor-marker { width: 48px; height: 48px; border-radius: 12px; background: #141416; border: 2px solid transparent; padding: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .map-pin-editor-marker.is-active { border-color: var(--accent, #edaf18); }
         .map-pin-editor-marker img { width: 24px; height: 24px; flex: 0 0 24px; }
         .map-pin-editor-note { width: 100%; height: 32px; padding: 0 8px; border-radius: 8px; border: 1px solid var(--border-primary, #334); background: rgba(0,0,0,0.3); color: var(--text-primary, #fff); font-size: 14px; }
@@ -5198,7 +5191,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
               if (!pin) return null;
               return (
                 <div className="map-icon-card" role="dialog" aria-label={t('map.pins.title')} onClick={(e) => e.stopPropagation()}>
-                  <img className="map-pin-disc" src={getPinImageUrl(pin.marker)} alt="" />
+                  <img className="map-pin-thumb" src={getPinImageUrl(pin.marker)} alt="" />
                   <div className="map-icon-card-text">
                     <div className="map-icon-card-name">{pin.note || t(`map.pins.marker.${pin.marker}`)}</div>
                     <div className="map-icon-card-facts">{t('map.pins.title')}{pin.floor ? ` · ${t('map.card.floor', { floor: pin.floor })}` : ''}</div>

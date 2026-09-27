@@ -68,7 +68,7 @@ export const MAP_ICON_CATALOG = [
 // Resonator ascension materials picked up by hand on the map (the only kind
 // of item that gets a map icon: enemy drops and farm-instance rewards are
 // obtained from the enemy / instance, not found lying on the map). Filter
-// tree: Collectible › Local Specialty › <item>. Icon = the item's own image
+// tree: Collectible › Ascension Material › <item>. Icon = the item's own image
 // (the same file materialData.js uses) on a dark disc in the round frame
 // (map-icons/frames/round-frame.png); images in map-icons/specialty/.
 const LOCAL_SPECIALTIES = [
@@ -106,7 +106,7 @@ for (const [slug, name] of LOCAL_SPECIALTIES) {
     id: `specialty-${slug}`,
     name,
     category: 'Collectible',
-    group: 'Local Specialty',
+    group: 'Ascension Material',
     subcategory: name,
     imageUrl: `map-icons/specialty/${slug}.png`,
     size: 128,

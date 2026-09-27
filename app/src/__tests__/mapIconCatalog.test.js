@@ -83,7 +83,7 @@ describe('author icon picker search (searchIconKinds)', () => {
 });
 
 describe('local specialties', () => {
-  const spec = MAP_ICON_CATALOG.filter(k => k.group === 'Local Specialty');
+  const spec = MAP_ICON_CATALOG.filter(k => k.group === 'Ascension Material');
   it('has one round-frame icon per ascension specialty, under Collectible', () => {
     expect(spec.length).toBe(27);
     for (const k of spec) {

@@ -4768,7 +4768,10 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         .map-share-actions.is-stacked { flex-direction: column; }
         .map-share-name { font-family: inherit; height: 32px; }
         .map-preset-name { display: inline-flex; align-items: center; gap: 4px; max-width: 100%; padding: 0; border: 0; background: none; cursor: pointer; font: inherit; font-size: 14px; color: var(--text-primary, #fff); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .map-preset-name svg { flex: 0 0 12px; opacity: 0.6; }
+        /* The pencil's box is centred on the text box, but its stroke sits
+           bottom-left and the text box includes descender space, so it read
+           low: lift it 2 px onto the capital-letter centre. */
+        .map-preset-name svg { flex: 0 0 12px; opacity: 0.6; transform: translateY(-2px); }
         html.left-handed .map-preset-row { flex-direction: row-reverse; text-align: right; }
         html.left-handed .map-share-actions:not(.is-stacked) { flex-direction: row-reverse; }
         html.left-handed .map-icon-card { flex-direction: row-reverse; }

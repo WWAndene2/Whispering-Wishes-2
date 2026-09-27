@@ -75,6 +75,11 @@
 // 8 → Startorch Academy, 1 → Starward Riseway, 2 → Fangspire Chasm,
 // 5 → Rebirth Uplands) — 0 icons remain on the Lahai Roi parent.
 //
+// DEFAULT_ICON_DRAFTS updated again from a 2026-09-27T17:44:52Z export —
+// purely additive vs. the prior seed (zoneDrafts/overlayDrafts unchanged,
+// the 451 existing icons byte-for-byte and in the same order): 40 new
+// enemy icons appended, one per Overlord / Calamity boss kind.
+//
 // DEFAULT_PAINT_STROKES is empty - the 552 strokes from that export (3232
 // points across blur/200, fade/200, blur/113) were baked directly into
 // Solaris_3's master image and its tile pyramid was re-sliced from the
@@ -1084,6 +1089,46 @@ export const DEFAULT_ICON_DRAFTS = [
   { id: 'icon-muiz28vy-1oy', kind: 'supply-chest', category: 'Collectible', subcategory: 'Supply Chest', x: 4700, y: 7944, floor: -1, zoneId: 'overlay-tethys-deep-mo6i9a2z', label: '', locked: true, inTree: true, scale: 1, rotation: 0, opacity: 1 },
   { id: 'icon-muiz2oio-2oj', kind: 'supply-chest', category: 'Collectible', subcategory: 'Supply Chest', x: 4698, y: 7927, floor: -1, zoneId: 'overlay-tethys-deep-mo6i9a2z', label: '', locked: true, inTree: true, scale: 1, rotation: 0, opacity: 1 },
   { id: 'icon-muiz35r8-7kn', kind: 'supply-chest', category: 'Collectible', subcategory: 'Supply Chest', x: 4727, y: 7959, floor: -1, zoneId: 'overlay-tethys-deep-mo6i9a2z', label: '', locked: true, inTree: true, scale: 1, rotation: 0, opacity: 1 },
+  { id: 'icon-muk25x6d-18', kind: 'enemy-fallacy-of-no-return', category: 'Enemy', subcategory: 'Overlord', label: '', x: 5209, y: 8121, zoneId: 'overlay-tethys-deep-mo6i9a2z', floor: -1, locked: true, inTree: true },
+  { id: 'icon-muk284kr-28n', kind: 'enemy-dreamless', category: 'Enemy', subcategory: 'Calamity', label: '', x: 3889, y: 6714, zoneId: 'norfall-barrens', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk299zm-3k', kind: 'enemy-thundering-mephis', category: 'Enemy', subcategory: 'Overlord', label: '', x: 3041, y: 7168, zoneId: 'desorock-highland', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk2akll-kf', kind: 'enemy-impermanence-heron', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2983, y: 7035, zoneId: 'desorock-highland', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk2euno-5at', kind: 'enemy-tempest-mephis', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2815, y: 7592, zoneId: 'central-plains', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk2fenj-5ku', kind: 'enemy-scar-aberrant-nightmare', category: 'Enemy', subcategory: 'Calamity', label: '', x: 2902, y: 7666, zoneId: 'central-plains', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk2g0lj-25g', kind: 'enemy-crownless', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2552, y: 7854, zoneId: 'central-plains', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk2gxr6-4dg', kind: 'enemy-bell-borne-geochelone', category: 'Enemy', subcategory: 'Calamity', label: '', x: 2298, y: 7879, zoneId: 'gorges-of-spirits', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk2huun-5gf', kind: 'enemy-inferno-rider', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2327, y: 8695, zoneId: 'port-city-of-guixu', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk2igvk-1u4', kind: 'enemy-feilian-beringal', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2965, y: 9266, zoneId: 'dim-forest', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk2jt8l-4ff', kind: 'enemy-lampylumen-myriad', category: 'Enemy', subcategory: 'Overlord', label: '', x: 3107, y: 8613, zoneId: 'wuming-bay', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk2krb8-2a3', kind: 'enemy-mourning-aix', category: 'Enemy', subcategory: 'Overlord', label: '', x: 3652, y: 9451, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk2lyol-6q', kind: 'enemy-mech-abomination', category: 'Enemy', subcategory: 'Overlord', label: '', x: 3731, y: 9233, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk2mune-7iw', kind: 'enemy-jue', category: 'Enemy', subcategory: 'Calamity', label: '', x: 5046, y: 9496, zoneId: 'huanglong-sub-1', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk2ovj1-2ig', kind: 'enemy-nightmare-thundering-mephis', category: 'Enemy', subcategory: 'Elite', label: '', x: 7986, y: 10969, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2q1v9-2yx', kind: 'enemy-nightmare-impermanence-heron', category: 'Enemy', subcategory: 'Elite', label: '', x: 8242, y: 11570, zoneId: 'thessaleo-fell', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2qnzu-mk', kind: 'enemy-lorelei', category: 'Enemy', subcategory: 'Overlord', label: '', x: 8409, y: 11168, zoneId: 'nimbus-sanctum', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2r6a0-2lw', kind: 'enemy-sentry-construct', category: 'Enemy', subcategory: 'Overlord', label: '', x: 8903, y: 11244, zoneId: 'averardo-vault', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2ria4-70w', kind: 'enemy-nightmare-inferno-rider', category: 'Enemy', subcategory: 'Elite', label: '', x: 8745, y: 11299, zoneId: 'averardo-vault', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2s7cd-72x', kind: 'enemy-nightmare-mourning-aix', category: 'Enemy', subcategory: 'Elite', label: '', x: 8952, y: 11570, zoneId: 'averardo-vault', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2t7ik-3ej', kind: 'enemy-nightmare-feilian-beringal', category: 'Enemy', subcategory: 'Elite', label: '', x: 8437, y: 10909, zoneId: 'hallowed-reach', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2trhd-1za', kind: 'enemy-dragon-of-dirge', category: 'Enemy', subcategory: 'Overlord', label: '', x: 8327, y: 10396, zoneId: 'penitent-s-end', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2u6a3-79t', kind: 'enemy-nightmare-crownless', category: 'Enemy', subcategory: 'Elite', label: '', x: 8282, y: 10231, zoneId: 'penitent-s-end', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2uys7-4we', kind: 'enemy-nightmare-tempest-mephis', category: 'Enemy', subcategory: 'Elite', label: '', x: 9174, y: 10182, zoneId: 'fagaceae-peninsula', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2w4re-50r', kind: 'enemy-nightmare-lampylumen-myriad', category: 'Enemy', subcategory: 'Elite', label: '', x: 9159, y: 12178, zoneId: 'beohr-waters', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2ybdz-1xk', kind: 'enemy-fleurdelys', category: 'Enemy', subcategory: 'Calamity', label: '', x: 9408, y: 12782, zoneId: 'overlay-avinoleum-mo7c3krn', floor: 1, locked: true, inTree: true },
+  { id: 'icon-muk32uul-lh', kind: 'enemy-nightmare-hecate', category: 'Enemy', subcategory: 'Calamity', label: '', x: 7370, y: 10848, zoneId: 'overlay-fabricatorium-of-the-deep-mo8qn4se', floor: -3, locked: true, opacity: 0.7, inTree: true },
+  { id: 'icon-muk34yrr-4l6', kind: 'enemy-hecate', category: 'Enemy', subcategory: 'Calamity', label: '', x: 7370, y: 10848, zoneId: 'ragunna-city', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk370zu-7mh', kind: 'enemy-lioness-of-glory', category: 'Enemy', subcategory: 'Overlord', label: '', x: 10388, y: 14164, zoneId: 'rinascita-sub-1', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk388dz-4eo', kind: 'enemy-lady-of-the-sea', category: 'Enemy', subcategory: 'Overlord', label: '', x: 11025, y: 14715, zoneId: 'rinascita-sub-1', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk38vcz-38s', kind: 'enemy-nightmare-kelpie', category: 'Enemy', subcategory: 'Elite', label: '', x: 10821, y: 14169, zoneId: 'rinascita-sub-1', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk39yzd-1ti', kind: 'enemy-fenrico', category: 'Enemy', subcategory: 'Overlord', label: '', x: 5997, y: 10969, zoneId: 'overlay-fabricatorium-of-the-deep-mo8qn4se', floor: -3, locked: true, inTree: true },
+  { id: 'icon-muk3ect3-7cn', kind: 'enemy-the-false-sovereign', category: 'Enemy', subcategory: 'Overlord', label: '', x: 10950, y: 15805, zoneId: 'rinascita-sub-2', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk3fhwk-6sa', kind: 'enemy-threnodian-leviathan', category: 'Enemy', subcategory: 'Calamity', label: '', x: 10094, y: 16016, zoneId: 'rinascita-sub-2', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk3hb0z-2bc', kind: 'enemy-hyvatia', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2802, y: 3883, zoneId: 'starward-riseway', floor: -5, locked: true, inTree: true },
+  { id: 'icon-muk3mtlv-2xs', kind: 'enemy-reactor-husk', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2461, y: 2956, zoneId: 'fangspire-chasm', floor: -5, locked: true, inTree: true },
+  { id: 'icon-muk3p50k-3rw', kind: 'enemy-nameless-explorer', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2536, y: 3011, zoneId: 'starblind-crashsite', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk3rrt5-4vr', kind: 'enemy-sigillum', category: 'Enemy', subcategory: 'Calamity', label: '', x: 2324, y: 2234, zoneId: 'tidelost-forest', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk3ufgk-270', kind: 'enemy-seed-of-illusory-origin', category: 'Enemy', subcategory: 'Calamity', label: '', x: 3150, y: 3754, zoneId: 'dimmr-deep', floor: -6, locked: true, inTree: true },
+  { id: 'icon-muk3wwu7-2x', kind: 'enemy-myriad-snare-rustfire-chassis', category: 'Enemy', subcategory: 'Overlord', label: '', x: -1635, y: 7220, zoneId: 'eastern-fang-peaks', floor: 0, locked: true, inTree: true },
 ];
 
 export const DEFAULT_PAINT_STROKES = [];

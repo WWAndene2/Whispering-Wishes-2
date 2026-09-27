@@ -52,6 +52,8 @@ describe('map search over enemy icons', () => {
   it('offers an "all of this class" result, in French too', () => {
     expect(keys('calamity')[0]).toBe('sub:Enemy/Calamity');
     expect(keys('calamité')[0]).toBe('sub:Enemy/Calamity');
+    expect(keys('calamity effigy')[0]).toBe('kind:enemy-calamity-effigy');
+    expect(keys('effigy')[0]).toBe('kind:enemy-calamity-effigy');
     expect(keys('boss huanglong').length).toBeGreaterThan(0);
   });
 });

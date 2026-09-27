@@ -268,7 +268,7 @@ export function buildSearchIndex({ icons, zones, getKind }) {
   }
 
   const floorOf = new Map(icons.map(ic => [ic.id, ic.floor ?? null]));
-  const list = [...docs.entries()].map(([key, d]) => ({ key, ...d, count: d.iconIds.length }));
+  const list = [...docs.entries()].map(([key, d]) => ({ key, ...d, count: d.iconIds.length, labelWords: tokenize(d.label).filter(w => !STOP_WORDS.has(w)) }));
   return { docs: list, byKey: new Map(list.map(d => [d.key, d])), floorOf };
 }
 
@@ -337,6 +337,9 @@ function runSearch(index, words, allowMissing, limit) {
     // is less precise than the "type · region" results.
     if (doc.type === 'zone' && words.length > 1 && !typeHit) score -= 1;
     score += TYPE_BONUS[doc.type] ?? 0;
+    // A result whose whole name is exactly what was typed (or its synonym) ranks
+    // first ("calamity"/"calamité" → the Calamity class before the Calamity Effigy boss).
+    if (!missing.length && doc.labelWords.length === words.length && words.every((w, i) => w.alts.includes(doc.labelWords[i]))) score += 1;
     out.push(missing.length ? { doc, score, partial: true, missing } : { doc, score });
   }
   out.sort((a, b) => b.score - a.score || b.doc.count - a.doc.count || a.doc.label.localeCompare(b.doc.label));

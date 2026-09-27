@@ -14,7 +14,8 @@
     "regions": "Régions",
     "iconFilters": "Filtres d'icônes",
     "offlineDownloads": "Téléchargements hors ligne",
-    "referenceImage": "Image de référence"
+    "referenceImage": "Image de référence",
+    "search": "Rechercher"
   },
   "legend": {
     "noIconsPlaced": "Aucune icône placée pour le moment. Ajoutez des icônes depuis le panneau d'édition.",
@@ -34,5 +35,38 @@
     "opacity": "Opacité",
     "zoom": "Zoom",
     "rotation": "Rotation"
+  },
+  "search": {
+    "title": "Rechercher sur la carte",
+    "placeholder": "Icônes, régions… ex. « coffre jinzhou »",
+    "clearQuery": "Effacer la recherche",
+    "close": "Fermer la recherche",
+    "savedTags": "Recherches enregistrées",
+    "removeTag": "Retirer {{name}}",
+    "clearTags": "Tout effacer",
+    "shownCount": "{{count}} sur la carte",
+    "otherFloors": "{{count}} sur d'autres étages",
+    "prev": "Résultat précédent",
+    "next": "Résultat suivant",
+    "frameAll": "Afficher tous les résultats",
+    "saveTag": "Enregistrer comme tag",
+    "saved": "Déjà enregistré",
+    "clearSelection": "Effacer la sélection",
+    "noResults": "Aucun résultat pour « {{query}} »",
+    "noResultsHint": "Essayez un objet (coffre, nexus, balise) et/ou un nom de région.",
+    "partial": "Aucun résultat exact — résultats les plus proches (sans « {{words}} »)",
+    "results": "Résultats de recherche",
+    "recent": "Récentes",
+    "clearRecent": "Effacer",
+    "suggestions": "Recherche rapide",
+    "tip": "Combinez les mots : un objet et une région, dans n'importe quel ordre. Les fautes de frappe sont tolérées.",
+    "type": {
+      "kind": "Toute la carte",
+      "category": "Catégorie",
+      "kindZone": "Dans la région",
+      "catZone": "Catégorie dans la région",
+      "zone": "Région",
+      "icon": "Repère"
+    }
   }
 }

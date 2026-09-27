@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Settings, Trash2, LocateFixed, Map as MapIcon, Hexagon, Plus, Construction, X, ImagePlus } from 'lucide-react';
+import { Settings, Trash2, LocateFixed, Map as MapIcon, Hexagon, Plus, Construction, X, ImagePlus, Search } from 'lucide-react';
 import { Card, CardHeader } from '../../shared/components/Card.jsx';
 import { MAP_ZONES } from '../../data/mapZones.js';
 import { OVERLAY_CATALOG, loadOverlayDrafts, saveOverlayDrafts } from '../../data/mapOverlays.js';
@@ -19,6 +19,8 @@ import { ZonesPopover } from './ZonesPopover.jsx';
 import { IconFiltersPopover } from './IconFiltersPopover.jsx';
 import { ReferenceImagePopover } from './ReferenceImagePopover.jsx';
 import { ReferenceImageLayer } from './ReferenceImageLayer.jsx';
+import { MapSearchPopover } from './MapSearchPopover.jsx';
+import { buildSearchIndex, resolveFilterKey } from './mapSearch.js';
 import { t } from '../../utils/i18n.js';
 
 const MAP_WIP_SEEN_KEY = 'ww-map-wip-seen';
@@ -44,6 +46,7 @@ const AUTHOR_FLAG_KEY = 'ww-zone-author';
 const COLOR_CANON = '#edaf18';   // brand gold — canonical zones from mapZones.js
 const COLOR_DRAFT = '#38bdf8';   // cyan — session drafts
 const COLOR_ACTIVE = '#edaf18';  // gold dashed — in-progress polygon
+const SEARCH_FOCUS_COLOR = '#edaf18'; // brand gold — ring around icons matched by the map search
 
 function slugify(s) {
   return String(s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || `zone-${Date.now().toString(36)}`;
@@ -158,6 +161,32 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   const [zonesOpen, setZonesOpen] = useState(false);
   const zonesAnchorRef = useRef(null);
   const zonesPanelRef = useRef(null);
+  // Search panel (magnifying glass) — see MapSearchPopover.jsx / mapSearch.js.
+  // Unlike the other popovers it does not close on outside taps: the user
+  // pans/zooms the map while stepping through results.
+  const [searchOpen, setSearchOpen] = useState(false);
+  const searchAnchorRef = useRef(null);
+  const searchPanelRef = useRef(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchSelectedKey, setSearchSelectedKey] = useState(null);
+  const [searchStep, setSearchStep] = useState(-1);
+  // Saved searches, shown as tags under the search bar and applied to the map
+  // while active (even with the panel closed). Persisted as result keys, so a
+  // tag keeps following its icons when the map data is edited.
+  const [searchTags, setSearchTags] = useState(() => {
+    try {
+      const v = JSON.parse(localStorage.getItem('ww-map-search-tags') || '[]');
+      return Array.isArray(v) ? v.filter(x => x && typeof x.key === 'string') : [];
+    } catch { return []; }
+  });
+  const [searchRecent, setSearchRecent] = useState(() => {
+    try {
+      const v = JSON.parse(localStorage.getItem('ww-map-search-recent') || '[]');
+      return Array.isArray(v) ? v.filter(k => typeof k === 'string') : [];
+    } catch { return []; }
+  });
+  useEffect(() => { try { localStorage.setItem('ww-map-search-tags', JSON.stringify(searchTags)); } catch {} }, [searchTags]);
+  useEffect(() => { try { localStorage.setItem('ww-map-search-recent', JSON.stringify(searchRecent)); } catch {} }, [searchRecent]);
   // Icon filters popover — toggles visibility of placed map-icon categories.
   const [filtersOpen, setFiltersOpen] = useState(false);
   const filtersAnchorRef = useRef(null);
@@ -559,6 +588,131 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       map.fitBounds([nw, se], { padding: [40, 40] });
     }
   }, [switchFloorForZone, overlayDrafts]);
+
+  // ── Map search (magnifying glass) ──────────────────────────────────────
+  const allZones = useMemo(() => [...MAP_ZONES, ...drafts], [drafts]);
+  const searchIndex = useMemo(
+    () => buildSearchIndex({ icons: iconDrafts, zones: allZones, getKind: getIconCatalogEntry }),
+    [iconDrafts, allZones],
+  );
+  const searchSelected = searchSelectedKey ? (searchIndex.byKey.get(searchSelectedKey) || null) : null;
+  const searchTagCounts = useMemo(
+    () => new Map(searchTags.map(tg => [tg.key, resolveFilterKey(searchIndex, tg.key).length])),
+    [searchTags, searchIndex],
+  );
+  // Icons the map is focused on: the selected result plus every active tag.
+  // null = no focus (the map draws normally); otherwise every other icon is
+  // drawn dimmed, and focused icons show even if their category is filtered off.
+  const searchFocusIds = useMemo(() => {
+    const ids = new Set();
+    if (searchSelected) searchSelected.iconIds.forEach(id => ids.add(id));
+    for (const tg of searchTags) if (tg.active) resolveFilterKey(searchIndex, tg.key).forEach(id => ids.add(id));
+    return ids.size ? ids : null;
+  }, [searchSelected, searchTags, searchIndex]);
+  // Stable order for stepping through results one by one: floor, then top→bottom, left→right.
+  const searchStepList = useMemo(() => {
+    const src = searchSelected ? searchSelected.iconIds : (searchFocusIds ? [...searchFocusIds] : []);
+    const byId = new Map(iconDrafts.map(ic => [ic.id, ic]));
+    return src.map(id => byId.get(id)).filter(Boolean)
+      .sort((a, b) => (a.floor ?? 0) - (b.floor ?? 0) || a.y - b.y || a.x - b.x);
+  }, [searchSelected, searchFocusIds, iconDrafts]);
+  const searchStepIconId = searchStep >= 0 ? (searchStepList[searchStep]?.id ?? null) : null;
+  const searchFocusSummary = useMemo(() => {
+    if (!searchStepList.length) return null;
+    const visible = searchStepList.filter(ic => ic.floor == null || ic.floor === viewFloor).length;
+    return { total: searchStepList.length, visible, otherFloors: searchStepList.length - visible, step: searchStep };
+  }, [searchStepList, viewFloor, searchStep]);
+  const searchSuggestions = useMemo(() => {
+    const kinds = searchIndex.docs.filter(d => d.type === 'kind').sort((a, b) => b.count - a.count);
+    const regions = searchIndex.docs.filter(d => d.type === 'zone' && d.zone?.level === 1 && d.count > 0).slice(0, 4);
+    return [...kinds, ...regions];
+  }, [searchIndex]);
+
+  // Frames a set of icons: switches to the floor holding most of them when
+  // none are on the current floor, then fits the view to the ones on it,
+  // leaving room at the top for the header and the search panel.
+  const frameSearchIcons = useCallback((ids) => {
+    const map = mapRef.current;
+    const L = leafletRef.current;
+    if (!map || !ids.length) return;
+    const wanted = new Set(ids);
+    const icons = iconDrafts.filter(ic => wanted.has(ic.id));
+    if (!icons.length) return;
+    const onFloor = (ic, f) => ic.floor == null || ic.floor === f;
+    let floor = viewFloor;
+    if (!icons.some(ic => onFloor(ic, floor))) {
+      const counts = new Map();
+      icons.forEach(ic => counts.set(ic.floor, (counts.get(ic.floor) || 0) + 1));
+      floor = [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0];
+      setViewFloor(floor);
+    }
+    const shown = icons.filter(ic => onFloor(ic, floor));
+    if (shown.length === 1) { handleFlyToIcon(shown[0]); return; }
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    shown.forEach(({ x, y }) => {
+      if (x < minX) minX = x; if (y < minY) minY = y;
+      if (x > maxX) maxX = x; if (y > maxY) maxY = y;
+    });
+    const nw = map.unproject([minX, minY], NATIVE_ZOOM);
+    const se = map.unproject([maxX, maxY], NATIVE_ZOOM);
+    const topPad = headerHeight + (searchPanelRef.current?.offsetHeight ?? 0) + 24;
+    const opts = { paddingTopLeft: [32, topPad], paddingBottomRight: [32, 48], maxZoom: NATIVE_ZOOM + 1, duration: 0.6 };
+    try { map.flyToBounds(L ? L.latLngBounds(nw, se) : [nw, se], opts); }
+    catch { map.fitBounds([nw, se], opts); }
+  }, [iconDrafts, viewFloor, handleFlyToIcon, headerHeight]);
+
+  const handleSearchSelect = useCallback((doc) => {
+    setSearchSelectedKey(doc.key);
+    setSearchStep(-1);
+    const scoped = doc.type === 'kindZone' || doc.type === 'catZone' || doc.type === 'icon';
+    setSearchQuery(scoped && doc.context ? `${doc.label} ${doc.context.split(' · ')[0]}` : doc.label);
+    setSearchRecent(prev => [doc.key, ...prev.filter(k => k !== doc.key)].slice(0, 6));
+    if (doc.type === 'zone') {
+      handleFlyToZone(doc.zone);
+      triggerZonePulse(doc.zone.id);
+      return;
+    }
+    if (doc.zoneId) triggerZonePulse(doc.zoneId);
+    frameSearchIcons(doc.iconIds);
+  }, [handleFlyToZone, triggerZonePulse, frameSearchIcons]);
+
+  const handleSearchStep = useCallback((dir) => {
+    const n = searchStepList.length;
+    if (!n) return;
+    const next = searchStep < 0 ? (dir > 0 ? 0 : n - 1) : (searchStep + dir + n) % n;
+    setSearchStep(next);
+    handleFlyToIcon(searchStepList[next]);
+  }, [searchStepList, searchStep, handleFlyToIcon]);
+
+  const handleSearchFrame = useCallback(() => {
+    setSearchStep(-1);
+    frameSearchIcons(searchStepList.map(ic => ic.id));
+  }, [frameSearchIcons, searchStepList]);
+
+  const handleSearchSaveTag = useCallback((doc) => {
+    const scoped = doc.type === 'kindZone' || doc.type === 'catZone' || doc.type === 'icon';
+    setSearchTags(prev => prev.some(tg => tg.key === doc.key)
+      ? prev
+      : [...prev, { key: doc.key, label: doc.label, context: scoped && doc.context ? doc.context.split(' · ')[0] : '', active: true }]);
+  }, []);
+  const handleSearchToggleTag = useCallback((key) => {
+    setSearchStep(-1);
+    setSearchTags(prev => prev.map(tg => tg.key === key ? { ...tg, active: !tg.active } : tg));
+  }, []);
+  const handleSearchRemoveTag = useCallback((key) => {
+    setSearchStep(-1);
+    setSearchTags(prev => prev.filter(tg => tg.key !== key));
+  }, []);
+  const handleSearchClearSelection = useCallback(() => {
+    setSearchSelectedKey(null);
+    setSearchStep(-1);
+    setSearchQuery('');
+  }, []);
+  // Closing the panel drops the in-progress selection but keeps active tags applied.
+  const closeSearch = useCallback(() => {
+    setSearchOpen(false);
+    handleSearchClearSelection();
+  }, [handleSearchClearSelection]);
 
   const toggleZoneExpanded = useCallback((id) => {
     setExpandedZones(prev => {
@@ -1941,15 +2095,23 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       // toggled off in the Hexagon filter are skipped.
       const ICON_BASE_PX = 28;
       const trigger = () => overlayRedrawRef.current();
-      iconDrafts.forEach((ic) => {
+      // Search focus (MapSearchPopover): focused icons are drawn last (on
+      // top) with a gold ring and bypass the category filters; every other
+      // icon is dimmed out.
+      const focusIds = searchFocusIds;
+      const ordered = focusIds
+        ? [...iconDrafts.filter(ic => !focusIds.has(ic.id)), ...iconDrafts.filter(ic => focusIds.has(ic.id))]
+        : iconDrafts;
+      ordered.forEach((ic) => {
         const cat = getIconCatalogEntry(ic.kind);
         if (!cat) return;
+        const focused = focusIds ? focusIds.has(ic.id) : false;
         const category = ic.category || cat.category || 'Uncategorised';
         const subcategory = ic.subcategory || cat.subcategory || '';
         // Filter if either the category is hidden OR the specific
         // category/subcategory pair is hidden.
-        if (iconFiltersOff.has(category)) return;
-        if (subcategory && iconFiltersOff.has(`${category}/${subcategory}`)) return;
+        if (!focused && iconFiltersOff.has(category)) return;
+        if (!focused && subcategory && iconFiltersOff.has(`${category}/${subcategory}`)) return;
         if (ic.floor != null && ic.floor !== viewFloor) return;
         const img = getIconImage(ic.kind, trigger);
         if (!img || !img.complete || img.naturalWidth === 0) return;
@@ -1957,8 +2119,18 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         const size = ICON_BASE_PX * (ic.scale ?? 1);
         const rot = ((ic.rotation || 0) * Math.PI) / 180;
         ctx.save();
-        ctx.globalAlpha = ic.opacity ?? 1;
+        ctx.globalAlpha = (ic.opacity ?? 1) * (focusIds && !focused ? 0.2 : 1);
         ctx.translate(pt.x, pt.y);
+        if (focused) {
+          const isStep = ic.id === searchStepIconId;
+          ctx.beginPath();
+          ctx.arc(0, 0, size * (isStep ? 0.84 : 0.64), 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(8, 12, 20, 0.55)';
+          ctx.fill();
+          ctx.lineWidth = isStep ? 3 : 2;
+          ctx.strokeStyle = SEARCH_FOCUS_COLOR;
+          ctx.stroke();
+        }
         if (rot) ctx.rotate(rot);
         ctx.drawImage(img, -size / 2, -size / 2, size, size);
         ctx.restore();
@@ -1972,7 +2144,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     return () => {
       map.off('move zoom viewreset zoomend resize', draw);
     };
-  }, [overlayDrafts, viewFloor, mapReady, iconDrafts, iconFiltersOff]);
+  }, [overlayDrafts, viewFloor, mapReady, iconDrafts, iconFiltersOff, searchFocusIds, searchStepIconId]);
 
   // Cleanup shared canvas + any pending zone-arm timer on unmount.
   useEffect(() => {
@@ -3154,6 +3326,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
            default instead, direct user report ("opaque instead of also
            being transparent"). */
         .map-card .kuro-header,
+        .map-search-popover .kuro-header,
         .map-zones-popover .kuro-header,
         .map-filters-popover .kuro-header,
         .map-downloads-popover .kuro-header {
@@ -3342,7 +3515,9 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         .map-filters-popover .kuro-card-inner::before,
         .map-filters-popover .kuro-card-inner::after,
         .map-downloads-popover .kuro-card-inner::before,
-        .map-downloads-popover .kuro-card-inner::after { display: none; }
+        .map-downloads-popover .kuro-card-inner::after,
+        .map-search-popover .kuro-card-inner::before,
+        .map-search-popover .kuro-card-inner::after { display: none; }
 
         /* ── Offline downloads popover (gear icon, user-side) ─────────── */
         /* Wraps a real <Card>; Kuro card provides the visuals. Only layout
@@ -3694,6 +3869,172 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         .map-zones-popover .zone-selector-treeitem {
           display: flex; flex-direction: column;
           gap: var(--space-xs, 4px);
+        }
+
+        /* ── Search popover (magnifying-glass button) ─────────────────── */
+        /* Full header width (same 12 px side gutters as the header card)
+           since it holds a text field. Glass background like the header. */
+        .map-search-popover {
+          position: absolute;
+          left: var(--space-md, 12px);
+          right: var(--space-md, 12px);
+          z-index: var(--z-overlay, 1000);
+          display: flex; flex-direction: column;
+        }
+        .map-search-popover .kuro-card {
+          background: ${MAP_BG_TRANSPARENT};
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          display: flex; flex-direction: column; min-height: 0;
+        }
+        .map-search-popover .map-search-body {
+          display: flex; flex-direction: column;
+          gap: var(--space-sm, 8px);
+          padding: var(--space-sm, 8px);
+          max-height: 60vh; overflow-y: auto;
+        }
+        .map-search-bar {
+          display: flex; align-items: center; gap: var(--space-xs, 4px);
+          height: 32px;
+          padding: 0 var(--space-xs, 4px) 0 var(--space-sm, 8px);
+          border: 1px solid rgba(var(--color-gold), 0.35);
+          border-radius: 8px;
+          background: rgba(8, 12, 20, 0.55);
+        }
+        .map-search-bar:focus-within { border-color: rgb(var(--color-gold)); box-shadow: 0 0 0 2px rgba(var(--color-gold), 0.2); }
+        .map-search-bar-icon { color: rgb(var(--color-gold)); flex: 0 0 auto; }
+        .map-search-input {
+          flex: 1 1 auto; min-width: 0; height: 100%;
+          background: transparent; border: 0; outline: none;
+          color: var(--text-primary, #fff);
+          font-family: var(--font-display); font-size: 14px;
+        }
+        /* The bar itself shows focus (:focus-within above); the app-wide
+           input focus ring would draw a second box inside it. */
+        .map-search-input:focus, .map-search-input:focus-visible { outline: none !important; box-shadow: none !important; }
+        .map-search-input::placeholder { color: var(--text-muted, #8892a4); }
+        .map-search-input::-webkit-search-cancel-button { display: none; }
+
+        .map-search-tags { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-xs, 4px); }
+        .map-search-tag {
+          display: inline-flex; align-items: center;
+          height: 24px; max-width: 100%;
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.16);
+          background: rgba(255, 255, 255, 0.04);
+          color: var(--text-muted, #8892a4);
+          font-family: var(--font-display); font-size: 12px;
+        }
+        .map-search-tag.is-active {
+          border-color: rgba(var(--color-gold), 0.6);
+          background: rgba(var(--color-gold), 0.14);
+          color: rgb(var(--color-gold));
+        }
+        .map-search-tag.is-empty { opacity: 0.55; }
+        .map-search-tag-toggle {
+          display: inline-flex; align-items: center; gap: var(--space-xs, 4px);
+          min-width: 0; height: 100%;
+          padding: 0 var(--space-xs, 4px) 0 var(--space-sm, 8px);
+          background: none; border: 0; color: inherit; font: inherit; cursor: pointer;
+        }
+        .map-search-tag-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 192px; }
+        .map-search-tag-ctx { opacity: 0.75; }
+        .map-search-tag-count {
+          min-width: 16px; height: 16px; padding: 0 var(--space-xs, 4px);
+          border-radius: 8px;
+          background: rgba(var(--color-gold), 0.22);
+          font-size: 12px; line-height: 16px; text-align: center;
+          font-variant-numeric: tabular-nums;
+        }
+        .map-search-tag-remove {
+          display: inline-flex; align-items: center; justify-content: center;
+          width: 24px; height: 24px;
+          background: none; border: 0; color: inherit; cursor: pointer; opacity: 0.7;
+        }
+        .map-search-tag-remove:hover { opacity: 1; }
+        .map-search-link {
+          background: none; border: 0; padding: 0 var(--space-xs, 4px);
+          min-height: 24px;
+          color: var(--text-muted, #8892a4); font-size: 12px; cursor: pointer; text-decoration: underline;
+        }
+
+        /* Two lines at phone width: what is selected on top, the controls
+           (stepper left, actions right) underneath. */
+        .map-search-selection {
+          display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-xs, 4px);
+          padding: var(--space-xs, 4px) var(--space-xs, 4px) var(--space-xs, 4px) var(--space-sm, 8px);
+          border-radius: 8px;
+          background: rgba(var(--color-gold), 0.08);
+          border: 1px solid rgba(var(--color-gold), 0.3);
+        }
+        .map-search-selection-text { flex: 1 1 calc(100% - 32px); min-width: 0; }
+        .map-search-stepper { display: flex; align-items: center; gap: 2px; }
+        .map-search-actions { display: flex; align-items: center; gap: var(--space-xs, 4px); margin-left: auto; }
+        .map-search-step-count {
+          min-width: 48px; text-align: center;
+          font-family: var(--font-data); font-size: 12px; color: var(--text-body);
+          font-variant-numeric: tabular-nums;
+        }
+
+        .map-search-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+        .map-search-row {
+          display: flex; align-items: center; gap: var(--space-sm, 8px);
+          width: 100%; min-height: 48px;
+          padding: var(--space-xs, 4px) var(--space-sm, 8px);
+          border-radius: 8px; border: 1px solid transparent;
+          background: none; color: inherit; text-align: left; font: inherit;
+          cursor: pointer;
+        }
+        .map-search-row.is-active, .map-search-row:hover, button.map-search-row:focus-visible {
+          background: rgba(var(--color-gold), 0.1);
+          border-color: rgba(var(--color-gold), 0.35);
+        }
+        .map-search-row-text { flex: 1 1 auto; min-width: 0; }
+        .map-search-row-label {
+          font-family: var(--font-display); font-size: 14px; color: var(--text-primary, #fff);
+          overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .map-search-row-ctx {
+          font-size: 12px; color: var(--text-muted, #8892a4);
+          overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .map-search-mark { background: none; color: rgb(var(--color-gold)); font-weight: 700; }
+        .map-search-thumb { width: 24px; height: 24px; flex: 0 0 24px; object-fit: contain; }
+        .map-search-thumb-glyph {
+          display: inline-flex; align-items: center; justify-content: center;
+          border-radius: 6px; background: rgba(var(--color-cyan), 0.12); color: rgb(var(--color-cyan));
+        }
+        .map-search-count { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+
+        .map-search-empty {
+          display: flex; align-items: flex-start; gap: var(--space-sm, 8px);
+          padding: var(--space-sm, 8px); color: var(--text-body); font-size: 14px;
+        }
+        .map-search-empty .map-search-row-ctx { white-space: normal; }
+        .map-search-note {
+          padding: var(--space-xs, 4px) var(--space-sm, 8px);
+          border-radius: 6px;
+          background: rgba(var(--color-cyan), 0.08);
+          color: rgb(var(--color-cyan)); font-size: 12px;
+        }
+        .map-search-idle { display: flex; flex-direction: column; gap: var(--space-md, 12px); }
+        .map-search-section { display: flex; flex-direction: column; gap: var(--space-xs, 4px); }
+        .map-search-section-head {
+          display: flex; align-items: center; justify-content: space-between;
+          font-family: var(--font-display); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+          color: var(--text-muted, #8892a4);
+        }
+        .map-search-section-head > span { display: inline-flex; align-items: center; gap: var(--space-xs, 4px); }
+        .map-search-chips { display: flex; flex-wrap: wrap; gap: var(--space-xs, 4px); }
+        .map-search-chip { display: inline-flex; align-items: center; gap: var(--space-xs, 4px); }
+        .map-search-chip-img { width: 16px; height: 16px; object-fit: contain; }
+        .map-search-tip { white-space: normal; margin-top: var(--space-xs, 4px); }
+
+        .map-search-btn { position: relative; }
+        .map-search-btn-dot {
+          position: absolute; top: 2px; right: 2px;
+          width: 6px; height: 6px; border-radius: 3px;
+          background: rgb(var(--color-gold));
         }
 
         /* ── Icon filters popover (hexagon button) ────────────────────── */
@@ -4093,10 +4434,27 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                 action={
                   <>
                     <button
+                      ref={searchAnchorRef}
+                      type="button"
+                      className={`kuro-btn kuro-btn-sm kuro-btn-icon map-search-btn ${searchOpen || searchFocusIds ? 'is-active' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (searchOpen) { closeSearch(); return; }
+                        setZonesOpen(false); setFiltersOpen(false); setDownloadsOpen(false); setRefImageOpen(false);
+                        setSearchOpen(true);
+                      }}
+                      aria-label={t('map.header.search')}
+                      aria-expanded={searchOpen}
+                      title={t('map.header.search')}
+                    >
+                      <Search size={14} />
+                      {!searchOpen && searchTags.some(tg => tg.active) && <span className="map-search-btn-dot" aria-hidden="true" />}
+                    </button>
+                    <button
                       ref={zonesAnchorRef}
                       type="button"
                       className={`kuro-btn kuro-btn-sm kuro-btn-icon ${zonesOpen ? 'is-active' : ''}`}
-                      onClick={(e) => { e.stopPropagation(); setZonesOpen(v => { if (!v) { setDownloadsOpen(false); setFiltersOpen(false); setRefImageOpen(false); } return !v; }); }}
+                      onClick={(e) => { e.stopPropagation(); setZonesOpen(v => { if (!v) { setDownloadsOpen(false); setFiltersOpen(false); setRefImageOpen(false); closeSearch(); } return !v; }); }}
                       aria-label={t('map.header.regions')}
                       aria-expanded={zonesOpen}
                       title={t('map.header.regions')}
@@ -4107,7 +4465,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                       ref={filtersAnchorRef}
                       type="button"
                       className={`kuro-btn kuro-btn-sm kuro-btn-icon ${filtersOpen ? 'is-active' : ''}`}
-                      onClick={(e) => { e.stopPropagation(); setFiltersOpen(v => { if (!v) { setZonesOpen(false); setDownloadsOpen(false); setRefImageOpen(false); } return !v; }); }}
+                      onClick={(e) => { e.stopPropagation(); setFiltersOpen(v => { if (!v) { setZonesOpen(false); setDownloadsOpen(false); setRefImageOpen(false); closeSearch(); } return !v; }); }}
                       aria-label={t('map.header.iconFilters')}
                       aria-expanded={filtersOpen}
                       title={t('map.header.iconFilters')}
@@ -4149,7 +4507,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                         ref={refImageAnchorRef}
                         type="button"
                         className={`kuro-btn kuro-btn-sm kuro-btn-icon ${refImageOpen ? 'is-active' : ''}`}
-                        onClick={(e) => { e.stopPropagation(); setRefImageOpen(v => { if (!v) { setZonesOpen(false); setFiltersOpen(false); setDownloadsOpen(false); } return !v; }); }}
+                        onClick={(e) => { e.stopPropagation(); setRefImageOpen(v => { if (!v) { setZonesOpen(false); setFiltersOpen(false); setDownloadsOpen(false); closeSearch(); } return !v; }); }}
                         aria-label={t('map.header.referenceImage')}
                         aria-expanded={refImageOpen}
                         title={t('map.header.referenceImage')}
@@ -4161,7 +4519,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                       ref={downloadsAnchorRef}
                       type="button"
                       className={`kuro-btn kuro-btn-sm kuro-btn-icon ${downloadsOpen ? 'is-active' : ''}`}
-                      onClick={(e) => { e.stopPropagation(); setDownloadsOpen(v => { if (!v) { setZonesOpen(false); setFiltersOpen(false); setRefImageOpen(false); } return !v; }); }}
+                      onClick={(e) => { e.stopPropagation(); setDownloadsOpen(v => { if (!v) { setZonesOpen(false); setFiltersOpen(false); setRefImageOpen(false); closeSearch(); } return !v; }); }}
                       aria-label={t('map.header.offlineDownloads')}
                       aria-expanded={downloadsOpen}
                       title={t('map.header.offlineDownloads')}
@@ -4190,6 +4548,33 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
             )}
 
             {toast && <div className="zone-author-toast" role="status">{toast}</div>}
+
+            {searchOpen && (
+              <MapSearchPopover
+                panelRef={searchPanelRef}
+                top={headerHeight + 8}
+                maxHeight={`calc(var(--canvas-height-px, 100dvh) - ${headerHeight + navPadding + 40}px)`}
+                index={searchIndex}
+                query={searchQuery}
+                setQuery={setSearchQuery}
+                selected={searchSelected}
+                onSelect={handleSearchSelect}
+                onClearSelection={handleSearchClearSelection}
+                focus={searchFocusSummary}
+                onStep={handleSearchStep}
+                onFrame={handleSearchFrame}
+                tags={searchTags}
+                tagCounts={searchTagCounts}
+                onSaveTag={handleSearchSaveTag}
+                onToggleTag={handleSearchToggleTag}
+                onRemoveTag={handleSearchRemoveTag}
+                onClearTags={() => { setSearchStep(-1); setSearchTags([]); }}
+                recent={searchRecent}
+                onClearRecent={() => setSearchRecent([])}
+                suggestions={searchSuggestions}
+                onClose={closeSearch}
+              />
+            )}
 
             {/* Zone selector — same var(--space-md) gap on top and right */}
             {zonesOpen && (

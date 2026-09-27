@@ -14,7 +14,8 @@
     "regions": "Regions",
     "iconFilters": "Icon filters",
     "offlineDownloads": "Offline downloads",
-    "referenceImage": "Reference image"
+    "referenceImage": "Reference image",
+    "search": "Search"
   },
   "legend": {
     "noIconsPlaced": "No icons placed yet. Add icons from the editor panel.",
@@ -34,5 +35,38 @@
     "opacity": "Opacity",
     "zoom": "Zoom",
     "rotation": "Rotation"
+  },
+  "search": {
+    "title": "Search the map",
+    "placeholder": "Search icons, regions… e.g. “chest jinzhou”",
+    "clearQuery": "Clear search",
+    "close": "Close search",
+    "savedTags": "Saved searches",
+    "removeTag": "Remove {{name}}",
+    "clearTags": "Clear all",
+    "shownCount": "{{count}} on the map",
+    "otherFloors": "{{count}} on other floors",
+    "prev": "Previous result",
+    "next": "Next result",
+    "frameAll": "Show all results",
+    "saveTag": "Save as tag",
+    "saved": "Already saved",
+    "clearSelection": "Clear selection",
+    "noResults": "No match for “{{query}}”",
+    "noResultsHint": "Try an item (chest, nexus, beacon) and/or a region name.",
+    "partial": "No exact match — closest results (ignoring “{{words}}”)",
+    "results": "Search results",
+    "recent": "Recent",
+    "clearRecent": "Clear",
+    "suggestions": "Quick search",
+    "tip": "Combine words: an item and a region, in any order. Typos and French work too.",
+    "type": {
+      "kind": "All on map",
+      "category": "Category",
+      "kindZone": "In region",
+      "catZone": "Category in region",
+      "zone": "Region",
+      "icon": "Marker"
+    }
   }
 }

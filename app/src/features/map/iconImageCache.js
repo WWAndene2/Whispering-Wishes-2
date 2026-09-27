@@ -10,6 +10,16 @@ import { getIconCatalogEntry } from '../../data/mapIconCatalog.js';
 
 const MAP_ICON_IMAGES = new Map();
 
+/** Resolved URL of a catalog icon's image (shared by the map canvas and the search list). */
+export function getIconImageUrl(kindId) {
+  const cat = getIconCatalogEntry(kindId);
+  if (!cat) return null;
+  const base = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL) || '/';
+  // Encode each path segment defensively.
+  const encoded = cat.imageUrl.split('/').map(encodeURIComponent).join('/');
+  return (base + encoded).replace(/([^:])\/\//g, '$1/');
+}
+
 export function getIconImage(kindId, onReady) {
   const cat = getIconCatalogEntry(kindId);
   if (!cat) return null;
@@ -17,10 +27,7 @@ export function getIconImage(kindId, onReady) {
   if (hit) return hit;
   const img = new Image();
   img.decoding = 'async';
-  const base = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL) || '/';
-  // Encode each path segment defensively.
-  const encoded = cat.imageUrl.split('/').map(encodeURIComponent).join('/');
-  img.src = (base + encoded).replace(/([^:])\/\//g, '$1/');
+  img.src = getIconImageUrl(kindId);
   img.onload = () => onReady && onReady();
   MAP_ICON_IMAGES.set(cat.id, img);
   return img;

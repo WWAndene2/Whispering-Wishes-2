@@ -689,7 +689,7 @@ function ProfileTab({
                   </div>
                   <button
                     onClick={() => saveVisualSettings({ ...visualSettings, leftHanded: !visualSettings.leftHanded })}
-                    className={`relative w-[48px] h-[24px] rounded-full transition-colors ${visualSettings.leftHanded ? 'bg-violet-500' : ''}`}
+                    className={`relative shrink-0 w-[48px] h-[24px] rounded-full transition-colors ${visualSettings.leftHanded ? 'bg-violet-500' : ''}`}
                     style={!visualSettings.leftHanded ? { background: 'var(--bg-btn)' } : undefined}
                     role="switch"
                     aria-checked={!!visualSettings.leftHanded}

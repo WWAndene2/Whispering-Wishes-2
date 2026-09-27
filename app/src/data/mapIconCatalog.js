@@ -101,6 +101,7 @@ const ENEMY_ICONS = [
   ['nightmare-kelpie', 'Nightmare: Kelpie'],
   ['nightmare-mourning-aix', 'Nightmare: Mourning Aix'],
   ['nightmare-thundering-mephis', 'Nightmare: Thundering Mephis'],
+  ['nightmare-tempest-mephis', 'Nightmare: Tempest Mephis'],
   ['reactor-husk', 'Reactor Husk'],
   ['sentry-construct', 'Sentry Construct'],
   ['sigillum', 'Sigillum'],

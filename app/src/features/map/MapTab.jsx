@@ -3310,14 +3310,14 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     setRefImage(null);
   }, []);
 
-  // Triple-tap on header toggles author-enabled. Unlocking author also
+  // Double-tap on header toggles author-enabled. Unlocking author also
   // enters draw mode in one shot (opens the editor panel); locking fully
   // exits — matches the "edition feature lives inside the editor panel"
-  // flow where the only entry/exit is the triple-tap.
+  // flow where the only entry/exit is the double-tap.
   const handleHeaderTap = useCallback(() => {
     const now = Date.now();
     headerTapsRef.current = [...headerTapsRef.current.filter(t => now - t < 700), now];
-    if (headerTapsRef.current.length >= 3) {
+    if (headerTapsRef.current.length >= 2) {
       headerTapsRef.current = [];
       setAuthorEnabled(prev => {
         const next = !prev;
@@ -4967,7 +4967,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                     className="zone-author-btn is-active"
                     onClick={() => {
                       // Exit the editor entirely — clears author-unlock so the
-                      // panel disappears. Triple-tap the card header to re-enter.
+                      // panel disappears. Double-tap the card header to re-enter.
                       try { localStorage.setItem(AUTHOR_FLAG_KEY, ''); } catch {}
                       setAuthorEnabled(false);
                       setAuthorMode(false);
@@ -4976,7 +4976,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                       showToast('Zone author locked');
                     }}
                     aria-label="Lock editor"
-                    title="Lock editor (triple-tap map header to re-open)"
+                    title="Lock editor (double-tap map header to re-open)"
                     style={{ padding: '2px 8px' }}
                   >
                     Lock editor

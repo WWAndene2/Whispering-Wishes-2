@@ -60,15 +60,13 @@ export function IconFiltersPopover({
     const cat = ic.category || kind?.category || 'Uncategorised';
     const sub = ic.subcategory || kind?.subcategory || '';
     const group = kind?.group || '';
-    if (!tree.has(cat)) tree.set(cat, { total: 0, subs: new Map(), kinds: new Set() });
+    if (!tree.has(cat)) tree.set(cat, { total: 0, subs: new Map() });
     const entry = tree.get(cat);
     entry.total++;
-    entry.kinds.add(ic.kind);
     if (group) {
-      if (!entry.subs.has(group)) entry.subs.set(group, { n: 0, subs: new Map(), kinds: new Set(), subKinds: new Map() });
+      if (!entry.subs.has(group)) entry.subs.set(group, { n: 0, subs: new Map(), subKinds: new Map() });
       const g = entry.subs.get(group);
       g.n++;
-      g.kinds.add(ic.kind);
       if (sub) {
         g.subs.set(sub, (g.subs.get(sub) || 0) + 1);
         if (!g.subKinds.has(sub)) g.subKinds.set(sub, new Set());
@@ -88,9 +86,9 @@ export function IconFiltersPopover({
     tree.set('Zone', { total: l3ZoneCount, subs: new Map([['Names', { n: l3ZoneCount }], ['Area', { n: l3ZoneCount }]]) });
   }
   const cats = [...tree.entries()].sort((a, b) => compareCategories(a[0], b[0]));
-  // A row shows its icon when every icon under it is the same kind (a leaf
-  // like "Nexus", or a group/category holding a single kind); rows mixing
-  // several kinds, and the synthetic Zone layers, have no single icon.
+  // Only leaf rows (a single kind, e.g. Nexus / Supply Chest) show an icon,
+  // on the right before the count; categories and groups never do, even
+  // while they happen to hold a single kind.
   const rowIcon = (kinds) => {
     if (!kinds || kinds.size !== 1) return null;
     const url = getIconImageUrl([...kinds][0]);
@@ -153,7 +151,7 @@ export function IconFiltersPopover({
                 const catOff = iconFiltersOff.has(cat);
                 const subs = [...entry.subs.entries()].sort((a, b) => compareSubcategories(a[0], b[0]));
                 // One toggle row for a group or subcategory, `depth` levels under the category.
-                const renderRow = (name, n, depth, parentOff, parentName, kinds) => {
+                const renderRow = (name, n, depth, parentOff, parentName, kinds, leaf) => {
                   const key = `${cat}/${name}`;
                   const ownOff = iconFiltersOff.has(key);
                   // Effectively hidden when any parent is hidden — reflected
@@ -172,9 +170,9 @@ export function IconFiltersPopover({
                           : (ownOff ? t('map.legend.show', { name }) : t('map.legend.hide', { name }))}
                       >
                         <span className="zone-selector-caret">{effectiveOff ? '▢' : '▣'}</span>
-                        {rowIcon(kinds)}
                         <span className="zone-selector-name">{name}</span>
-                        <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{n}</span>
+                        {leaf && rowIcon(kinds)}
+                        <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: leaf && rowIcon(kinds) ? 0 : 'auto' }}>{n}</span>
                       </button>
                     </div>
                   );
@@ -190,16 +188,15 @@ export function IconFiltersPopover({
                         title={catOff ? t('map.legend.show', { name: cat }) : t('map.legend.hide', { name: cat })}
                       >
                         <span className="zone-selector-caret">{catOff ? '▢' : '▣'}</span>
-                        {rowIcon(entry.kinds)}
                         <span className="zone-selector-name">{cat}</span>
                         <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{entry.total}</span>
                       </button>
                     </div>
                     {subs.map(([name, node]) => (
                       <React.Fragment key={name}>
-                        {renderRow(name, node.n, 1, catOff, cat, node.kinds)}
+                        {renderRow(name, node.n, 1, catOff, cat, node.subs ? null : node.kinds, !node.subs)}
                         {node.subs && [...node.subs.entries()].sort((a, b) => compareSubcategories(a[0], b[0]))
-                          .map(([sub, n]) => renderRow(sub, n, 2, catOff || iconFiltersOff.has(`${cat}/${name}`), catOff ? cat : name, node.subKinds.get(sub)))}
+                          .map(([sub, n]) => renderRow(sub, n, 2, catOff || iconFiltersOff.has(`${cat}/${name}`), catOff ? cat : name, node.subKinds.get(sub), true))}
                       </React.Fragment>
                     ))}
                   </React.Fragment>

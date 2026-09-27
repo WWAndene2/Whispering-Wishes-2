@@ -18,8 +18,9 @@ describe('map icon catalog', () => {
   it('enemy entries mirror ECHO_DATA (name, class, element, Sonata sets)', () => {
     expect(enemies.length).toBeGreaterThan(0);
     for (const k of enemies) {
-      const echo = ECHO_DATA[k.name];
-      expect(echo, k.name).toBeTruthy();
+      const echo = ECHO_DATA[k.echoName];
+      expect(echo, k.echoName).toBeTruthy();
+      expect(k.name).not.toMatch(/Reminiscence/);
       expect(k.subcategory).toBe(echo.rank);
       expect(ENEMY_CLASS_ORDER).toContain(k.subcategory);
       expect(k.tags).toEqual(expect.arrayContaining([echo.element, ...echo.sets]));

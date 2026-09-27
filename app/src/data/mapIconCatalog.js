@@ -67,8 +67,11 @@ export const MAP_ICON_CATALOG = [
 // ── Enemies ────────────────────────────────────────────────────────────────
 // Filter tree: Enemy › <class> (Calamity / Overlord / Elite / Common). Class,
 // element and Sonata sets are read from ECHO_DATA (data/echoes.js) — the same
-// source the rest of the app uses — so they are never re-typed here; the name
-// must match its ECHO_DATA key exactly. Images live in map-icons/enemy/.
+// source the rest of the app uses — so they are never re-typed here; the
+// second column must match its ECHO_DATA key exactly. Images live in
+// map-icons/enemy/. The map shows the ENEMY's name: an Echo name's
+// "Reminiscence: " prefix qualifies the Echo you obtain, not the enemy you
+// fight, so it is dropped for display ("Reminiscence: Fenrico" → "Fenrico").
 // `tags` feed the map search (class, element, Sonata sets, "boss").
 const ENEMY_ICONS = [
   ['bell-borne-geochelone', 'Bell-Borne Geochelone'],
@@ -77,8 +80,8 @@ const ENEMY_ICONS = [
   ['dreamless', 'Dreamless'],
   ['fallacy-of-no-return', 'Fallacy of No Return'],
   ['feilian-beringal', 'Feilian Beringal'],
-  ['reminiscence-fenrico', 'Reminiscence: Fenrico'],
-  ['reminiscence-fleurdelys', 'Reminiscence: Fleurdelys'],
+  ['fenrico', 'Reminiscence: Fenrico'],
+  ['fleurdelys', 'Reminiscence: Fleurdelys'],
   ['hecate', 'Hecate'],
   ['hyvatia', 'Hyvatia'],
   ['impermanence-heron', 'Impermanence Heron'],
@@ -102,7 +105,7 @@ const ENEMY_ICONS = [
   ['sigillum', 'Sigillum'],
   ['tempest-mephis', 'Tempest Mephis'],
   ['the-false-sovereign', 'The False Sovereign'],
-  ['reminiscence-threnodian-leviathan', 'Reminiscence: Threnodian - Leviathan'],
+  ['threnodian-leviathan', 'Reminiscence: Threnodian - Leviathan'],
   ['thundering-mephis', 'Thundering Mephis'],
 ];
 
@@ -113,7 +116,8 @@ for (const [slug, echoName] of ENEMY_ICONS) {
   if (!echo) throw new Error(`mapIconCatalog: no ECHO_DATA entry named "${echoName}"`);
   MAP_ICON_CATALOG.push({
     id: `enemy-${slug}`,
-    name: echoName,
+    name: echoName.replace(/^Reminiscence:\s*/, ''),
+    echoName,
     category: 'Enemy',
     subcategory: echo.rank,
     imageUrl: `map-icons/enemy/${slug}.png`,

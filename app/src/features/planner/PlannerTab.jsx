@@ -785,7 +785,7 @@ function PlannerTab({
               {state.planner.linkedToCalc ? <Link2 size={14} /> : <Unlink2 size={14} />}
             </button>
             <span className="text-gray-400 text-sm">{planData.goalProgress.toFixed(0)}%</span>
-            <button type="button" onClick={(e) => { e.stopPropagation(); toggleSection('goal'); }} aria-expanded={!collapsed.goal} aria-label={t(collapsed.goal ? 'common.expandSection' : 'common.collapseSection')} className="flex items-center justify-center">
+            <button type="button" onClick={(e) => { e.stopPropagation(); toggleSection('goal'); }} aria-expanded={!collapsed.goal} aria-label={t(collapsed.goal ? 'common.expandSection' : 'common.collapseSection')} className="flex items-center justify-center min-w-[24px] min-h-[24px]">
               <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 ${collapsed.goal ? '' : 'rotate-180'}`} />
             </button>
           </>}>{t('planner.goalProgressTitle')}</CardHeader>

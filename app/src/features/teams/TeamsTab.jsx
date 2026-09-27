@@ -1014,13 +1014,13 @@ function TeamsTab({
                           <button
                             onClick={(e) => { e.stopPropagation(); shuffleSuggestion(); }}
                             disabled={!teamSuggestions.some(s => s.header === t('teams.tab.sectionCurated'))}
-                            className="action-btn flex items-center gap-1 px-1.5 py-0.5 rounded text-2xs text-cyan-400/80 hover:text-cyan-300 hover:bg-cyan-500/10 disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                            className="action-btn flex items-center gap-1 px-1.5 py-0.5 min-h-[24px] rounded text-2xs text-cyan-400/80 hover:text-cyan-300 hover:bg-cyan-500/10 disabled:opacity-30 disabled:pointer-events-none transition-colors"
                             aria-label={t('teams.tab.shuffleAria')}
                             title={t('teams.tab.shuffleAria')}
                           >
                             <Shuffle size={12} /> {t('teams.tab.shuffle')}
                           </button>
-                          <button type="button" onClick={(e) => { e.stopPropagation(); setSuggestionsCollapsed(p => !p); }} aria-expanded={!suggestionsCollapsed} aria-label={t(suggestionsCollapsed ? 'common.expandSection' : 'common.collapseSection')} className="flex items-center justify-center">
+                          <button type="button" onClick={(e) => { e.stopPropagation(); setSuggestionsCollapsed(p => !p); }} aria-expanded={!suggestionsCollapsed} aria-label={t(suggestionsCollapsed ? 'common.expandSection' : 'common.collapseSection')} className="flex items-center justify-center min-w-[24px] min-h-[24px]">
                             <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 ${suggestionsCollapsed ? '' : 'rotate-180'}`} />
                           </button>
                         </div>

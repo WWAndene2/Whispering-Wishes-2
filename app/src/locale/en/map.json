@@ -41,7 +41,6 @@
   "search": {
     "title": "Search the map",
     "placeholder": "Search icons, regions… e.g. “chest jinzhou”",
-    "clearQuery": "Clear search",
     "close": "Close search",
     "savedTags": "Saved searches",
     "removeTag": "Remove {{name}}",
@@ -69,6 +68,7 @@
       "catZone": "Category in region",
       "zone": "Region",
       "icon": "Marker"
-    }
+    },
+    "header": "Search"
   }
 }

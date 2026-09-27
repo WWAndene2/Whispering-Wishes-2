@@ -11,6 +11,9 @@
 //   subcategory: default second-level filter group under the category
 //                (e.g. "Resonance › Nexus" vs "Resonance › Beacon");
 //                user can override per-draft
+//   group:       optional middle level between category and subcategory in
+//                the filter tree (e.g. "Collectible › Chest › Supply Chest"),
+//                so several chest kinds can be shown/hidden together
 //   imageUrl:    relative path under the app's BASE_URL
 //   size:        natural size on disk in px (square — both PNGs are 128²)
 
@@ -51,6 +54,7 @@ export const MAP_ICON_CATALOG = [
     id: 'supply-chest',
     name: 'Supply Chest',
     category: 'Collectible',
+    group: 'Chest',
     subcategory: 'Supply Chest',
     imageUrl: 'map-icons/Supply-Chest.png',
     size: 128,

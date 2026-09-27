@@ -15,7 +15,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Search, X, ChevronLeft, ChevronRight, Maximize2, BookmarkPlus, Map as MapIcon, History, SearchX } from 'lucide-react';
-import { Card, CardBody } from '../../shared/components/Card.jsx';
+import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { searchMap, highlightRanges } from './mapSearch.js';
 import { getIconImageUrl } from './iconImageCache.js';
 import { t } from '../../utils/i18n.js';
@@ -110,6 +110,15 @@ export function MapSearchPopover({
       style={{ top: `${top}px`, maxHeight }}
     >
       <Card>
+        <CardHeader
+          action={
+            <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={onClose} aria-label={t('map.search.close')} title={t('map.search.close')}>
+              <X size={14} />
+            </button>
+          }
+        >
+          {t('map.search.header')}
+        </CardHeader>
         <CardBody className="map-search-body">
           {/* ── Search bar ── */}
           <div className="map-search-bar">
@@ -132,12 +141,6 @@ export function MapSearchPopover({
               autoComplete="off"
               spellCheck={false}
             />
-            {query && (
-              <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => { setQuery(''); setListOpen(true); inputRef.current?.focus(); }} aria-label={t('map.search.clearQuery')} title={t('map.search.clearQuery')}>
-                <X size={14} />
-              </button>
-            )}
-            <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={onClose} aria-label={t('map.search.close')} title={t('map.search.close')}>✕</button>
           </div>
 
           {/* ── Saved tags ── */}

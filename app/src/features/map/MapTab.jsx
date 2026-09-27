@@ -605,6 +605,28 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     }
   }, [switchFloorForZone, overlayDrafts]);
 
+  // Tree of drafts only (canonical-parented drafts surface at root with breadcrumb).
+  // Returns flat list in DFS traversal order, each node carrying { ...draft, depth, isLast }.
+  const draftTree = useMemo(() => {
+    const draftIds = new Set(drafts.map(d => d.id));
+    const byParent = new Map();
+    drafts.forEach(d => {
+      const pid = d.parentId && draftIds.has(d.parentId) ? d.parentId : null;
+      if (!byParent.has(pid)) byParent.set(pid, []);
+      byParent.get(pid).push(d);
+    });
+    const out = [];
+    const walk = (pid, depth) => {
+      const kids = byParent.get(pid) || [];
+      kids.forEach((c, i) => {
+        out.push({ ...c, depth, isFirst: i === 0, isLast: i === kids.length - 1 });
+        walk(c.id, depth + 1);
+      });
+    };
+    walk(null, 0);
+    return out;
+  }, [drafts]);
+
   // ── Map search (magnifying glass) ──────────────────────────────────────
   const allZones = useMemo(() => [...MAP_ZONES, ...drafts], [drafts]);
   const searchIndex = useMemo(
@@ -625,13 +647,26 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     for (const tg of searchTags) if (tg.active) resolveFilterKey(searchIndex, tg.key).forEach(id => ids.add(id));
     return ids.size ? ids : null;
   }, [searchSelected, searchTags, searchIndex]);
-  // Stable order for stepping through results one by one: floor, then top→bottom, left→right.
+  // Order for stepping through results one by one (1, 2, 3…): the same order
+  // icons appear in the Regions tree — zones in tree pre-order, each zone's
+  // icons in their stored order; icons outside any tree zone come last.
   const searchStepList = useMemo(() => {
-    const src = searchSelected ? searchSelected.iconIds : (searchFocusIds ? [...searchFocusIds] : []);
-    const byId = new Map(iconDrafts.map(ic => [ic.id, ic]));
-    return src.map(id => byId.get(id)).filter(Boolean)
-      .sort((a, b) => (a.floor ?? 0) - (b.floor ?? 0) || a.y - b.y || a.x - b.x);
-  }, [searchSelected, searchFocusIds, iconDrafts]);
+    const src = new Set(searchSelected ? searchSelected.iconIds : (searchFocusIds ? [...searchFocusIds] : []));
+    if (!src.size) return [];
+    const byZone = new Map();
+    for (const ic of iconDrafts) {
+      if (!src.has(ic.id)) continue;
+      if (!byZone.has(ic.zoneId)) byZone.set(ic.zoneId, []);
+      byZone.get(ic.zoneId).push(ic);
+    }
+    const out = [];
+    for (const node of draftTree) {
+      const icons = byZone.get(node.id);
+      if (icons) { out.push(...icons); byZone.delete(node.id); }
+    }
+    for (const icons of byZone.values()) out.push(...icons);
+    return out;
+  }, [searchSelected, searchFocusIds, iconDrafts, draftTree]);
   const searchStepIconId = searchStep >= 0 ? (searchStepList[searchStep]?.id ?? null) : null;
   const searchFocusSummary = useMemo(() => {
     if (!searchStepList.length) return null;
@@ -761,27 +796,6 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     if (ov && Number.isFinite(ov.floor)) setViewFloor(ov.floor);
   }, [drafts, overlayDrafts, authorMode]);
 
-  // Tree of drafts only (canonical-parented drafts surface at root with breadcrumb).
-  // Returns flat list in DFS traversal order, each node carrying { ...draft, depth, isLast }.
-  const draftTree = useMemo(() => {
-    const draftIds = new Set(drafts.map(d => d.id));
-    const byParent = new Map();
-    drafts.forEach(d => {
-      const pid = d.parentId && draftIds.has(d.parentId) ? d.parentId : null;
-      if (!byParent.has(pid)) byParent.set(pid, []);
-      byParent.get(pid).push(d);
-    });
-    const out = [];
-    const walk = (pid, depth) => {
-      const kids = byParent.get(pid) || [];
-      kids.forEach((c, i) => {
-        out.push({ ...c, depth, isFirst: i === 0, isLast: i === kids.length - 1 });
-        walk(c.id, depth + 1);
-      });
-    };
-    walk(null, 0);
-    return out;
-  }, [drafts]);
 
   // Zone/subzone ids that have at least one child draft — drives whether a
   // collapse toggle shows on that row at all (a leaf zone has nothing to
@@ -2128,7 +2142,11 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         const subcategory = ic.subcategory || cat.subcategory || '';
         // Filter if either the category is hidden OR the specific
         // category/subcategory pair is hidden.
+        // Optional middle level (catalog `group`, e.g. Collectible › Chest ›
+        // Supply Chest) hides every kind under it at once.
+        const group = cat.group || '';
         if (!focused && iconFiltersOff.has(category)) return;
+        if (!focused && group && iconFiltersOff.has(`${category}/${group}`)) return;
         if (!focused && subcategory && iconFiltersOff.has(`${category}/${subcategory}`)) return;
         if (ic.floor != null && ic.floor !== viewFloor) return;
         const img = getIconImage(ic.kind, trigger);
@@ -3913,6 +3931,13 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           -webkit-backdrop-filter: blur(8px);
           display: flex; flex-direction: column; min-height: 0;
         }
+        .map-search-popover .kuro-header { padding: var(--space-sm, 8px) var(--space-md, 12px); }
+        .map-search-popover .kuro-header h3::before { display: none; }
+        .map-search-popover .kuro-header h3 {
+          font-family: var(--font-display);
+          font-size: var(--font-base, 13px);
+          letter-spacing: 0.03em;
+        }
         .map-search-popover .map-search-body {
           display: flex; flex-direction: column;
           gap: var(--space-sm, 8px);
@@ -3922,7 +3947,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         .map-search-bar {
           display: flex; align-items: center; gap: var(--space-xs, 4px);
           height: 32px;
-          padding: 0 var(--space-xs, 4px) 0 var(--space-sm, 8px);
+          padding: 0 var(--space-sm, 8px);
           border: 1px solid rgba(var(--color-gold), 0.35);
           border-radius: 8px;
           background: rgba(8, 12, 20, 0.55);
@@ -4069,7 +4094,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
            hover colour/shadow, drop the lift, here only. */
         .map-filters-popover .kuro-header-action .kuro-btn:hover,
         .map-zones-popover .kuro-header-action .kuro-btn:hover,
-        .map-downloads-popover .kuro-header-action .kuro-btn:hover {
+        .map-downloads-popover .kuro-header-action .kuro-btn:hover,
+        .map-search-popover .kuro-header-action .kuro-btn:hover {
           transform: none;
         }
 

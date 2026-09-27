@@ -160,6 +160,7 @@ export function buildSearchIndex({ icons, zones, getKind }) {
       kindName: k.name || ic.kind,
       category: ic.category || k.category || 'Uncategorised',
       subcategory: ic.subcategory || k.subcategory || '',
+      group: k.group || '',
       chain: chainOf(ic.zoneId),
     };
   });
@@ -181,8 +182,8 @@ export function buildSearchIndex({ icons, zones, getKind }) {
   };
 
   for (const m of iconMeta) {
-    const { ic, kindName, category, subcategory } = m;
-    const typeWords = [category, subcategory, kindName];
+    const { ic, kindName, category, subcategory, group } = m;
+    const typeWords = [category, group, subcategory, kindName];
     add(`kind:${ic.kind}`, () => ({
       type: 'kind', label: kindName, context: category, kind: ic.kind,
       filter: { kind: ic.kind }, fields: fields(kindName, typeWords, null),

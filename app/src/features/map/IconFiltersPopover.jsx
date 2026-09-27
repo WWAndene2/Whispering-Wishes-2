@@ -45,32 +45,46 @@ export function IconFiltersPopover({
   l3ZoneCount = 0,
   onClose,
 }) {
-  // Build a nested category → subcategory tree from the placed icons. A
-  // subcategory count rolls up into its parent category. Keys use
-  // "Category/Subcategory" form so iconFiltersOff can target either level;
-  // a category-level hide cascades to all its subs via the render-time
+  // Build a nested category → [group →] subcategory tree from the placed
+  // icons. Counts roll up to every parent. Keys use "Category/Subcategory"
+  // (and "Category/Group" for the optional catalog `group` level, e.g.
+  // Collectible › Chest › Supply Chest) so iconFiltersOff can target any
+  // level; hiding a parent cascades to its children via the render-time
   // filter.
-  const tree = new Map(); // category → { total, subs: Map<sub, n> }
+  // category → { total, subs: Map<name, { n, subs?: Map<sub, n> }> } — an
+  // entry with its own `subs` is a group.
+  const tree = new Map();
   for (const ic of iconDrafts) {
     const kind = getIconCatalogEntry(ic.kind);
     const cat = ic.category || kind?.category || 'Uncategorised';
     const sub = ic.subcategory || kind?.subcategory || '';
+    const group = kind?.group || '';
     if (!tree.has(cat)) tree.set(cat, { total: 0, subs: new Map() });
     const entry = tree.get(cat);
     entry.total++;
-    if (sub) entry.subs.set(sub, (entry.subs.get(sub) || 0) + 1);
+    if (group) {
+      if (!entry.subs.has(group)) entry.subs.set(group, { n: 0, subs: new Map() });
+      const g = entry.subs.get(group);
+      g.n++;
+      if (sub) g.subs.set(sub, (g.subs.get(sub) || 0) + 1);
+    } else if (sub) {
+      if (!entry.subs.has(sub)) entry.subs.set(sub, { n: 0 });
+      entry.subs.get(sub).n++;
+    }
   }
   // Synthetic "Zone" category — not derived from placed icons at all (L3
   // zone Names/Area map layers instead), but toggled through the exact same
   // iconFiltersOff mechanism so it needs no separate show/hide plumbing.
   // Direct user request.
   if (l3ZoneCount > 0) {
-    tree.set('Zone', { total: l3ZoneCount, subs: new Map([['Names', l3ZoneCount], ['Area', l3ZoneCount]]) });
+    tree.set('Zone', { total: l3ZoneCount, subs: new Map([['Names', { n: l3ZoneCount }], ['Area', { n: l3ZoneCount }]]) });
   }
   const cats = [...tree.entries()].sort((a, b) => compareCategories(a[0], b[0]));
   // Every filter key shown in this panel (categories + their subcategories),
   // for the Hide all / Show all button.
-  const allKeys = cats.flatMap(([cat, entry]) => [cat, ...[...entry.subs.keys()].map(sub => `${cat}/${sub}`)]);
+  const allKeys = cats.flatMap(([cat, entry]) => [cat, ...[...entry.subs.entries()].flatMap(([name, node]) => [
+    `${cat}/${name}`, ...(node.subs ? [...node.subs.keys()].map(sub => `${cat}/${sub}`) : []),
+  ])]);
   const allHidden = cats.length > 0 && cats.every(([cat]) => iconFiltersOff.has(cat));
 
   return (
@@ -122,6 +136,32 @@ export function IconFiltersPopover({
               {cats.map(([cat, entry]) => {
                 const catOff = iconFiltersOff.has(cat);
                 const subs = [...entry.subs.entries()].sort((a, b) => compareSubcategories(a[0], b[0]));
+                // One toggle row for a group or subcategory, `depth` levels under the category.
+                const renderRow = (name, n, depth, parentOff, parentName) => {
+                  const key = `${cat}/${name}`;
+                  const ownOff = iconFiltersOff.has(key);
+                  // Effectively hidden when any parent is hidden — reflected
+                  // visually without persisting state.
+                  const effectiveOff = parentOff || ownOff;
+                  return (
+                    <div key={key} className="zone-selector-row" style={{ paddingLeft: `calc(${depth} * var(--space-md, 12px))` }}>
+                      <button
+                        type="button"
+                        className={`kuro-btn kuro-btn-sm zone-selector-item ${effectiveOff ? '' : 'is-current'}`}
+                        onClick={() => toggleIconFilter(key)}
+                        aria-pressed={!effectiveOff}
+                        disabled={parentOff}
+                        title={parentOff
+                          ? t('map.legend.parentHidden', { name: parentName })
+                          : (ownOff ? t('map.legend.show', { name }) : t('map.legend.hide', { name }))}
+                      >
+                        <span className="zone-selector-caret">{effectiveOff ? '▢' : '▣'}</span>
+                        <span className="zone-selector-name">{name}</span>
+                        <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{n}</span>
+                      </button>
+                    </div>
+                  );
+                };
                 return (
                   <React.Fragment key={cat}>
                     <div className="zone-selector-row">
@@ -137,32 +177,13 @@ export function IconFiltersPopover({
                         <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{entry.total}</span>
                       </button>
                     </div>
-                    {subs.map(([sub, n]) => {
-                      const key = `${cat}/${sub}`;
-                      const subOff = iconFiltersOff.has(key);
-                      // A subcategory is effectively hidden if its parent
-                      // category is hidden — reflect that visually without
-                      // persisting state.
-                      const effectiveOff = catOff || subOff;
-                      return (
-                        <div key={key} className="zone-selector-row" style={{ paddingLeft: 'var(--space-md, 12px)' }}>
-                          <button
-                            type="button"
-                            className={`kuro-btn kuro-btn-sm zone-selector-item ${effectiveOff ? '' : 'is-current'}`}
-                            onClick={() => toggleIconFilter(key)}
-                            aria-pressed={!effectiveOff}
-                            disabled={catOff}
-                            title={catOff
-                              ? t('map.legend.parentHidden', { name: cat })
-                              : (subOff ? t('map.legend.show', { name: sub }) : t('map.legend.hide', { name: sub }))}
-                          >
-                            <span className="zone-selector-caret">{effectiveOff ? '▢' : '▣'}</span>
-                            <span className="zone-selector-name">{sub}</span>
-                            <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{n}</span>
-                          </button>
-                        </div>
-                      );
-                    })}
+                    {subs.map(([name, node]) => (
+                      <React.Fragment key={name}>
+                        {renderRow(name, node.n, 1, catOff, cat)}
+                        {node.subs && [...node.subs.entries()].sort((a, b) => compareSubcategories(a[0], b[0]))
+                          .map(([sub, n]) => renderRow(sub, n, 2, catOff || iconFiltersOff.has(`${cat}/${name}`), catOff ? cat : name))}
+                      </React.Fragment>
+                    ))}
                   </React.Fragment>
                 );
               })}

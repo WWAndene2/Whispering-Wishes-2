@@ -41,7 +41,6 @@
   "search": {
     "title": "Rechercher sur la carte",
     "placeholder": "Icônes, régions… ex. « coffre jinzhou »",
-    "clearQuery": "Effacer la recherche",
     "close": "Fermer la recherche",
     "savedTags": "Recherches enregistrées",
     "removeTag": "Retirer {{name}}",
@@ -69,6 +68,7 @@
       "catZone": "Catégorie dans la région",
       "zone": "Région",
       "icon": "Repère"
-    }
+    },
+    "header": "Recherche"
   }
 }

@@ -37,8 +37,8 @@ const DEFAULT_VISUAL_SETTINGS = Object.freeze({
   appBg: { type: 'other', id: 'log-2-0', url: './Background/Kc8q8mYt-Log-2-0.jpg', objectPosition: '50% 50%' },
   dyslexicFont: false,
   colorBlindMode: false,
-  // Settings > Display > Left-handed mode — mirrors thumb-reach controls
-  // (so far the Map tab's header buttons, popovers and cards) to the left.
+  // Settings > Display > Left-handed mode — moves thumb-reach controls to
+  // the left (html.left-handed; rules in styles/kuro.css and MapTab.jsx).
   leftHanded: false,
   soundEnabled: true,
   // Profile > Display > Sound: 'off' or '1'/'2'/'3' — which of the 3 Log

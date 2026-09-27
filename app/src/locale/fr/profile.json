@@ -158,7 +158,7 @@
     "colorBlindMode": "Mode daltonien",
     "colorBlindModeDesc": "Ajoute des motifs aux couleurs des éléments",
     "leftHanded": "Mode gaucher",
-    "leftHandedDesc": "Place boutons et panneaux à gauche (onglet Carte pour l'instant)",
+    "leftHandedDesc": "Place boutons, interrupteurs et panneaux à gauche",
     "toggleLeftHanded": "Activer/désactiver le mode gaucher",
     "toggleColorBlind": "Activer/désactiver le mode daltonien",
     "swipeNavigation": "Navigation par balayage",

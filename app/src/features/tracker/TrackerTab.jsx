@@ -100,7 +100,7 @@ function TrackerTab({
 
             {/* Onboarding hint for new users with no imported data */}
             {!state.profile.importedAt && !dismissedImport && setActiveTab && (
-              <div className="flex items-center gap-3 rounded-lg border border-cyan-500/25 bg-cyan-500/5 px-3 py-3 content-layer">
+              <div className="lh-row flex items-center gap-3 rounded-lg border border-cyan-500/25 bg-cyan-500/5 px-3 py-3 content-layer">
                 <button onClick={() => setActiveTab('profile')} className="flex items-center gap-3 flex-1 min-w-0 hover:opacity-80 transition-opacity">
                   <Upload size={16} className="text-cyan-400 flex-shrink-0" />
                   <span className="text-cyan-300/90 text-base">{t('tracker.importHintPre')} <strong>{t('tabs.profile')}</strong> {t('tracker.importHintPost')}</span>
@@ -130,7 +130,7 @@ function TrackerTab({
               </CardBody>
             </Card>
 
-            <div className="flex items-center justify-between text-sm content-layer">
+            <div className="lh-row flex items-center justify-between text-sm content-layer">
               <span className="text-gray-400">{t('tracker.versionPhaseServer', { version: activeBanners.version, phase: activeBanners.phase, server: state.server })}</span>
               <div className="flex items-center gap-2">
                 {trackerCategory === 'character' && (

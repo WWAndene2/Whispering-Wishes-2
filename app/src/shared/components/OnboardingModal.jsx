@@ -90,7 +90,7 @@ const OnboardingModal = ({ onComplete }) => {
               programmatic focus as "visible" the same as real keyboard
               focus, so it showed a highlight ring immediately on open with
               no tab press involved. */}
-          <button onClick={onComplete} className="kuro-btn onboarding-skip-btn absolute top-3 right-4 z-20 min-h-[48px]" style={{ padding: '8px 14px', fontSize: 'var(--font-sm)' }}>{t('modals.onboarding.skip')}</button>
+          <button onClick={onComplete} className="kuro-btn onboarding-skip-btn lh-corner absolute top-3 right-4 z-20 min-h-[48px]" style={{ padding: '8px 14px', fontSize: 'var(--font-sm)' }}>{t('modals.onboarding.skip')}</button>
 
           {/* Content — Abby hosts the tutorial throughout, not just the intro
               step, so she stays put above the per-step title/desc. */}

@@ -814,7 +814,7 @@ function AnalyticsTab({
                                 boxShadow: `0 0 40px ${trophyObj.color}25, 0 0 80px ${trophyObj.color}10, inset 0 0 30px ${trophyObj.color}08`
                               }}
                             >
-                              <button onClick={() => setSelectedTrophy(null)} className="absolute top-2 right-2 p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full hover:bg-white/10 text-gray-500 hover:text-white transition-all" aria-label={t('analytics.trophies.closeAria')}>
+                              <button onClick={() => setSelectedTrophy(null)} className="lh-corner absolute top-2 right-2 p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full hover:bg-white/10 text-gray-500 hover:text-white transition-all" aria-label={t('analytics.trophies.closeAria')}>
                                 <X size={14} />
                               </button>
                               <div

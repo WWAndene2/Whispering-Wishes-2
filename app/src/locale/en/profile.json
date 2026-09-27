@@ -158,7 +158,7 @@
     "colorBlindMode": "Color-Blind Mode",
     "colorBlindModeDesc": "Adds patterns to element colors",
     "leftHanded": "Left-handed mode",
-    "leftHandedDesc": "Puts buttons and panels on the left (Map tab for now)",
+    "leftHandedDesc": "Puts buttons, switches and panels on the left",
     "toggleLeftHanded": "Toggle left-handed mode",
     "toggleColorBlind": "Toggle color-blind mode",
     "swipeNavigation": "Swipe Navigation",

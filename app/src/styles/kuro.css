@@ -2893,3 +2893,25 @@
       20%  { opacity: 0.9; }
       100% { opacity: 0; transform: translate(-50%, -50%) scale(3) rotate(45deg); }
     }
+
+    /* ── Left-handed mode (Settings › Display, html.left-handed) ─────────
+       Moves thumb-reach controls to the left edge without mirroring text,
+       images or layout as a whole. Opt-in hooks:
+         .lh-row     a row whose trailing control(s) belong on the thumb side
+                     (settings switches, dismiss banners, card action rows);
+                     row-reverse flips it, and a justify-end row packs left.
+         .lh-push    a button pushed to the end of its row with ml-auto.
+         .lh-corner  a top-right absolute close / skip button → top-left.
+       Card headers with actions and sheet-modal headers flip automatically.
+       The Map tab keeps its own, more detailed rules in MapTab.jsx. */
+    html.left-handed .kuro-header:has(> .kuro-header-action) { flex-direction: row-reverse; }
+    html.left-handed .kuro-header-action { flex-direction: row-reverse; justify-content: flex-start; }
+    html.left-handed [data-sheet-header] { flex-direction: row-reverse; }
+    html.left-handed .lh-row { flex-direction: row-reverse; }
+    html.left-handed .lh-push { margin-left: 0; margin-right: auto; order: -1; }
+    html.left-handed .lh-corner.right-2 { right: auto; left: 8px; }
+    html.left-handed .lh-corner.right-3 { right: auto; left: 12px; }
+    html.left-handed .lh-corner.right-4 { right: auto; left: 16px; }
+    /* A settings row's label block (icon + text) mirrors too, so its text
+       lines up against the outer edge instead of floating ragged. */
+    html.left-handed .lh-row > .flex.items-center.gap-3 { flex-direction: row-reverse; text-align: right; }

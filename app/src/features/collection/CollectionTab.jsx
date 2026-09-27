@@ -365,7 +365,7 @@ function CollectionTab({
         <>
           {/* Import prompt toast — non-blocking, dismissible */}
           {!state.profile.importedAt && !dismissedImport && setActiveTab && (
-            <div className="flex items-center gap-3 rounded-lg border border-cyan-500/25 bg-cyan-500/5 px-3 py-3 content-layer">
+            <div className="lh-row flex items-center gap-3 rounded-lg border border-cyan-500/25 bg-cyan-500/5 px-3 py-3 content-layer">
               <button onClick={() => setActiveTab('profile')} className="flex items-center gap-3 flex-1 min-w-0 hover:opacity-80 transition-opacity">
                 <Upload size={14} className="text-cyan-400 flex-shrink-0" />
                 <span className="text-cyan-300/90 text-sm">{t('collection.importPromptPre')} <strong>{t('collection.importPromptTab')}</strong> {t('collection.importPromptPost')}</span>
@@ -691,7 +691,7 @@ function CollectionTab({
                 </CardBody>
               </Card>
               {/* Sort Controls */}
-              <div className="flex gap-1.5 items-center justify-end">
+              <div className="lh-row flex gap-1.5 items-center justify-end">
                 <button
                   onClick={refreshImages}
                   className="kuro-btn flex items-center justify-center w-[30px] h-[30px] !p-0 !rounded-lg text-gray-400 hover:text-emerald-400 transition-all"

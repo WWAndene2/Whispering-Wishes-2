@@ -604,7 +604,7 @@ function ProfileTab({
               <CardHeader><Settings size={14} className="text-gray-400" /> {t('profile.display.title')}</CardHeader>
               <CardBody className="space-y-3">
                 {/* OLED Mode Toggle */}
-                <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
+                <div className="lh-row flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
                   <div className="flex items-center gap-3">
                     <div className={`w-[30px] h-[30px] shrink-0 rounded-lg flex items-center justify-center ${visualSettings.oledMode ? 'bg-white text-black' : 'text-gray-400'}`} style={!visualSettings.oledMode ? { background: 'var(--bg-btn)' } : undefined}>
                       <Monitor size={16} />
@@ -631,7 +631,7 @@ function ProfileTab({
                 )}
 
                 {/* Dyslexic Font Toggle */}
-                <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
+                <div className="lh-row flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
                   <div className="flex items-center gap-3">
                     <div className={`w-[30px] h-[30px] shrink-0 rounded-lg flex items-center justify-center ${visualSettings.dyslexicFont ? 'bg-amber-500 text-white' : 'text-gray-400'}`} style={!visualSettings.dyslexicFont ? { background: 'var(--bg-btn)' } : undefined}>
                       <Type size={16} />
@@ -654,7 +654,7 @@ function ProfileTab({
                 </div>
 
                 {/* Color-Blind Mode Toggle */}
-                <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
+                <div className="lh-row flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
                   <div className="flex items-center gap-3">
                     <div className={`w-[30px] h-[30px] shrink-0 rounded-lg flex items-center justify-center ${visualSettings.colorBlindMode ? 'bg-teal-500 text-white' : 'text-gray-400'}`} style={!visualSettings.colorBlindMode ? { background: 'var(--bg-btn)' } : undefined}>
                       <Eye size={16} />
@@ -677,7 +677,7 @@ function ProfileTab({
                 </div>
 
                 {/* Left-Handed Mode Toggle */}
-                <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
+                <div className="lh-row flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
                   <div className="flex items-center gap-3">
                     <div className={`w-[30px] h-[30px] shrink-0 rounded-lg flex items-center justify-center ${visualSettings.leftHanded ? 'bg-violet-500 text-white' : 'text-gray-400'}`} style={!visualSettings.leftHanded ? { background: 'var(--bg-btn)' } : undefined}>
                       <Hand size={16} className="-scale-x-100" />
@@ -700,7 +700,7 @@ function ProfileTab({
                 </div>
 
                 {/* Swipe Navigation Toggle */}
-                <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
+                <div className="lh-row flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
                   <div className="flex items-center gap-3">
                     <div className={`w-[30px] h-[30px] shrink-0 rounded-lg flex items-center justify-center ${visualSettings.swipeNavigation ? 'bg-cyan-500 text-white' : 'text-gray-400'}`} style={!visualSettings.swipeNavigation ? { background: 'var(--bg-btn)' } : undefined}>
                       <ChevronDown size={16} className="-rotate-90" />
@@ -727,7 +727,7 @@ function ProfileTab({
                 )}
 
                 {/* Animations Toggle — 3-state: off < on < full */}
-                <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
+                <div className="lh-row flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
                   <div className="flex items-center gap-3">
                     <div className={`w-[30px] h-[30px] shrink-0 rounded-lg flex items-center justify-center ${visualSettings.animationsEnabled !== 'off' ? (visualSettings.animationsEnabled === 'full' ? 'bg-fuchsia-500 text-white' : 'bg-purple-500 text-white') : 'text-gray-400'}`} style={visualSettings.animationsEnabled === 'off' ? { background: 'var(--bg-btn)' } : undefined}>
                       <Sparkles size={16} />
@@ -1225,7 +1225,7 @@ function ProfileTab({
                     with no section header of its own. */}
 
                 {/* Master Sound Toggle */}
-                <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
+                <div className="lh-row flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
                   <div className="flex items-center gap-3">
                     <div className={`w-[30px] h-[30px] shrink-0 rounded-lg flex items-center justify-center ${visualSettings.soundEnabled ? 'bg-cyan-500 text-white' : 'text-gray-400'}`} style={!visualSettings.soundEnabled ? { background: 'var(--bg-btn)' } : undefined}>
                       {visualSettings.soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
@@ -1343,7 +1343,7 @@ function ProfileTab({
 
                 {/* Install App on Device */}
                 {pwa?.canInstall && (
-                  <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
+                  <div className="lh-row flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
                     <div className="flex items-center gap-3">
                       <div className="w-[30px] h-[30px] shrink-0 rounded-lg flex items-center justify-center bg-[rgba(237,175,24,0.2)] text-yellow-400">
                         <Download size={16} />

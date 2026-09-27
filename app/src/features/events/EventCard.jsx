@@ -151,7 +151,7 @@ const EventCard = memo(({ event, server, bannerImage, visualSettings, status, on
           </div>
         </div>
 
-        <div className="flex justify-between items-end">
+        <div className="lh-row flex justify-between items-end">
           <div className={event.rewards ? `kuro-badge font-medium ${isExpired ? 'kuro-badge-gray' : showDoneStyle ? 'kuro-badge-emerald' : isSkipped ? 'kuro-badge-gray line-through' : `${colors.bg} ${colors.text}`}` : ''}>
             {renderRewardsWithIcons(event.rewards)}
           </div>

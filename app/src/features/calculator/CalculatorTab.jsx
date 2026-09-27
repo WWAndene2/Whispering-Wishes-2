@@ -225,7 +225,7 @@ function CalculatorTab({ state, dispatch }) {
                       {[[ASTRITE_PER_PULL,t('calculator.convenePlural1')], [ASTRITE_PER_PULL*5,t('calculator.convenesN', { n: 5 })], [ASTRITE_PER_PULL*10,t('calculator.convenesN', { n: 10 })], [ASTRITE_PER_PULL*20,t('calculator.convenesN', { n: 20 })]].map(([amt, tip]) => (
                         <button key={amt} onClick={() => setCalc('astrite', String(Math.min(MAX_ASTRITE, (+state.calc.astrite || 0) + amt)))} className="kuro-btn kuro-btn-sm active-gold" style={{ paddingLeft: 8, paddingRight: 8 }} title={tip} aria-label={t('calculator.addAstriteAria', { amt: formatNumber(amt), tip })}>+{formatNumber(amt)}<span className="text-yellow-600 ml-0.5 text-sm">({tip.split(' ')[0]})</span></button>
                       ))}
-                      <button onClick={() => setCalc('astrite', '')} className="kuro-btn kuro-btn-sm active-red ml-auto" style={{ paddingLeft: 8, paddingRight: 8 }} aria-label={t('calculator.clearAstriteAria')}>{t('calculator.clearLabel')}</button>
+                      <button onClick={() => setCalc('astrite', '')} className="kuro-btn kuro-btn-sm active-red ml-auto lh-push" style={{ paddingLeft: 8, paddingRight: 8 }} aria-label={t('calculator.clearAstriteAria')}>{t('calculator.clearLabel')}</button>
                     </div>
                   </div>
                   <div>
@@ -235,7 +235,7 @@ function CalculatorTab({ state, dispatch }) {
                       {[[ASTRITE_PER_PULL,t('calculator.convenePlural1')], [ASTRITE_PER_PULL*5,t('calculator.convenesN', { n: 5 })], [ASTRITE_PER_PULL*10,t('calculator.convenesN', { n: 10 })], [ASTRITE_PER_PULL*20,t('calculator.convenesN', { n: 20 })]].map(([amt, tip]) => (
                         <button key={amt} onClick={() => setCalc('lunite', String(Math.min(MAX_ASTRITE, (+state.calc.lunite || 0) + amt)))} className="kuro-btn kuro-btn-sm active-cyan" style={{ paddingLeft: 8, paddingRight: 8 }} title={tip} aria-label={t('calculator.addLuniteAria', { amt: formatNumber(amt), tip })}>+{formatNumber(amt)}<span className="text-cyan-600 ml-0.5 text-sm">({tip.split(' ')[0]})</span></button>
                       ))}
-                      <button onClick={() => setCalc('lunite', '')} className="kuro-btn kuro-btn-sm active-red ml-auto" style={{ paddingLeft: 8, paddingRight: 8 }} aria-label={t('calculator.clearLuniteAria')}>{t('calculator.clearLabel')}</button>
+                      <button onClick={() => setCalc('lunite', '')} className="kuro-btn kuro-btn-sm active-red ml-auto lh-push" style={{ paddingLeft: 8, paddingRight: 8 }} aria-label={t('calculator.clearLuniteAria')}>{t('calculator.clearLabel')}</button>
                     </div>
                   </div>
                   {(() => {
@@ -287,7 +287,7 @@ function CalculatorTab({ state, dispatch }) {
                         {[1, 5, 10].map(amt => (
                           <button key={amt} onClick={() => setCalc('lustrous', String(Math.min(MAX_CALC_PULLS, (+state.calc.lustrous || 0) + amt)))} aria-label={t('calculator.addLustrousAria', { amt, plural: amt > 1 ? 's' : '' })} className="kuro-btn kuro-btn-sm active-cyan" style={{ paddingLeft: 8, paddingRight: 8 }}>+{amt}</button>
                         ))}
-                        <button onClick={() => setCalc('lustrous', '')} className="kuro-btn kuro-btn-sm active-red ml-auto" style={{ paddingLeft: 8, paddingRight: 8 }} aria-label={t('calculator.clearLustrousAria')}>{t('calculator.clearLabel')}</button>
+                        <button onClick={() => setCalc('lustrous', '')} className="kuro-btn kuro-btn-sm active-red ml-auto lh-push" style={{ paddingLeft: 8, paddingRight: 8 }} aria-label={t('calculator.clearLustrousAria')}>{t('calculator.clearLabel')}</button>
                       </div>
                     </div>
                   )}

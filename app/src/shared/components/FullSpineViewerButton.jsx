@@ -103,7 +103,7 @@ const FullSpineViewerButton = ({ name, imageUrl, className = '', variant = 'butt
               fallbackImgStyle={{ objectFit: 'contain', objectPosition: 'center' }}
             />
           </div>
-          <button onClick={() => setOpen(false)} className="kuro-btn absolute top-3 right-3 z-20 w-8 h-8 !p-0 rounded-full flex items-center justify-center" aria-label={t('modals.characterDetail.closeFullSpineAria')}>
+          <button onClick={() => setOpen(false)} className="kuro-btn lh-corner absolute top-3 right-3 z-20 w-8 h-8 !p-0 rounded-full flex items-center justify-center" aria-label={t('modals.characterDetail.closeFullSpineAria')}>
             <X size={14} />
           </button>
         </div>

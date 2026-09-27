@@ -175,7 +175,8 @@ const MAX_IMG_ENTRIES = 250;
 // both Solaris_3's and Mengzhou's tiles again.
 // v16: Lahai Roi's tiles moved to map-tiles/lahai-roi-v2/ (new map); drops
 // every device's cached copy of the previous tiles.
-const TILE_CACHE_VERSION = 'v16';
+// v17: Dimmr Plains' tiles moved to map-tiles/Dimmr_Plains-v2/ (new map).
+const TILE_CACHE_VERSION = 'v17';
 const TILE_CACHE = `ww-tiles-${TILE_CACHE_VERSION}`;
 // Match tiles for either:
 //   * a flat sub-map overlay at /<dir>/lossless/{y}/{x}.png

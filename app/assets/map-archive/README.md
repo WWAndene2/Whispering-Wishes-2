@@ -8,6 +8,8 @@ code references these files.
   update (tiles, sources, reference webp), byte-for-byte as it was served.
 - `lahai-roi-2026-09-22/unused-webp-tiles/` — an older `{z}/{y}/{x}.webp`
   pyramid that sat next to it; the app only ever loaded `lossless/`.
+- `dimmr-plains-2026-09-22/overlay/` — Dimmr Plains before the 2026-09-27
+  map update (tiles and reference webp), byte-for-byte as it was served.
 - `solaris_3-old/` — the base world map's previous version.
 
 To bring a version back, move its folder into `app/public/map-tiles/` under a

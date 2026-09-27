@@ -80,6 +80,10 @@
 // the 451 existing icons byte-for-byte and in the same order): 40 new
 // enemy icons appended, one per Overlord / Calamity boss kind.
 //
+// DEFAULT_ICON_DRAFTS: 2026-09-27T20:07:15Z export — only change: 15 boss
+// icons moved from floor null (all floors) to 0 (ground). Delivered to
+// existing players through ICON_SEED_CHANGES[3].
+//
 // DEFAULT_PAINT_STROKES is empty - the 552 strokes from that export (3232
 // points across blur/200, fade/200, blur/113) were baked directly into
 // Solaris_3's master image and its tile pyramid was re-sliced from the
@@ -1090,19 +1094,19 @@ export const DEFAULT_ICON_DRAFTS = [
   { id: 'icon-muiz2oio-2oj', kind: 'supply-chest', category: 'Collectible', subcategory: 'Supply Chest', x: 4698, y: 7927, floor: -1, zoneId: 'overlay-tethys-deep-mo6i9a2z', label: '', locked: true, inTree: true, scale: 1, rotation: 0, opacity: 1 },
   { id: 'icon-muiz35r8-7kn', kind: 'supply-chest', category: 'Collectible', subcategory: 'Supply Chest', x: 4727, y: 7959, floor: -1, zoneId: 'overlay-tethys-deep-mo6i9a2z', label: '', locked: true, inTree: true, scale: 1, rotation: 0, opacity: 1 },
   { id: 'icon-muk25x6d-18', kind: 'enemy-fallacy-of-no-return', category: 'Enemy', subcategory: 'Overlord', label: '', x: 5209, y: 8121, zoneId: 'overlay-tethys-deep-mo6i9a2z', floor: -1, locked: true, inTree: true },
-  { id: 'icon-muk284kr-28n', kind: 'enemy-dreamless', category: 'Enemy', subcategory: 'Calamity', label: '', x: 3889, y: 6714, zoneId: 'norfall-barrens', floor: null, locked: true, inTree: true },
-  { id: 'icon-muk299zm-3k', kind: 'enemy-thundering-mephis', category: 'Enemy', subcategory: 'Overlord', label: '', x: 3041, y: 7168, zoneId: 'desorock-highland', floor: null, locked: true, inTree: true },
-  { id: 'icon-muk2akll-kf', kind: 'enemy-impermanence-heron', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2983, y: 7035, zoneId: 'desorock-highland', floor: null, locked: true, inTree: true },
-  { id: 'icon-muk2euno-5at', kind: 'enemy-tempest-mephis', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2815, y: 7592, zoneId: 'central-plains', floor: null, locked: true, inTree: true },
-  { id: 'icon-muk2fenj-5ku', kind: 'enemy-scar-aberrant-nightmare', category: 'Enemy', subcategory: 'Calamity', label: '', x: 2902, y: 7666, zoneId: 'central-plains', floor: null, locked: true, inTree: true },
-  { id: 'icon-muk2g0lj-25g', kind: 'enemy-crownless', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2552, y: 7854, zoneId: 'central-plains', floor: null, locked: true, inTree: true },
-  { id: 'icon-muk2gxr6-4dg', kind: 'enemy-bell-borne-geochelone', category: 'Enemy', subcategory: 'Calamity', label: '', x: 2298, y: 7879, zoneId: 'gorges-of-spirits', floor: null, locked: true, inTree: true },
-  { id: 'icon-muk2huun-5gf', kind: 'enemy-inferno-rider', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2327, y: 8695, zoneId: 'port-city-of-guixu', floor: null, locked: true, inTree: true },
-  { id: 'icon-muk2igvk-1u4', kind: 'enemy-feilian-beringal', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2965, y: 9266, zoneId: 'dim-forest', floor: null, locked: true, inTree: true },
-  { id: 'icon-muk2jt8l-4ff', kind: 'enemy-lampylumen-myriad', category: 'Enemy', subcategory: 'Overlord', label: '', x: 3107, y: 8613, zoneId: 'wuming-bay', floor: null, locked: true, inTree: true },
-  { id: 'icon-muk2krb8-2a3', kind: 'enemy-mourning-aix', category: 'Enemy', subcategory: 'Overlord', label: '', x: 3652, y: 9451, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
-  { id: 'icon-muk2lyol-6q', kind: 'enemy-mech-abomination', category: 'Enemy', subcategory: 'Overlord', label: '', x: 3731, y: 9233, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
-  { id: 'icon-muk2mune-7iw', kind: 'enemy-jue', category: 'Enemy', subcategory: 'Calamity', label: '', x: 5046, y: 9496, zoneId: 'huanglong-sub-1', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk284kr-28n', kind: 'enemy-dreamless', category: 'Enemy', subcategory: 'Calamity', label: '', x: 3889, y: 6714, zoneId: 'norfall-barrens', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk299zm-3k', kind: 'enemy-thundering-mephis', category: 'Enemy', subcategory: 'Overlord', label: '', x: 3041, y: 7168, zoneId: 'desorock-highland', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2akll-kf', kind: 'enemy-impermanence-heron', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2983, y: 7035, zoneId: 'desorock-highland', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2euno-5at', kind: 'enemy-tempest-mephis', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2815, y: 7592, zoneId: 'central-plains', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2fenj-5ku', kind: 'enemy-scar-aberrant-nightmare', category: 'Enemy', subcategory: 'Calamity', label: '', x: 2902, y: 7666, zoneId: 'central-plains', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2g0lj-25g', kind: 'enemy-crownless', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2552, y: 7854, zoneId: 'central-plains', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2gxr6-4dg', kind: 'enemy-bell-borne-geochelone', category: 'Enemy', subcategory: 'Calamity', label: '', x: 2298, y: 7879, zoneId: 'gorges-of-spirits', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2huun-5gf', kind: 'enemy-inferno-rider', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2327, y: 8695, zoneId: 'port-city-of-guixu', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2igvk-1u4', kind: 'enemy-feilian-beringal', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2965, y: 9266, zoneId: 'dim-forest', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2jt8l-4ff', kind: 'enemy-lampylumen-myriad', category: 'Enemy', subcategory: 'Overlord', label: '', x: 3107, y: 8613, zoneId: 'wuming-bay', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2krb8-2a3', kind: 'enemy-mourning-aix', category: 'Enemy', subcategory: 'Overlord', label: '', x: 3652, y: 9451, zoneId: 'whining-aix-s-mire', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2lyol-6q', kind: 'enemy-mech-abomination', category: 'Enemy', subcategory: 'Overlord', label: '', x: 3731, y: 9233, zoneId: 'whining-aix-s-mire', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk2mune-7iw', kind: 'enemy-jue', category: 'Enemy', subcategory: 'Calamity', label: '', x: 5046, y: 9496, zoneId: 'huanglong-sub-1', floor: 0, locked: true, inTree: true },
   { id: 'icon-muk2ovj1-2ig', kind: 'enemy-nightmare-thundering-mephis', category: 'Enemy', subcategory: 'Elite', label: '', x: 7986, y: 10969, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
   { id: 'icon-muk2q1v9-2yx', kind: 'enemy-nightmare-impermanence-heron', category: 'Enemy', subcategory: 'Elite', label: '', x: 8242, y: 11570, zoneId: 'thessaleo-fell', floor: 0, locked: true, inTree: true },
   { id: 'icon-muk2qnzu-mk', kind: 'enemy-lorelei', category: 'Enemy', subcategory: 'Overlord', label: '', x: 8409, y: 11168, zoneId: 'nimbus-sanctum', floor: 0, locked: true, inTree: true },
@@ -1125,8 +1129,8 @@ export const DEFAULT_ICON_DRAFTS = [
   { id: 'icon-muk3fhwk-6sa', kind: 'enemy-threnodian-leviathan', category: 'Enemy', subcategory: 'Calamity', label: '', x: 10094, y: 16016, zoneId: 'rinascita-sub-2', floor: 0, locked: true, inTree: true },
   { id: 'icon-muk3hb0z-2bc', kind: 'enemy-hyvatia', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2802, y: 3883, zoneId: 'starward-riseway', floor: -5, locked: true, inTree: true },
   { id: 'icon-muk3mtlv-2xs', kind: 'enemy-reactor-husk', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2461, y: 2956, zoneId: 'fangspire-chasm', floor: -5, locked: true, inTree: true },
-  { id: 'icon-muk3p50k-3rw', kind: 'enemy-nameless-explorer', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2536, y: 3011, zoneId: 'starblind-crashsite', floor: null, locked: true, inTree: true },
-  { id: 'icon-muk3rrt5-4vr', kind: 'enemy-sigillum', category: 'Enemy', subcategory: 'Calamity', label: '', x: 2324, y: 2234, zoneId: 'tidelost-forest', floor: null, locked: true, inTree: true },
+  { id: 'icon-muk3p50k-3rw', kind: 'enemy-nameless-explorer', category: 'Enemy', subcategory: 'Overlord', label: '', x: 2536, y: 3011, zoneId: 'starblind-crashsite', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muk3rrt5-4vr', kind: 'enemy-sigillum', category: 'Enemy', subcategory: 'Calamity', label: '', x: 2324, y: 2234, zoneId: 'tidelost-forest', floor: 0, locked: true, inTree: true },
   { id: 'icon-muk3ufgk-270', kind: 'enemy-seed-of-illusory-origin', category: 'Enemy', subcategory: 'Calamity', label: '', x: 3150, y: 3754, zoneId: 'dimmr-deep', floor: -6, locked: true, inTree: true },
   { id: 'icon-muk3wwu7-2x', kind: 'enemy-myriad-snare-rustfire-chassis', category: 'Enemy', subcategory: 'Overlord', label: '', x: -1635, y: 7220, zoneId: 'eastern-fang-peaks', floor: 0, locked: true, inTree: true },
 ];
@@ -1183,4 +1187,27 @@ export const ICON_SEED_ADDITIONS = {
     'icon-muk3wwu7-2x',
   ],
 };
-export const ICON_SEED_VERSION = 2;
+// Changes to icons already seeded, per version: [id, field, from, to].
+// Applied to a player's saved icon only while it still has `from` (the player
+// hasn't edited that field), so personal edits always win.
+export const ICON_SEED_CHANGES = {
+  // 2026-09-27T20:07:15Z export: 15 boss icons from "all floors" to ground.
+  3: [
+    ['icon-muk284kr-28n', 'floor', null, 0],
+    ['icon-muk299zm-3k', 'floor', null, 0],
+    ['icon-muk2akll-kf', 'floor', null, 0],
+    ['icon-muk2euno-5at', 'floor', null, 0],
+    ['icon-muk2fenj-5ku', 'floor', null, 0],
+    ['icon-muk2g0lj-25g', 'floor', null, 0],
+    ['icon-muk2gxr6-4dg', 'floor', null, 0],
+    ['icon-muk2huun-5gf', 'floor', null, 0],
+    ['icon-muk2igvk-1u4', 'floor', null, 0],
+    ['icon-muk2jt8l-4ff', 'floor', null, 0],
+    ['icon-muk2krb8-2a3', 'floor', null, 0],
+    ['icon-muk2lyol-6q', 'floor', null, 0],
+    ['icon-muk2mune-7iw', 'floor', null, 0],
+    ['icon-muk3p50k-3rw', 'floor', null, 0],
+    ['icon-muk3rrt5-4vr', 'floor', null, 0],
+  ],
+};
+export const ICON_SEED_VERSION = 3;

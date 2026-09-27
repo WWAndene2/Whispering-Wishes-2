@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { mergeIconSeed, loadIconDrafts, ICON_DRAFTS_KEY, ICON_SEED_VERSION_KEY } from '../features/map/mapStorage.js';
-import { DEFAULT_ICON_DRAFTS, ICON_SEED_ADDITIONS, ICON_SEED_VERSION } from '../data/mapDefaults.js';
+import { DEFAULT_ICON_DRAFTS, ICON_SEED_ADDITIONS, ICON_SEED_CHANGES, ICON_SEED_VERSION } from '../data/mapDefaults.js';
 
 const ic = (id) => ({ id, kind: 'resonance-beacon', x: 0, y: 0 });
 const seed = [ic('a'), ic('b'), ic('c'), ic('d')];
@@ -20,6 +20,25 @@ describe('mergeIconSeed', () => {
   it('keeps the player edits of an icon it already has', () => {
     const edited = { ...ic('c'), x: 99 };
     expect(mergeIconSeed([edited], 1, seed, additions, 3).icons[0]).toBe(edited);
+  });
+});
+
+describe('mergeIconSeed field changes', () => {
+  const chg = { 3: [['a', 'floor', null, 0]] };
+  it('applies a change only where the player still has the old value', () => {
+    expect(mergeIconSeed([{ ...ic('a'), floor: null }], 2, seed, {}, 3, chg).icons[0].floor).toBe(0);
+    expect(mergeIconSeed([{ ...ic('a'), floor: 4 }], 2, seed, {}, 3, chg).icons[0].floor).toBe(4);
+    expect(mergeIconSeed([ic('b')], 2, seed, {}, 3, chg).icons).toEqual([ic('b')]); // deleted: nothing added
+  });
+  it('treats a missing field as null and never mutates the saved list', () => {
+    const saved = [ic('a')];
+    const r = mergeIconSeed(saved, 2, seed, {}, 3, chg);
+    expect(r.icons[0].floor).toBe(0);
+    expect(saved[0].floor).toBeUndefined();
+  });
+  it('seed already holds every change target value', () => {
+    const byId = new Map(DEFAULT_ICON_DRAFTS.map(i => [i.id, i]));
+    for (const list of Object.values(ICON_SEED_CHANGES)) for (const [id, f, , to] of list) expect(byId.get(id)?.[f]).toBe(to);
   });
 });
 

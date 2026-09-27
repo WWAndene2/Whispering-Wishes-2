@@ -223,7 +223,9 @@ export const MAP_ICON_CATALOG = [
     // assets/map-icon-sources/exploration-progress-capture-6.png) by
     // colour-to-alpha against black, like Sonance Casket: Ragunna — the
     // outer-background method left dark caps on the thin white tips (beak,
-    // wing, tail); 65% of the canvas height and width.
+    // wing, tail); then a rim of the icon's own edge gold (~1.25 px at
+    // 128 px) is added around the silhouette so the thin edges read solid;
+    // 65% of the canvas height and width.
     imageUrl: 'map-icons/Unclaimed-Rafter-Kites.png',
     size: 128,
   },

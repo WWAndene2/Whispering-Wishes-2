@@ -17,7 +17,7 @@ import { getIconImageUrl } from './iconImageCache.js';
 const FAVORITES_KEY = 'ww-icon-picker-favorites';
 const RECENT_KEY = 'ww-icon-picker-recent';
 const RECENT_MAX = 12;
-const CATEGORY_ORDER = ['Resonance', 'Collectible', 'Enemy'];
+const CATEGORY_ORDER = ['Resonance', 'Collectible', 'Point of Interest', 'Enemy'];
 
 const readList = (key) => {
   try { const v = JSON.parse(localStorage.getItem(key) || '[]'); return Array.isArray(v) ? v : []; } catch { return []; }

@@ -29,7 +29,7 @@ function compareSubcategories(a, b) {
 // Explicit priority for known top-level categories (Zone before Resonance,
 // Enemy under Collectible — direct user requests); anything else falls back
 // to alphabetical order after these.
-const CATEGORY_ORDER = ['Zone', 'Resonance', 'Collectible', 'Enemy'];
+const CATEGORY_ORDER = ['Zone', 'Resonance', 'Collectible', 'Point of Interest', 'Enemy'];
 function compareCategories(a, b) {
   const ia = CATEGORY_ORDER.indexOf(a);
   const ib = CATEGORY_ORDER.indexOf(b);

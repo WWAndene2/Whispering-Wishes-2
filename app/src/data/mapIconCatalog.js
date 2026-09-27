@@ -58,7 +58,7 @@ export const MAP_ICON_CATALOG = [
   {
     id: 'viewpoint',
     name: 'Viewpoint',
-    category: 'Collectible',
+    category: 'Point of Interest',
     subcategory: 'Viewpoint',
     // Cut from a native in-game capture (Exploration Progress screen,
     // assets/map-icon-sources/exploration-progress-capture-2.png): outer

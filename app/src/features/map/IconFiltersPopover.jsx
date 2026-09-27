@@ -87,7 +87,7 @@ export function IconFiltersPopover({
   }
   const cats = [...tree.entries()].sort((a, b) => compareCategories(a[0], b[0]));
   // Only leaf rows (a single kind, e.g. Nexus / Supply Chest) show an icon,
-  // on the right before the count; categories and groups never do, even
+  // right after the name; categories and groups never do, even
   // while they happen to hold a single kind.
   const rowIcon = (kinds) => {
     if (!kinds || kinds.size !== 1) return null;
@@ -172,7 +172,7 @@ export function IconFiltersPopover({
                         <span className="zone-selector-caret">{effectiveOff ? '▢' : '▣'}</span>
                         <span className="zone-selector-name">{name}</span>
                         {leaf && rowIcon(kinds)}
-                        <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: leaf && rowIcon(kinds) ? 0 : 'auto' }}>{n}</span>
+                        <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{n}</span>
                       </button>
                     </div>
                   );

@@ -4136,9 +4136,12 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
            padding-right on the label. */
         .map-filters-popover .zone-selector-item .zone-selector-name {
           padding-right: 0;
+          /* Name takes only its own width so a kind icon can sit right after
+             it; the count badge keeps margin-left:auto to stay at the far right. */
+          flex: 0 1 auto;
         }
-        /* Icon of the kind a leaf filter row controls, right-aligned before the count. */
-        .map-filters-icon { width: 16px; height: 16px; flex: 0 0 16px; object-fit: contain; margin-left: auto; }
+        /* Icon of the kind a leaf filter row controls, right after its name. */
+        .map-filters-icon { width: 16px; height: 16px; flex: 0 0 16px; object-fit: contain; }
         .map-filters-popover .kuro-badge {
           font-variant-numeric: tabular-nums;
         }

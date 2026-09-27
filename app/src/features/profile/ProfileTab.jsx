@@ -5,7 +5,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { Award, Check, ChevronDown, CreditCard, Crosshair, Crown, Download, Eye, Globe, Monitor, Settings, Sparkles, Type, User, Volume2, VolumeX } from 'lucide-react';
+import { Award, Check, ChevronDown, CreditCard, Crosshair, Crown, Download, Eye, Globe, Monitor, Settings, Sparkles, Type, User, Volume2, VolumeX, Hand } from 'lucide-react';
 import ImportFlow from './ImportFlow.jsx';
 import { SERVERS, getServerOffset } from '../../data/constants.js';
 import { CHARACTER_DATA } from '../../data/characters.js';
@@ -673,6 +673,29 @@ function ProfileTab({
                     aria-label={t('profile.display.toggleColorBlind')}
                   >
                     <div className={`absolute top-[4px] w-[16px] h-[16px] rounded-full transition-all ${visualSettings.colorBlindMode ? 'left-[28px] bg-white' : 'left-[4px] bg-gray-400'}`} />
+                  </button>
+                </div>
+
+                {/* Left-Handed Mode Toggle */}
+                <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-medium)] bg-white/5">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-[30px] h-[30px] shrink-0 rounded-lg flex items-center justify-center ${visualSettings.leftHanded ? 'bg-violet-500 text-white' : 'text-gray-400'}`} style={!visualSettings.leftHanded ? { background: 'var(--bg-btn)' } : undefined}>
+                      <Hand size={16} className="-scale-x-100" />
+                    </div>
+                    <div>
+                      <div className="text-white text-base font-medium">{t('profile.display.leftHanded')}</div>
+                      <div className="text-gray-400 text-sm">{t('profile.display.leftHandedDesc')}</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => saveVisualSettings({ ...visualSettings, leftHanded: !visualSettings.leftHanded })}
+                    className={`relative w-[48px] h-[24px] rounded-full transition-colors ${visualSettings.leftHanded ? 'bg-violet-500' : ''}`}
+                    style={!visualSettings.leftHanded ? { background: 'var(--bg-btn)' } : undefined}
+                    role="switch"
+                    aria-checked={!!visualSettings.leftHanded}
+                    aria-label={t('profile.display.toggleLeftHanded')}
+                  >
+                    <div className={`absolute top-[4px] w-[16px] h-[16px] rounded-full transition-all ${visualSettings.leftHanded ? 'left-[28px] bg-white' : 'left-[4px] bg-gray-400'}`} />
                   </button>
                 </div>
 

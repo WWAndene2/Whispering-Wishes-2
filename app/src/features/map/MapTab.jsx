@@ -4660,6 +4660,20 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         .map-pin-editor-note { width: 100%; height: 32px; padding: 0 8px; border-radius: 8px; border: 1px solid var(--border-primary, #334); background: rgba(0,0,0,0.3); color: var(--text-primary, #fff); font-size: 14px; }
         .map-pin-editor-actions { display: flex; gap: 8px; width: 100%; align-items: center; }
         .map-pin-editor-spacer { flex: 1 1 auto; }
+
+        /* ── Left-handed mode (Settings > Display, html.left-handed) ──────
+           Thumb-reach controls move to the left edge: header buttons come
+           first (title goes right), header-anchored popovers open from the
+           left, and cards / the pin editor put their buttons on the left. */
+        html.left-handed .map-header-tap .kuro-header { flex-direction: row-reverse; }
+        html.left-handed .map-header-tap .kuro-header-action { flex-direction: row-reverse; }
+        html.left-handed .map-zones-popover,
+        html.left-handed .map-filters-popover,
+        html.left-handed .map-downloads-popover { right: auto; left: var(--space-md, 12px); }
+        html.left-handed .map-icon-card { flex-direction: row-reverse; }
+        html.left-handed .map-icon-card-text { text-align: right; }
+        html.left-handed .map-pin-editor { flex-direction: row; }
+        html.left-handed .map-pin-editor-actions { flex-direction: row-reverse; }
         .map-icon-card-text { flex: 1 1 auto; min-width: 0; }
         .map-icon-card-name { font-size: 14px; color: var(--text-primary, #fff); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .map-icon-card-facts, .map-icon-card-zone { font-size: 12px; color: var(--text-muted, #8892a4); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

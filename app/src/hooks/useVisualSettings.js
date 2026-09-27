@@ -37,6 +37,9 @@ const DEFAULT_VISUAL_SETTINGS = Object.freeze({
   appBg: { type: 'other', id: 'log-2-0', url: './Background/Kc8q8mYt-Log-2-0.jpg', objectPosition: '50% 50%' },
   dyslexicFont: false,
   colorBlindMode: false,
+  // Settings > Display > Left-handed mode — mirrors thumb-reach controls
+  // (so far the Map tab's header buttons, popovers and cards) to the left.
+  leftHanded: false,
   soundEnabled: true,
   // Profile > Display > Sound: 'off' or '1'/'2'/'3' — which of the 3 Log
   // Screen ambient tracks (public/audio/log-screen-*.m4a) loops quietly in
@@ -145,6 +148,11 @@ export function useVisualSettings() {
   useEffect(() => {
     document.documentElement.classList.toggle('colorblind-mode', !!visualSettings.colorBlindMode);
   }, [visualSettings.colorBlindMode]);
+
+  // Sync left-handed mode class to <html> (features scope their own mirroring to it)
+  useEffect(() => {
+    document.documentElement.classList.toggle('left-handed', !!visualSettings.leftHanded);
+  }, [visualSettings.leftHanded]);
 
   // Lazy-load OpenDyslexic font for accessibility
   useEffect(() => {

@@ -81,6 +81,30 @@ export const MAP_ICON_CATALOG = [
     size: 128,
   },
   {
+    id: 'melody-orchestration',
+    name: 'Melody Orchestration',
+    category: 'Point of Interest',
+    group: 'Puzzle',
+    subcategory: 'Melody Orchestration',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-4.png): outer
+    // background removed, colours untouched; 65% of the canvas height.
+    imageUrl: 'map-icons/Melody-Orchestration.png',
+    size: 128,
+  },
+  {
+    id: 'pipe-maintenance',
+    name: 'Pipe Maintenance',
+    category: 'Point of Interest',
+    group: 'Puzzle',
+    subcategory: 'Pipe Maintenance',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-4.png): outer
+    // background removed, colours untouched; 65% of the canvas height.
+    imageUrl: 'map-icons/Pipe-Maintenance.png',
+    size: 128,
+  },
+  {
     id: 'blobfly',
     name: 'Blobfly',
     category: 'Collectible',
@@ -163,8 +187,10 @@ export const MAP_ICON_CATALOG = [
     category: 'Collectible',
     group: 'Chest',
     subcategory: 'Triptych Chest',
-    // Placeholder image: the empty round frame (no dedicated icon).
-    imageUrl: 'map-icons/frames/round-frame.png',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-4.png): outer
+    // background removed, colours untouched; 65% of the canvas height.
+    imageUrl: 'map-icons/Triptych-Chest.png',
     size: 128,
   },
   {

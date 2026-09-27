@@ -109,6 +109,12 @@ const ENEMY_ICONS = [
   ['the-false-sovereign', 'The False Sovereign'],
   ['threnodian-leviathan', 'Reminiscence: Threnodian - Leviathan'],
   ['thundering-mephis', 'Thundering Mephis'],
+  ['thousand-puppet-pavilion', 'Thousand-Puppet Pavilion'],
+  ['denia', 'Reminiscence: Denia'],
+  ['threnodian-voidborne-construct', 'Reminiscence: Threnodian - Voidborne Construct'],
+  ['lady-of-the-sea', 'Lady of the Sea'],
+  ['nightmare-crownless', 'Nightmare: Crownless'],
+  ['nightmare-lampylumen-myriad', 'Nightmare: Lampylumen Myriad'],
   // Arsinosa is the Lioness of Glory's own name — searchable as an extra tag.
   ['lioness-of-glory', 'Lioness of Glory', { tags: ['Arsinosa'] }],
 ];

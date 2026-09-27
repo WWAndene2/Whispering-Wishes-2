@@ -3,15 +3,10 @@
 // Renders the character/weapon/echo detail modal matching detailModal.type.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { lazy, Suspense } from 'react';
+import { CharacterDetailModal } from '../modals/CharacterDetailModal.jsx';
 import { WeaponDetailModal } from '../modals/WeaponDetailModal.jsx';
 import { EchoDetailModal } from '../modals/EchoDetailModal.jsx';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
-
-// Lazy: the character modal's solo rotation guide runs calcTeamStats, which pulls in the whole
-// damage engine (engine/characterBlocks + features/teams, ~1.3 MB of source). A static import here
-// put all of it in the startup bundle even though it is only needed once a character is opened.
-const CharacterDetailModal = lazy(() => import('../modals/CharacterDetailModal.jsx').then(m => ({ default: m.CharacterDetailModal })));
 
 export function DetailModalHost({ detailModal, setDetailModal, visualSettings, setActiveTab, collectionData }) {
   const { getImageFraming } = useImageFramingContext();
@@ -20,7 +15,6 @@ export function DetailModalHost({ detailModal, setDetailModal, visualSettings, s
 
   if (detailModal.type === 'character') {
     return (
-      <Suspense fallback={null}>
       <CharacterDetailModal
         name={detailModal.name}
         imageUrl={detailModal.imageUrl}
@@ -37,7 +31,6 @@ export function DetailModalHost({ detailModal, setDetailModal, visualSettings, s
         }}
         collectionData={collectionData}
       />
-      </Suspense>
     );
   }
 

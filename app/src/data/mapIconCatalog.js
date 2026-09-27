@@ -70,6 +70,18 @@ export const MAP_ICON_CATALOG = [
     size: 128,
   },
   {
+    id: 'soliskin',
+    name: 'Soliskin',
+    category: 'Collectible',
+    group: 'Trinkets',
+    subcategory: 'Soliskin',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-5.png): outer
+    // background removed, colours untouched; 65% of the canvas height.
+    imageUrl: 'map-icons/Soliskin.png',
+    size: 128,
+  },
+  {
     id: 'viewpoint',
     name: 'Viewpoint',
     category: 'Point of Interest',
@@ -102,6 +114,18 @@ export const MAP_ICON_CATALOG = [
     // assets/map-icon-sources/exploration-progress-capture-4.png): outer
     // background removed, colours untouched; 65% of the canvas height.
     imageUrl: 'map-icons/Pipe-Maintenance.png',
+    size: 128,
+  },
+  {
+    id: 'void-storm-zone',
+    name: 'Void Storm Zone',
+    category: 'Point of Interest',
+    group: 'Challenge',
+    subcategory: 'Void Storm Zone',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-5.png): outer
+    // background removed, colours untouched; 65% of the canvas height.
+    imageUrl: 'map-icons/Void-Storm-Zone.png',
     size: 128,
   },
   {
@@ -148,8 +172,11 @@ export const MAP_ICON_CATALOG = [
     category: 'Collectible',
     group: 'Trinkets',
     subcategory: 'Tape of Last Words',
-    // Placeholder image: the empty round frame (no dedicated icon).
-    imageUrl: 'map-icons/frames/round-frame.png',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-5.png): outer
+    // background removed, colours untouched; 65% of the canvas height
+    // (and of its width: the tape is a wide shape).
+    imageUrl: 'map-icons/Tape-Of-Last-Words.png',
     size: 128,
   },
   {

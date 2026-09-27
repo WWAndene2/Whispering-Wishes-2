@@ -10,9 +10,14 @@ import { DEFAULT_OVERLAY_DRAFTS } from './mapDefaults.js';
 
 export const OVERLAY_CATALOG = [
   {
-    // Re-detoured (ocean cutout retuned: tighter, more consistent coastline
-    // detection, thin margin) - pyramid/minZoom/maxZoom same convention as
-    // Mengzhou/Dimmr Plains, lossless/{z}/{y}/{x}.png for z in [minZoom, maxZoom].
+    // Lahai Roi, 2026-09-27 map update. Source: map-tiles/lahai-roi/
+    // Lahai_Roi_New.png (11264x10240 = the previous 8192x8192 frame x 11/8,
+    // cropped 512 px top and bottom), outlined like the previous version and
+    // brought back to the same 8192x8192 frame, so zones, icons and this
+    // overlay's placement are unchanged. Pyramid: lossless/{z}/{y}/{x}.png for
+    // z in [minZoom, maxZoom], same convention as Mengzhou/Dimmr Plains.
+    // The previous version is kept, unreferenced (disabled), in
+    // map-tiles/lahai-roi(old)/, like solaris_3(old)/.
     id: 'lahai-roi',
     name: 'Lahai Roi',
     imageUrl: 'map-tiles/lahai-roi/Lahai-roi.webp',

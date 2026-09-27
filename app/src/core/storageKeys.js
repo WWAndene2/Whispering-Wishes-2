@@ -30,6 +30,7 @@ export const AUX_EXPORTABLE_KEYS = {
   teamEquipment:    'ww-team-equipment',
   calendarNotes:    'ww-calendar-notes',
   mapFound:         'ww-map-found',       // map icons marked as found (array of icon ids)
+  mapPins:          'ww-map-pins',        // personal map pins (array of { id, marker, x, y, floor, note })
 };
 
 // ── Auxiliary keys: NOT exported, but cleared on reset ──

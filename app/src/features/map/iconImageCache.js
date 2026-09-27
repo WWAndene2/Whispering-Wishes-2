@@ -7,6 +7,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import { getIconCatalogEntry } from '../../data/mapIconCatalog.js';
+import { getPinMarker } from '../../data/mapPinMarkers.js';
 
 const MAP_ICON_IMAGES = new Map();
 
@@ -30,5 +31,25 @@ export function getIconImage(kindId, onReady) {
   img.src = getIconImageUrl(kindId);
   img.onload = () => onReady && onReady();
   MAP_ICON_IMAGES.set(cat.id, img);
+  return img;
+}
+
+// Personal-pin marker glyphs (data/mapPinMarkers.js), cached the same way.
+const PIN_IMAGES = new Map();
+
+export function getPinImageUrl(markerId) {
+  const base = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL) || '/';
+  return (base + getPinMarker(markerId).imageUrl).replace(/([^:])\/\//g, '$1/');
+}
+
+export function getPinImage(markerId, onReady) {
+  const id = getPinMarker(markerId).id;
+  const hit = PIN_IMAGES.get(id);
+  if (hit) return hit;
+  const img = new Image();
+  img.decoding = 'async';
+  img.src = getPinImageUrl(id);
+  img.onload = () => onReady && onReady();
+  PIN_IMAGES.set(id, img);
   return img;
 }

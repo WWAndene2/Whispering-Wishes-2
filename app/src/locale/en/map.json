@@ -80,5 +80,26 @@
     "markFound": "Mark as found",
     "found": "Found",
     "floor": "floor {{floor}}"
+  },
+  "pins": {
+    "title": "My pin",
+    "add": "Add a pin",
+    "new": "New pin",
+    "placeHint": "Tap the map to drop your pin (or hold anywhere for 1 s)",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "note": "Note",
+    "notePlaceholder": "Note (optional) — e.g. “Lamp puzzle, come back later”",
+    "marker": {
+      "label": "Marker",
+      "star": "Star",
+      "monster": "Enemy",
+      "pickaxe": "Ore",
+      "diamond": "Treasure",
+      "leaves": "Plant",
+      "question": "Unknown"
+    }
   }
 }

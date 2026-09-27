@@ -80,5 +80,26 @@
     "markFound": "Marquer trouvé",
     "found": "Trouvé",
     "floor": "étage {{floor}}"
+  },
+  "pins": {
+    "title": "Mon repère",
+    "add": "Ajouter un repère",
+    "new": "Nouveau repère",
+    "placeHint": "Touche la carte pour poser ton repère (ou maintiens 1 s n'importe où)",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "note": "Note",
+    "notePlaceholder": "Note (facultatif) — ex. « Énigme de lampe, revenir plus tard »",
+    "marker": {
+      "label": "Symbole",
+      "star": "Étoile",
+      "monster": "Ennemi",
+      "pickaxe": "Minerai",
+      "diamond": "Trésor",
+      "leaves": "Plante",
+      "question": "Inconnu"
+    }
   }
 }

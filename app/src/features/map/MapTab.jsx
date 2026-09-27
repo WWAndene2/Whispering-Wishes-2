@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Settings, Trash2, LocateFixed, Map as MapIcon, Hexagon, Plus, Construction, X, ImagePlus, Search, ChevronDown, ChevronRight } from 'lucide-react';
+import { Settings, Trash2, LocateFixed, Map as MapIcon, Hexagon, Plus, Construction, X, ImagePlus, Search, ChevronDown, ChevronRight, MapPin } from 'lucide-react';
 import { Card, CardHeader } from '../../shared/components/Card.jsx';
 import { MAP_ZONES } from '../../data/mapZones.js';
 import { OVERLAY_CATALOG, loadOverlayDrafts, saveOverlayDrafts } from '../../data/mapOverlays.js';
@@ -9,7 +9,9 @@ import { tileUrlsForOverlay } from '../../core/tileSW.js';
 import { FocusTrapModal } from '../../shared/components/FocusTrapModal.jsx';
 import { hideOnError } from '../../shared/utils/imageHelpers.js';
 import { MAP_W, MAP_H, TILE_SIZE, NATIVE_ZOOM, MAX_ZOOM, rdpSimplify, computePlacementBounds, clampToBounds } from './tileMath.js';
-import { getIconImage, getIconImageUrl } from './iconImageCache.js';
+import { getIconImage, getIconImageUrl, getPinImage, getPinImageUrl } from './iconImageCache.js';
+import { MAP_PIN_MARKERS, DEFAULT_PIN_MARKER } from '../../data/mapPinMarkers.js';
+import { generateUniqueId } from '../../utils/generateId.js';
 import { OVERLAY_TILE_CACHE, OVERLAY_TILE_CACHE_LIMIT, OVERLAY_TILE_RETRY_COUNTS } from './tileCache.js';
 import { loadDrafts, saveDrafts, loadPaintStrokes, savePaintStrokes } from './mapStorage.js';
 import { useToast } from './useToast.js';
@@ -50,6 +52,9 @@ const COLOR_DRAFT = '#38bdf8';   // cyan — session drafts
 const COLOR_ACTIVE = '#edaf18';  // gold dashed — in-progress polygon
 // Map search focus: matched icons drawn at 1.25x with a gold glow breathing over 2.4 s.
 const SEARCH_FOCUS_SCALE = 1.25;
+// Personal pin: dark disc diameter and the marker glyph drawn inside it.
+const PIN_DISC_PX = 32;
+const PIN_GLYPH_PX = 24;
 const SEARCH_BREATH_MS = 2400;
 
 // Icon categories visible by default; every other category starts hidden the
@@ -301,6 +306,35 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   }), []);
   // Icon whose info card is open (tap an icon outside author mode).
   const [iconCardId, setIconCardId] = useState(null);
+
+  // ── Personal pins (player) ─────────────────────────────────────────────
+  // Player-placed markers with an optional note: { id, marker, x, y, floor,
+  // note } in native-zoom pixel coords like icon drafts. Persisted in
+  // ww-map-pins, an exportable key (cloud backup / restore / export).
+  const [pins, setPins] = useState(() => {
+    try { const v = JSON.parse(localStorage.getItem('ww-map-pins') || '[]'); return Array.isArray(v) ? v : []; } catch { return []; }
+  });
+  const savePins = useCallback((update) => setPins(prev => {
+    const next = update(prev);
+    try { localStorage.setItem('ww-map-pins', JSON.stringify(next)); } catch {}
+    return next;
+  }), []);
+  const [pinPlacing, setPinPlacing] = useState(false);   // next map tap drops a pin
+  const [pinEditor, setPinEditor] = useState(null);      // pin being created / edited
+  const [pinCardId, setPinCardId] = useState(null);      // pin whose card is open
+  const commitPinEditor = useCallback(() => {
+    if (!pinEditor) return;
+    const { isNew, ...rest } = pinEditor; // isNew is editor-only state
+    const pin = { ...rest, note: (rest.note || '').trim() };
+    savePins(prev => (prev.some(p => p.id === pin.id) ? prev.map(p => (p.id === pin.id ? pin : p)) : [...prev, pin]));
+    setPinEditor(null);
+    setPinCardId(pin.id);
+  }, [pinEditor, savePins]);
+  const deletePin = useCallback((id) => {
+    savePins(prev => prev.filter(p => p.id !== id));
+    setPinEditor(null);
+    setPinCardId(null);
+  }, [savePins]);
 
   const saveIconDrafts = useCallback((next) => {
     setIconDrafts(next);
@@ -2290,6 +2324,27 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         ctx.drawImage(img, -size / 2, -size / 2, size, size);
         ctx.restore();
       });
+
+      // ── Personal pins: white glyph on a dark disc, above every icon.
+      pins.forEach((pin) => {
+        if (pin.floor != null && pin.floor !== viewFloor) return;
+        const img = getPinImage(pin.marker, trigger);
+        const pt = map.latLngToContainerPoint(map.unproject([pin.x, pin.y], NATIVE_ZOOM));
+        ctx.save();
+        ctx.translate(pt.x, pt.y);
+        ctx.beginPath();
+        ctx.arc(0, 0, PIN_DISC_PX / 2, 0, Math.PI * 2);
+        ctx.fillStyle = '#141416';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        ctx.shadowBlur = 4;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = pin.id === pinCardId ? '#edaf18' : 'rgba(240, 240, 242, 0.85)';
+        ctx.stroke();
+        if (img && img.complete && img.naturalWidth) ctx.drawImage(img, -PIN_GLYPH_PX / 2, -PIN_GLYPH_PX / 2, PIN_GLYPH_PX, PIN_GLYPH_PX);
+        ctx.restore();
+      });
     };
     overlayRedrawRef.current = draw;
 
@@ -2311,7 +2366,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       map.off('move zoom viewreset zoomend resize', draw);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [overlayDrafts, viewFloor, mapReady, iconDrafts, iconFiltersOff, searchFocusIds, searchStepIconId, foundIds, hideFound]);
+  }, [overlayDrafts, viewFloor, mapReady, iconDrafts, iconFiltersOff, searchFocusIds, searchStepIconId, foundIds, hideFound, pins, pinCardId]);
 
   // Cleanup shared canvas + any pending zone-arm timer on unmount.
   useEffect(() => {
@@ -3305,20 +3360,46 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     return hit;
   }, [iconDrafts, iconFiltersOff, viewFloor, searchFocusIds, hideFound, foundIds]);
 
-  // Tap an icon (outside author mode) → info card; tap elsewhere closes it.
+  const pinAtPoint = useCallback((px, py) => {
+    const map = mapRef.current;
+    if (!map) return null;
+    let hit = null;
+    let best = PIN_DISC_PX / 2 + 4;
+    for (const pin of pins) {
+      if (pin.floor != null && pin.floor !== viewFloor) continue;
+      const pt = map.latLngToContainerPoint(map.unproject([pin.x, pin.y], NATIVE_ZOOM));
+      const d = Math.hypot(pt.x - px, pt.y - py);
+      if (d <= best) { best = d; hit = pin; }
+    }
+    return hit;
+  }, [pins, viewFloor]);
+
+  // Tap a pin or an icon (outside author mode) → its card; tap elsewhere
+  // closes it. While placing a pin, the tap drops it and opens its editor.
   useEffect(() => {
     if (authorMode || !mapReady) return;
     const map = mapRef.current;
     if (!map) return;
     const onClick = (e) => {
+      if (Date.now() < suppressMapClickUntilRef.current) return;
+      if (pinPlacing) {
+        const p = map.project(e.latlng, NATIVE_ZOOM);
+        setPinPlacing(false);
+        setIconCardId(null);
+        setPinCardId(null);
+        setPinEditor({ id: `pin-${generateUniqueId()}`, marker: DEFAULT_PIN_MARKER, x: Math.round(p.x), y: Math.round(p.y), floor: viewFloor || null, note: '', isNew: true });
+        return;
+      }
       const pt = map.latLngToContainerPoint(e.latlng);
-      const ic = iconAtPoint(pt.x, pt.y);
+      const pin = pinAtPoint(pt.x, pt.y);
+      setPinCardId(pin ? pin.id : null);
+      const ic = pin ? null : iconAtPoint(pt.x, pt.y);
       setIconCardId(ic ? ic.id : null);
     };
     map.on('click', onClick);
     return () => map.off('click', onClick);
-  }, [authorMode, mapReady, iconAtPoint]);
-  useEffect(() => { if (authorMode) setIconCardId(null); }, [authorMode]);
+  }, [authorMode, mapReady, iconAtPoint, pinAtPoint, pinPlacing, viewFloor]);
+  useEffect(() => { if (authorMode) { setIconCardId(null); setPinCardId(null); setPinPlacing(false); setPinEditor(null); } }, [authorMode]);
 
   // ── Long-press to delete (author mode) ────────────────────────────────
   // Holding a finger / the mouse still on a visible icon for LONG_PRESS_MS
@@ -3381,6 +3462,54 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     };
   }, [authorMode, mapReady, iconAtPoint]);
   useEffect(() => () => { if (deletedIconTimerRef.current) clearTimeout(deletedIconTimerRef.current); }, []);
+
+  // Player mode: holding still on an empty spot for LONG_PRESS_MS drops a
+  // personal pin there (same gesture as Google Maps); on a pin it opens the
+  // pin's editor.
+  useEffect(() => {
+    if (authorMode || !mapReady) return;
+    const map = mapRef.current;
+    if (!map) return;
+    const container = map.getContainer();
+    let timer = null;
+    let start = null;
+    const cancel = () => { if (timer) clearTimeout(timer); timer = null; start = null; };
+    const onDown = (e) => {
+      if (e.isPrimary === false || e.target.closest?.('button, input, [role="dialog"], .leaflet-control')) return;
+      const rect = container.getBoundingClientRect();
+      const px = e.clientX - rect.left;
+      const py = e.clientY - rect.top;
+      start = { x: e.clientX, y: e.clientY };
+      timer = setTimeout(() => {
+        timer = null;
+        suppressMapClickUntilRef.current = Date.now() + 600;
+        haptic.medium();
+        setIconCardId(null);
+        setPinPlacing(false);
+        const pin = pinAtPoint(px, py);
+        if (pin) { setPinCardId(pin.id); setPinEditor({ ...pin }); return; }
+        setPinCardId(null);
+        const p = map.project(map.containerPointToLatLng([px, py]), NATIVE_ZOOM);
+        setPinEditor({ id: `pin-${generateUniqueId()}`, marker: DEFAULT_PIN_MARKER, x: Math.round(p.x), y: Math.round(p.y), floor: viewFloor || null, note: '', isNew: true });
+      }, LONG_PRESS_MS);
+    };
+    const onMove = (e) => { if (start && Math.hypot(e.clientX - start.x, e.clientY - start.y) > 8) cancel(); };
+    container.addEventListener('pointerdown', onDown);
+    container.addEventListener('pointermove', onMove);
+    container.addEventListener('pointerup', cancel);
+    container.addEventListener('pointercancel', cancel);
+    container.addEventListener('pointerleave', cancel);
+    map.on('zoomstart movestart', cancel);
+    return () => {
+      cancel();
+      container.removeEventListener('pointerdown', onDown);
+      container.removeEventListener('pointermove', onMove);
+      container.removeEventListener('pointerup', cancel);
+      container.removeEventListener('pointercancel', cancel);
+      container.removeEventListener('pointerleave', cancel);
+      map.off('zoomstart movestart', cancel);
+    };
+  }, [authorMode, mapReady, pinAtPoint, viewFloor]);
   const undoDeleteIcon = useCallback(() => {
     if (!deletedIcon) return;
     setIconDrafts((prev) => {
@@ -4529,6 +4658,15 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           font-family: var(--font-display); color: var(--text-body);
         }
         .map-icon-card img { width: 48px; height: 48px; object-fit: contain; flex: 0 0 48px; }
+        .map-icon-card img.map-pin-disc { background: #141416; border-radius: 50%; padding: 8px; box-sizing: border-box; }
+        .map-pin-editor { flex-wrap: wrap; }
+        .map-pin-editor-markers { display: flex; gap: 8px; width: 100%; justify-content: space-between; }
+        .map-pin-editor-marker { width: 48px; height: 48px; border-radius: 50%; background: #141416; border: 2px solid transparent; padding: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .map-pin-editor-marker.is-active { border-color: var(--accent, #edaf18); }
+        .map-pin-editor-marker img { width: 24px; height: 24px; flex: 0 0 24px; }
+        .map-pin-editor-note { width: 100%; height: 32px; padding: 0 8px; border-radius: 8px; border: 1px solid var(--border-primary, #334); background: rgba(0,0,0,0.3); color: var(--text-primary, #fff); font-size: 14px; }
+        .map-pin-editor-actions { display: flex; gap: 8px; width: 100%; align-items: center; }
+        .map-pin-editor-spacer { flex: 1 1 auto; }
         .map-icon-card-text { flex: 1 1 auto; min-width: 0; }
         .map-icon-card-name { font-size: 14px; color: var(--text-primary, #fff); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .map-icon-card-facts, .map-icon-card-zone { font-size: 12px; color: var(--text-muted, #8892a4); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -4947,6 +5085,18 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                     >
                       <MapIcon size={14} />
                     </button>
+                    {!authorMode && (
+                      <button
+                        type="button"
+                        className={`kuro-btn kuro-btn-sm kuro-btn-icon ${pinPlacing ? 'is-active' : ''}`}
+                        onClick={(e) => { e.stopPropagation(); setPinEditor(null); setIconCardId(null); setPinCardId(null); setPinPlacing(v => !v); }}
+                        aria-label={t('map.pins.add')}
+                        aria-pressed={pinPlacing}
+                        title={t('map.pins.add')}
+                      >
+                        <MapPin size={14} />
+                      </button>
+                    )}
                     <button
                       ref={filtersAnchorRef}
                       type="button"
@@ -5034,6 +5184,71 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
             )}
 
             {toast && <div className="zone-author-toast" role="status">{toast}</div>}
+
+            {pinPlacing && (
+              <div className="icon-undo-bar" role="status" style={{ top: `${headerHeight + 8}px` }} onClick={(e) => e.stopPropagation()}>
+                <MapPin size={16} aria-hidden="true" />
+                <span>{t('map.pins.placeHint')}</span>
+                <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => setPinPlacing(false)}>{t('map.pins.cancel')}</button>
+              </div>
+            )}
+
+            {pinCardId && !pinEditor && (() => {
+              const pin = pins.find(p => p.id === pinCardId);
+              if (!pin) return null;
+              return (
+                <div className="map-icon-card" role="dialog" aria-label={t('map.pins.title')} onClick={(e) => e.stopPropagation()}>
+                  <img className="map-pin-disc" src={getPinImageUrl(pin.marker)} alt="" />
+                  <div className="map-icon-card-text">
+                    <div className="map-icon-card-name">{pin.note || t(`map.pins.marker.${pin.marker}`)}</div>
+                    <div className="map-icon-card-facts">{t('map.pins.title')}{pin.floor ? ` · ${t('map.card.floor', { floor: pin.floor })}` : ''}</div>
+                  </div>
+                  <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => setPinEditor({ ...pin })}>{t('map.pins.edit')}</button>
+                  <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => setPinCardId(null)} aria-label={t('map.search.close')}><X size={14} /></button>
+                </div>
+              );
+            })()}
+
+            {pinEditor && (
+              <form
+                className="map-icon-card map-pin-editor"
+                role="dialog"
+                aria-label={pinEditor.isNew ? t('map.pins.new') : t('map.pins.edit')}
+                onClick={(e) => e.stopPropagation()}
+                onSubmit={(e) => { e.preventDefault(); commitPinEditor(); }}
+                onKeyDown={(e) => { if (e.key === 'Escape') { e.preventDefault(); setPinEditor(null); } }}
+              >
+                <div className="map-pin-editor-markers" role="radiogroup" aria-label={t('map.pins.marker.label')}>
+                  {MAP_PIN_MARKERS.map(m => (
+                    <button key={m.id} type="button" role="radio" aria-checked={pinEditor.marker === m.id}
+                      className={`map-pin-editor-marker ${pinEditor.marker === m.id ? 'is-active' : ''}`}
+                      onClick={() => setPinEditor(ed => ({ ...ed, marker: m.id }))}
+                      aria-label={t(`map.pins.marker.${m.id}`)} title={t(`map.pins.marker.${m.id}`)}>
+                      <img src={getPinImageUrl(m.id)} alt="" />
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  className="map-pin-editor-note"
+                  value={pinEditor.note}
+                  maxLength={80}
+                  placeholder={t('map.pins.notePlaceholder')}
+                  aria-label={t('map.pins.note')}
+                  onChange={(e) => { const v = e.target.value; setPinEditor(ed => ({ ...ed, note: v })); }}
+                />
+                <div className="map-pin-editor-actions">
+                  {!pinEditor.isNew && (
+                    <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => deletePin(pinEditor.id)}>
+                      <Trash2 size={14} aria-hidden="true" /> {t('map.pins.delete')}
+                    </button>
+                  )}
+                  <span className="map-pin-editor-spacer" />
+                  <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => setPinEditor(null)}>{t('map.pins.cancel')}</button>
+                  <button type="submit" className="kuro-btn kuro-btn-sm is-active">{t('map.pins.save')}</button>
+                </div>
+              </form>
+            )}
 
             {iconCardId && (() => {
               const ic = iconDrafts.find(i => i.id === iconCardId);

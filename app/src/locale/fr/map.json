@@ -101,5 +101,31 @@
       "leaves": "Plante",
       "question": "Inconnu"
     }
+  },
+  "share": {
+    "title": "Partager la carte",
+    "sendLabel": "Partager",
+    "receiveLabel": "Importer un code",
+    "includeFound": "Inclure mes icônes trouvées ({{count}})",
+    "shareButton": "Partager mes repères ({{count}})",
+    "sharePin": "Partager ce repère",
+    "shared": "Code partagé",
+    "copied": "Code copié — colle-le à un ami",
+    "copyFailed": "Impossible de copier le code",
+    "copyManually": "Partage automatique impossible — copie le code ci-dessous",
+    "codeLabel": "Code de partage",
+    "pasteLabel": "Coller un code de partage",
+    "pastePlaceholder": "Colle un code commençant par WWMAP1:",
+    "preview": "Repères : {{pins}} · Icônes trouvées : {{found}}",
+    "unknownIgnored": "{{count}} icônes inconnues ignorées",
+    "invalidIgnored": "{{count}} entrées invalides ignorées",
+    "add": "Ajouter à ma carte",
+    "replace": "Remplacer ma carte",
+    "imported": "Importé — repères : {{pins}}, icônes trouvées : {{found}}",
+    "error": {
+      "not-a-code": "Ce n'est pas un code de partage de carte.",
+      "too-large": "Ce code est trop volumineux.",
+      "corrupt": "Ce code est abîmé ou incomplet."
+    }
   }
 }

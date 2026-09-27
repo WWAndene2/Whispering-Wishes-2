@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Settings, Trash2, LocateFixed, Map as MapIcon, Hexagon, Plus, Construction, X, ImagePlus, Search, ChevronDown, ChevronRight, MapPin } from 'lucide-react';
+import { Settings, Trash2, LocateFixed, Map as MapIcon, Hexagon, Plus, Construction, X, ImagePlus, Search, ChevronDown, ChevronRight, MapPin, Share2 } from 'lucide-react';
 import { Card, CardHeader } from '../../shared/components/Card.jsx';
 import { MAP_ZONES } from '../../data/mapZones.js';
 import { OVERLAY_CATALOG, loadOverlayDrafts, saveOverlayDrafts } from '../../data/mapOverlays.js';
@@ -17,6 +17,8 @@ import { loadDrafts, saveDrafts, loadPaintStrokes, savePaintStrokes } from './ma
 import { useToast } from './useToast.js';
 import { useOfflineTiles } from './useOfflineTiles.js';
 import { OfflineDownloadsPopover } from './OfflineDownloadsPopover.jsx';
+import { MapSharePopover, shareCodeText } from './MapSharePopover.jsx';
+import { encodeMapShare } from './mapShareCode.js';
 import { ZonesPopover } from './ZonesPopover.jsx';
 import { IconFiltersPopover } from './IconFiltersPopover.jsx';
 import { ReferenceImagePopover } from './ReferenceImagePopover.jsx';
@@ -330,6 +332,35 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     setPinEditor(null);
     setPinCardId(pin.id);
   }, [pinEditor, savePins]);
+  // Share panel (header button) and applying an imported share code.
+  const [shareOpen, setShareOpen] = useState(false);
+  const importShare = useCallback(({ pins: incoming, foundIds: incomingFound, mode }) => {
+    const fresh = incoming.map(p => ({ ...p, id: `pin-${generateUniqueId()}` }));
+    savePins(prev => {
+      if (mode === 'replace') return fresh;
+      const seen = new Set(prev.map(p => `${p.marker}|${p.x}|${p.y}`));
+      return [...prev, ...fresh.filter(p => !seen.has(`${p.marker}|${p.x}|${p.y}`))];
+    });
+    if (mode === 'replace' || incomingFound.length) {
+      setFoundIds(prev => {
+        const next = mode === 'replace' ? new Set(incomingFound) : new Set([...prev, ...incomingFound]);
+        try { localStorage.setItem('ww-map-found', JSON.stringify([...next])); } catch {}
+        return next;
+      });
+    }
+    setShareOpen(false);
+    showToast(t('map.share.imported', { pins: incoming.length, found: incomingFound.length }));
+  }, [savePins]);
+  // Opening any other header popover closes the share panel.
+  useEffect(() => {
+    if (zonesOpen || filtersOpen || downloadsOpen || refImageOpen || searchOpen) setShareOpen(false);
+  }, [zonesOpen, filtersOpen, downloadsOpen, refImageOpen, searchOpen]);
+  const knownIconIds = useMemo(() => new Set(iconDrafts.map(ic => ic.id)), [iconDrafts]);
+  const sharePin = useCallback(async (pin) => {
+    const r = await shareCodeText(await encodeMapShare({ pins: [pin] }), t('map.pins.title'));
+    if (r === 'copied') showToast(t('map.share.copied'));
+    else if (r === 'failed') showToast(t('map.share.copyFailed'));
+  }, []);
   const deletePin = useCallback((id) => {
     savePins(prev => prev.filter(p => p.id !== id));
     setPinEditor(null);
@@ -4675,6 +4706,16 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         html.left-handed .map-zones-popover,
         html.left-handed .map-filters-popover,
         html.left-handed .map-downloads-popover { right: auto; left: var(--space-md, 12px); }
+        .map-share-popover { width: 288px; }
+        .map-share-section { display: flex; flex-direction: column; gap: var(--space-sm, 8px); }
+        .map-share-section + .map-share-section { border-top: 1px solid rgba(255,255,255,0.08); padding-top: var(--space-sm, 8px); }
+        .map-share-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted, #8892a4); }
+        .map-share-check { display: flex; align-items: center; gap: var(--space-sm, 8px); font-size: 12px; color: var(--text-primary, #fff); }
+        .map-share-code { width: 100%; box-sizing: border-box; resize: none; padding: 4px 8px; border-radius: 8px; border: 1px solid var(--border-primary, #334); background: rgba(0,0,0,0.3); color: var(--text-primary, #fff); font-family: ui-monospace, monospace; font-size: 12px; word-break: break-all; }
+        .map-share-actions { display: flex; gap: var(--space-sm, 8px); }
+        .map-share-actions .kuro-btn { flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
+        .map-share-error { color: #f87171; }
+        html.left-handed .map-share-actions { flex-direction: row-reverse; }
         html.left-handed .map-icon-card { flex-direction: row-reverse; }
         html.left-handed .map-icon-card-text { text-align: right; }
         html.left-handed .map-pin-editor { flex-direction: row; }
@@ -5123,6 +5164,18 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                         <MapPin size={14} />
                       </button>
                     )}
+                    {!authorMode && (
+                      <button
+                        type="button"
+                        className={`kuro-btn kuro-btn-sm kuro-btn-icon ${shareOpen ? 'is-active' : ''}`}
+                        onClick={(e) => { e.stopPropagation(); setShareOpen(v => { if (!v) { setZonesOpen(false); setFiltersOpen(false); setDownloadsOpen(false); setRefImageOpen(false); closeSearch(); } return !v; }); }}
+                        aria-label={t('map.share.title')}
+                        aria-expanded={shareOpen}
+                        title={t('map.share.title')}
+                      >
+                        <Share2 size={14} />
+                      </button>
+                    )}
                     <button
                       ref={filtersAnchorRef}
                       type="button"
@@ -5209,6 +5262,18 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
               />
             )}
 
+            {shareOpen && !authorMode && (
+              <MapSharePopover
+                top={headerHeight + 8}
+                maxHeight={popoverMaxHeight}
+                pins={pins}
+                foundIds={foundIds}
+                knownIconIds={knownIconIds}
+                onImport={importShare}
+                onClose={() => setShareOpen(false)}
+              />
+            )}
+
             {toast && <div className="zone-author-toast" role="status">{toast}</div>}
 
             {pinPlacing && (
@@ -5229,6 +5294,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                     <div className="map-icon-card-name">{pin.note || t(`map.pins.marker.${pin.marker}`)}</div>
                     <div className="map-icon-card-facts">{t('map.pins.title')}{pin.floor ? ` · ${t('map.card.floor', { floor: pin.floor })}` : ''}</div>
                   </div>
+                  <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => sharePin(pin)} aria-label={t('map.share.sharePin')} title={t('map.share.sharePin')}><Share2 size={14} /></button>
                   <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => setPinEditor({ ...pin })}>{t('map.pins.edit')}</button>
                   <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => setPinCardId(null)} aria-label={t('map.search.close')}><X size={14} /></button>
                 </div>

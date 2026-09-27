@@ -101,5 +101,31 @@
       "leaves": "Plant",
       "question": "Unknown"
     }
+  },
+  "share": {
+    "title": "Share map",
+    "sendLabel": "Share",
+    "receiveLabel": "Import a code",
+    "includeFound": "Include my found icons ({{count}})",
+    "shareButton": "Share my pins ({{count}})",
+    "sharePin": "Share this pin",
+    "shared": "Code shared",
+    "copied": "Code copied — paste it to a friend",
+    "copyFailed": "Couldn't copy the code",
+    "copyManually": "Couldn't share automatically — copy the code below",
+    "codeLabel": "Share code",
+    "pasteLabel": "Paste a share code",
+    "pastePlaceholder": "Paste a code starting with WWMAP1:",
+    "preview": "Pins: {{pins}} · Found icons: {{found}}",
+    "unknownIgnored": "{{count}} unknown icons ignored",
+    "invalidIgnored": "{{count}} invalid entries ignored",
+    "add": "Add to my map",
+    "replace": "Replace my map",
+    "imported": "Imported — pins: {{pins}}, found icons: {{found}}",
+    "error": {
+      "not-a-code": "This isn't a map share code.",
+      "too-large": "This code is too large.",
+      "corrupt": "This code is damaged or incomplete."
+    }
   }
 }

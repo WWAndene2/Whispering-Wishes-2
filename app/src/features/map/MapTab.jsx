@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Settings, Trash2, LocateFixed, Map as MapIcon, Hexagon, Plus, Construction, X, ImagePlus, Search } from 'lucide-react';
+import { Settings, Trash2, LocateFixed, Map as MapIcon, Hexagon, Plus, Construction, X, ImagePlus, Search, ChevronDown, ChevronRight } from 'lucide-react';
 import { Card, CardHeader } from '../../shared/components/Card.jsx';
 import { MAP_ZONES } from '../../data/mapZones.js';
 import { OVERLAY_CATALOG, loadOverlayDrafts, saveOverlayDrafts } from '../../data/mapOverlays.js';
 import { DEFAULT_ICON_DRAFTS } from '../../data/mapDefaults.js';
-import { MAP_ICON_CATALOG, ENEMY_CLASS_ORDER, getIconCatalogEntry } from '../../data/mapIconCatalog.js';
+import { MAP_ICON_CATALOG, getIconCatalogEntry } from '../../data/mapIconCatalog.js';
 import { tileUrlsForOverlay } from '../../core/tileSW.js';
 import { FocusTrapModal } from '../../shared/components/FocusTrapModal.jsx';
 import { hideOnError } from '../../shared/utils/imageHelpers.js';
 import { MAP_W, MAP_H, TILE_SIZE, NATIVE_ZOOM, MAX_ZOOM, rdpSimplify, computePlacementBounds, clampToBounds } from './tileMath.js';
-import { getIconImage } from './iconImageCache.js';
+import { getIconImage, getIconImageUrl } from './iconImageCache.js';
 import { OVERLAY_TILE_CACHE, OVERLAY_TILE_CACHE_LIMIT, OVERLAY_TILE_RETRY_COUNTS } from './tileCache.js';
 import { loadDrafts, saveDrafts, loadPaintStrokes, savePaintStrokes } from './mapStorage.js';
 import { useToast } from './useToast.js';
@@ -19,6 +19,7 @@ import { ZonesPopover } from './ZonesPopover.jsx';
 import { IconFiltersPopover } from './IconFiltersPopover.jsx';
 import { ReferenceImagePopover } from './ReferenceImagePopover.jsx';
 import { ReferenceImageLayer } from './ReferenceImageLayer.jsx';
+import { IconKindPicker } from './IconKindPicker.jsx';
 import { MapSearchPopover } from './MapSearchPopover.jsx';
 import { buildSearchIndex, resolveFilterKey } from './mapSearch.js';
 import { t } from '../../utils/i18n.js';
@@ -47,24 +48,6 @@ const COLOR_CANON = '#edaf18';   // brand gold — canonical zones from mapZones
 const COLOR_DRAFT = '#38bdf8';   // cyan — session drafts
 const COLOR_ACTIVE = '#edaf18';  // gold dashed — in-progress polygon
 // Map search focus: matched icons drawn at 1.25x with a gold glow breathing over 2.4 s.
-// Icon picker in the author panel: catalog grouped by category (enemies also
-// by class, in ENEMY_CLASS_ORDER), names alphabetical within a group.
-const MAP_ICON_CATALOG_GROUPS = (() => {
-  const groups = new Map();
-  for (const c of MAP_ICON_CATALOG) {
-    const label = c.category === 'Enemy' ? `Enemy · ${c.subcategory}` : (c.category || 'Uncategorised');
-    if (!groups.has(label)) groups.set(label, []);
-    groups.get(label).push(c);
-  }
-  const rank = (label) => {
-    const cls = ENEMY_CLASS_ORDER.indexOf(label.replace('Enemy · ', ''));
-    return label.startsWith('Enemy · ') ? 100 + (cls === -1 ? 50 : cls) : 0;
-  };
-  return [...groups.entries()]
-    .map(([label, kinds]) => [label, [...kinds].sort((a, b) => a.name.localeCompare(b.name))])
-    .sort((a, b) => rank(a[0]) - rank(b[0]) || a[0].localeCompare(b[0]));
-})();
-
 const SEARCH_FOCUS_SCALE = 1.25;
 const SEARCH_BREATH_MS = 2400;
 
@@ -368,9 +351,22 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   // scale / opacity) instead of moving a single pending icon. Exits on
   // re-click of the button, ESC, or leaving the map.
   const [multiPlaceFromId, setMultiPlaceFromId] = useState(null);
+  // Stamp mode — a catalog kind id picked in the icon picker. While set,
+  // every map click creates a new icon of that kind at the click, with
+  // zone/floor auto-detected from the click (no template row needed).
+  const [stampKind, setStampKind] = useState(null);
+  const [stampPlaced, setStampPlaced] = useState(0);
+  // Icon picker (IconKindPicker) — null, { mode: 'stamp' } or
+  // { mode: 'change', iconId } (change an existing row's kind).
+  const [iconPicker, setIconPicker] = useState(null);
+  // Author icon list: rows are one line until expanded; list can be filtered.
+  const [expandedIconIds, setExpandedIconIds] = useState(() => new Set());
+  const [iconListQuery, setIconListQuery] = useState('');
+  // Regions tree (author panel): unfolded "Kind ×N" groups, keyed "zoneId|kindId".
+  const [expandedTreeGroups, setExpandedTreeGroups] = useState(() => new Set());
   useEffect(() => {
-    placingIconIdRef.current = placingIconId != null || multiPlaceFromId != null;
-  }, [placingIconId, multiPlaceFromId]);
+    placingIconIdRef.current = placingIconId != null || multiPlaceFromId != null || stampKind != null;
+  }, [placingIconId, multiPlaceFromId, stampKind]);
   // L2-leaf confirm: first tap on a leaf arms it, second tap within
   // ZONE_ARM_MS fires handleFlyToZone. Leaves don't have an explicit
   // fly-to icon; this prevents accidental navigation when browsing.
@@ -3173,6 +3169,56 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     };
   }, [multiPlaceFromId, mapReady, findEnclosingZone, resolveZoneFloor, placementBounds]);
 
+  // Stamp placement: every map click adds one icon of `stampKind`.
+  useEffect(() => {
+    if (!stampKind || !mapReady) return;
+    const map = mapRef.current;
+    if (!map) return;
+    const kind = getIconCatalogEntry(stampKind);
+    if (!kind) { setStampKind(null); return; }
+    const container = map.getContainer();
+    const prevCursor = container.style.cursor;
+    container.style.cursor = 'crosshair';
+    const onClick = (e) => {
+      const pt = map.project(e.latlng, NATIVE_ZOOM);
+      const [x, y] = clampToBounds(Math.round(pt.x), Math.round(pt.y), placementBounds);
+      const zone = findEnclosingZone(x, y);
+      const floor = zone ? resolveZoneFloor(zone) : null;
+      const icon = {
+        id: `icon-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e4).toString(36)}`,
+        kind: kind.id,
+        category: kind.category || 'Uncategorised',
+        subcategory: kind.subcategory || '',
+        label: '',
+        x, y,
+        zoneId: zone?.id || null,
+        floor: floor ?? null,
+        locked: false,
+      };
+      setIconDrafts((prev) => {
+        const next = [...prev, icon];
+        try { localStorage.setItem('ww-icon-drafts', JSON.stringify(next)); } catch {}
+        return next;
+      });
+      setStampPlaced(n => n + 1);
+    };
+    map.on('click', onClick);
+    const onKey = (e) => { if (e.key === 'Escape') { setStampKind(null); setPanelCollapsed(false); } };
+    document.addEventListener('keydown', onKey);
+    return () => {
+      map.off('click', onClick);
+      document.removeEventListener('keydown', onKey);
+      container.style.cursor = prevCursor;
+    };
+  }, [stampKind, mapReady, findEnclosingZone, resolveZoneFloor, placementBounds]);
+
+  // How many icons of each kind exist (shown on the picker's tiles).
+  const placedCountsByKind = useMemo(() => {
+    const m = new Map();
+    for (const ic of iconDrafts) m.set(ic.kind, (m.get(ic.kind) || 0) + 1);
+    return m;
+  }, [iconDrafts]);
+
   // Close the downloads popover when clicking outside it.
   useEffect(() => {
     if (!downloadsOpen) return;
@@ -4219,6 +4265,89 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           font-variant-numeric: tabular-nums;
         }
 
+        /* ── Icon picker (author panel) — see IconKindPicker.jsx ────────── */
+        .icon-picker {
+          display: flex; flex-direction: column; gap: var(--space-sm, 8px);
+          margin: var(--space-sm, 8px) 0;
+          padding: var(--space-sm, 8px);
+          border: 1px solid rgba(var(--color-gold), 0.35);
+          border-radius: 8px;
+          background: rgba(8, 12, 20, 0.55);
+        }
+        .icon-picker-head { display: flex; align-items: center; justify-content: space-between; }
+        .icon-picker-title { font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted, #8892a4); }
+        .icon-picker-search {
+          display: flex; align-items: center; gap: var(--space-xs, 4px);
+          height: 32px; padding: 0 var(--space-sm, 8px);
+          border: 1px solid var(--border-medium); border-radius: 8px;
+          color: rgb(var(--color-gold));
+        }
+        .icon-picker-search input { flex: 1 1 auto; min-width: 0; height: 100%; background: none; border: 0; outline: none; color: var(--text-primary, #fff); font: inherit; font-size: 12px; }
+        .icon-picker-tabs { display: flex; flex-wrap: wrap; gap: var(--space-xs, 4px); }
+        .icon-picker-tabs.is-sub { padding-left: var(--space-sm, 8px); }
+        .icon-picker-body { display: flex; flex-direction: column; gap: var(--space-sm, 8px); max-height: 48vh; overflow-y: auto; overscroll-behavior: contain; }
+        .icon-picker-group-label { font-size: 12px; color: var(--text-muted, #8892a4); margin-bottom: var(--space-xs, 4px); }
+        .icon-picker-group-label span { opacity: 0.7; }
+        .icon-picker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: var(--space-xs, 4px); }
+        .icon-picker-tile { position: relative; }
+        .icon-picker-pick {
+          width: 100%; min-height: 64px;
+          display: flex; flex-direction: column; align-items: center; gap: 2px;
+          padding: var(--space-xs, 4px) 2px;
+          border: 1px solid transparent; border-radius: 6px;
+          background: rgba(255, 255, 255, 0.03); color: var(--text-body); cursor: pointer;
+        }
+        .icon-picker-pick:hover, .icon-picker-pick:focus-visible { border-color: rgba(var(--color-gold), 0.5); background: rgba(var(--color-gold), 0.08); }
+        .icon-picker-tile.is-current .icon-picker-pick { border-color: rgb(var(--color-gold)); }
+        .icon-picker-pick img { width: 32px; height: 32px; object-fit: contain; }
+        .icon-picker-name {
+          font-size: 12px; line-height: 1.15; text-align: center;
+          display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .icon-picker-count {
+          position: absolute; top: 2px; left: 2px;
+          min-width: 16px; height: 16px; padding: 0 3px; border-radius: 8px;
+          background: rgba(var(--color-cyan), 0.25); color: rgb(var(--color-cyan));
+          font-size: 12px; line-height: 16px; text-align: center; pointer-events: none;
+        }
+        .icon-picker-fav {
+          position: absolute; top: 0; right: 0; width: 24px; height: 24px;
+          display: flex; align-items: center; justify-content: center;
+          background: none; border: 0; color: var(--text-muted, #8892a4); opacity: 0.45; cursor: pointer;
+        }
+        .icon-picker-tile:hover .icon-picker-fav, .icon-picker-fav.is-on { opacity: 1; }
+        .icon-picker-fav.is-on { color: rgb(var(--color-gold)); }
+        .icon-picker-fav.is-on svg { fill: currentColor; }
+
+        /* Stamp mode status (author panel) */
+        .icon-stamp-bar {
+          display: flex; align-items: center; gap: var(--space-sm, 8px);
+          margin: var(--space-sm, 8px) 0; padding: var(--space-xs, 4px) var(--space-sm, 8px);
+          border: 1px solid rgb(var(--color-gold)); border-radius: 8px;
+          background: rgba(var(--color-gold), 0.1);
+        }
+        .icon-stamp-bar img { width: 32px; height: 32px; object-fit: contain; }
+        .icon-stamp-bar.is-floating {
+          position: absolute; left: var(--space-md, 12px); right: var(--space-md, 12px);
+          margin: 0; z-index: var(--z-overlay, 1000);
+          background: ${MAP_BG_TRANSPARENT}; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+          font-family: var(--font-display); color: var(--text-body);
+        }
+        .icon-stamp-text { flex: 1 1 auto; min-width: 0; font-size: 12px; }
+
+        /* Pending icon list: filter bar + compact rows */
+        .icon-list-tools { display: flex; align-items: center; gap: var(--space-xs, 4px); margin: var(--space-xs, 4px) 0; }
+        .icon-list-tools input { flex: 1 1 auto; min-width: 0; height: 24px; padding: 0 var(--space-sm, 8px); border: 1px solid var(--border-medium); border-radius: 6px; background: var(--bg-card-inner); color: var(--text-primary, #fff); font: inherit; font-size: 12px; }
+        .icon-row.is-compact { padding: var(--space-xs, 4px) var(--space-sm, 8px); }
+        .icon-row-kind {
+          flex: 1 1 auto; min-width: 0;
+          display: flex; flex-direction: column; align-items: flex-start;
+          background: none; border: 0; padding: 0; color: inherit; font: inherit; text-align: left; cursor: pointer;
+        }
+        .icon-row-kind:disabled { cursor: default; }
+        .icon-row-kind-name { font-size: 12px; color: var(--text-primary, #fff); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+        .icon-row-kind .hint { font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+
         /* ── Map-icon editor row (admin-only, in author panel) ────────── */
         .icon-row {
           display: flex; flex-direction: column;
@@ -4689,6 +4818,22 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
 
             {toast && <div className="zone-author-toast" role="status">{toast}</div>}
 
+            {/* Stamp mode status — floats over the map (the author panel folds away while placing). */}
+            {stampKind && (() => {
+              const k = getIconCatalogEntry(stampKind);
+              return (
+                <div className="icon-stamp-bar is-floating" role="status" style={{ top: `${headerHeight + 8}px` }} onClick={(e) => e.stopPropagation()}>
+                  <img src={getIconImageUrl(stampKind)} alt="" />
+                  <div className="icon-stamp-text">
+                    <div>Placing <b>{k?.name}</b> — click the map</div>
+                    <div className="hint">{stampPlaced} placed this session · zone & floor auto-detected · Esc to stop</div>
+                  </div>
+                  <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => { setPanelCollapsed(false); setIconPicker({ mode: 'stamp' }); }}>Switch</button>
+                  <button type="button" className="kuro-btn kuro-btn-sm is-active" onClick={() => { setStampKind(null); setPanelCollapsed(false); }}>Stop</button>
+                </div>
+              );
+            })()}
+
             {searchOpen && (
               <MapSearchPopover
                 panelRef={searchPanelRef}
@@ -5134,7 +5279,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                                 <button type="button" onClick={() => handleDeleteDraft(node.id)} aria-label={`Delete ${node.name}`}>Delete</button>
                               </span>
                             </div>
-                            {!isCollapsed && zoneIcons.map(ic => {
+                            {!isCollapsed && (() => {
+                              const renderTreeIcon = (ic, extraDepth = 0) => {
                               const icCat = getIconCatalogEntry(ic.kind);
                               const iconSrc = icCat ? (BASE + icCat.imageUrl.split('/').map(encodeURIComponent).join('/')).replace(/([^:])\/\//g, '$1/') : null;
                               const nameText = ic.label || icCat?.name || 'Icon';
@@ -5143,7 +5289,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                                 <div
                                   key={`tree-ic-${ic.id}`}
                                   className={`draft-row is-icon-row ${iconSelected ? 'is-selected' : ''}`}
-                                  style={{ paddingLeft: 4 + (indentLevel + 1) * 14 }}
+                                  style={{ paddingLeft: 4 + (indentLevel + 1 + extraDepth) * 14 }}
                                 >
                                   <span className="drname">
                                     <span className="tree-glyph">└─ </span>
@@ -5176,7 +5322,58 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                                   </span>
                                 </div>
                               );
-                            })}
+                              };
+                              // Icons of the same kind in this zone collapse into one
+                              // "Kind ×N" row (unfolded on demand), so a zone holding
+                              // dozens of enemies/chests stays one line per kind.
+                              const byKind = new Map();
+                              for (const ic of zoneIcons) {
+                                if (!byKind.has(ic.kind)) byKind.set(ic.kind, []);
+                                byKind.get(ic.kind).push(ic);
+                              }
+                              return [...byKind.entries()].map(([kindId, icons]) => {
+                                if (icons.length === 1) return renderTreeIcon(icons[0]);
+                                const groupKey = `${node.id}|${kindId}`;
+                                const open = expandedTreeGroups.has(groupKey);
+                                const kindEntry = getIconCatalogEntry(kindId);
+                                const groupName = kindEntry?.name || kindId;
+                                const allSel = icons.every(ic => selectedIconIds.has(ic.id));
+                                return (
+                                  <React.Fragment key={`tree-grp-${groupKey}`}>
+                                    <div className="draft-row is-icon-row is-icon-group" style={{ paddingLeft: 4 + (indentLevel + 1) * 14 }}>
+                                      <span className="drname">
+                                        <span className="tree-glyph">└─ </span>
+                                        <input
+                                          type="checkbox"
+                                          className="bulk-check"
+                                          checked={allSel}
+                                          onChange={() => {
+                                            setSelectedIconIds(prev => {
+                                              const n = new Set(prev);
+                                              icons.forEach(ic => (allSel ? n.delete(ic.id) : n.add(ic.id)));
+                                              return n;
+                                            });
+                                          }}
+                                          aria-label={`Select all ${icons.length} ${groupName}`}
+                                          title={`Select all ${icons.length} "${groupName}" in this zone for bulk edit`}
+                                        />
+                                        <img src={getIconImageUrl(kindId)} alt="" className="draft-row-icon-thumb" />
+                                        <span className="drlabel">{groupName} <span className="kuro-badge kuro-badge-neutral">×{icons.length}</span></span>
+                                      </span>
+                                      <button
+                                        className="edit-btn"
+                                        type="button"
+                                        onClick={() => setExpandedTreeGroups(prev => { const n = new Set(prev); if (n.has(groupKey)) n.delete(groupKey); else n.add(groupKey); return n; })}
+                                        aria-expanded={open}
+                                        title={open ? 'Collapse' : `Show the ${icons.length} icons`}
+                                        aria-label={open ? `Collapse ${groupName}` : `Show ${icons.length} ${groupName}`}
+                                      >{open ? '▾' : '▸'}</button>
+                                    </div>
+                                    {open && icons.map(ic => renderTreeIcon(ic, 1))}
+                                  </React.Fragment>
+                                );
+                              });
+                            })()}
                           </React.Fragment>
                         );
                       })}
@@ -5500,22 +5697,9 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                         </button>
                         <button
                           type="button"
-                          className="kuro-btn kuro-btn-sm"
-                          onClick={() => {
-                            const id = `icon-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e4).toString(36)}`;
-                            const firstKind = MAP_ICON_CATALOG[0];
-                            const next = [...iconDrafts, {
-                              id,
-                              kind: firstKind?.id || '',
-                              category: firstKind?.category || 'Uncategorised',
-                              subcategory: firstKind?.subcategory || '',
-                              x: MAP_W / 2,
-                              y: MAP_H / 2,
-                              label: '',
-                              locked: false,
-                            }];
-                            saveIconDrafts(next);
-                          }}
+                          className={`kuro-btn kuro-btn-sm ${iconPicker?.mode === 'stamp' ? 'is-active' : ''}`}
+                          onClick={() => setIconPicker(p => (p?.mode === 'stamp' ? null : { mode: 'stamp' }))}
+                          title="Pick an icon, then click the map to place it (as many as you like)"
                           style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}
                         >
                           <Plus size={12} /> Add
@@ -5524,12 +5708,75 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                     );
                   })()}
                 </div>
+                {iconPicker && (
+                  <IconKindPicker
+                    title={iconPicker.mode === 'stamp' ? 'Add icons — pick a kind' : 'Change icon kind'}
+                    currentKind={iconPicker.mode === 'change' ? iconDrafts.find(i => i.id === iconPicker.iconId)?.kind : stampKind}
+                    placedCounts={placedCountsByKind}
+                    onClose={() => setIconPicker(null)}
+                    onPick={(kind) => {
+                      if (iconPicker.mode === 'stamp') {
+                        setPlacingIconId(null);
+                        setMultiPlaceFromId(null);
+                        setStampPlaced(0);
+                        setStampKind(kind.id);
+                        // Fold the panel so the map is free to click; Stop / Esc brings it back.
+                        setPanelCollapsed(true);
+                      } else {
+                        const ic = iconDrafts.find(i => i.id === iconPicker.iconId);
+                        if (ic) {
+                          const prevCat = getIconCatalogEntry(ic.kind);
+                          saveIconDrafts(iconDrafts.map(x => x.id !== ic.id ? x : {
+                            ...x,
+                            kind: kind.id,
+                            // Auto-sync category/subcategory when the user hadn't customised them.
+                            category: (!ic.category || ic.category === prevCat?.category) ? (kind.category || 'Uncategorised') : ic.category,
+                            subcategory: (!ic.subcategory || ic.subcategory === prevCat?.subcategory) ? (kind.subcategory || '') : ic.subcategory,
+                          }));
+                        }
+                      }
+                      setIconPicker(null);
+                    }}
+                  />
+                )}
                 {iconDrafts.length === 0 && (
                   <div className="hint" style={{ fontSize: 10, padding: '4px 0' }}>
-                    No icons yet. Add one to get started. Categories show up in the Hexagon filter menu.
+                    No icons yet. Press Add, pick an icon, then click the map. Categories show up in the Hexagon filter menu.
                   </div>
                 )}
-                {iconDrafts.filter(ic => !ic.inTree).map((ic) => {
+                {(() => {
+                  const pending = iconDrafts.filter(ic => !ic.inTree);
+                  if (pending.length < 2) return null;
+                  const q = iconListQuery.trim().toLowerCase();
+                  const shown = q ? pending.filter(ic => {
+                    const k = getIconCatalogEntry(ic.kind);
+                    const zone = zoneOptions.find(o => o.id === ic.zoneId);
+                    return [k?.name, ic.label, ic.category, ic.subcategory, zone?.label].filter(Boolean).join(' ').toLowerCase().includes(q);
+                  }).length : pending.length;
+                  return (
+                    <div className="icon-list-tools">
+                      <input
+                        type="search"
+                        value={iconListQuery}
+                        onChange={(e) => setIconListQuery(e.target.value)}
+                        placeholder={`Filter ${pending.length} pending icons — kind, zone, label…`}
+                        aria-label="Filter pending icons"
+                      />
+                      <span className="hint">{shown}/{pending.length}</span>
+                      <button type="button" className="kuro-btn kuro-btn-sm"
+                        onClick={() => setExpandedIconIds(prev => prev.size ? new Set() : new Set(pending.map(ic => ic.id)))}>
+                        {expandedIconIds.size ? 'Collapse all' : 'Expand all'}
+                      </button>
+                    </div>
+                  );
+                })()}
+                {iconDrafts.filter(ic => !ic.inTree).filter(ic => {
+                  const q = iconListQuery.trim().toLowerCase();
+                  if (!q) return true;
+                  const k = getIconCatalogEntry(ic.kind);
+                  const zone = zoneOptions.find(o => o.id === ic.zoneId);
+                  return [k?.name, ic.label, ic.category, ic.subcategory, zone?.label].filter(Boolean).join(' ').toLowerCase().includes(q);
+                }).map((ic) => {
                   const cat = getIconCatalogEntry(ic.kind);
                   const base = (import.meta.env.BASE_URL || '/');
                   const iconSrc = cat ? (base + cat.imageUrl.split('/').map(encodeURIComponent).join('/')).replace(/([^:])\/\//g, '$1/') : null;
@@ -5538,40 +5785,35 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                   const isMulti = multiPlaceFromId === ic.id;
                   const locked = !!ic.locked;
                   const disabled = locked;
+                  const expanded = expandedIconIds.has(ic.id) || isPlacing || isMulti;
+                  const zoneLabel = zoneOptions.find(o => o.id === ic.zoneId)?.label;
                   return (
-                    <div key={ic.id} className={`icon-row ${isPlacing || isMulti ? 'is-active' : ''} ${locked ? 'is-locked' : ''}`}>
-                      {/* Row 1 — preview, kind dropdown, per-icon actions */}
+                    <div key={ic.id} className={`icon-row ${expanded ? '' : 'is-compact'} ${isPlacing || isMulti ? 'is-active' : ''} ${locked ? 'is-locked' : ''}`}>
+                      {/* Row 1 — preview, kind (opens the picker), zone, per-icon actions */}
                       <div className="row">
                         <div className="icon-preview" aria-hidden="true">
                           {iconSrc && <img src={iconSrc} alt="" />}
                         </div>
-                        <div className="field" style={{ flex: '1 1 0' }}>
-                          <label>Kind {locked && <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 4 }}>locked</span>}</label>
-                          <select
-                            value={ic.kind || ''}
-                            disabled={disabled}
-                            onChange={(e) => {
-                              const nextCat = getIconCatalogEntry(e.target.value);
-                              const prevCat = getIconCatalogEntry(ic.kind);
-                              patchIcon({
-                                kind: e.target.value,
-                                // Auto-sync category/subcategory when user hadn't customised.
-                                category: (!ic.category || ic.category === prevCat?.category)
-                                  ? (nextCat?.category || 'Uncategorised')
-                                  : ic.category,
-                                subcategory: (!ic.subcategory || ic.subcategory === prevCat?.subcategory)
-                                  ? (nextCat?.subcategory || '')
-                                  : ic.subcategory,
-                              });
-                            }}
-                          >
-                            {MAP_ICON_CATALOG_GROUPS.map(([label, kinds]) => (
-                              <optgroup key={label} label={label}>
-                                {kinds.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-                              </optgroup>
-                            ))}
-                          </select>
-                        </div>
+                        <button
+                          type="button"
+                          className="icon-row-kind"
+                          disabled={disabled}
+                          onClick={() => setIconPicker({ mode: 'change', iconId: ic.id })}
+                          title="Change kind"
+                        >
+                          <span className="icon-row-kind-name">{cat?.name || ic.kind || '—'}{locked && <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 4 }}>locked</span>}</span>
+                          <span className="hint">{zoneLabel || 'No zone'}{ic.floor != null ? ` · floor ${ic.floor}` : ''}</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="kuro-btn kuro-btn-sm kuro-btn-icon"
+                          onClick={() => setExpandedIconIds(prev => { const n = new Set(prev); if (n.has(ic.id)) n.delete(ic.id); else n.add(ic.id); return n; })}
+                          aria-expanded={expanded}
+                          title={expanded ? 'Collapse' : 'Edit details'}
+                          aria-label={expanded ? 'Collapse' : 'Edit details'}
+                        >
+                          {expanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                        </button>
                         <button
                           type="button"
                           className="kuro-btn kuro-btn-sm kuro-btn-icon"
@@ -5593,6 +5835,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                         </button>
                       </div>
 
+                      {expanded && (<>
                       {/* Row 2a — zone attribution (auto-detected on place) */}
                       <div className="row">
                         <div className="field" style={{ flex: '1 1 auto' }}>
@@ -5767,6 +6010,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                           Add to tree
                         </button>
                       </div>
+                      </>)}
                     </div>
                   );
                 })}

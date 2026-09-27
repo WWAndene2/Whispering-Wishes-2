@@ -395,3 +395,34 @@ export function floorBreakdown(index, iconIds) {
   }
   return out;
 }
+
+/**
+ * Ranks icon catalog kinds (the author panel's icon picker) against a query,
+ * with the same matching as the map search: every word must match the kind's
+ * name, Echo name, category / group / class or tags (typos, synonyms, FR).
+ * An empty query returns the kinds unchanged.
+ * @param {Array} kinds catalog entries ({ id, name, echoName?, category, group?, subcategory, tags? })
+ */
+export function searchIconKinds(kinds, query) {
+  const words = parseQuery(query);
+  if (!words.length) return kinds;
+  const out = [];
+  for (const k of kinds) {
+    const doc = {
+      fields: [
+        { words: tokenize(k.name), weight: 3, role: 'label' },
+        { words: tokenize([k.echoName, k.category, k.group, k.subcategory, ...(k.tags || [])].filter(Boolean).join(' ')), weight: 2, role: 'type' },
+      ],
+    };
+    let score = 0;
+    let ok = true;
+    for (const qw of words) {
+      const m = matchWord(qw, doc);
+      if (!m) { ok = false; break; }
+      score += m.score;
+    }
+    if (ok) out.push({ k, score });
+  }
+  out.sort((a, b) => b.score - a.score || a.k.name.localeCompare(b.k.name));
+  return out.map(r => r.k);
+}

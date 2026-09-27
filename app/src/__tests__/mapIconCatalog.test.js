@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { MAP_ICON_CATALOG, ENEMY_CLASS_ORDER, getIconCatalogEntry } from '../data/mapIconCatalog.js';
 import { ECHO_DATA } from '../data/echoes.js';
-import { buildSearchIndex, searchMap } from '../features/map/mapSearch.js';
+import { buildSearchIndex, searchMap, searchIconKinds } from '../features/map/mapSearch.js';
 
 const PUBLIC = join(__dirname, '..', '..', 'public');
 const enemies = MAP_ICON_CATALOG.filter(k => k.category === 'Enemy');
@@ -58,5 +58,26 @@ describe('map search over enemy icons', () => {
     expect(keys('calamity effigy')[0]).toBe('kind:enemy-calamity-effigy');
     expect(keys('effigy')[0]).toBe('kind:enemy-calamity-effigy');
     expect(keys('boss huanglong').length).toBeGreaterThan(0);
+  });
+});
+
+describe('author icon picker search (searchIconKinds)', () => {
+  const names = (q) => searchIconKinds(MAP_ICON_CATALOG, q).map(k => k.name);
+  it('returns the whole catalog for an empty query', () => {
+    expect(searchIconKinds(MAP_ICON_CATALOG, '  ')).toHaveLength(MAP_ICON_CATALOG.length);
+  });
+  it('matches by name with typos, and by class + element together (FR too)', () => {
+    expect(names('crownles')[0]).toBe('Crownless');
+    const r = names('calamité havoc');
+    expect(r.length).toBeGreaterThan(0);
+    for (const n of r) {
+      const k = MAP_ICON_CATALOG.find(x => x.name === n);
+      expect(k.subcategory).toBe('Calamity');
+      expect(k.tags).toContain('Havoc');
+    }
+  });
+  it('matches alternate names and Echo names', () => {
+    expect(names('arsinosa')[0]).toBe('Lioness of Glory');
+    expect(names('denia')[0]).toBe('Seed of Illusory Origin');
   });
 });

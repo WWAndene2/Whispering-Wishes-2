@@ -74,6 +74,7 @@ export const MAP_ICON_CATALOG = [
 // fight, so it is dropped for display ("Reminiscence: Fenrico" → "Fenrico").
 // `tags` feed the map search (class, element, Sonata sets, "boss").
 const ENEMY_ICONS = [
+  ['calamity-effigy', 'Calamity Effigy'],
   ['bell-borne-geochelone', 'Bell-Borne Geochelone'],
   ['crownless', 'Crownless'],
   ['dragon-of-dirge', 'Dragon of Dirge'],

@@ -114,7 +114,7 @@ const ENEMY_ICONS = [
 // Enemies with no Echo in ECHO_DATA: class (and element when known) given by
 // hand, per the project owner.
 const ENEMY_ICONS_MANUAL = [
-  { slug: 'scar-aberrant-nightmare', name: 'Scar: Aberrant Nightmare', rank: 'Calamity' },
+  { slug: 'scar-aberrant-nightmare', name: 'Scar: Aberrant Nightmare', rank: 'Calamity', element: 'Havoc' },
 ];
 
 const ENEMY_CLASS_ORDER = ['Calamity', 'Overlord', 'Elite', 'Common'];

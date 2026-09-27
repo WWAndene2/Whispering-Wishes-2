@@ -39,6 +39,7 @@ describe('map search over enemy icons', () => {
     expect(getIconCatalogEntry('enemy-lioness-of-glory').subcategory).toBe('Overlord');
     expect(keys('arsinosa')[0]).toBe('kind:enemy-lioness-of-glory');
     expect(keys('scar')[0]).toBe('kind:enemy-scar-aberrant-nightmare');
+    expect(keys('scar havoc')[0]).toBe('kind:enemy-scar-aberrant-nightmare');
   });
 
   it('finds a boss by name, typo included', () => {

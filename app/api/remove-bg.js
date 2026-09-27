@@ -11,7 +11,7 @@ const MAX_RETRIES = 3;
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB
 
 // F-006: Restrict server-side fetches to known image hosts (prevents SSRF)
-const ALLOWED_IMAGE_HOSTS = ['i.ibb.co', 'ibb.co', 'i.imgur.com', 'imgur.com', 'cdn.discordapp.com', 'media.discordapp.net', 'pbs.twimg.com', 'raw.githubusercontent.com', 'i.postimg.cc', 'wuwa.gg', 'wuwatracker.com', 'static.wikia.nocookie.net'];
+const ALLOWED_IMAGE_HOSTS = ['i.ibb.co', 'ibb.co', 'i.imgur.com', 'imgur.com', 'cdn.discordapp.com', 'media.discordapp.net', 'pbs.twimg.com', 'raw.githubusercontent.com', 'i.postimg.cc', 'static.wikia.nocookie.net'];
 const isAllowedImageHost = (url) => {
   try {
     const parsed = new URL(url);

@@ -249,7 +249,7 @@ const PRECACHE = ['/', '/index.html', '/manifest.webmanifest', '/app-title-icon/
 const CDN_DOMAINS = ['cdnjs.cloudflare.com', 'unpkg.com', 'cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 
 // Image domains — stale-while-revalidate
-const IMG_DOMAINS = ['i.ibb.co', 'i.imgur.com', 'ibb.co', 'cdn.discordapp.com', 'media.discordapp.net', 'pbs.twimg.com', 'raw.githubusercontent.com', 'i.postimg.cc', 'wuwa.gg', 'wuwatracker.com'];
+const IMG_DOMAINS = ['i.ibb.co', 'i.imgur.com', 'ibb.co', 'cdn.discordapp.com', 'media.discordapp.net', 'pbs.twimg.com', 'raw.githubusercontent.com', 'i.postimg.cc'];
 
 // Install — precache app shell + OCR assets. The two run in parallel and each has its own
 // cache.addAll error handling implicitly (a rejected promise here fails the whole install), so
@@ -537,7 +537,7 @@ async function fetchTileWithRetry(cache, url, maxAttempts = 3) {
   // canvas that has ever drawn an opaque response becomes "tainted" and
   // silently refuses to read its own pixels back, making the blur brush
   // produce nothing at all for any tile that was ever offline-downloaded.
-  // Other download targets (icon hosts like wuwatracker.com, i.ibb.co)
+  // Other download targets (icon hosts like i.ibb.co)
   // still need no-cors: they don't send CORS headers at all, so a
   // same-context 'cors' fetch() would reject outright instead of falling
   // back the way an <img> tag silently would.

@@ -24,7 +24,7 @@ export const ALLOWED_IMAGE_HOSTS = Object.freeze([
   'i.ibb.co', 'ibb.co', 'i.imgur.com', 'imgur.com',
   'cdn.discordapp.com', 'media.discordapp.net',
   'pbs.twimg.com', 'raw.githubusercontent.com',
-  'i.postimg.cc', 'wuwa.gg', 'wuwatracker.com',
+  'i.postimg.cc',
 ]);
 
 export const isAllowedImageUrl = (url) => {

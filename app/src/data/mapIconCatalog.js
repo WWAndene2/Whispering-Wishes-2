@@ -71,8 +71,10 @@ export const MAP_ICON_CATALOG = [
     category: 'Collectible',
     group: 'Trinkets',
     subcategory: 'Windchimer',
-    // Placeholder image: the empty round frame (no dedicated icon).
-    imageUrl: 'map-icons/frames/round-frame.png',
+    // Background removed from a photo of the in-game icon
+    // (assets/map-icon-sources/windchimer-photo.jpg), original tones kept;
+    // drawn at 65% of the canvas height, like the other Trinkets (~60%).
+    imageUrl: 'map-icons/Windchimer.png',
     size: 128,
   },
   {

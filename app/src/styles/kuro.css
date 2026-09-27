@@ -2915,3 +2915,19 @@
     /* A settings row's label block (icon + text) mirrors too, so its text
        lines up against the outer edge instead of floating ragged. */
     html.left-handed .lh-row > .flex.items-center.gap-3 { flex-direction: row-reverse; text-align: right; }
+    /* App header: the brand group mirrors too — [gear] … [title][logo] — so
+       the logo, not the subtitle text, meets the header's outer padding. */
+    html.left-handed .header-top .header-brand { flex-direction: row-reverse; text-align: right; }
+    /* Card-header titles: gold accent bar on the outer (right) side. */
+    html.left-handed .kuro-header:has(> .kuro-header-action) > h3 { flex-direction: row-reverse; text-align: right; }
+    /* Banner cards: the pull-simulator pills + ▶ player go bottom-left (▶ on
+       the outer edge) and the featured 4★ portraits take the bottom-right,
+       so the controls never cover the portraits. Name and art stay put. */
+    html.left-handed .banner-controls { flex-direction: row-reverse; }
+    html.left-handed .banner-featured { align-self: flex-end; text-align: right; }
+    html.left-handed .banner-featured > .flex { justify-content: flex-end; }
+    /* Calculator sliders grow toward the palm: pity sliders run right→left;
+       the Resonator/Weapon split slider mirrors whole (fill included) and its
+       label row (.lh-row) swaps sides with it. */
+    html.left-handed .kuro-slider { direction: rtl; }
+    html.left-handed .kuro-slider.priority-slider { direction: ltr; transform: scaleX(-1); }

@@ -1061,7 +1061,7 @@ function WhisperingWishesInner() {
         )}
         <div className="header-inner max-w-lg md:max-w-2xl lg:max-w-none mx-auto pl-1.5 pr-1.5 relative z-10" style={{ width: '100%' }}>
           <div className="header-top lh-row flex items-center justify-between py-1.5">
-            <div className="flex items-center gap-2">
+            <div className="header-brand flex items-center gap-2">
               <div className="relative group cursor-pointer" onClick={async () => {
                 if (pwa?.canInstall) {
                   const accepted = await pwa.promptInstall();

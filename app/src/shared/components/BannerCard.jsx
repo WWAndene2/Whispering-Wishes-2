@@ -260,7 +260,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
           {item.title && <p className="text-gray-200 text-sm line-clamp-1">{(getLocale() === 'fr' && CURRENT_BANNER_TITLES_FR[item.title]) || item.title}</p>}
         </div>
         
-        <div>
+        <div className="banner-featured">
           <div className="text-gray-300 text-sm mb-0.5 uppercase tracking-wider">{t('tracker.featured')} 4★</div>
           <div className="flex gap-2 flex-wrap">
             {(item.featured4Stars || []).map(n => {
@@ -302,7 +302,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
           are independent features: pills appear for both character and
           weapon banners regardless of whether a convene-video preview
           exists for this item. */}
-      <div className="absolute bottom-3 right-3 z-20 flex items-center gap-1">
+      <div className="banner-controls lh-corner absolute bottom-3 right-3 z-20 flex items-center gap-1">
         <ConvenePullPills kind={isChar ? 'character' : 'weapon'} onPull={(c) => { setPullSim(c); setPullSimId(id => id + 1); }} showTide={isChar ? (calc?.radiant > 0) : (calc?.forging > 0)} />
         {conveneVideoUrl ? (
           <button

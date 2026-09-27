@@ -299,7 +299,7 @@ function CalculatorTab({ state, dispatch }) {
                     return (
                     <div>
                       <div className="kuro-label">{t('calculator.astritePriority')}{state.calc.bannerCategory === 'standard' ? t('calculator.astritePriorityStandard') : ''}</div>
-                      <div className="flex items-center justify-between mb-1.5">
+                      <div className="lh-row flex items-center justify-between mb-1.5">
                         <div className="flex items-center gap-1.5">
                           <Crown size={12} style={{ color: currentPriority >= 50 ? '#edaf18' : '#6b7280' }} />
                           <span className="text-base font-medium" style={{ color: currentPriority >= 50 ? '#edaf18' : '#6b7280' }}>{t('calculator.resonatorPercent', { pct: currentPriority })}</span>

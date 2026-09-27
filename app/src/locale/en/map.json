@@ -67,7 +67,8 @@
       "kindZone": "In region",
       "catZone": "Category in region",
       "zone": "Region",
-      "icon": "Marker"
+      "icon": "Marker",
+      "subcategory": "Class"
     },
     "header": "Search"
   }

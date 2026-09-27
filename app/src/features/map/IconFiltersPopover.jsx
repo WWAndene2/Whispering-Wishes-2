@@ -12,10 +12,11 @@ import { Eye, EyeOff, X } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { t } from '../../utils/i18n.js';
 import { getIconImageUrl } from './iconImageCache.js';
+import { MAP_ICON_CATALOG, ENEMY_CLASS_ORDER } from '../../data/mapIconCatalog.js';
 
 // Explicit priority for known subcategories (Nexus before Beacon); anything
 // else falls back to alphabetical order after these.
-const SUBCATEGORY_ORDER = ['Nexus', 'Beacon'];
+const SUBCATEGORY_ORDER = ['Nexus', 'Beacon', ...ENEMY_CLASS_ORDER];
 function compareSubcategories(a, b) {
   const ia = SUBCATEGORY_ORDER.indexOf(a);
   const ib = SUBCATEGORY_ORDER.indexOf(b);
@@ -23,10 +24,10 @@ function compareSubcategories(a, b) {
   return a.localeCompare(b);
 }
 
-// Explicit priority for known top-level categories (Zone before Resonance
-// — direct user request); anything else falls back to alphabetical order
-// after these.
-const CATEGORY_ORDER = ['Zone', 'Resonance'];
+// Explicit priority for known top-level categories (Zone before Resonance,
+// Enemy under Collectible — direct user requests); anything else falls back
+// to alphabetical order after these.
+const CATEGORY_ORDER = ['Zone', 'Resonance', 'Collectible', 'Enemy'];
 function compareCategories(a, b) {
   const ia = CATEGORY_ORDER.indexOf(a);
   const ib = CATEGORY_ORDER.indexOf(b);
@@ -55,28 +56,32 @@ export function IconFiltersPopover({
   // category → { total, subs: Map<name, { n, subs?: Map<sub, n> }> } — an
   // entry with its own `subs` is a group.
   const tree = new Map();
-  for (const ic of iconDrafts) {
-    const kind = getIconCatalogEntry(ic.kind);
-    const cat = ic.category || kind?.category || 'Uncategorised';
-    const sub = ic.subcategory || kind?.subcategory || '';
-    const group = kind?.group || '';
+  // Adds one icon (inc=1) or just the row structure for a catalog kind with
+  // nothing placed yet (inc=0), so every category/class exists in the panel
+  // before the first icon of it is placed (e.g. Enemy › Overlord).
+  const addToTree = (kindId, cat, sub, group, inc) => {
     if (!tree.has(cat)) tree.set(cat, { total: 0, subs: new Map() });
     const entry = tree.get(cat);
-    entry.total++;
+    entry.total += inc;
     if (group) {
       if (!entry.subs.has(group)) entry.subs.set(group, { n: 0, subs: new Map(), subKinds: new Map() });
       const g = entry.subs.get(group);
-      g.n++;
+      g.n += inc;
       if (sub) {
-        g.subs.set(sub, (g.subs.get(sub) || 0) + 1);
+        g.subs.set(sub, (g.subs.get(sub) || 0) + inc);
         if (!g.subKinds.has(sub)) g.subKinds.set(sub, new Set());
-        g.subKinds.get(sub).add(ic.kind);
+        g.subKinds.get(sub).add(kindId);
       }
     } else if (sub) {
       if (!entry.subs.has(sub)) entry.subs.set(sub, { n: 0, kinds: new Set() });
-      entry.subs.get(sub).n++;
-      entry.subs.get(sub).kinds.add(ic.kind);
+      entry.subs.get(sub).n += inc;
+      entry.subs.get(sub).kinds.add(kindId);
     }
+  };
+  for (const k of MAP_ICON_CATALOG) addToTree(k.id, k.category || 'Uncategorised', k.subcategory || '', k.group || '', 0);
+  for (const ic of iconDrafts) {
+    const kind = getIconCatalogEntry(ic.kind);
+    addToTree(ic.kind, ic.category || kind?.category || 'Uncategorised', ic.subcategory || kind?.subcategory || '', kind?.group || '', 1);
   }
   // Synthetic "Zone" category — not derived from placed icons at all (L3
   // zone Names/Area map layers instead), but toggled through the exact same

@@ -15,7 +15,10 @@
 //                the filter tree (e.g. "Collectible › Chest › Supply Chest"),
 //                so several chest kinds can be shown/hidden together
 //   imageUrl:    relative path under the app's BASE_URL
-//   size:        natural size on disk in px (square — both PNGs are 128²)
+//   size:        natural size on disk in px (square)
+//   tags:        optional extra search words (see the Enemies section below)
+
+import { ECHO_DATA } from './echoes.js';
 
 export const MAP_ICON_CATALOG = [
   {
@@ -60,6 +63,66 @@ export const MAP_ICON_CATALOG = [
     size: 128,
   },
 ];
+
+// ── Enemies ────────────────────────────────────────────────────────────────
+// Filter tree: Enemy › <class> (Calamity / Overlord / Elite / Common). Class,
+// element and Sonata sets are read from ECHO_DATA (data/echoes.js) — the same
+// source the rest of the app uses — so they are never re-typed here; the name
+// must match its ECHO_DATA key exactly. Images live in map-icons/enemy/.
+// `tags` feed the map search (class, element, Sonata sets, "boss").
+const ENEMY_ICONS = [
+  ['bell-borne-geochelone', 'Bell-Borne Geochelone'],
+  ['crownless', 'Crownless'],
+  ['dragon-of-dirge', 'Dragon of Dirge'],
+  ['dreamless', 'Dreamless'],
+  ['fallacy-of-no-return', 'Fallacy of No Return'],
+  ['feilian-beringal', 'Feilian Beringal'],
+  ['reminiscence-fenrico', 'Reminiscence: Fenrico'],
+  ['reminiscence-fleurdelys', 'Reminiscence: Fleurdelys'],
+  ['hecate', 'Hecate'],
+  ['hyvatia', 'Hyvatia'],
+  ['impermanence-heron', 'Impermanence Heron'],
+  ['inferno-rider', 'Inferno Rider'],
+  ['jue', 'Jué'],
+  ['lampylumen-myriad', 'Lampylumen Myriad'],
+  ['lorelei', 'Lorelei'],
+  ['mech-abomination', 'Mech Abomination'],
+  ['mourning-aix', 'Mourning Aix'],
+  ['myriad-snare-rustfire-chassis', 'Myriad Snare: Rustfire Chassis'],
+  ['nameless-explorer', 'Nameless Explorer'],
+  ['nightmare-inferno-rider', 'Nightmare: Inferno Rider'],
+  ['nightmare-feilian-beringal', 'Nightmare: Feilian Beringal'],
+  ['nightmare-hecate', 'Nightmare: Hecate'],
+  ['nightmare-impermanence-heron', 'Nightmare: Impermanence Heron'],
+  ['nightmare-kelpie', 'Nightmare: Kelpie'],
+  ['nightmare-mourning-aix', 'Nightmare: Mourning Aix'],
+  ['nightmare-thundering-mephis', 'Nightmare: Thundering Mephis'],
+  ['reactor-husk', 'Reactor Husk'],
+  ['sentry-construct', 'Sentry Construct'],
+  ['sigillum', 'Sigillum'],
+  ['tempest-mephis', 'Tempest Mephis'],
+  ['the-false-sovereign', 'The False Sovereign'],
+  ['reminiscence-threnodian-leviathan', 'Reminiscence: Threnodian - Leviathan'],
+  ['thundering-mephis', 'Thundering Mephis'],
+];
+
+const ENEMY_CLASS_ORDER = ['Calamity', 'Overlord', 'Elite', 'Common'];
+
+for (const [slug, echoName] of ENEMY_ICONS) {
+  const echo = ECHO_DATA[echoName];
+  if (!echo) throw new Error(`mapIconCatalog: no ECHO_DATA entry named "${echoName}"`);
+  MAP_ICON_CATALOG.push({
+    id: `enemy-${slug}`,
+    name: echoName,
+    category: 'Enemy',
+    subcategory: echo.rank,
+    imageUrl: `map-icons/enemy/${slug}.png`,
+    size: 128,
+    tags: ['boss', 'enemy', echo.rank, echo.element, ...(echo.sets || [])].filter(Boolean),
+  });
+}
+
+export { ENEMY_CLASS_ORDER };
 
 export function getIconCatalogEntry(kindId) {
   return MAP_ICON_CATALOG.find((c) => c.id === kindId) || null;

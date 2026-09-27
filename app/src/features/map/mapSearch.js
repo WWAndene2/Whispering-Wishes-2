@@ -61,6 +61,26 @@ const SYNONYMS = {
   zones: ['zone'],
   beacons: ['beacon'],
   nexuses: ['nexus'],
+  bosses: ['boss'],
+  enemies: ['enemy'],
+  ennemi: ['enemy'],
+  ennemis: ['enemy'],
+  monstre: ['enemy'],
+  monstres: ['enemy'],
+  monster: ['enemy'],
+  monsters: ['enemy'],
+  mob: ['enemy'],
+  mobs: ['enemy'],
+  calamite: ['calamity'],
+  calamites: ['calamity'],
+  seigneur: ['overlord'],
+  overlords: ['overlord'],
+  elites: ['elite'],
+  commun: ['common'],
+  communs: ['common'],
+  echo: ['boss', 'enemy'],
+  echos: ['boss', 'enemy'],
+  echoes: ['boss', 'enemy'],
 };
 
 const MAX_RESULTS = 30;
@@ -161,6 +181,7 @@ export function buildSearchIndex({ icons, zones, getKind }) {
       category: ic.category || k.category || 'Uncategorised',
       subcategory: ic.subcategory || k.subcategory || '',
       group: k.group || '',
+      tags: k.tags || [],
       chain: chainOf(ic.zoneId),
     };
   });
@@ -182,12 +203,18 @@ export function buildSearchIndex({ icons, zones, getKind }) {
   };
 
   for (const m of iconMeta) {
-    const { ic, kindName, category, subcategory, group } = m;
-    const typeWords = [category, group, subcategory, kindName];
+    const { ic, kindName, category, subcategory, group, tags } = m;
+    const typeWords = [category, group, subcategory, kindName, ...tags];
     add(`kind:${ic.kind}`, () => ({
-      type: 'kind', label: kindName, context: category, kind: ic.kind,
+      type: 'kind', label: kindName, context: [category, subcategory !== kindName && subcategory].filter(Boolean).join(' · '), kind: ic.kind,
       filter: { kind: ic.kind }, fields: fields(kindName, typeWords, null),
     })).iconIds.push(ic.id);
+    if (subcategory && subcategory !== kindName) {
+      add(`sub:${category}/${subcategory}`, () => ({
+        type: 'subcategory', label: subcategory, context: category, kind: null,
+        filter: { category, subcategory }, fields: fields(subcategory, [category, subcategory], null),
+      })).iconIds.push(ic.id);
+    }
     add(`cat:${category}`, () => ({
       type: 'category', label: category, context: '', kind: null,
       filter: { category }, fields: fields(category, [category], null),
@@ -210,14 +237,16 @@ export function buildSearchIndex({ icons, zones, getKind }) {
     }
   }
 
-  // A category doc that only ever holds one kind duplicates that kind's doc.
-  const kindsPerCat = new Map();
+  // A category / subcategory doc that only ever holds one kind duplicates that kind's doc.
+  const kindsPer = new Map();
+  const note = (k, kind) => { if (!kindsPer.has(k)) kindsPer.set(k, new Set()); kindsPer.get(k).add(kind); };
   for (const m of iconMeta) {
-    if (!kindsPerCat.has(m.category)) kindsPerCat.set(m.category, new Set());
-    kindsPerCat.get(m.category).add(m.ic.kind);
+    note(`cat:${m.category}`, m.ic.kind);
+    if (m.subcategory) note(`sub:${m.category}/${m.subcategory}`, m.ic.kind);
   }
   for (const [key, d] of docs) {
-    if ((d.type === 'category' || d.type === 'catZone') && (kindsPerCat.get(d.filter.category)?.size ?? 0) < 2) docs.delete(key);
+    if ((d.type === 'category' || d.type === 'catZone') && (kindsPer.get(`cat:${d.filter.category}`)?.size ?? 0) < 2) docs.delete(key);
+    if (d.type === 'subcategory' && (kindsPer.get(key)?.size ?? 0) < 2) docs.delete(key);
   }
 
   const zoneIconIds = new Map();
@@ -263,7 +292,7 @@ function matchWord(qw, doc) {
 }
 
 // Base rank per type for a tie: broad results first, then region-scoped ones.
-const TYPE_BONUS = { kind: 0.6, category: 0.5, zone: 0.4, icon: 0.3, kindZone: 0.2, catZone: 0.1 };
+const TYPE_BONUS = { kind: 0.6, subcategory: 0.55, category: 0.5, zone: 0.4, icon: 0.3, kindZone: 0.2, catZone: 0.1 };
 
 /**
  * Ranked results for a query. Empty/stop-word-only queries return [].

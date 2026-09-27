@@ -67,7 +67,8 @@
       "kindZone": "Dans la région",
       "catZone": "Catégorie dans la région",
       "zone": "Région",
-      "icon": "Repère"
+      "icon": "Repère",
+      "subcategory": "Classe"
     },
     "header": "Recherche"
   }

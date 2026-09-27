@@ -4,7 +4,7 @@ import { Card, CardHeader } from '../../shared/components/Card.jsx';
 import { MAP_ZONES } from '../../data/mapZones.js';
 import { OVERLAY_CATALOG, loadOverlayDrafts, saveOverlayDrafts } from '../../data/mapOverlays.js';
 import { DEFAULT_ICON_DRAFTS } from '../../data/mapDefaults.js';
-import { MAP_ICON_CATALOG, getIconCatalogEntry } from '../../data/mapIconCatalog.js';
+import { MAP_ICON_CATALOG, ENEMY_CLASS_ORDER, getIconCatalogEntry } from '../../data/mapIconCatalog.js';
 import { tileUrlsForOverlay } from '../../core/tileSW.js';
 import { FocusTrapModal } from '../../shared/components/FocusTrapModal.jsx';
 import { hideOnError } from '../../shared/utils/imageHelpers.js';
@@ -47,6 +47,24 @@ const COLOR_CANON = '#edaf18';   // brand gold — canonical zones from mapZones
 const COLOR_DRAFT = '#38bdf8';   // cyan — session drafts
 const COLOR_ACTIVE = '#edaf18';  // gold dashed — in-progress polygon
 // Map search focus: matched icons drawn at 1.25x with a gold glow breathing over 2.4 s.
+// Icon picker in the author panel: catalog grouped by category (enemies also
+// by class, in ENEMY_CLASS_ORDER), names alphabetical within a group.
+const MAP_ICON_CATALOG_GROUPS = (() => {
+  const groups = new Map();
+  for (const c of MAP_ICON_CATALOG) {
+    const label = c.category === 'Enemy' ? `Enemy · ${c.subcategory}` : (c.category || 'Uncategorised');
+    if (!groups.has(label)) groups.set(label, []);
+    groups.get(label).push(c);
+  }
+  const rank = (label) => {
+    const cls = ENEMY_CLASS_ORDER.indexOf(label.replace('Enemy · ', ''));
+    return label.startsWith('Enemy · ') ? 100 + (cls === -1 ? 50 : cls) : 0;
+  };
+  return [...groups.entries()]
+    .map(([label, kinds]) => [label, [...kinds].sort((a, b) => a.name.localeCompare(b.name))])
+    .sort((a, b) => rank(a[0]) - rank(b[0]) || a[0].localeCompare(b[0]));
+})();
+
 const SEARCH_FOCUS_SCALE = 1.25;
 const SEARCH_BREATH_MS = 2400;
 
@@ -57,7 +75,10 @@ const SEARCH_BREATH_MS = 2400;
 // the user's later show/hide choice sticks across reloads.
 const DEFAULT_VISIBLE_ICON_CATEGORIES = new Set(['Resonance', 'Zone']);
 const ICON_FILTERS_SEEN_KEY = 'ww-icon-filters-seen-categories';
-function seedDefaultHiddenCategories(offSet, icons) {
+function seedDefaultHiddenCategories(offSet, placedIcons) {
+  // Catalog kinds count too, so a category is already hidden in the filter
+  // panel before its first icon is placed.
+  const icons = [...placedIcons, ...MAP_ICON_CATALOG.map(k => ({ kind: k.id }))];
   let seen;
   try { seen = new Set(JSON.parse(localStorage.getItem(ICON_FILTERS_SEEN_KEY) || '[]')); } catch { seen = new Set(); }
   let changed = false;
@@ -5527,8 +5548,10 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                               });
                             }}
                           >
-                            {MAP_ICON_CATALOG.map(c => (
-                              <option key={c.id} value={c.id}>{c.name}</option>
+                            {MAP_ICON_CATALOG_GROUPS.map(([label, kinds]) => (
+                              <optgroup key={label} label={label}>
+                                {kinds.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                              </optgroup>
                             ))}
                           </select>
                         </div>

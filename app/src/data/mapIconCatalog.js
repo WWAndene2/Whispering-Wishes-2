@@ -50,9 +50,60 @@ export const MAP_ICON_CATALOG = [
     id: 'sonance-casket',
     name: 'Sonance Casket',
     category: 'Collectible',
+    group: 'Trinkets',
     subcategory: 'Sonance Casket',
     imageUrl: 'map-icons/Sonance-Casket.png',
     size: 256,
+  },
+  {
+    id: 'blobfly',
+    name: 'Blobfly',
+    category: 'Collectible',
+    group: 'Trinkets',
+    subcategory: 'Blobfly',
+    // Placeholder image: the empty round frame (no dedicated icon).
+    imageUrl: 'map-icons/frames/round-frame.png',
+    size: 128,
+  },
+  {
+    id: 'windchimer',
+    name: 'Windchimer',
+    category: 'Collectible',
+    group: 'Trinkets',
+    subcategory: 'Windchimer',
+    // Placeholder image: the empty round frame (no dedicated icon).
+    imageUrl: 'map-icons/frames/round-frame.png',
+    size: 128,
+  },
+  {
+    id: 'frostbug',
+    name: 'Frostbug',
+    category: 'Collectible',
+    group: 'Trinkets',
+    subcategory: 'Frostbug',
+    // Placeholder image: the empty round frame (no dedicated icon).
+    imageUrl: 'map-icons/frames/round-frame.png',
+    size: 128,
+  },
+  {
+    id: 'tape-of-last-words',
+    name: 'Tape of Last Words',
+    category: 'Collectible',
+    group: 'Trinkets',
+    subcategory: 'Tape of Last Words',
+    // Placeholder image: the empty round frame (no dedicated icon).
+    imageUrl: 'map-icons/frames/round-frame.png',
+    size: 128,
+  },
+  {
+    id: 'unclaimed-rafter-kites',
+    name: 'Unclaimed Rafter Kites',
+    category: 'Collectible',
+    group: 'Trinkets',
+    subcategory: 'Unclaimed Rafter Kites',
+    // Placeholder image: the empty round frame (no dedicated icon).
+    imageUrl: 'map-icons/frames/round-frame.png',
+    size: 128,
   },
   {
     id: 'supply-chest',

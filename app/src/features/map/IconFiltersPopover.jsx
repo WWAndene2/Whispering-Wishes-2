@@ -8,7 +8,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import React from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, X } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { t } from '../../utils/i18n.js';
 
@@ -102,7 +102,11 @@ export function IconFiltersPopover({
                 className="kuro-btn kuro-btn-sm kuro-btn-icon"
                 onClick={onClose}
                 aria-label={t('map.wip.close')}
-              >✕</button>
+              >
+                {/* Same 14px lucide glyph as the Hide/Show all button beside it — a
+                    text ✕ sits at a font-dependent height and looked misaligned. */}
+                <X size={14} />
+              </button>
             </>
           }
         >

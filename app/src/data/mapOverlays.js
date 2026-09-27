@@ -156,21 +156,22 @@ export const OVERLAY_CATALOG = [
     maxZoom: 6,
   },
   {
-    // Dimmr Plains, 2026-09-27 map update. Source: map-tiles/Dimmr_Plains-v2/
+    // Dimmr Plains, 2026-09-27 map update. Source: map-tiles/Dimmr_Plains-v3/
     // Dimmr_Plains_New.zip (6912x6144, 27x24 tiles), scaled x1/0.5282 into
     // the previous 13312x12288 frame (registered sub-pixel against the
     // previous tiles), so zones, icons and this overlay's placement are
     // unchanged. The black sea was cut out by border flood-fill and the
-    // island outlined like the previous version. About 120 z6 tiles of the
-    // previous version (e.g. x 34-45, y 29-35) were 4 px left of their
-    // neighbours; the new map is continuous there instead of copying that.
+    // island outlined with half the previous version's band (78 px solid,
+    // 65 px taper), since the new map already draws its own coastline.
+    // About 120 z6 tiles of the previous version (e.g. x 34-45, y 29-35)
+    // were 4 px left of their neighbours; the new map is continuous there instead of copying that.
     // Pyramid: lossless/{z}/{y}/{x}.png for z in [minZoom, maxZoom], same
-    // convention as Mengzhou/Lahai Roi. New folder name (-v2) on purpose,
+    // convention as Mengzhou/Lahai Roi. New folder name (-v3) on purpose,
     // see Lahai Roi above; the previous version is archived, not served, in
     // assets/map-archive/dimmr-plains-2026-09-22/.
     id: 'dimmr-plains',
     name: 'Dimmr Plains',
-    imageUrl: 'map-tiles/Dimmr_Plains-v2/Dimmr_Plains.webp',
+    imageUrl: 'map-tiles/Dimmr_Plains-v3/Dimmr_Plains.webp',
     naturalWidth: 13312,
     naturalHeight: 12288,
     pyramid: true,

@@ -329,7 +329,9 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   // Which zone/subzone branches are collapsed in the drafts tree below —
   // direct user request ("after hundred item i cant figure it out what is
   // where"). Ephemeral like the selection above, not persisted.
-  const [collapsedDraftIds, setCollapsedDraftIds] = useState(() => new Set());
+  // Zones start folded (the tree is long with every icon under it); zones
+  // created later start unfolded.
+  const [collapsedDraftIds, setCollapsedDraftIds] = useState(() => new Set(drafts.map(d => d.id)));
   const toggleDraftCollapsed = (id) => setCollapsedDraftIds((prev) => {
     const next = new Set(prev);
     if (next.has(id)) next.delete(id); else next.add(id);
@@ -362,6 +364,20 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   // Author icon list: rows are one line until expanded; list can be filtered.
   const [expandedIconIds, setExpandedIconIds] = useState(() => new Set());
   const [iconListQuery, setIconListQuery] = useState('');
+  // Author panel section shown (tabs); remembered. Map clicks only add zone
+  // points on the Zones tab, so working on icons/sub-maps never draws a polygon.
+  const [authorTab, setAuthorTab] = useState(() => {
+    try { return localStorage.getItem('ww-author-tab') || 'zones'; } catch { return 'zones'; }
+  });
+  const authorTabRef = useRef(authorTab);
+  const selectAuthorTab = useCallback((tab) => {
+    authorTabRef.current = tab;
+    setAuthorTab(tab);
+    // A tool keeps listening to map clicks, so leaving its tab turns it off.
+    if (tab !== 'paint') setPaintMode(false);
+    if (tab !== 'zones') setFreehandMode(false);
+    try { localStorage.setItem('ww-author-tab', tab); } catch {}
+  }, []);
   // Regions tree (author panel): unfolded "Kind ×N" groups, keyed "zoneId|kindId".
   const [expandedTreeGroups, setExpandedTreeGroups] = useState(() => new Set());
   useEffect(() => {
@@ -1528,6 +1544,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       // Icon-place mode preempts zone-point adds — the user is placing
       // an icon, not drawing a polygon.
       if (placingIconIdRef.current) return;
+      // Only the Zones tab of the author panel draws.
+      if (authorTabRef.current !== 'zones') return;
       map.closePopup();
       const pt = map.project(e.latlng, NATIVE_ZOOM);
       setAuthorPoints(prev => [...prev, [Math.round(pt.x), Math.round(pt.y)]]);
@@ -3728,6 +3746,15 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         }
 
         /* ── Zone author panel (bottom sheet when authoring) ──────────── */
+        .author-tabs {
+          display: flex; flex-wrap: wrap; gap: var(--space-xs, 4px);
+          margin: var(--space-xs, 4px) 0 var(--space-sm, 8px);
+          padding-bottom: var(--space-sm, 8px);
+          border-bottom: 1px solid var(--border-default);
+        }
+        /* Each section begins with its own divider; right under the tab bar's
+           border it would draw a second line. */
+        .author-tabs + .divider { display: none; }
         .zone-author-panel {
           position: absolute;
           left: var(--space-md, 12px);
@@ -3744,7 +3771,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           color: var(--text-body);
           font-size: 12px;
           display: flex; flex-direction: column; gap: var(--space-sm, 8px);
-          max-height: calc(100% - 120px); overflow-y: auto;
+          max-height: 50%; overflow-y: auto; overscroll-behavior: contain;
         }
         .zone-author-panel .panel-top-row {
           display: flex; gap: var(--space-xs, 6px);
@@ -4963,6 +4990,21 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                     style={{ padding: '2px 8px' }}
                   >▼</button>
                 </div>
+                {/* Sections as tabs — only the chosen one is shown (remembered). */}
+                <div className="author-tabs" role="tablist" aria-label="Editor sections">
+                  {[
+                    ['zones', `Zones (${drafts.length})`],
+                    ['icons', `Icons (${iconDrafts.length})`],
+                    ['submaps', `Sub-maps (${overlayDrafts.filter(ov => !(ov.locked && drafts.some(d => d.overlayId === ov.id))).length})`],
+                    ['paint', `Paint (${paintStrokes.length})`],
+                    ['config', 'Config'],
+                  ].map(([id, label]) => (
+                    <button key={id} type="button" role="tab" aria-selected={authorTab === id}
+                      className={`zone-author-btn ${authorTab === id ? 'is-active' : ''}`}
+                      onClick={() => selectAuthorTab(id)}>{label}</button>
+                  ))}
+                </div>
+                {authorTab === 'zones' && (<>
                 <div className="row">
                   <span className="count">{authorPoints.length}</span>
                   <span className="hint">point{authorPoints.length === 1 ? '' : 's'} · tap to add · drag pts · tap pt = delete · + = insert</span>
@@ -5056,96 +5098,6 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                   {editingId && (
                     <button className="zone-author-btn is-danger" type="button" onClick={handleCancelEdit}>Cancel edit</button>
                   )}
-                </div>
-
-                {/* ── Ocean paint tool — blot over map artefacts ── */}
-                <div className="divider" />
-                <div className="drafts-head"><span>Ocean paint ({paintStrokes.length})</span></div>
-                <div className="row">
-                  <button
-                    className={`zone-author-btn ${paintMode ? 'is-active' : ''}`}
-                    type="button"
-                    aria-pressed={paintMode}
-                    onClick={() => { setPaintMode(v => !v); if (!paintMode) { setFreehandMode(false); } }}
-                  >
-                    {paintMode ? 'Paint: on' : 'Paint'}
-                  </button>
-                  <button
-                    className="zone-author-btn"
-                    type="button"
-                    onClick={handlePaintUndo}
-                    disabled={paintStrokes.length === 0}
-                  >Undo stroke</button>
-                  <button
-                    className="zone-author-btn"
-                    type="button"
-                    onClick={handleCopyPaintJson}
-                    disabled={paintStrokes.length === 0}
-                    title="Copy stroke JSON to paste to Claude so paint can be baked into the tiles"
-                  >Copy JSON</button>
-                  <button
-                    className="zone-author-btn is-danger"
-                    type="button"
-                    onClick={handlePaintClear}
-                    disabled={paintStrokes.length === 0}
-                  >Clear all</button>
-                </div>
-                <div className="row">
-                  <div className="field" style={{ flex: '1 1 0' }}>
-                    <label>Brush ({paintBrushSize}px native)</label>
-                    <input
-                      type="range"
-                      min="4"
-                      max="200"
-                      step="1"
-                      value={paintBrushSize}
-                      onChange={(e) => setPaintBrushSize(+e.target.value || 40)}
-                      className="overlay-slider"
-                    />
-                  </div>
-                  <button
-                    className={`zone-author-btn ${paintBrushMode === 'solid' ? 'is-active' : ''}`}
-                    type="button"
-                    aria-pressed={paintBrushMode === 'solid'}
-                    onClick={() => setPaintBrushMode('solid')}
-                    title="Hard-edged blot — paints a flat, fully opaque shape"
-                  >Solid</button>
-                  <button
-                    className={`zone-author-btn ${paintBrushMode === 'fade' ? 'is-active' : ''}`}
-                    type="button"
-                    aria-pressed={paintBrushMode === 'fade'}
-                    onClick={() => setPaintBrushMode('fade')}
-                    title="Soft-edged blot — paints translucent ocean colour, fading to transparent at the brush edge"
-                  >Fade</button>
-                  <button
-                    className={`zone-author-btn ${paintBrushMode === 'blur' ? 'is-active' : ''}`}
-                    type="button"
-                    aria-pressed={paintBrushMode === 'blur'}
-                    onClick={() => setPaintBrushMode('blur')}
-                    title="Blurs the map/overlay pixels already there, feathered at the brush edge — smooths a hard edge without painting any new colour"
-                  >Blur</button>
-                </div>
-
-                {/* ── Config export / import — backup & restore the whole editor state ── */}
-                <div className="divider" />
-                <div className="drafts-head"><span>Editor config</span></div>
-                <div className="row">
-                  <button className="zone-author-btn" type="button" onClick={handleExportConfig}>
-                    Export JSON
-                  </button>
-                  <button className="zone-author-btn" type="button" onClick={handleImportConfigClick}>
-                    Import JSON
-                  </button>
-                  <input
-                    ref={configImportInputRef}
-                    type="file"
-                    accept="application/json,.json"
-                    style={{ display: 'none' }}
-                    onChange={handleImportConfigFile}
-                  />
-                </div>
-                <div className="hint" style={{ fontSize: 10, opacity: 0.7 }}>
-                  Exports zones + sub-maps + paint as one JSON. Paste that file into chat and I can ship it as an app-wide seed.
                 </div>
 
                 {drafts.length > 0 && (
@@ -5494,6 +5446,102 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                   />
                 )}
 
+                </>)}
+                {authorTab === 'paint' && (<>
+                {/* ── Ocean paint tool — blot over map artefacts ── */}
+                <div className="divider" />
+                <div className="drafts-head"><span>Ocean paint ({paintStrokes.length})</span></div>
+                <div className="row">
+                  <button
+                    className={`zone-author-btn ${paintMode ? 'is-active' : ''}`}
+                    type="button"
+                    aria-pressed={paintMode}
+                    onClick={() => { setPaintMode(v => !v); if (!paintMode) { setFreehandMode(false); } }}
+                  >
+                    {paintMode ? 'Paint: on' : 'Paint'}
+                  </button>
+                  <button
+                    className="zone-author-btn"
+                    type="button"
+                    onClick={handlePaintUndo}
+                    disabled={paintStrokes.length === 0}
+                  >Undo stroke</button>
+                  <button
+                    className="zone-author-btn"
+                    type="button"
+                    onClick={handleCopyPaintJson}
+                    disabled={paintStrokes.length === 0}
+                    title="Copy stroke JSON to paste to Claude so paint can be baked into the tiles"
+                  >Copy JSON</button>
+                  <button
+                    className="zone-author-btn is-danger"
+                    type="button"
+                    onClick={handlePaintClear}
+                    disabled={paintStrokes.length === 0}
+                  >Clear all</button>
+                </div>
+                <div className="row">
+                  <div className="field" style={{ flex: '1 1 0' }}>
+                    <label>Brush ({paintBrushSize}px native)</label>
+                    <input
+                      type="range"
+                      min="4"
+                      max="200"
+                      step="1"
+                      value={paintBrushSize}
+                      onChange={(e) => setPaintBrushSize(+e.target.value || 40)}
+                      className="overlay-slider"
+                    />
+                  </div>
+                  <button
+                    className={`zone-author-btn ${paintBrushMode === 'solid' ? 'is-active' : ''}`}
+                    type="button"
+                    aria-pressed={paintBrushMode === 'solid'}
+                    onClick={() => setPaintBrushMode('solid')}
+                    title="Hard-edged blot — paints a flat, fully opaque shape"
+                  >Solid</button>
+                  <button
+                    className={`zone-author-btn ${paintBrushMode === 'fade' ? 'is-active' : ''}`}
+                    type="button"
+                    aria-pressed={paintBrushMode === 'fade'}
+                    onClick={() => setPaintBrushMode('fade')}
+                    title="Soft-edged blot — paints translucent ocean colour, fading to transparent at the brush edge"
+                  >Fade</button>
+                  <button
+                    className={`zone-author-btn ${paintBrushMode === 'blur' ? 'is-active' : ''}`}
+                    type="button"
+                    aria-pressed={paintBrushMode === 'blur'}
+                    onClick={() => setPaintBrushMode('blur')}
+                    title="Blurs the map/overlay pixels already there, feathered at the brush edge — smooths a hard edge without painting any new colour"
+                  >Blur</button>
+                </div>
+
+                </>)}
+                {authorTab === 'config' && (<>
+                {/* ── Config export / import — backup & restore the whole editor state ── */}
+                <div className="divider" />
+                <div className="drafts-head"><span>Editor config</span></div>
+                <div className="row">
+                  <button className="zone-author-btn" type="button" onClick={handleExportConfig}>
+                    Export JSON
+                  </button>
+                  <button className="zone-author-btn" type="button" onClick={handleImportConfigClick}>
+                    Import JSON
+                  </button>
+                  <input
+                    ref={configImportInputRef}
+                    type="file"
+                    accept="application/json,.json"
+                    style={{ display: 'none' }}
+                    onChange={handleImportConfigFile}
+                  />
+                </div>
+                <div className="hint" style={{ fontSize: 10, opacity: 0.7 }}>
+                  Exports zones + sub-maps + paint as one JSON. Paste that file into chat and I can ship it as an app-wide seed.
+                </div>
+
+                </>)}
+                {authorTab === 'submaps' && (<>
                 {/* ── Sub-maps section — only editable (unlocked or not in tree) placements. */}
                 {(() => {
                   const editableOverlays = overlayDrafts.filter(ov => !(ov.locked && drafts.some(d => d.overlayId === ov.id)));
@@ -5636,6 +5684,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                   </>);
                 })()}
 
+                </>)}
+                {authorTab === 'icons' && (<>
                 {/* ── Map icons section — admin-only authoring surface for
                     placing interactive icons on the map. Each icon =
                       { id, kind, category, x, y, label }
@@ -6015,6 +6065,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                   );
                 })}
 
+                </>)}
               </div>
             )}
 

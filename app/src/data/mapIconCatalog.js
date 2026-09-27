@@ -128,6 +128,40 @@ export const MAP_ICON_CATALOG = [
     imageUrl: 'map-icons/Void-Storm-Zone.png',
     size: 128,
   },
+  // Not filed yet: the right category for these is still to be decided.
+  {
+    id: 'auto-casket',
+    name: 'Auto Casket',
+    category: 'Other',
+    subcategory: 'Auto Casket',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-6.png): outer
+    // background removed, colours untouched; 65% of the canvas height.
+    imageUrl: 'map-icons/Auto-Casket.png',
+    size: 128,
+  },
+  {
+    id: 'squarefield-sparring',
+    name: 'Squarefield Sparring',
+    category: 'Other',
+    subcategory: 'Squarefield Sparring',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-6.png): outer
+    // background removed, colours untouched; 65% of the canvas height.
+    imageUrl: 'map-icons/Squarefield-Sparring.png',
+    size: 128,
+  },
+  {
+    id: 'super-cloud-ride-challenge',
+    name: 'Super Cloud Ride Challenge',
+    category: 'Other',
+    subcategory: 'Super Cloud Ride Challenge',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-6.png): outer
+    // background removed, colours untouched; 65% of the canvas height.
+    imageUrl: 'map-icons/Super-Cloud-Ride-Challenge.png',
+    size: 128,
+  },
   {
     id: 'blobfly',
     name: 'Blobfly',

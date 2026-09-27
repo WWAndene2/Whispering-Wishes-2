@@ -279,6 +279,29 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       return seedDefaultHiddenCategories(next, iconDrafts) ? next : prev;
     });
   }, [iconDrafts]);
+  // ── Found progress (player) ────────────────────────────────────────────
+  // Icon ids the player marked as found. Persisted in ww-map-found, which is
+  // one of core/storageKeys.js's exportable keys, so it rides along with the
+  // JSON export and the Google cloud backup/restore (sync across devices).
+  const [foundIds, setFoundIds] = useState(() => {
+    try { const v = JSON.parse(localStorage.getItem('ww-map-found') || '[]'); return new Set(Array.isArray(v) ? v : []); } catch { return new Set(); }
+  });
+  const toggleFound = useCallback((id) => {
+    setFoundIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      try { localStorage.setItem('ww-map-found', JSON.stringify([...next])); } catch {}
+      return next;
+    });
+  }, []);
+  const [hideFound, setHideFound] = useState(() => { try { return localStorage.getItem('ww-map-hide-found') === '1'; } catch { return false; } });
+  const toggleHideFound = useCallback(() => setHideFound(v => {
+    try { localStorage.setItem('ww-map-hide-found', v ? '' : '1'); } catch {}
+    return !v;
+  }), []);
+  // Icon whose info card is open (tap an icon outside author mode).
+  const [iconCardId, setIconCardId] = useState(null);
+
   const saveIconDrafts = useCallback((next) => {
     setIconDrafts(next);
     try { localStorage.setItem('ww-icon-drafts', JSON.stringify(next)); } catch {}
@@ -709,6 +732,24 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     () => buildSearchIndex({ icons: iconDrafts, zones: allZones, getKind: getIconCatalogEntry }),
     [iconDrafts, allZones],
   );
+  // Region completion (Regions panel): found/total icons per zone, a zone
+  // counting its sub-zones too. Only computed once something is found.
+  const zoneProgress = useMemo(() => {
+    if (!foundIds.size) return null;
+    const parentOf = new Map(allZones.map(z => [z.id, z.parentId || null]));
+    const out = new Map();
+    for (const ic of iconDrafts) {
+      const seen = new Set();
+      for (let z = ic.zoneId; z && !seen.has(z); z = parentOf.get(z)) {
+        seen.add(z);
+        const e = out.get(z) || { total: 0, found: 0 };
+        e.total++;
+        if (foundIds.has(ic.id)) e.found++;
+        out.set(z, e);
+      }
+    }
+    return out;
+  }, [foundIds, iconDrafts, allZones]);
   const searchSelected = searchSelectedKey ? (searchIndex.byKey.get(searchSelectedKey) || null) : null;
   const searchTagCounts = useMemo(
     () => new Map(searchTags.map(tg => [tg.key, resolveFilterKey(searchIndex, tg.key).length])),
@@ -2227,6 +2268,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         if (!focused && iconFiltersOff.has(category)) return;
         if (!focused && group && iconFiltersOff.has(`${category}/${group}`)) return;
         if (!focused && subcategory && iconFiltersOff.has(`${category}/${subcategory}`)) return;
+        const found = foundIds.has(ic.id);
+        if (!focused && found && hideFound) return;
         if (ic.floor != null && ic.floor !== viewFloor) return;
         const img = getIconImage(ic.kind, trigger);
         if (!img || !img.complete || img.naturalWidth === 0) return;
@@ -2234,7 +2277,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         const size = ICON_BASE_PX * (ic.scale ?? 1) * (focused ? SEARCH_FOCUS_SCALE * (1 + 0.04 * breath) : 1);
         const rot = ((ic.rotation || 0) * Math.PI) / 180;
         ctx.save();
-        ctx.globalAlpha = (ic.opacity ?? 1) * (focusIds && !focused ? 0.2 : 1);
+        // Found icons stay visible but faded (unless "hide found" is on).
+        ctx.globalAlpha = (ic.opacity ?? 1) * (focusIds && !focused ? 0.2 : 1) * (found && !focused ? 0.35 : 1);
         ctx.translate(pt.x, pt.y);
         if (focused) {
           // The icon currently reached with the ‹ › stepper glows a little stronger.
@@ -2267,7 +2311,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       map.off('move zoom viewreset zoomend resize', draw);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [overlayDrafts, viewFloor, mapReady, iconDrafts, iconFiltersOff, searchFocusIds, searchStepIconId]);
+  }, [overlayDrafts, viewFloor, mapReady, iconDrafts, iconFiltersOff, searchFocusIds, searchStepIconId, foundIds, hideFound]);
 
   // Cleanup shared canvas + any pending zone-arm timer on unmount.
   useEffect(() => {
@@ -3235,6 +3279,47 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     };
   }, [stampKind, mapReady, findEnclosingZone, resolveZoneFloor, placementBounds]);
 
+  // Topmost visible icon under a map-container point — the draw loop's own
+  // visibility rules (filters incl. group, floor, search focus, hidden found).
+  const iconAtPoint = useCallback((px, py) => {
+    const map = mapRef.current;
+    if (!map) return null;
+    let hit = null;
+    let best = Infinity;
+    for (const ic of iconDrafts) {
+      const kind = getIconCatalogEntry(ic.kind);
+      if (!kind) continue;
+      const category = ic.category || kind.category || 'Uncategorised';
+      const sub = ic.subcategory || kind.subcategory || '';
+      const focused = searchFocusIds ? searchFocusIds.has(ic.id) : false;
+      if (!focused && (iconFiltersOff.has(category)
+        || (kind.group && iconFiltersOff.has(`${category}/${kind.group}`))
+        || (sub && iconFiltersOff.has(`${category}/${sub}`)))) continue;
+      if (!focused && hideFound && foundIds.has(ic.id)) continue;
+      if (ic.floor != null && ic.floor !== viewFloor) continue;
+      const pt = map.latLngToContainerPoint(map.unproject([ic.x, ic.y], NATIVE_ZOOM));
+      const r = Math.max(14, (28 * (ic.scale ?? 1)) / 2); // ≥ 28 px tap target
+      const d = Math.hypot(pt.x - px, pt.y - py);
+      if (d <= r && d <= best) { best = d; hit = ic; }
+    }
+    return hit;
+  }, [iconDrafts, iconFiltersOff, viewFloor, searchFocusIds, hideFound, foundIds]);
+
+  // Tap an icon (outside author mode) → info card; tap elsewhere closes it.
+  useEffect(() => {
+    if (authorMode || !mapReady) return;
+    const map = mapRef.current;
+    if (!map) return;
+    const onClick = (e) => {
+      const pt = map.latLngToContainerPoint(e.latlng);
+      const ic = iconAtPoint(pt.x, pt.y);
+      setIconCardId(ic ? ic.id : null);
+    };
+    map.on('click', onClick);
+    return () => map.off('click', onClick);
+  }, [authorMode, mapReady, iconAtPoint]);
+  useEffect(() => { if (authorMode) setIconCardId(null); }, [authorMode]);
+
   // ── Long-press to delete (author mode) ────────────────────────────────
   // Holding a finger / the mouse still on a visible icon for LONG_PRESS_MS
   // deletes it; an Undo bar stays for UNDO_MS. The release that ends the
@@ -3253,33 +3338,12 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     let timer = null;
     let start = null;
     const cancel = () => { if (timer) clearTimeout(timer); timer = null; start = null; };
-    // Topmost visible icon under a container point (same visibility rules as the draw loop).
-    const iconAt = (px, py) => {
-      let hit = null;
-      let best = Infinity;
-      for (const ic of iconDrafts) {
-        const kind = getIconCatalogEntry(ic.kind);
-        if (!kind) continue;
-        const category = ic.category || kind.category || 'Uncategorised';
-        const sub = ic.subcategory || kind.subcategory || '';
-        const focused = searchFocusIds ? searchFocusIds.has(ic.id) : false;
-        if (!focused && (iconFiltersOff.has(category)
-          || (kind.group && iconFiltersOff.has(`${category}/${kind.group}`))
-          || (sub && iconFiltersOff.has(`${category}/${sub}`)))) continue;
-        if (ic.floor != null && ic.floor !== viewFloor) continue;
-        const pt = map.latLngToContainerPoint(map.unproject([ic.x, ic.y], NATIVE_ZOOM));
-        const r = (28 * (ic.scale ?? 1)) / 2;
-        const d = Math.hypot(pt.x - px, pt.y - py);
-        if (d <= r && d <= best) { best = d; hit = ic; }
-      }
-      return hit;
-    };
     const onDown = (e) => {
       if (e.isPrimary === false) return;
       const rect = container.getBoundingClientRect();
       const px = e.clientX - rect.left;
       const py = e.clientY - rect.top;
-      const ic = iconAt(px, py);
+      const ic = iconAtPoint(px, py);
       if (!ic) return;
       start = { x: e.clientX, y: e.clientY };
       timer = setTimeout(() => {
@@ -3315,7 +3379,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       container.removeEventListener('pointerleave', cancel);
       map.off('zoomstart movestart', cancel);
     };
-  }, [authorMode, mapReady, iconDrafts, iconFiltersOff, viewFloor, searchFocusIds]);
+  }, [authorMode, mapReady, iconAtPoint]);
   useEffect(() => () => { if (deletedIconTimerRef.current) clearTimeout(deletedIconTimerRef.current); }, []);
   const undoDeleteIcon = useCallback(() => {
     if (!deletedIcon) return;
@@ -4454,6 +4518,22 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           background: rgba(var(--color-gold), 0.1);
         }
         .icon-stamp-bar img { width: 32px; height: 32px; object-fit: contain; }
+        /* Info card for a tapped icon (player mode). Sits above the bottom bar. */
+        .map-icon-card {
+          position: absolute; left: var(--space-md, 12px); right: var(--space-md, 12px); bottom: 64px;
+          z-index: var(--z-overlay, 1000);
+          display: flex; align-items: center; gap: var(--space-sm, 8px);
+          padding: var(--space-sm, 8px);
+          border: 1px solid rgba(var(--color-gold), 0.45); border-radius: 12px;
+          background: ${MAP_BG_TRANSPARENT}; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+          font-family: var(--font-display); color: var(--text-body);
+        }
+        .map-icon-card img { width: 48px; height: 48px; object-fit: contain; flex: 0 0 48px; }
+        .map-icon-card-text { flex: 1 1 auto; min-width: 0; }
+        .map-icon-card-name { font-size: 14px; color: var(--text-primary, #fff); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .map-icon-card-facts, .map-icon-card-zone { font-size: 12px; color: var(--text-muted, #8892a4); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .zone-progress { margin-left: auto; font-size: 12px; font-variant-numeric: tabular-nums; color: var(--text-muted, #8892a4); }
+        .zone-progress.is-complete { color: rgb(var(--color-gold)); }
         .icon-undo-bar {
           position: absolute; left: 50%; transform: translateX(-50%);
           z-index: var(--z-overlay, 1000);
@@ -4955,6 +5035,31 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
 
             {toast && <div className="zone-author-toast" role="status">{toast}</div>}
 
+            {iconCardId && (() => {
+              const ic = iconDrafts.find(i => i.id === iconCardId);
+              if (!ic) return null;
+              const k = getIconCatalogEntry(ic.kind);
+              const zonePath = [];
+              const byId = new Map(allZones.map(z => [z.id, z]));
+              for (let z = byId.get(ic.zoneId), guard = 0; z && guard < 10; z = byId.get(z.parentId), guard++) zonePath.unshift(z.name || z.id);
+              const found = foundIds.has(ic.id);
+              const facts = [k?.subcategory && k.subcategory !== k?.name ? k.subcategory : k?.category, ...(k?.tags || []).filter(t2 => !['boss', 'enemy', k?.subcategory].includes(t2)).slice(0, 3)].filter(Boolean);
+              return (
+                <div className="map-icon-card" role="dialog" aria-label={k?.name || 'Icon'} onClick={(e) => e.stopPropagation()}>
+                  <img src={getIconImageUrl(ic.kind)} alt="" />
+                  <div className="map-icon-card-text">
+                    <div className="map-icon-card-name">{ic.label || k?.name || ic.kind}</div>
+                    {facts.length > 0 && <div className="map-icon-card-facts">{facts.join(' · ')}</div>}
+                    <div className="map-icon-card-zone">{zonePath.join(' › ') || '—'}{ic.floor ? ` · ${t('map.card.floor', { floor: ic.floor })}` : ''}</div>
+                  </div>
+                  <button type="button" className={`kuro-btn kuro-btn-sm ${found ? 'is-active' : ''}`} onClick={() => toggleFound(ic.id)} aria-pressed={found}>
+                    {found ? `✓ ${t('map.card.found')}` : t('map.card.markFound')}
+                  </button>
+                  <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => setIconCardId(null)} aria-label={t('map.search.close')}><X size={14} /></button>
+                </div>
+              );
+            })()}
+
             {deletedIcon && (
               <div className="icon-undo-bar" role="status" style={{ top: `${headerHeight + (stampKind ? 64 : 8)}px` }} onClick={(e) => e.stopPropagation()}>
                 <img src={getIconImageUrl(deletedIcon.icon.kind)} alt="" />
@@ -5024,6 +5129,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                 onFlyToZone={handleFlyToZone}
                 onPushSubMapToEdit={handlePushSubMapToEdit}
                 onZoneClick={triggerZonePulse}
+                zoneProgress={zoneProgress}
                 showToast={showToast}
                 onClose={() => setZonesOpen(false)}
               />
@@ -5039,6 +5145,9 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                 iconFiltersOff={iconFiltersOff}
                 toggleIconFilter={toggleIconFilter}
                 setAllIconFilters={setAllIconFilters}
+                foundIds={foundIds}
+                hideFound={hideFound}
+                toggleHideFound={toggleHideFound}
                 l3ZoneCount={l3Zones.length}
                 onClose={() => setFiltersOpen(false)}
               />

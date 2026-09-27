@@ -25,7 +25,9 @@
     "hideAll": "Tout masquer",
     "showAll": "Tout afficher",
     "expand": "Déplier {{name}}",
-    "collapse": "Replier {{name}}"
+    "collapse": "Replier {{name}}",
+    "hideFound": "Masquer les trouvés",
+    "showFound": "Afficher les trouvés"
   },
   "referenceImage": {
     "import": "Importer une image",
@@ -73,5 +75,10 @@
       "subcategory": "Classe"
     },
     "header": "Recherche"
+  },
+  "card": {
+    "markFound": "Marquer trouvé",
+    "found": "Trouvé",
+    "floor": "étage {{floor}}"
   }
 }

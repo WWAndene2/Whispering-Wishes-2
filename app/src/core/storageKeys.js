@@ -29,6 +29,7 @@ export const AUX_EXPORTABLE_KEYS = {
   trophyOverrides:  TROPHY_OVERRIDES_KEY,
   teamEquipment:    'ww-team-equipment',
   calendarNotes:    'ww-calendar-notes',
+  mapFound:         'ww-map-found',       // map icons marked as found (array of icon ids)
 };
 
 // ── Auxiliary keys: NOT exported, but cleared on reset ──

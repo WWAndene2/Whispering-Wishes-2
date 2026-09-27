@@ -26,6 +26,7 @@ export function ZonesPopover({
   onFlyToZone,
   onPushSubMapToEdit,
   onZoneClick,
+  zoneProgress,
   showToast,
   onClose,
 }) {
@@ -75,6 +76,11 @@ export function ZonesPopover({
           >
             <span className="zone-selector-caret">{hasChildren ? (expanded ? '▾' : '▸') : '·'}</span>
             <span className="zone-selector-name">{zone.name || zone.id}</span>
+            {(() => {
+              // Found/total of the icons in this zone and its sub-zones, once anything is marked found.
+              const pr = zoneProgress?.get(zone.id);
+              return pr && pr.total > 0 ? <span className={`zone-progress ${pr.found === pr.total ? 'is-complete' : ''}`}>{pr.found}/{pr.total}</span> : null;
+            })()}
           </button>
           {hasChildren && (
             <button

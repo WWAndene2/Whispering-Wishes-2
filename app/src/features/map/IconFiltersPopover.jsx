@@ -8,7 +8,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from 'react';
-import { Eye, EyeOff, X, ChevronDown, ChevronRight } from 'lucide-react';
+import { Eye, EyeOff, X, ChevronDown, ChevronRight, CheckCheck } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { t } from '../../utils/i18n.js';
 import { getIconImageUrl } from './iconImageCache.js';
@@ -46,6 +46,9 @@ export function IconFiltersPopover({
   iconFiltersOff,
   toggleIconFilter,
   setAllIconFilters,
+  foundIds,
+  hideFound,
+  toggleHideFound,
   l3ZoneCount = 0,
   onClose,
 }) {
@@ -93,6 +96,19 @@ export function IconFiltersPopover({
     tree.set('Zone', { total: l3ZoneCount, subs: new Map([['Names', { n: l3ZoneCount }], ['Area', { n: l3ZoneCount }]]) });
   }
   const cats = [...tree.entries()].sort((a, b) => compareCategories(a[0], b[0]));
+  // Completion: how many icons under each filter key are marked found.
+  const foundBy = new Map();
+  for (const ic of iconDrafts) {
+    if (!foundIds?.has(ic.id)) continue;
+    const kind = getIconCatalogEntry(ic.kind);
+    const cat = ic.category || kind?.category || 'Uncategorised';
+    const sub = ic.subcategory || kind?.subcategory || '';
+    for (const key of [cat, kind?.group && `${cat}/${kind.group}`, sub && `${cat}/${sub}`]) {
+      if (key) foundBy.set(key, (foundBy.get(key) || 0) + 1);
+    }
+  }
+  const showProgress = (foundIds?.size ?? 0) > 0;
+  const countLabel = (key, n) => (showProgress && key.split('/')[0] !== 'Zone' ? `${foundBy.get(key) || 0}/${n}` : n);
   // Categories and groups fold open/closed with the chevron at the end of
   // their row (the row itself still toggles visibility). Folded by default so
   // the panel stays short as kinds are added; remembered across sessions.
@@ -145,6 +161,16 @@ export function IconFiltersPopover({
         <CardHeader
           action={
             <>
+              <button
+                type="button"
+                className={`kuro-btn kuro-btn-sm kuro-btn-icon ${hideFound ? 'is-active' : ''}`}
+                onClick={toggleHideFound}
+                aria-pressed={hideFound}
+                aria-label={hideFound ? t('map.legend.showFound') : t('map.legend.hideFound')}
+                title={hideFound ? t('map.legend.showFound') : t('map.legend.hideFound')}
+              >
+                <CheckCheck size={14} />
+              </button>
               {cats.length > 0 && (
                 <button
                   type="button"
@@ -203,7 +229,7 @@ export function IconFiltersPopover({
                         <span className="zone-selector-caret">{effectiveOff ? '▢' : '▣'}</span>
                         <span className="zone-selector-name">{name}</span>
                         {leaf && rowIcon(kinds)}
-                        <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{n}</span>
+                        <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{countLabel(key, n)}</span>
                       </button>
                       {foldable && foldButton(key, name)}
                     </div>
@@ -221,7 +247,7 @@ export function IconFiltersPopover({
                       >
                         <span className="zone-selector-caret">{catOff ? '▢' : '▣'}</span>
                         <span className="zone-selector-name">{cat}</span>
-                        <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{entry.total}</span>
+                        <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{countLabel(cat, entry.total)}</span>
                       </button>
                       {subs.length > 0 && foldButton(cat, cat)}
                     </div>

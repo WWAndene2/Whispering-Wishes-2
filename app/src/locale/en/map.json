@@ -25,7 +25,9 @@
     "hideAll": "Hide all",
     "showAll": "Show all",
     "expand": "Expand {{name}}",
-    "collapse": "Collapse {{name}}"
+    "collapse": "Collapse {{name}}",
+    "hideFound": "Hide found",
+    "showFound": "Show found"
   },
   "referenceImage": {
     "import": "Import image",
@@ -73,5 +75,10 @@
       "subcategory": "Class"
     },
     "header": "Search"
+  },
+  "card": {
+    "markFound": "Mark as found",
+    "found": "Found",
+    "floor": "floor {{floor}}"
   }
 }

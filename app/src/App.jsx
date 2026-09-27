@@ -77,7 +77,7 @@ const ProfileTab = lazy(() => import('./features/profile/ProfileTab.jsx'));
 const MapTab = lazy(() => import('./features/map/MapTab.jsx'));
 const TabLoadingFallback = () => <div className="flex items-center justify-center py-20 text-gray-500 text-sm">Loading...</div>;
 
-import { IMAGE_FRAMING_KEY, TROPHY_OVERRIDES_KEY } from './shared/constants/appConstants.js';
+import { TROPHY_OVERRIDES_KEY } from './shared/constants/appConstants.js';
 import { silentCatch } from './utils/silentCatch.js';
 import { gatherAuxData, restoreAuxData, getMergedHistories } from './core/storageKeys.js';
 import { hashUidForStorage } from './shared/utils/hashUidForStorage.js';
@@ -923,14 +923,12 @@ function WhisperingWishesInner() {
 
   // Export data - includes main state + auxiliary localStorage settings for full round-trip
   const handleExport = useCallback(() => {
-    const aux = {};
-    // Use live state for visualSettings (avoids 300ms debounce stale read from localStorage)
+    // Every exportable key (core/storageKeys.js AUX_EXPORTABLE_KEYS) — the same set the
+    // cloud backup sends — with live in-memory values where a setting has a debounced mirror.
+    const aux = gatherAuxData();
     if (visualSettings) aux.visualSettings = visualSettings;
-    try { const v = localStorage.getItem(IMAGE_FRAMING_KEY); if (v) aux.imageFraming = JSON.parse(v); } catch {}
     if (Object.keys(customCollectionImages).length > 0) aux.collectionImages = customCollectionImages;
     if (Object.keys(trophyOverrides).length > 0) aux.trophyOverrides = trophyOverrides;
-    try { const v = localStorage.getItem('ww-team-equipment'); if (v) aux.teamEquipment = JSON.parse(v); } catch {}
-    try { const v = localStorage.getItem('ww-calendar-notes'); if (v) aux.calendarNotes = JSON.parse(v); } catch {}
     const data = { timestamp: new Date().toISOString(), version: APP_VERSION, state, ...(Object.keys(aux).length > 0 ? { aux } : {}) };
     const jsonStr = JSON.stringify(data, null, 2);
     setExportData(jsonStr);

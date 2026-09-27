@@ -23,6 +23,7 @@ import { IconKindPicker } from './IconKindPicker.jsx';
 import { MapSearchPopover } from './MapSearchPopover.jsx';
 import { buildSearchIndex, resolveFilterKey } from './mapSearch.js';
 import { t } from '../../utils/i18n.js';
+import { haptic } from '../../utils/haptics.js';
 
 const MAP_WIP_SEEN_KEY = 'ww-map-wip-seen';
 // Last-left map position (center in native-zoom pixel coords + zoom), so
@@ -1541,6 +1542,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     if (map.doubleClickZoom) map.doubleClickZoom.disable();
     const handler = (e) => {
       if (gestureActiveRef.current) return;
+      if (Date.now() < suppressMapClickUntilRef.current) return;
       // Icon-place mode preempts zone-point adds — the user is placing
       // an icon, not drawing a polygon.
       if (placingIconIdRef.current) return;
@@ -3085,6 +3087,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const prevCursor = container.style.cursor;
     container.style.cursor = 'crosshair';
     const onClick = (e) => {
+      if (Date.now() < suppressMapClickUntilRef.current) return;
       const pt = map.project(e.latlng, NATIVE_ZOOM);
       const [x, y] = clampToBounds(Math.round(pt.x), Math.round(pt.y), placementBounds);
       setIconDrafts((prev) => {
@@ -3131,6 +3134,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const prevCursor = container.style.cursor;
     container.style.cursor = 'crosshair';
     const onClick = (e) => {
+      if (Date.now() < suppressMapClickUntilRef.current) return;
       const pt = map.project(e.latlng, NATIVE_ZOOM);
       const [x, y] = clampToBounds(Math.round(pt.x), Math.round(pt.y), placementBounds);
       setIconDrafts((prev) => {
@@ -3198,6 +3202,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const prevCursor = container.style.cursor;
     container.style.cursor = 'crosshair';
     const onClick = (e) => {
+      if (Date.now() < suppressMapClickUntilRef.current) return;
       const pt = map.project(e.latlng, NATIVE_ZOOM);
       const [x, y] = clampToBounds(Math.round(pt.x), Math.round(pt.y), placementBounds);
       const zone = findEnclosingZone(x, y);
@@ -3229,6 +3234,101 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       container.style.cursor = prevCursor;
     };
   }, [stampKind, mapReady, findEnclosingZone, resolveZoneFloor, placementBounds]);
+
+  // ── Long-press to delete (author mode) ────────────────────────────────
+  // Holding a finger / the mouse still on a visible icon for LONG_PRESS_MS
+  // deletes it; an Undo bar stays for UNDO_MS. The release that ends the
+  // hold would otherwise reach the map as a click (adding a zone point or
+  // placing an icon), so clicks are ignored briefly afterwards.
+  const LONG_PRESS_MS = 1000;
+  const UNDO_MS = 6000;
+  const suppressMapClickUntilRef = useRef(0);
+  const [deletedIcon, setDeletedIcon] = useState(null); // { icon, index } | null
+  const deletedIconTimerRef = useRef(null);
+  useEffect(() => {
+    if (!authorMode || !mapReady) return;
+    const map = mapRef.current;
+    if (!map) return;
+    const container = map.getContainer();
+    let timer = null;
+    let start = null;
+    const cancel = () => { if (timer) clearTimeout(timer); timer = null; start = null; };
+    // Topmost visible icon under a container point (same visibility rules as the draw loop).
+    const iconAt = (px, py) => {
+      let hit = null;
+      let best = Infinity;
+      for (const ic of iconDrafts) {
+        const kind = getIconCatalogEntry(ic.kind);
+        if (!kind) continue;
+        const category = ic.category || kind.category || 'Uncategorised';
+        const sub = ic.subcategory || kind.subcategory || '';
+        const focused = searchFocusIds ? searchFocusIds.has(ic.id) : false;
+        if (!focused && (iconFiltersOff.has(category)
+          || (kind.group && iconFiltersOff.has(`${category}/${kind.group}`))
+          || (sub && iconFiltersOff.has(`${category}/${sub}`)))) continue;
+        if (ic.floor != null && ic.floor !== viewFloor) continue;
+        const pt = map.latLngToContainerPoint(map.unproject([ic.x, ic.y], NATIVE_ZOOM));
+        const r = (28 * (ic.scale ?? 1)) / 2;
+        const d = Math.hypot(pt.x - px, pt.y - py);
+        if (d <= r && d <= best) { best = d; hit = ic; }
+      }
+      return hit;
+    };
+    const onDown = (e) => {
+      if (e.isPrimary === false) return;
+      const rect = container.getBoundingClientRect();
+      const px = e.clientX - rect.left;
+      const py = e.clientY - rect.top;
+      const ic = iconAt(px, py);
+      if (!ic) return;
+      start = { x: e.clientX, y: e.clientY };
+      timer = setTimeout(() => {
+        timer = null;
+        suppressMapClickUntilRef.current = Date.now() + 600;
+        setIconDrafts((prev) => {
+          const index = prev.findIndex(x => x.id === ic.id);
+          if (index === -1) return prev;
+          const next = prev.filter(x => x.id !== ic.id);
+          try { localStorage.setItem('ww-icon-drafts', JSON.stringify(next)); } catch {}
+          setDeletedIcon({ icon: prev[index], index });
+          return next;
+        });
+        haptic.medium();
+        if (deletedIconTimerRef.current) clearTimeout(deletedIconTimerRef.current);
+        deletedIconTimerRef.current = setTimeout(() => setDeletedIcon(null), UNDO_MS);
+      }, LONG_PRESS_MS);
+    };
+    // Moving more than a few px means a pan, not a hold.
+    const onMove = (e) => { if (start && Math.hypot(e.clientX - start.x, e.clientY - start.y) > 8) cancel(); };
+    container.addEventListener('pointerdown', onDown);
+    container.addEventListener('pointermove', onMove);
+    container.addEventListener('pointerup', cancel);
+    container.addEventListener('pointercancel', cancel);
+    container.addEventListener('pointerleave', cancel);
+    map.on('zoomstart movestart', cancel);
+    return () => {
+      cancel();
+      container.removeEventListener('pointerdown', onDown);
+      container.removeEventListener('pointermove', onMove);
+      container.removeEventListener('pointerup', cancel);
+      container.removeEventListener('pointercancel', cancel);
+      container.removeEventListener('pointerleave', cancel);
+      map.off('zoomstart movestart', cancel);
+    };
+  }, [authorMode, mapReady, iconDrafts, iconFiltersOff, viewFloor, searchFocusIds]);
+  useEffect(() => () => { if (deletedIconTimerRef.current) clearTimeout(deletedIconTimerRef.current); }, []);
+  const undoDeleteIcon = useCallback(() => {
+    if (!deletedIcon) return;
+    setIconDrafts((prev) => {
+      if (prev.some(x => x.id === deletedIcon.icon.id)) return prev;
+      const next = [...prev];
+      next.splice(Math.min(deletedIcon.index, next.length), 0, deletedIcon.icon);
+      try { localStorage.setItem('ww-icon-drafts', JSON.stringify(next)); } catch {}
+      return next;
+    });
+    setDeletedIcon(null);
+    if (deletedIconTimerRef.current) clearTimeout(deletedIconTimerRef.current);
+  }, [deletedIcon]);
 
   // How many icons of each kind exist (shown on the picker's tiles).
   const placedCountsByKind = useMemo(() => {
@@ -4354,6 +4454,16 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           background: rgba(var(--color-gold), 0.1);
         }
         .icon-stamp-bar img { width: 32px; height: 32px; object-fit: contain; }
+        .icon-undo-bar {
+          position: absolute; left: 50%; transform: translateX(-50%);
+          z-index: var(--z-overlay, 1000);
+          display: flex; align-items: center; gap: var(--space-sm, 8px);
+          padding: var(--space-xs, 4px) var(--space-xs, 4px) var(--space-xs, 4px) var(--space-sm, 8px);
+          border: 1px solid rgba(var(--color-red), 0.6); border-radius: 8px;
+          background: ${MAP_BG_TRANSPARENT}; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+          font-family: var(--font-display); font-size: 12px; color: var(--text-body); white-space: nowrap;
+        }
+        .icon-undo-bar img { width: 24px; height: 24px; object-fit: contain; }
         .icon-stamp-bar.is-floating {
           position: absolute; left: var(--space-md, 12px); right: var(--space-md, 12px);
           margin: 0; z-index: var(--z-overlay, 1000);
@@ -4844,6 +4954,14 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
             )}
 
             {toast && <div className="zone-author-toast" role="status">{toast}</div>}
+
+            {deletedIcon && (
+              <div className="icon-undo-bar" role="status" style={{ top: `${headerHeight + (stampKind ? 64 : 8)}px` }} onClick={(e) => e.stopPropagation()}>
+                <img src={getIconImageUrl(deletedIcon.icon.kind)} alt="" />
+                <span>Deleted <b>{getIconCatalogEntry(deletedIcon.icon.kind)?.name || 'icon'}</b></span>
+                <button type="button" className="kuro-btn kuro-btn-sm is-active" onClick={undoDeleteIcon}>Undo</button>
+              </div>
+            )}
 
             {/* Stamp mode status — floats over the map (the author panel folds away while placing). */}
             {stampKind && (() => {

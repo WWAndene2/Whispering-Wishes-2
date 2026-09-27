@@ -4654,9 +4654,9 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         .map-icon-card img.map-pin-thumb { background: #141416; border-radius: 12px; padding: 8px; box-sizing: border-box; }
         .map-pin-editor { flex-wrap: wrap; }
         .map-pin-editor-markers { display: flex; gap: 8px; width: 100%; justify-content: space-between; }
-        .map-pin-editor-marker { width: 48px; height: 48px; border-radius: 12px; background: #141416; border: 2px solid transparent; padding: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .map-pin-editor-marker { width: 40px; height: 40px; border-radius: 8px; background: #141416; border: 2px solid transparent; padding: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .map-pin-editor-marker.is-active { border-color: var(--accent, #edaf18); }
-        .map-pin-editor-marker img { width: 24px; height: 24px; flex: 0 0 24px; }
+        .map-pin-editor-marker img { width: 32px; height: 32px; flex: 0 0 32px; }
         .map-pin-editor-note { width: 100%; height: 32px; padding: 0 8px; border-radius: 8px; border: 1px solid var(--border-primary, #334); background: rgba(0,0,0,0.3); color: var(--text-primary, #fff); font-size: 14px; }
         .map-pin-editor-actions { display: flex; gap: 8px; width: 100%; align-items: center; }
         .map-pin-editor-spacer { flex: 1 1 auto; }

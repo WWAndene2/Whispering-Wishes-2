@@ -234,10 +234,14 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
               card's actual rendered width and doesn't reliably land the badge
               next to the first word. A one-word name has no "rest", so it stays
               a single line with the badge beside it, same as before. */}
-          <h4
-            className="font-bold text-xl text-white leading-tight cursor-pointer"
-            onClick={() => setDetailModal?.({ show: true, type: isChar ? 'character' : 'weapon', name: item.name, imageUrl: (collectionImages || DEFAULT_COLLECTION_IMAGES)[item.name], framing: getImageFraming(`collection-${item.name}`) })}
-          >
+          <h2 className="font-bold text-xl text-white leading-tight">
+            {/* A real button so the detail modal is reachable by keyboard and screen readers,
+                not only by a mouse/touch click on the heading text. */}
+            <button
+              type="button"
+              className="text-left cursor-pointer"
+              onClick={() => setDetailModal?.({ show: true, type: isChar ? 'character' : 'weapon', name: item.name, imageUrl: (collectionImages || DEFAULT_COLLECTION_IMAGES)[item.name], framing: getImageFraming(`collection-${item.name}`) })}
+            >
             {item.isNew ? (() => {
               const [firstWord, ...restWords] = item.name.split(' ');
               const rest = restWords.join(' ');
@@ -251,7 +255,8 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
                 </>
               );
             })() : item.name}
-          </h4>
+            </button>
+          </h2>
           {item.title && <p className="text-gray-200 text-sm line-clamp-1">{(getLocale() === 'fr' && CURRENT_BANNER_TITLES_FR[item.title]) || item.title}</p>}
         </div>
         

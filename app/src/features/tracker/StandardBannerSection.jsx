@@ -180,7 +180,7 @@ const StandardBannerSection = memo(({ bannerImage, altText, title, subtitle, ite
                 CSS/icon happened to produce (20 isn't a suite value). */}
             <span className="kuro-badge kuro-badge-cyan min-h-6" style={{ backgroundColor: 'rgba(0,200,255,0.1)' }}>{subtitle}</span>
           </div>
-          <h4 className="font-bold text-xl text-white leading-tight">{title}</h4>
+          <h2 className="font-bold text-xl text-white leading-tight">{title}</h2>
         </div>
         <div>
           <div className="text-gray-300 text-sm mb-0.5 uppercase tracking-wider">

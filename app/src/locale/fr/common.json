@@ -18,5 +18,7 @@
   "search": "Rechercher",
   "error": "Une erreur est survenue",
   "reload": "Recharger",
-  "undo": "Annuler l'action"
+  "undo": "Annuler l'action",
+  "expandSection": "Déplier la section",
+  "collapseSection": "Replier la section"
 }

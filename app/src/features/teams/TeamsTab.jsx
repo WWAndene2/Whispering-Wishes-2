@@ -1005,7 +1005,10 @@ function TeamsTab({
 
                   {/* Suggested Teams from Character Data — collapsible */}
                   <Card>
-                    <div className="cursor-pointer" role="button" tabIndex={0} onClick={() => setSuggestionsCollapsed(p => !p)} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSuggestionsCollapsed(p => !p); } }} aria-expanded={!suggestionsCollapsed}>
+                    {/* The header row stays mouse/touch-clickable; keyboard and screen-reader users get the
+                        chevron as the real toggle button — a role="button" wrapper can't contain the
+                        Shuffle button without nesting interactive controls. */}
+                    <div className="cursor-pointer" onClick={() => setSuggestionsCollapsed(p => !p)}>
                       <CardHeader action={
                         <div className="flex items-center gap-1.5">
                           <button
@@ -1017,7 +1020,9 @@ function TeamsTab({
                           >
                             <Shuffle size={12} /> {t('teams.tab.shuffle')}
                           </button>
-                          <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 ${suggestionsCollapsed ? '' : 'rotate-180'}`} />
+                          <button type="button" onClick={(e) => { e.stopPropagation(); setSuggestionsCollapsed(p => !p); }} aria-expanded={!suggestionsCollapsed} aria-label={t(suggestionsCollapsed ? 'common.expandSection' : 'common.collapseSection')} className="flex items-center justify-center">
+                            <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 ${suggestionsCollapsed ? '' : 'rotate-180'}`} />
+                          </button>
                         </div>
                       }><Target size={14} className="text-cyan-400" /> {t('teams.tab.teamSuggestions')}</CardHeader>
                     </div>

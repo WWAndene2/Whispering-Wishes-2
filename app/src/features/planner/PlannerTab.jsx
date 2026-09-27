@@ -760,7 +760,9 @@ function PlannerTab({
 
       {/* ── 6. Goal Progress ───────────────────────────────────────────────── */}
       <Card>
-        <div className="cursor-pointer" role="button" tabIndex={0} onClick={() => toggleSection('goal')} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSection('goal'); } }} aria-expanded={!collapsed.goal}>
+        {/* Row stays mouse/touch-clickable; the chevron below is the keyboard/screen-reader toggle,
+            since a role="button" wrapper can't contain the link button without nesting controls. */}
+        <div className="cursor-pointer" onClick={() => toggleSection('goal')}>
           <CardHeader action={<>
             {/* Direct user request: the goal target (and its char/weapon allocation split) is
                 independent from the Calculator tab by default, using a fixed 50/50 split —
@@ -783,7 +785,9 @@ function PlannerTab({
               {state.planner.linkedToCalc ? <Link2 size={14} /> : <Unlink2 size={14} />}
             </button>
             <span className="text-gray-400 text-sm">{planData.goalProgress.toFixed(0)}%</span>
-            <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 ${collapsed.goal ? '' : 'rotate-180'}`} />
+            <button type="button" onClick={(e) => { e.stopPropagation(); toggleSection('goal'); }} aria-expanded={!collapsed.goal} aria-label={t(collapsed.goal ? 'common.expandSection' : 'common.collapseSection')} className="flex items-center justify-center">
+              <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 ${collapsed.goal ? '' : 'rotate-180'}`} />
+            </button>
           </>}>{t('planner.goalProgressTitle')}</CardHeader>
         </div>
         {!collapsed.goal && (

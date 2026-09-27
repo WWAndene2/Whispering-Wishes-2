@@ -18,5 +18,7 @@
   "search": "Search",
   "error": "Something went wrong",
   "reload": "Reload",
-  "undo": "Undo"
+  "undo": "Undo",
+  "expandSection": "Expand section",
+  "collapseSection": "Collapse section"
 }

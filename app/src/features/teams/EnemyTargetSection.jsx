@@ -35,8 +35,8 @@ export function EnemyTargetCard({ enemyEcho, setEnemyEcho, enemyLevel, setEnemyL
           <Sword size={12} className="text-red-400 shrink-0" />
           <span className="text-gray-400 text-sm font-medium shrink-0">{t('teams.enemyTarget.target')}</span>
           <div className="flex items-center gap-1 ml-auto">
-            <span className="text-gray-500 text-sm">{t('teams.enemyTarget.level')}</span>
-            <input type="text" inputMode="numeric" value={enemyLevel}
+            <label htmlFor="enemy-target-level" className="text-gray-500 text-sm">{t('teams.enemyTarget.level')}</label>
+            <input id="enemy-target-level" type="text" inputMode="numeric" value={enemyLevel}
               onFocus={e => e.target.select()}
               onChange={e => { const v = e.target.value.replace(/\D/g, ''); if (v === '') { setEnemyLevel(''); return; } const n = parseInt(v, 10); setEnemyLevel(Number.isNaN(n) ? 90 : Math.max(1, Math.min(120, n))); }}
               onBlur={e => { if (!e.target.value || isNaN(parseInt(e.target.value, 10))) setEnemyLevel(90); }}

@@ -3,7 +3,6 @@ import { Settings, Trash2, LocateFixed, Map as MapIcon, Hexagon, Plus, Construct
 import { Card, CardHeader } from '../../shared/components/Card.jsx';
 import { MAP_ZONES } from '../../data/mapZones.js';
 import { OVERLAY_CATALOG, loadOverlayDrafts, saveOverlayDrafts } from '../../data/mapOverlays.js';
-import { DEFAULT_ICON_DRAFTS } from '../../data/mapDefaults.js';
 import { MAP_ICON_CATALOG, getIconCatalogEntry } from '../../data/mapIconCatalog.js';
 import { tileUrlsForOverlay } from '../../core/tileSW.js';
 import { FocusTrapModal } from '../../shared/components/FocusTrapModal.jsx';
@@ -13,7 +12,7 @@ import { getIconImage, getIconImageUrl, getPinImage, getPinImageUrl } from './ic
 import { MAP_PIN_MARKERS, DEFAULT_PIN_MARKER } from '../../data/mapPinMarkers.js';
 import { generateUniqueId } from '../../utils/generateId.js';
 import { OVERLAY_TILE_CACHE, OVERLAY_TILE_CACHE_LIMIT, OVERLAY_TILE_RETRY_COUNTS } from './tileCache.js';
-import { loadDrafts, saveDrafts, loadPaintStrokes, savePaintStrokes } from './mapStorage.js';
+import { loadDrafts, saveDrafts, loadPaintStrokes, savePaintStrokes, loadIconDrafts } from './mapStorage.js';
 import { useToast } from './useToast.js';
 import { useOfflineTiles } from './useOfflineTiles.js';
 import { OfflineDownloadsPopover } from './OfflineDownloadsPopover.jsx';
@@ -247,15 +246,9 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   // Map icons (placed by admins via the author panel). Each entry:
   //   { id, category, x, y, label? }
   // Persisted to localStorage. Categories drive the filter popover.
-  const [iconDrafts, setIconDrafts] = useState(() => {
-    if (typeof localStorage === 'undefined') return DEFAULT_ICON_DRAFTS;
-    try {
-      const raw = localStorage.getItem('ww-icon-drafts');
-      if (raw === null) return DEFAULT_ICON_DRAFTS;
-      const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : DEFAULT_ICON_DRAFTS;
-    } catch { return DEFAULT_ICON_DRAFTS; }
-  });
+  // Seed for a new player; saved icons get newer seed icons merged in
+  // (mapStorage.js loadIconDrafts / mergeIconSeed).
+  const [iconDrafts, setIconDrafts] = useState(loadIconDrafts);
   const [iconFiltersOff, setIconFiltersOff] = useState(() => {
     // Set of category keys currently hidden. Persisted. 'Zone/Area' defaults
     // to off (direct user request) — seeded into the off-set exactly once

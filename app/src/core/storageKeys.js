@@ -37,6 +37,7 @@ export const AUX_EXPORTABLE_KEYS = {
 // ── Auxiliary keys: NOT exported, but cleared on reset ──
 // These are local preferences or state that don't transfer between devices
 export const AUX_INTERNAL_KEYS = [
+  'ww-icon-seed-version',
   'ww-map-active-preset',
   'ww-equipment-presets',
   'ww-owned-chars',

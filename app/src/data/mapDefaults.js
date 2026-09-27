@@ -1132,3 +1132,55 @@ export const DEFAULT_ICON_DRAFTS = [
 ];
 
 export const DEFAULT_PAINT_STROKES = [];
+
+// Icon seed versions, so players who already have saved icons still receive
+// icons added to the seed later (features/map/mapStorage.js mergeIconSeed):
+// each version lists the ids it ADDED; a player on an older version gets
+// the ones they don't have yet, and nothing they changed or deleted is
+// touched. Version 1 = everything seeded before versioning existed.
+// Bump ICON_SEED_VERSION and add an entry whenever new icons are seeded.
+export const ICON_SEED_ADDITIONS = {
+  2: [
+    'icon-muk25x6d-18',
+    'icon-muk284kr-28n',
+    'icon-muk299zm-3k',
+    'icon-muk2akll-kf',
+    'icon-muk2euno-5at',
+    'icon-muk2fenj-5ku',
+    'icon-muk2g0lj-25g',
+    'icon-muk2gxr6-4dg',
+    'icon-muk2huun-5gf',
+    'icon-muk2igvk-1u4',
+    'icon-muk2jt8l-4ff',
+    'icon-muk2krb8-2a3',
+    'icon-muk2lyol-6q',
+    'icon-muk2mune-7iw',
+    'icon-muk2ovj1-2ig',
+    'icon-muk2q1v9-2yx',
+    'icon-muk2qnzu-mk',
+    'icon-muk2r6a0-2lw',
+    'icon-muk2ria4-70w',
+    'icon-muk2s7cd-72x',
+    'icon-muk2t7ik-3ej',
+    'icon-muk2trhd-1za',
+    'icon-muk2u6a3-79t',
+    'icon-muk2uys7-4we',
+    'icon-muk2w4re-50r',
+    'icon-muk2ybdz-1xk',
+    'icon-muk32uul-lh',
+    'icon-muk34yrr-4l6',
+    'icon-muk370zu-7mh',
+    'icon-muk388dz-4eo',
+    'icon-muk38vcz-38s',
+    'icon-muk39yzd-1ti',
+    'icon-muk3ect3-7cn',
+    'icon-muk3fhwk-6sa',
+    'icon-muk3hb0z-2bc',
+    'icon-muk3mtlv-2xs',
+    'icon-muk3p50k-3rw',
+    'icon-muk3rrt5-4vr',
+    'icon-muk3ufgk-270',
+    'icon-muk3wwu7-2x',
+  ],
+};
+export const ICON_SEED_VERSION = 2;

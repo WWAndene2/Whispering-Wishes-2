@@ -71,9 +71,10 @@ export const MAP_ICON_CATALOG = [
     category: 'Collectible',
     group: 'Trinkets',
     subcategory: 'Windchimer',
-    // Background removed from a photo of the in-game icon
-    // (assets/map-icon-sources/windchimer-photo.jpg), original tones kept;
-    // drawn at 65% of the canvas height, like the other Trinkets (~60%).
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture.png): outer
+    // background removed, colours untouched; 65% of the canvas height, in
+    // line with the other Trinkets (~60%).
     imageUrl: 'map-icons/Windchimer.png',
     size: 128,
   },
@@ -83,8 +84,11 @@ export const MAP_ICON_CATALOG = [
     category: 'Collectible',
     group: 'Trinkets',
     subcategory: 'Frostbug',
-    // Placeholder image: the empty round frame (no dedicated icon).
-    imageUrl: 'map-icons/frames/round-frame.png',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture.png): outer
+    // background removed, colours untouched; 65% of the canvas height, in
+    // line with the other Trinkets (~60%).
+    imageUrl: 'map-icons/Frostbug.png',
     size: 128,
   },
   {

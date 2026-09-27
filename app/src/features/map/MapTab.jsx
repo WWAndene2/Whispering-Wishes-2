@@ -4301,6 +4301,9 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           pointer-events: none;
         }
         .map-header-tap { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        /* Map title: one PerfectSuite step below the card-title 14 px, centred
+           in the space the header buttons leave (either side, left-handed too). */
+        .map-header-tap .kuro-header h3 { flex: 1 1 auto; min-width: 0; justify-content: center; text-align: center; font-size: 12px; }
 
         /* ── Zones popover (header-anchored, like downloads) ──────────── */
         .map-zones-popover {

@@ -41,6 +41,7 @@ export const MAP_ICON_CATALOG = [
     id: 'treasure-spot',
     name: 'Treasure Spot',
     category: 'Collectible',
+    group: 'Chest',
     subcategory: 'Treasure Spot',
     imageUrl: 'map-icons/Treasure-Spot.png',
     size: 128,

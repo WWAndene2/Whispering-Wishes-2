@@ -124,7 +124,7 @@ export function IconFiltersPopover({
   const foldButton = (key, name) => (
     <button
       type="button"
-      className="kuro-btn kuro-btn-sm kuro-btn-icon"
+      className={`kuro-btn kuro-btn-sm kuro-btn-icon map-filters-fold ${expanded.has(key) ? 'is-open' : 'is-closed'}`}
       onClick={() => toggleExpanded(key)}
       aria-expanded={expanded.has(key)}
       aria-label={expanded.has(key) ? t('map.legend.collapse', { name }) : t('map.legend.expand', { name })}

@@ -4674,6 +4674,20 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         html.left-handed .map-icon-card-text { text-align: right; }
         html.left-handed .map-pin-editor { flex-direction: row; }
         html.left-handed .map-pin-editor-actions { flex-direction: row-reverse; }
+        /* Popover headers: action buttons on the left, close in the corner. */
+        html.left-handed .map-zones-popover .kuro-header,
+        html.left-handed .map-filters-popover .kuro-header,
+        html.left-handed .map-downloads-popover .kuro-header,
+        html.left-handed .map-search-popover .kuro-header,
+        html.left-handed .map-zones-popover .kuro-header-action,
+        html.left-handed .map-filters-popover .kuro-header-action,
+        html.left-handed .map-downloads-popover .kuro-header-action,
+        html.left-handed .map-search-popover .kuro-header-action { flex-direction: row-reverse; }
+        /* Filter rows: fold arrow on the left; it points down while folded
+           and up once unfolded (a right-pointing arrow would aim into the row). */
+        html.left-handed .map-filters-popover .zone-selector-row { flex-direction: row-reverse; }
+        html.left-handed .map-filters-fold.is-closed svg { transform: rotate(90deg); }
+        html.left-handed .map-filters-fold.is-open svg { transform: rotate(180deg); }
         .map-icon-card-text { flex: 1 1 auto; min-width: 0; }
         .map-icon-card-name { font-size: 14px; color: var(--text-primary, #fff); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .map-icon-card-facts, .map-icon-card-zone { font-size: 12px; color: var(--text-muted, #8892a4); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

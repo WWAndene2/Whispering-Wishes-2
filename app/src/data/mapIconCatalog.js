@@ -110,7 +110,9 @@ const ENEMY_ICONS = [
   ['threnodian-leviathan', 'Reminiscence: Threnodian - Leviathan'],
   ['thundering-mephis', 'Thundering Mephis'],
   ['thousand-puppet-pavilion', 'Thousand-Puppet Pavilion'],
-  ['denia', 'Reminiscence: Denia'],
+  // Shown on the map as "Seed of Illusory Origin" — it is also Denia, searchable as such.
+  ['seed-of-illusory-origin', 'Reminiscence: Denia', { name: 'Seed of Illusory Origin', tags: ['Denia'] }],
+  ['nightmare-adam-smasher', 'Reminiscence - Nightmare: Adam Smasher', { name: 'Nightmare: Adam Smasher' }],
   ['threnodian-voidborne-construct', 'Reminiscence: Threnodian - Voidborne Construct'],
   ['lady-of-the-sea', 'Lady of the Sea'],
   ['nightmare-crownless', 'Nightmare: Crownless'],
@@ -132,7 +134,7 @@ for (const [slug, echoName, extra] of ENEMY_ICONS) {
   if (!echo) throw new Error(`mapIconCatalog: no ECHO_DATA entry named "${echoName}"`);
   MAP_ICON_CATALOG.push({
     id: `enemy-${slug}`,
-    name: echoName.replace(/^Reminiscence:\s*/, ''),
+    name: extra?.name || echoName.replace(/^Reminiscence:\s*/, ''),
     echoName,
     category: 'Enemy',
     subcategory: echo.rank,

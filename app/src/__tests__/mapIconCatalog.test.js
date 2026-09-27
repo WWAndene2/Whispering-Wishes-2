@@ -38,6 +38,9 @@ describe('map search over enemy icons', () => {
     expect(getIconCatalogEntry('enemy-scar-aberrant-nightmare').subcategory).toBe('Calamity');
     expect(getIconCatalogEntry('enemy-lioness-of-glory').subcategory).toBe('Overlord');
     expect(keys('arsinosa')[0]).toBe('kind:enemy-lioness-of-glory');
+    expect(getIconCatalogEntry('enemy-seed-of-illusory-origin').name).toBe('Seed of Illusory Origin');
+    expect(keys('denia')[0]).toBe('kind:enemy-seed-of-illusory-origin');
+    expect(keys('adam smasher')[0]).toBe('kind:enemy-nightmare-adam-smasher');
     expect(keys('scar')[0]).toBe('kind:enemy-scar-aberrant-nightmare');
     expect(keys('scar havoc')[0]).toBe('kind:enemy-scar-aberrant-nightmare');
   });

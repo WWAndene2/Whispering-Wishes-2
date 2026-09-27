@@ -683,6 +683,13 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     return out;
   }, [drafts]);
 
+  // Max height for every header-anchored panel (search / regions / filters /
+  // downloads / reference image): what's left of the map card below the
+  // panel's own top (headerHeight + 8) with an 8 px bottom gap. It used to be
+  // derived from the whole canvas height, so a tall panel overflowed the map
+  // card and the card itself scrolled when a low button got focus.
+  const popoverMaxHeight = `calc(100% - ${headerHeight + 16}px)`;
+
   // ── Map search (magnifying glass) ──────────────────────────────────────
   const allZones = useMemo(() => [...MAP_ZONES, ...drafts], [drafts]);
   const searchIndex = useMemo(
@@ -4171,10 +4178,20 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           letter-spacing: 0.03em;
         }
         .map-filters-popover .kuro-body { padding: var(--space-sm, 8px) var(--space-md, 12px); }
+        /* Header stays put; only the row list scrolls when it's taller than
+           the panel's max height (the popover's inline maxHeight). The card
+           and its inner wrapper are flex columns that may shrink (min-height 0)
+           so the list — not the whole card — takes the overflow. */
+        .map-filters-popover { display: flex; flex-direction: column; }
+        .map-filters-popover > .kuro-card { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+        .map-filters-popover > .kuro-card > .kuro-card-inner { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+        .map-filters-popover .kuro-header { flex: 0 0 auto; }
         .map-filters-popover .map-filters-body {
           display: flex; flex-direction: column;
           gap: var(--space-xs, 4px);
+          flex: 1 1 auto; min-height: 0;
           max-height: 60vh; overflow-y: auto;
+          overscroll-behavior: contain;
         }
         .map-filters-list { display: flex; flex-direction: column; gap: var(--space-xs, 4px); }
         /* Reference-image popover sliders (opacity/zoom/rotation) — same
@@ -4660,7 +4677,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
               <OfflineDownloadsPopover
                 panelRef={downloadsPanelRef}
                 top={headerHeight + 8}
-                maxHeight={`calc(var(--canvas-height-px, 100dvh) - ${headerHeight + navPadding + 40}px)`}
+                maxHeight={popoverMaxHeight}
                 downloadables={downloadables}
                 overlayOffline={overlayOffline}
                 onDownloadAll={handleDownloadAll}
@@ -4676,7 +4693,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
               <MapSearchPopover
                 panelRef={searchPanelRef}
                 top={headerHeight + 8}
-                maxHeight={`calc(var(--canvas-height-px, 100dvh) - ${headerHeight + navPadding + 40}px)`}
+                maxHeight={popoverMaxHeight}
                 index={searchIndex}
                 query={searchQuery}
                 setQuery={setSearchQuery}
@@ -4704,7 +4721,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
               <ZonesPopover
                 panelRef={zonesPanelRef}
                 top={headerHeight + 8}
-                maxHeight={`calc(var(--canvas-height-px, 100dvh) - ${headerHeight + navPadding + 40}px)`}
+                maxHeight={popoverMaxHeight}
                 zoneNav={zoneNav}
                 expandedZones={expandedZones}
                 currentZoneId={currentZoneId}
@@ -4726,7 +4743,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
               <IconFiltersPopover
                 panelRef={filtersPanelRef}
                 top={headerHeight + 8}
-                maxHeight={`calc(var(--canvas-height-px, 100dvh) - ${headerHeight + navPadding + 40}px)`}
+                maxHeight={popoverMaxHeight}
                 iconDrafts={iconDrafts}
                 getIconCatalogEntry={getIconCatalogEntry}
                 iconFiltersOff={iconFiltersOff}
@@ -4741,7 +4758,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
               <ReferenceImagePopover
                 panelRef={refImagePanelRef}
                 top={headerHeight + 8}
-                maxHeight={`calc(var(--canvas-height-px, 100dvh) - ${headerHeight + navPadding + 40}px)`}
+                maxHeight={popoverMaxHeight}
                 refImage={refImage}
                 onImportFile={handleRefImageFile}
                 onChange={handleRefImageChange}

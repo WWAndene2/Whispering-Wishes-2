@@ -23,7 +23,9 @@
     "hide": "Masquer {{name}}",
     "parentHidden": "La catégorie parente « {{name}} » est masquée",
     "hideAll": "Tout masquer",
-    "showAll": "Tout afficher"
+    "showAll": "Tout afficher",
+    "expand": "Déplier {{name}}",
+    "collapse": "Replier {{name}}"
   },
   "referenceImage": {
     "import": "Importer une image",

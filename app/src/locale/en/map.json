@@ -23,7 +23,9 @@
     "hide": "Hide {{name}}",
     "parentHidden": "Parent category \"{{name}}\" is hidden",
     "hideAll": "Hide all",
-    "showAll": "Show all"
+    "showAll": "Show all",
+    "expand": "Expand {{name}}",
+    "collapse": "Collapse {{name}}"
   },
   "referenceImage": {
     "import": "Import image",

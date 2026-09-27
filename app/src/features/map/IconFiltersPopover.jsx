@@ -7,8 +7,8 @@
 // also consumed by the map-render effect that filters visible icons).
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import React from 'react';
-import { Eye, EyeOff, X } from 'lucide-react';
+import React, { useState } from 'react';
+import { Eye, EyeOff, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { t } from '../../utils/i18n.js';
 import { getIconImageUrl } from './iconImageCache.js';
@@ -16,6 +16,8 @@ import { MAP_ICON_CATALOG, ENEMY_CLASS_ORDER } from '../../data/mapIconCatalog.j
 
 // Explicit priority for known subcategories (Nexus before Beacon); anything
 // else falls back to alphabetical order after these.
+const EXPANDED_KEY = 'ww-icon-filters-expanded';
+
 const SUBCATEGORY_ORDER = ['Nexus', 'Beacon', ...ENEMY_CLASS_ORDER];
 function compareSubcategories(a, b) {
   const ia = SUBCATEGORY_ORDER.indexOf(a);
@@ -91,6 +93,30 @@ export function IconFiltersPopover({
     tree.set('Zone', { total: l3ZoneCount, subs: new Map([['Names', { n: l3ZoneCount }], ['Area', { n: l3ZoneCount }]]) });
   }
   const cats = [...tree.entries()].sort((a, b) => compareCategories(a[0], b[0]));
+  // Categories and groups fold open/closed with the chevron at the end of
+  // their row (the row itself still toggles visibility). Folded by default so
+  // the panel stays short as kinds are added; remembered across sessions.
+  const [expanded, setExpanded] = useState(() => {
+    try { return new Set(JSON.parse(localStorage.getItem(EXPANDED_KEY) || '[]')); } catch { return new Set(); }
+  });
+  const toggleExpanded = (key) => setExpanded(prev => {
+    const next = new Set(prev);
+    if (next.has(key)) next.delete(key); else next.add(key);
+    try { localStorage.setItem(EXPANDED_KEY, JSON.stringify([...next])); } catch {}
+    return next;
+  });
+  const foldButton = (key, name) => (
+    <button
+      type="button"
+      className="kuro-btn kuro-btn-sm kuro-btn-icon"
+      onClick={() => toggleExpanded(key)}
+      aria-expanded={expanded.has(key)}
+      aria-label={expanded.has(key) ? t('map.legend.collapse', { name }) : t('map.legend.expand', { name })}
+      title={expanded.has(key) ? t('map.legend.collapse', { name }) : t('map.legend.expand', { name })}
+    >
+      {expanded.has(key) ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+    </button>
+  );
   // Only leaf rows (a single kind, e.g. Nexus / Supply Chest) show an icon,
   // right after the name; categories and groups never do, even
   // while they happen to hold a single kind.
@@ -156,7 +182,7 @@ export function IconFiltersPopover({
                 const catOff = iconFiltersOff.has(cat);
                 const subs = [...entry.subs.entries()].sort((a, b) => compareSubcategories(a[0], b[0]));
                 // One toggle row for a group or subcategory, `depth` levels under the category.
-                const renderRow = (name, n, depth, parentOff, parentName, kinds, leaf) => {
+                const renderRow = (name, n, depth, parentOff, parentName, kinds, leaf, foldable) => {
                   const key = `${cat}/${name}`;
                   const ownOff = iconFiltersOff.has(key);
                   // Effectively hidden when any parent is hidden — reflected
@@ -179,6 +205,7 @@ export function IconFiltersPopover({
                         {leaf && rowIcon(kinds)}
                         <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{n}</span>
                       </button>
+                      {foldable && foldButton(key, name)}
                     </div>
                   );
                 };
@@ -196,11 +223,12 @@ export function IconFiltersPopover({
                         <span className="zone-selector-name">{cat}</span>
                         <span className="kuro-badge kuro-badge-neutral" style={{ marginLeft: 'auto' }}>{entry.total}</span>
                       </button>
+                      {subs.length > 0 && foldButton(cat, cat)}
                     </div>
-                    {subs.map(([name, node]) => (
+                    {expanded.has(cat) && subs.map(([name, node]) => (
                       <React.Fragment key={name}>
-                        {renderRow(name, node.n, 1, catOff, cat, node.subs ? null : node.kinds, !node.subs)}
-                        {node.subs && [...node.subs.entries()].sort((a, b) => compareSubcategories(a[0], b[0]))
+                        {renderRow(name, node.n, 1, catOff, cat, node.subs ? null : node.kinds, !node.subs, !!node.subs && node.subs.size > 0)}
+                        {node.subs && expanded.has(`${cat}/${name}`) && [...node.subs.entries()].sort((a, b) => compareSubcategories(a[0], b[0]))
                           .map(([sub, n]) => renderRow(sub, n, 2, catOff || iconFiltersOff.has(`${cat}/${name}`), catOff ? cat : name, node.subKinds.get(sub), true))}
                       </React.Fragment>
                     ))}

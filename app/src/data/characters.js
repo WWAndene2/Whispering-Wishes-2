@@ -121,7 +121,7 @@ const CHARACTER_DATA = {
     weaponAlts: { alt5: ['Red Spring', 'Azure Oath'], alt4: ['Feather Edge', 'Fables of Wisdom'], alt3: ['Sword of Night'] },
     teams: ['Rover: Electro + Yinlin + Verina', 'Rover: Electro + Calcharo + Shorekeeper'] },
   'Jiyan': { rarity: 5, element: 'Aero', weapon: 'Broadblade', role: 'Main DPS',
-    // desc rewritten 2026-08-31 against the wiki/Jiyan/Combat (Chrome/Windows UA +
+    // desc rewritten 2026-08-31 against the Jiyan combat reference (Chrome/Windows UA +
     // google.com referer + jsRender, load+9s wait; 2nd attempt cleared the Cloudflare interstitial the 1st
     // hit): exact Resolve economy (0-60 cap, gain sources, 15s no-hit decay), exact 30-Resolve thresholds for
     // both the empowered Windqueller (+20% DMG, costs 30 Resolve) and the Finale-vs-Prelude Liberation branch,
@@ -158,7 +158,7 @@ const CHARACTER_DATA = {
       'Jiyan + Lynae + Mornye',
     ] },
   'Calcharo': { rarity: 5, element: 'Electro', weapon: 'Broadblade', role: 'Main DPS',
-    // desc rewritten 2026-08-31 against the wiki/Calcharo/Combat (Chrome/Windows UA +
+    // desc rewritten 2026-08-31 against the Calcharo combat reference (Chrome/Windows UA +
     // google.com referer + jsRender, load+9s wait; 2nd attempt cleared Cloudflare) and cross-checked against
     // the source/wuthering-waves/characters/calcharo's Skills tab (identical mechanic text, confirms both
     // agree). Exact resource economy previously undocumented: Cruelty caps at 3, gained 1 per Resonance Skill
@@ -218,8 +218,8 @@ const CHARACTER_DATA = {
       'Calcharo + Yinlin + Verina',
     ] },
   'Encore': { rarity: 5, element: 'Fusion', weapon: 'Rectifier', role: 'Main DPS',
-    // desc rewritten 2026-08-31 against wuthering.gg/characters/encore (Lv.1 skill-detail widget, cross-checked
-    // against the wiki/Encore/Combat's Forte/Resonance Chain text) for exact Mayhem
+    // desc rewritten 2026-08-31 against a community Encore page (Lv.1 skill-detail widget, cross-checked
+    // against the Encore combat reference's Forte/Resonance Chain text) for exact Mayhem
     // economy, Cosmos Rave entry/exit, and the Flaming Woolies → Energetic Welcome cast-order window — none of
     // this was previously documented with exact numbers.
     desc: "Wooly-Counting Game, a girl of the Black Shores accompanied by one black and one white Wooly, who dreams of creating happy stories with candies, fairy tales, and her imagination. On-field Fusion DPS who builds Mayhem toward an empowered, DMG-reduction Heavy Attack nuke, and can swap her whole kit into an enhanced 'Cosmos' form for a fixed duration via her Resonance Liberation.",
@@ -254,14 +254,14 @@ const CHARACTER_DATA = {
       'Encore + Sanhua + Verina',
       'Encore + Brant + Shorekeeper',
     ] },
-  // desc corrected against the wiki's Jianxin infobox (2026-08-17 audit): the wiki's
+  // desc corrected against the reference Jianxin infobox (2026-08-17 audit): the reference's
   // current secondary_title is "Guiding Starlance", not "Cleansing Reflections" (a stale title still
-  // shown on the source's character page for her — the two sources disagree here, the wiki's live
+  // shown on the source's character page for her — the two sources disagree here, the reference live
   // infobox is treated as authoritative). Skills/base stats/multipliers/buffs/ascension mats all
   // independently re-verified against the source character/1405 this same audit and were already
   // accurate. weaponAlts/teams were corrected against the source's live build/team page (see comments
   // by those fields below) once it became reachable via a Chrome UA + referer + jsRender fetch.
-  // desc re-verified 2026-08-31 against the wiki/Jianxin/Combat's "Details"/"Forte"
+  // desc re-verified 2026-08-31 against the Jianxin combat reference's "Details"/"Forte"
   // tables directly (not just the infobox blurb): the prior "large HP-scaling shield and periodic team
   // healing" line was vague/approximate — replaced with the exact mechanics from the Forte Circuit table:
   // Chi caps at 120, gained from Basic ATK hits, casting Calming Air, landing Chi Counter/Chi Parry, and
@@ -277,7 +277,7 @@ const CHARACTER_DATA = {
   // unconditionally "the team" — it's whichever Resonator happens to be active when each tick lands) is
   // healed once every 6s — corrected from "periodic team healing" to reflect that it's a single active-unit
   // heal-over-time, not a party-wide heal.
-  // TODO: verify — the wiki's Forte/Chi text does not give a per-hit Chi gain number for any of the four
+  // TODO: verify — the reference Forte/Chi text does not give a per-hit Chi gain number for any of the four
   // Chi sources (Basic ATK hit / Calming Air cast / Chi Counter-Parry hit / Intro Skill hit); could not be
   // sourced this pass, left undocumented rather than invented.
   'Jianxin': { rarity: 5, element: 'Aero', weapon: 'Gauntlets', role: 'Support',
@@ -318,10 +318,10 @@ const CHARACTER_DATA = {
       'Jianxin + Xiangli Yao + Verina',
       'Jianxin + Mortefi + Jinhsi',
     ] },
-  // Full audit 2026-08-17 against the wiki (MediaWiki API, Cloudflare bypassed via
+  // Full audit 2026-08-17 against the reference (reference API, Cloudflare bypassed via
   // Chrome UA + google.com referer + jsRender) and the source/character/1104 — base stats, skills,
   // multipliers, buffs, ascension mats all independently re-confirmed accurate, no changes needed there.
-  // desc enriched with the wiki's "last living Suan'ni" lore detail (his species/heritage, not previously
+  // desc enriched with the reference "last living Suan'ni" lore detail (his species/heritage, not previously
   // captured). bestEchoes/weaponAlts/teams corrected against the source's live build/team page (re-fetched
   // same audit): Endless Resonance 5pc has since overtaken Frosty Resolve as her #1 echo set (100% vs
   // 98.9% on the source's calc scale) — bestEchoes updated to its main echo, Mech Abomination. weaponAlts.
@@ -330,7 +330,7 @@ const CHARACTER_DATA = {
   // teams: 'Lingyang + Zhezhi + Shorekeeper' had no basis in the source's synergy list — replaced with
   // 'Lingyang + Lynae + Zhezhi', explicitly named "Lingyang's best partners" and the source's cited Best
   // Team; 'Lingyang + Sanhua + Verina' kept, confirmed as the source's named F2P Team.
-  // desc rewritten 2026-08-31 against the wiki/Lingyang/Combat's Forte "Details" text
+  // desc rewritten 2026-08-31 against the Lingyang combat reference's Forte "Details" text
   // (Chrome/Windows UA + google.com referer + jsRender). Prior text only named the resource trigger (Furious
   // Punches) and skipped the other two restore events, the exact 100 cap, and the Striding Lion entry/exit
   // timing — all now stated verbatim: Lion's Spirit restores on Furious Punches, Lion Awakens (Intro), and
@@ -366,7 +366,7 @@ const CHARACTER_DATA = {
       'Lingyang + Sanhua + Verina',
       'Lingyang + Sanhua + Shorekeeper',
     ] },
-  // Full audit 2026-08-17 against the wiki (MediaWiki API) and the source/
+  // Full audit 2026-08-17 against the reference API and the source/
   // character/1503 — desc, skills, base stats, multipliers, buffs, ascension mats, echoes, alt4/alt3
   // weapons, and teams all independently re-confirmed accurate, no changes needed there. CHAR_BUFF_TABLE's
   // existing "Outro is All DMG Amp, not Amplify" note re-confirmed against the source's exact wording
@@ -383,7 +383,7 @@ const CHARACTER_DATA = {
     // desc property at all. Re-added below, trimmed to a short gameplay summary per the
     // lore/gameplay split convention used elsewhere in this file — full mechanical detail (exact
     // Photosynthesis Energy economy, cast-order notes, buff numbers) remains sourced against the
-    // wiki/Verina/Combat and the source/wuthering-waves/characters/verina's Gameplay tab, and still
+    // Verina combat reference and the source's Gameplay tab, and still
     // lives in this file's other tables (CHAR_BUFF_TABLE, SKILL_MULTIPLIERS, CHARACTER_ROTATIONS).
     desc: "Nature Calling, endowed with extensive knowledge of botany, Verina is always considerate, always smiling, and always wishes for every flower to be blessed with the miracle of life. Spectro healer who builds Photosynthesis Energy from Basic Attacks and skills, then spends it on healing Heavy/Mid-air Attacks; her Resonance Liberation heals and marks enemies for Coordinated Attack procs, while her Outro heals the incoming ally and grants the team a DMG Amp buff.",
     skills: ['Cultivation', 'Botany Experiment', 'Starflower Blooms', 'Arboreal Flourish'],
@@ -395,7 +395,7 @@ const CHARACTER_DATA = {
     // current sources unanimously name Iuno as Jiyan's actual current buffer instead.
     teams: ['Jinhsi + Yinlin + Verina', 'Jiyan + Iuno + Verina', 'Encore + Changli + Verina'] },
   'Yinlin': { rarity: 5, element: 'Electro', weapon: 'Rectifier', role: 'Sub DPS',
-    // desc rewritten 2026-08-31 verbatim against the wiki/Yinlin/Combat (re-fetched,
+    // desc rewritten 2026-08-31 verbatim against the Yinlin combat reference (re-fetched,
     // Chrome UA + google.com referer + jsRender, 2 attempts needed past a Cloudflare interstitial) and
     // cross-checked against the source/wuthering-waves/characters/yinlin. Exact Forte economy: Judgment
     // Points cap at 100, restored by Zapstring's Dance (Basic ATK) hits, Magnetic Roar, Electromagnetic
@@ -443,9 +443,9 @@ const CHARACTER_DATA = {
       'Yinlin + Calcharo + Shorekeeper',
       'Yinlin + Youhu + Shorekeeper',
     ] },
-  // Full audit 2026-08-17 against the wiki (MediaWiki API) and the source's live build page
+  // Full audit 2026-08-17 against the reference API and the source's live build page
   // (Chrome UA + google.com referer + jsRender) — desc, skills, base stats, all skill multipliers
-  // (independently spot-checked section-by-section against the wiki's own Forte table, matches exactly),
+  // (independently spot-checked section-by-section against the reference Forte table, matches exactly),
   // buffs, ascension mats, bestEchoes, and both example teams all re-confirmed accurate, no changes
   // needed there. weaponAlts corrected against the source's live calc %: alt5 had Lustrous Razor (80.1%,
   // near the bottom of her 5★ options) ahead of the two actually-best non-signature 5★s, Kumokiri
@@ -453,7 +453,7 @@ const CHARACTER_DATA = {
   // ranked list for her at all (looks like a copy/paste from another character) — replaced with Aureate
   // Zenith (72.3%), her confirmed best 4★; Waning Redshift (70.7%, confirmed #2 4★) kept.
   'Jinhsi': { rarity: 5, element: 'Spectro', weapon: 'Broadblade', role: 'Main DPS',
-    // desc rewritten 2026-08-31 to exact-mechanic depth against the wiki/Jinhsi/Combat
+    // desc rewritten 2026-08-31 to exact-mechanic depth against the Jinhsi combat reference
     // (Chrome/Windows UA + google.com referer + jsRender, load+9s wait to clear Cloudflare). Prior text was
     // flavor + "builds Incandescence from any team member's Attribute or Coordinated DMG" with no exact
     // trigger events/amounts/cooldowns — replaced with the verbatim Instructions-panel + Forte Circuit text.
@@ -480,7 +480,7 @@ const CHARACTER_DATA = {
       'Jinhsi + Yuanwu + Verina',
       'Jinhsi + Mortefi + Verina',
     ] },
-  // Full audit 2026-08-17 against the wiki (MediaWiki API) and the source's live build page
+  // Full audit 2026-08-17 against the reference API and the source's live build page
   // (Chrome UA + google.com referer + jsRender) — desc, skills, base stats, multipliers, ascension mats,
   // and bestEchoes all re-confirmed accurate. weaponAlts corrected against the source's calc %: alt5's Red
   // Spring (90.0%, tied for 5th) was outranked by Emerald Sentence (90.4%, actual #3) — swapped. alt4
@@ -491,7 +491,7 @@ const CHARACTER_DATA = {
   // Lupa being explicitly "part of Changli's best team" as the top Mono Fusion buffer); the Encore+Verina
   // budget team was kept, confirmed as the source's named Budget Dual DPS Team.
   // desc rewritten 2026-08-31 with exact Forte economy/True Sight mechanics per
-  // the wiki/Changli/Combat ("Instructions" + "Forte" > "Details" sections):
+  // the Changli combat reference ("Instructions" + "Forte" > "Details" sections):
   // Enflamement caps at 4 stacks; +1 per on-hit True Sight: Conquest (ground) or True Sight: Charge
   // (jump/mid-air) follow-up, or +4 instantly from casting Liberation Radiance of Fealty. True Sight
   // itself (12s window) is entered by landing Basic ATK Stage 4, Mid-air ATK Stage 4, Resonance Skill
@@ -526,7 +526,7 @@ const CHARACTER_DATA = {
       'Changli + Chixia + Lupa',
       'Changli + Xiangli Yao + Lupa',
     ] },
-  // Full audit 2026-08-17 against the wiki (MediaWiki API) and the source's live build page
+  // Full audit 2026-08-17 against the reference API and the source's live build page
   // (Chrome UA + google.com referer + jsRender) — desc content (title prepended to match the roster's
   // convention), skills, base stats, multipliers, buffs, ascension mats, bestEchoes, and both example
   // teams all re-confirmed accurate. weaponAlts corrected against the source's calc %: alt5 led with Cosmic
@@ -609,7 +609,7 @@ const CHARACTER_DATA = {
   // alt4 previously paired Variation with Call of the Abyss (85.1%) while skipping Rectifier#25 (87.2%,
   // the source's actual #2 and its named no-gacha pick) — swapped in.
   // desc rewritten 2026-08-31 with exact Forte resource economy and Liberation/Stellarealm timing, sourced
-  // from the wiki/Shorekeeper/Combat (MediaWiki API action=parse, bypassing the
+  // from the Shorekeeper combat reference (reference API action=parse, bypassing the
   // Combat page's own Cloudflare interstitial) cross-checked against the source's live kit page (Chrome UA +
   // google.com referer + jsRender). Prior desc had zero mention of the Collapsed Core/Empirical Data
   // resource economy or any exact numbers/caps/timing at all.
@@ -671,7 +671,7 @@ const CHARACTER_DATA = {
   // 5-stars; alt4 uses Undying Flame (75.8%, best 4★) and Pistols#26 (72.0%, named best F2P/no-gacha
   // option); alt3 uses the standard starter Pistols of Night, matching the convention used elsewhere.
   'Carlotta': { rarity: 5, element: 'Glacio', weapon: 'Pistols', role: 'Main DPS',
-    // desc rewritten 2026-08-31 to exact-mechanic depth against the wiki/Carlotta/Combat
+    // desc rewritten 2026-08-31 to exact-mechanic depth against the Carlotta combat reference
     // (Chrome/Windows UA + google.com referer + jsRender). Prior text was flavor + a vague "builds Moldable
     // Crystals and Substance" summary with no exact ammo counts, gain events, or enhanced-state gating.
     desc: 'Reshaping Dimensions, second daughter of the Montelli family and an art investor unbound by convention — she moves seamlessly through social circles and business transactions while quietly handling the family\'s unspeakable "troubles" in secret. On-field Glacio Main DPS built around two resources, Moldable Crystals and Substance, built up through her Basic Attacks, Skill, and dodges. Filling Substance unlocks her empowered Heavy Attack and boosts her Liberation\'s DMG Multiplier, while casting the Liberation itself locks her into Twilight Tango — a forced Basic Attack/Liberation sequence that ends in an automatic burst finisher.',
@@ -710,7 +710,7 @@ const CHARACTER_DATA = {
   // missing — added: alt5 uses Solsworn Ciphers (90.0%) and Blazing Justice (88.2%), the source's #2/#3
   // non-signature 5-stars; alt4 uses Aether Strike (72.9%) and Celestial Spiral (72.6%), the top two
   // 4-stars; alt3 uses the standard starter Gauntlets of Night, matching the convention used elsewhere.
-  // desc rewritten 2026-08-31 against the wiki/Roccia/Combat (Chrome/Windows UA +
+  // desc rewritten 2026-08-31 against the Roccia combat reference (Chrome/Windows UA +
   // google.com referer + jsRender, 2 attempts to clear Cloudflare interstitial) with exact Forte
   // ("Imagination") resource economy — this was previously flavor text with zero real numbers.
   'Roccia': { rarity: 5, element: 'Havoc', weapon: 'Gauntlets', role: 'Sub DPS',
@@ -744,7 +744,7 @@ const CHARACTER_DATA = {
   // Rectifier of Night, matching the convention used elsewhere.
   'Phoebe': { rarity: 5, element: 'Spectro', weapon: 'Rectifier', role: 'Sub DPS',
     // desc rewritten 2026-08-31 with exact Forte economy, verified verbatim against
-    // the wiki/Phoebe/Combat's "Forte" section (Chrome UA + google.com referer +
+    // the Phoebe combat reference's "Forte" section (Chrome UA + google.com referer +
     // jsRender): Prayer caps at 120 (+5/s passive, ~24s 0→full); Divine Voice caps at 60, refilled to 60
     // by Absolution Litany/Utter Confession; the two modes are mutually exclusive and cannot coexist;
     // Divine Voice reaching 0 does NOT auto-exit the mode (it persists until manually swapped); Starflash
@@ -781,7 +781,7 @@ const CHARACTER_DATA = {
   // him at all) and Commando of Conviction as a no-gacha baseline; alt3 uses the standard starter Sword
   // of Night.
   'Brant': { rarity: 5, element: 'Fusion', weapon: 'Sword', role: 'Main DPS',
-    // desc rewritten 2026-08-31 against the wiki/Brant/Combat (Chrome/Windows UA +
+    // desc rewritten 2026-08-31 against the Brant combat reference (Chrome/Windows UA +
     // google.com referer + jsRender, load+9s wait): added exact Forte ("Bravo") economy, Aflame
     // enter/exit + duration, and Returned from Ashes' exact shield duration — none of this was in the
     // prior flavor-text-only desc.
@@ -828,7 +828,7 @@ const CHARACTER_DATA = {
   // non-signature 5-stars; alt4 uses Radiant Dawn (77.9%, best 4★) and Augment (77.8%, #2 4★); alt3 uses
   // the standard starter Rectifier of Night, matching the convention used elsewhere.
   'Cantarella': { rarity: 5, element: 'Havoc', weapon: 'Rectifier', role: 'Sub DPS',
-    // desc rewritten 2026-08-31 against the wiki/Cantarella/Combat (Chrome/Windows UA +
+    // desc rewritten 2026-08-31 against the Cantarella combat reference (Chrome/Windows UA +
     // google.com referer + jsRender, 2 attempts needed past a Cloudflare interstitial) and cross-checked against
     // the source/wuthering-waves/characters/cantarella's Kit/Gameplay tabs. Prior desc only gestured at "builds
     // Trance through Intro/Skill/Liberation" with no exact economy — the real numbers: Trance caps at 5, gained
@@ -879,7 +879,7 @@ const CHARACTER_DATA = {
   // missing — added: alt5 uses Tragicomedy (93.7%) and Verity's Handle (85.0%), the source's #2/#3
   // non-signature 5-stars; alt4 uses Aether Strike (72.6%, best 4★) and Celestial Spiral (69.3%, #2 4★);
   // alt3 uses the standard starter Gauntlets of Night.
-  // desc rewritten 2026-08-31 via the wiki/Zani/Combat (Instructions/Forte/Resonance
+  // desc rewritten 2026-08-31 via the Zani combat reference (Instructions/Forte/Resonance
   // Chain sections) cross-checked against the source/wuthering-waves/characters/zani "Kit" tab (both live,
   // Chrome UA + google.com referer + jsRender, loaded 2026-08-31) — exact Forte economy, exact Inferno Mode
   // entry/exit gate and exact cast-order/timing dependencies added; previous desc was accurate at a high level
@@ -983,7 +983,7 @@ const CHARACTER_DATA = {
   // the source's own explicit "last resort" pick — the only other Sword in the game with an HP% main stat,
   // matching her HP-scaling kit, so used here instead of the generic starter Sword of Night).
   'Cartethyia': { rarity: 5, element: 'Aero', weapon: 'Sword', role: 'Main DPS',
-    // desc rewritten 2026-08-31 against the wiki/Cartethyia/Combat's "Forte" section for
+    // desc rewritten 2026-08-31 against the Cartethyia combat reference's "Forte" section for
     // exact resource economy (trigger events, amounts, caps), enhanced-state entry/exit conditions and duration,
     // and the Skill1→Skill2 cast-order dependency inside Manifest — the prior desc only gestured at "builds Sword
     // Shadows" / "consumes stacked Aero Erosion for bonus DMG" with no numbers at all.
@@ -1021,7 +1021,7 @@ const CHARACTER_DATA = {
     skillMaterials: { weeklyDrop: "The Netherworld's Stare", forgery: 'Waveworn Residue' },
     bestEchoes: ['Lioness of Glory', 'Flaming Clawprint 5pc'], bestWeapon: 'Wildfire Mark',
     weaponAlts: { alt5: ['Ages of Harvest', 'Kumokiri'], alt4: ['Waning Redshift', 'Aureate Zenith'], alt3: ['Broadblade of Night'] },
-    // Expanded 2026-09-12 from a fresh prydwen.gg snapshot the user provided directly (Data dump/
+    // Expanded 2026-09-12 from a fresh build-guide snapshot the user provided directly (Data dump/
     // Lupa/Lupa.md's Synergies/Example Teams, updated to fold in Jingran, who didn't exist in this
     // codebase when the section was first written), taken directly as authoritative for her own
     // recommendations:
@@ -1066,7 +1066,7 @@ const CHARACTER_DATA = {
   // Rectifier of Night.
   'Phrolova': { rarity: 5, element: 'Havoc', weapon: 'Rectifier', role: 'Main DPS',
     // desc rewritten 2026-08-31 to exact Forte economy/enhanced-state mechanics via
-    // the wiki/Phrolova/Combat, cross-checked the source/character/1608: previous
+    // the Phrolova combat reference, cross-checked the source/character/1608: previous
     // blurb only vaguely described "builds Volatile Notes through combos" — added the exact trigger events
     // (Strings from Basic ATK Stage 3/Movement of Fate and Finality, Winds from Skill/Murmurs in a Haunting
     // Dream), the exact 6-Note/Compose-state/not-Resolving-Chord gate on Scarlet Coda, the Compose state's
@@ -1134,7 +1134,7 @@ const CHARACTER_DATA = {
       'Augusta + Mortefi + Shorekeeper',
       'Augusta + Mortefi + Verina',
     ] },
-  // desc rewritten 2026-08-31 against the wiki/Iuno/Combat "Forte > Details" (Chrome/
+  // desc rewritten 2026-08-31 against the Iuno combat reference "Forte > Details" (Chrome/
   // Windows UA + google.com referer + jsRender, load+9s wait): prior desc was flavor text with no exact
   // resource numbers. Sentience (0-100 cap): Intro Skill +40, Resonance Liberation +60, Closing/Unfinished
   // Refrain +25 each, plus passive regen from Moonring Basic ATK/Dodge Counter/Mid-air Attack while in Lunar
@@ -1154,7 +1154,7 @@ const CHARACTER_DATA = {
     skillMaterials: { weeklyDrop: "The Netherworld's Stare", forgery: 'Cadence' },
     bestEchoes: ['Lady of the Sea', 'Crown of Valor 3pc + Sierra Gale 2pc'], bestWeapon: "Moongazer's Sigil",
     weaponAlts: { alt5: ["Verity's Handle", 'Blazing Justice'], alt4: ['Aether Strike', 'Legend of Drunken Hero'], alt3: ['Guardian Gauntlets'] },
-    // REBUILT 2026-09-12 from a fresh prydwen.gg build-guide snapshot the user provided directly
+    // REBUILT 2026-09-12 from a fresh build-guide snapshot the user provided directly
     // (superseding the prior text-scrape dump, which had gone stale) — Data dump/Iuno/Iuno.md's
     // "Example Teams" section, read icon-order and taken directly as authoritative for Iuno's own
     // recommendations:
@@ -1250,7 +1250,7 @@ const CHARACTER_DATA = {
     // skills[3] corrected 2026-08-17: was 'Reverberance - Return' (her actual Intro Skill name) — the
     // `skills` array convention is [Basic ATK, Skill, Liberation, Forte Circuit] per every other
     // character's entry, and her real Forte Circuit name is 'Sight of Unraveling - Oblivion' per
-    // the wiki's own Forte gallery/the source's kit breakdown.
+    // the reference Forte gallery/the source's kit breakdown.
     skills: ['Reign of Silence', 'Fractured Composition', 'Moment of Nihility', 'Sight of Unraveling - Oblivion'],
     ascension: { boss: 'Abyssal Husk', common: 'Polygon Core', specialty: 'Summer Flower' },
     skillMaterials: { weeklyDrop: 'When Irises Bloom', forgery: 'Waveworn Residue' },
@@ -1743,7 +1743,7 @@ const CHARACTER_DATA = {
   'Qingxiao': { rarity: 5, element: 'Aero', weapon: 'Sword', role: 'Main DPS',
     desc: 'Paragon of Mengzhou. On-field Aero DPS who builds resources through Sheathed/Drawn Stance attacks, then unleashes Ephemeral Transcendence for an empowered combo finisher.',
     skills: ['Strings to Steel', 'Severing Note', 'Billows Beneath Heaven', 'Tonality Shift'],
-    // Confirmed 2026-08-20 (v3.6 now live) via the wiki's own Ascension
+    // Confirmed 2026-08-20 (v3.6 now live) via the reference's own Ascension
     // Materials/Forte tables: boss drop Forged Empyrean's Sigh, common Autopuppet Kernel (Land of
     // Xuanfang family, already in COMMON_MAT_TIERS), specialty Blade Blossom.
     ascension: { boss: "Forged Empyrean's Sigh", common: 'Autopuppet Kernel', specialty: 'Blade Blossom' },
@@ -1782,9 +1782,9 @@ const CHARACTER_DATA = {
     desc: 'A loner treading into illusive depths, of Mengzhou. On-field Fusion DPS who alternates Yin Vessel and Yang Font stances, with ATK and Heavy Attack DMG scaling off Max HP, entering a Yinghuo state via Resonance Liberation for empowered follow-up strikes.',
     skills: ['Edge of Life and Death', 'Malevolent Encounter', 'Burial of Thousand Souls', 'Question the Tombs'],
     // Dates corrected 2026-08-18: Jingran releases in the v3.6-p2 banner (~2026-09-10, per BANNER_HISTORY),
-    // not Aug 20 (that's Qingxiao's v3.6-p1 date) — the wiki's own infobox leaves releaseDate blank/commented
+    // not Aug 20 (that's Qingxiao's v3.6-p1 date) — the reference infobox leaves releaseDate blank/commented
     // ("2026-09-??"), so no exact day is confirmed yet.
-    // Confirmed 2026-08-20 via the wiki's own Ascension Materials/Forte tables
+    // Confirmed 2026-08-20 via the reference's own Ascension Materials/Forte tables
     // (page now live, marked "upcoming content" since Jingran himself hasn't banner-released yet —
     // his kit/materials are shown regardless): boss drop Forged Empyrean's Sigh (shared with
     // Qingxiao), common Whisperin Core, specialty Cloudperch Seed.
@@ -1792,10 +1792,10 @@ const CHARACTER_DATA = {
     // weeklyDrop Skyward Glazed Heart, forgery Carved Crystal family — both confirmed same source.
     skillMaterials: { weeklyDrop: 'Skyward Glazed Heart', forgery: 'Carved Crystal' },
     // bestWeapon confirmed real via the source: Thousandfold Deliverance (Broadblade, 412 ATK / +72.2% HP, "Hark, Spirits and Stars").
-    // weaponAlts added 2026-09-07 against a real nanoka.cc dump (Data dump/Jingran/Jingran.md) —
+    // weaponAlts added 2026-09-07 against a real data dump (Data dump/Jingran/Jingran.md) —
     // its "Recommended Weapons" list ranks Thousandfold Deliverance #1 (already bestWeapon), Radiance
     // Cleaver #2, Aureate Zenith #3; no ATK%/comparison figures given on that page to rank further alts.
-    // bestEchoes/teams REBUILT 2026-09-12 from a fresh prydwen.gg build-guide snapshot the user
+    // bestEchoes/teams REBUILT 2026-09-12 from a fresh build-guide snapshot the user
     // provided directly (Data dump/Jingran/Jingran.md), superseding the prior "not yet written"
     // placeholder — that dump now has a full Build/Gameplay-and-Teams section.
     // bestEchoes: [mainEcho, set] convention (see Brant's own entry above) — main echo is Myriad
@@ -1826,7 +1826,7 @@ const CHARACTER_DATA = {
     // (Iuno + Shorekeeper/Verina), Mono Fusion (Mortefi + Mornye/Lupa), F2P (Rebecca/Mortefi +
     // Shorekeeper/Verina). Checked 2026-09-12: only Iuno's own dump independently corroborated the
     // pairing at the time. UPDATED 2026-09-12 (same day, after Lupa's own dump was refreshed from a
-    // fresh prydwen.gg snapshot): Lupa's own "Best Team" now independently names Jingran too (with
+    // fresh build-guide snapshot): Lupa's own "Best Team" now independently names Jingran too (with
     // Mortefi as his dedicated 3rd-slot partner, Mornye as the generalist alternate) — 'Jingran +
     // Mortefi + Lupa' is now mutually confirmed on both sides, not one-way.
     teams: [
@@ -1839,7 +1839,7 @@ const CHARACTER_DATA = {
       'Jingran + Mortefi + Shorekeeper',
       'Jingran + Mortefi + Verina',
     ] },
-    // Re-checked 2026-09-12 against a fresh prydwen.gg build-guide snapshot (Data dump/Jingran/
+    // Re-checked 2026-09-12 against a fresh build-guide snapshot (Data dump/Jingran/
     // Jingran.md) — his Standard (S0-S1) and S2+ rotations are now published (see CHARACTER_ROTATIONS
     // below, added below this entry) and his Build/Gameplay-and-Teams sections are fully populated,
     // superseding the 2026-09-07 "no guide content yet" note.
@@ -1847,7 +1847,7 @@ const CHARACTER_DATA = {
   'Aalto': { rarity: 4, element: 'Aero', weapon: 'Pistols', role: 'Sub DPS',
     desc: 'Suave information broker who slips through the mist. Aero sub-DPS who summons a mist clone via his Skill, dealing off-field Aero DMG whenever it triggers a Coordinated Attack alongside the active Resonator.',
     // corrected 2026-08-18: skills[3] was 'Mistcloak Dash' (the internal dash mechanic triggered within the Forte
-    // Circuit), not the Forte Circuit's actual name 'Misty Cover' (the wiki Combat page). SKILL_ICONS already aliased
+    // Circuit), not the Forte Circuit's actual name 'Misty Cover' (the reference Combat page). SKILL_ICONS already aliased
     // both names to the same icon; fixing here for consistency with the real skill name.
     skills: ['Half Truths', 'Shift Trick', 'Flower in the Mist', 'Misty Cover'],
     ascension: { boss: 'Roaring Rock Fist', common: 'Howler Core', specialty: 'Wintry Bell' },
@@ -1920,7 +1920,7 @@ const CHARACTER_DATA = {
       'Chixia + Lupa + Encore',
     ] },
   'Danjin': { rarity: 4, element: 'Havoc', weapon: 'Sword', role: 'Sub DPS',
-    // desc expanded 2026-08-18 (the wiki + the source): lore half is the wiki's "Scarlet Shade" Midnight Ranger
+    // desc expanded 2026-08-18 (the reference + the source): lore half is the reference "Scarlet Shade" Midnight Ranger
     // who hunts thieves/bandits for retribution; gameplay half is the source's Hybrid framing — a fast
     // Outro-buff rotation for Havoc teammates, or a longer rotation (Basic ATK x3 into Skill x3, capped
     // by a full-power Forte Heavy Attack) that lets her run as a legitimate Main DPS.
@@ -1950,8 +1950,8 @@ const CHARACTER_DATA = {
       'Danjin + Roccia + Shorekeeper',
       'Danjin + Mortefi + Shorekeeper',
     ] },
-  // Audited 2026-08-18 via the wiki (infobox/MediaWiki API) + the source Kit/Build/
-  // Gameplay tabs. desc: the wiki infobox `role` field is "Concerto Efficiency;Traction;Resonance
+  // Audited 2026-08-18 via reference (infobox/reference API) + the source Kit/Build/
+  // Gameplay tabs. desc: the reference infobox `role` field is "Concerto Efficiency;Traction;Resonance
   // Liberation Regeneration"; the source frames her as a fully quickswap-friendly Hybrid whose Outro
   // funnels Resonance Energy to the incoming character and whose Forte/Resonance Skill both group
   // enemies — expanded desc below to cover both. bestEchoes corrected: 'Bell-Borne Geochelone' isn't
@@ -1988,7 +1988,7 @@ const CHARACTER_DATA = {
       'Yangyang + Carlotta + Verina',
       'Yangyang + Carlotta + Shorekeeper',
     ] },
-  // Sanhua corrected 2026-08-18 via the source's Kit/Build/Gameplay tabs: desc lore confirmed via the wiki's
+  // Sanhua corrected 2026-08-18 via the source's Kit/Build/Gameplay tabs: desc lore confirmed via reference's
   // Official Introduction ("the loyal and reliable guard of Jinzhou Magistrate Jinhsi") — was already
   // accurate. bestWeapon changed from 'Emerald of Genesis' (the source's #3 pick at 100.00%) to 'Blazing
   // Brilliance' (the source's #1 pick at 108.39%, R1); weaponAlts added (previously missing entirely).
@@ -2023,9 +2023,9 @@ const CHARACTER_DATA = {
       'Sanhua + Rover: Havoc + Shorekeeper',
       'Sanhua + Carlotta + Verina',
     ] },
-  // corrected 2026-08-18 via the wiki's Taoqi/Combat page + the source's Kit/Build/Gameplay tabs (previously
+  // corrected 2026-08-18 via the Taoqi combat reference page + the source's Kit/Build/Gameplay tabs (previously
   // had no weaponAlts at all, and only a partial CHARACTER_DATA entry). desc: her Outro Iron Will is a
-  // "Resonance Skill DMG Amplified by 38%" per the wiki's own Forte Details text (matches her infobox
+  // "Resonance Skill DMG Amplified by 38%" per the reference Forte Details text (matches her infobox
   // `role` field's own "Resonance Skill DMG Amplification" tag, see COMBAT_ROLE_DATA above) — not
   // "amplifys", which was unsourced. bestEchoes replaced 'Bell-Borne Geochelone' (the source's shield-focused
   // Main Echo alt, not the top Echo Set) with the source's actual #1 Echo Set 'Rejuvenating Glow 5pc'
@@ -2061,7 +2061,7 @@ const CHARACTER_DATA = {
       'Taoqi + Jinhsi + Verina',
       'Taoqi + Jinhsi + Shorekeeper',
     ] },
-  // corrected 2026-08-18 via the wiki's Yuanwu/Combat page (Forte Details, rendered) + the source's
+  // corrected 2026-08-18 via the Yuanwu combat reference page (Forte Details, rendered) + the source's
   // Kit/Build/Review/Gameplay tabs (previously only had a partial CHARACTER_DATA entry, no
   // weaponAlts). desc: dropped "generates shields via Resonance Liberation" — Blazing Might's own
   // Forte Details text has no shield at all; the 200%-DEF shield only exists on Resonance Chain S4
@@ -2095,7 +2095,7 @@ const CHARACTER_DATA = {
     bestEchoes: ['Fallacy of No Return', 'Rejuvenating Glow 5pc', 'Moonlit Clouds 5pc'], bestWeapon: 'Originite: Type IV',
     weaponAlts: { alt5: ["Verity's Handle", 'Abyss Surges'], alt4: ['Amity Accord', 'Stonard'], alt3: ['Guardian Gauntlets', 'Gauntlets of Voyager'] },
     teams: ['Yuanwu + Jinhsi + Verina', 'Yuanwu + Jinhsi + Shorekeeper'] },
-  // corrected 2026-08-18 via the wiki's Mortefi/Combat page (Forte Details, rendered) + the source's Kit/
+  // corrected 2026-08-18 via the Mortefi combat reference page (Forte Details, rendered) + the source's Kit/
   // Build/Review/Gameplay tabs (previously only had a partial CHARACTER_DATA entry, no weaponAlts).
   // desc: kept largely as-is (Fusion Coordinated ATK + Outro Heavy ATK buff both trace exactly to
   // Violent Finale's Burning Rhapsody and Rage Transposition), just re-worded to flag him as a Hybrid
@@ -2142,8 +2142,8 @@ const CHARACTER_DATA = {
       'Mortefi + Phoebe + Rover: Spectro',
       'Mortefi + Zani + Rover: Spectro',
     ] },
-  // audited 2026-08-18: sourced from the wiki's Youhu/Combat page (rendered via the
-  // MediaWiki API, section-by-section, since the raw wikitext only transcludes {{Forte Table}}/
+  // audited 2026-08-18: sourced from the Youhu combat reference page (rendered via the
+  // reference API, section-by-section, since the raw page source only transcludes {{Forte Table}}/
   // {{Chain Table}} templates) and the source's Kit/Build/Review/Gameplay tabs.
   // bestEchoes expanded with the source's actual #1/#2 Main Echo picks (Fallacy of No Return now the source's
   // stated top choice over Bell-Borne Geochelone, both on the Rejuvenating Glow 5pc set) plus the
@@ -2216,7 +2216,7 @@ const CHARACTER_DATA = {
     ] },
   // corrected/added 2026-08-18: desc rewritten — a real bio (Black Shores Consultant/"Spiritchaser
   // Taoist" who wanders investigating the strange and mysterious, selling talismans and divination as
-  // her trade) plus a gameplay-role summary (the wiki's Combat page + the source's Kit/Review tabs): she
+  // her trade) plus a gameplay-role summary (the reference Combat page + the source's Kit/Review tabs): she
   // heals off-field via Heavy Attacks/Intro/Outro, generates Mountain/Thunder Trigrams off her Basic
   // ATK/Skill/Mid-air Attack to unlock an enhanced Liberation (Flashing Thunder Spell: Harmony) that
   // deploys a Five Thunders Spell Array inflicting Electro Flare and ramping team Resonance Skill DMG
@@ -2600,7 +2600,7 @@ const CHARACTER_DATA = {
   // dump's generic "Skill Damage" row label) — all real, all silently uncredited. Echo (11.9%) stays
   // excluded — generic equipped-Echo damage, not his own kit's Echo Skill button.
   ['Aalto',         ['Basic ATK', 'Skill', 'Liberation'], [],                                  []],
-  // dmgFocus corrected 2026-08-18: her Forte Details table (the wiki's Lumi/Combat page) funnels nearly
+  // dmgFocus corrected 2026-08-18: her Forte Details table (the Lumi combat reference page) funnels nearly
   // every attack — Energized Pounce/Rebound, Glare, Red Spotlight Basic/Heavy ATK, Laser — into "counted
   // as Basic Attack DMG" explicitly; only her Liberation (Squeakie Express) and Resonance Skill
   // (Pounce/Rebound, which the source's own Review calls "minimal damage") aren't Basic ATK, so 'Skill' had
@@ -2690,7 +2690,7 @@ const CHARACTER_DATA = {
   // same pass, so same "silently rejecting a real teammate Basic ATK DMG Bonus buff" bug would apply
   // here too if 'Basic ATK' weren't added alongside it.
   ['Baizhi',        ['Basic ATK', 'Skill', 'Liberation', 'Heavy ATK'], ['Heal'],                            []],
-  // buff tag corrected 2026-08-18: the wiki's Taoqi/Combat Outro Skill "Iron Will" text is "Resonance
+  // buff tag corrected 2026-08-18: the Taoqi combat reference Outro Skill "Iron Will" text is "Resonance
   // Skill DMG Amplified by 38%" — matches the 'Skill DMG Amp' convention used for Lumi/Baizhi/Buling's
   // identical Amp-type buffs below, not the "Amplify" wording (which belongs to a different, unsourced
   // stat this character never actually carries).
@@ -2700,7 +2700,7 @@ const CHARACTER_DATA = {
   // missing despite already being correctly basicDmg/libDmg-categorized. Echo (9.7%) stays excluded —
   // generic equipped-Echo damage, not her own kit's Echo Skill button.
   ['Taoqi',         ['Skill', 'Basic ATK', 'Liberation'], ['Shield', 'Skill DMG Amp'],         []],
-  // buff tag corrected 2026-08-18: the wiki's Yuanwu/Combat Forte Details table for Resonance Liberation
+  // buff tag corrected 2026-08-18: the Yuanwu combat reference Forte Details table for Resonance Liberation
   // Blazing Might has no shield effect at all — the 'Shield' tag had no basis in his base (S0) kit,
   // only appearing on Resonance Chain S4 "Retributive Knuckles" (200% DEF shield, see
   // RESONANCE_CHAIN_DATA below), so it's removed from this always-on buff list.
@@ -2727,7 +2727,7 @@ const CHARACTER_DATA = {
   // dmgFocus corrected 2026-08-18: 'Skill' had no basis — her Resonance Skill (In Shadow Thunder Stirs,
   // 58.40% at Lv.10) is one of her weakest hits; her biggest single damage source is her Resonance
   // Liberation (Flashing Thunder Spell / enhanced Harmony variant, up to 536.79% at Lv.10 plus the Five
-  // Thunders Spell Array's continuous DMG) per the wiki's Buling/Combat Forte Details table.
+  // Thunders Spell Array's continuous DMG) per the Buling combat reference Forte Details table.
   // dmgFocus corrected 2026-09-04 (Phase A audit, REMAINING_WORK.md 1c): was ['Liberation'] only. This
   // source's own Calculations tab has no Damage Profile % breakdown for her (explicitly stated as
   // unavailable), so magnitude can't be judged precisely — same "no % data" case as Youhu/Yuanwu above,
@@ -2821,18 +2821,18 @@ const CHARACTER_DATA = {
   // corrected 2026-08-18: HP was 10062 vs the source's exact Lv.90 stat screen 10063 (ATK/DEF/Energy already matched).
   ['Sanhua',        10063, 275, 941,  100],
   ['Taoqi',         8950,  225, 1564, 125],
-  // DEF corrected 2026-08-18: was 1637 vs the wiki's exact Lv.90 Ascensions and Stats table
+  // DEF corrected 2026-08-18: was 1637 vs the reference exact Lv.90 Ascensions and Stats table
   // (8,525.00 / 225.00 / 1,637.75, rounds to 1638) and the source's own Lv.90 stat screen (DEF 1638).
   ['Yuanwu',        8525,  225, 1638, 125],
-  // DEF corrected 2026-08-18: was 1136 vs the wiki's exact Lv.90 Ascensions and Stats table (10,025.00 /
+  // DEF corrected 2026-08-18: was 1136 vs the reference exact Lv.90 Ascensions and Stats table (10,025.00 /
   // 250.00 / 1,136.65, rounds to 1137) and the source's own Lv.90 stat screen (DEF 1137).
   ['Mortefi',       10025, 250, 1137, 125],
   ['Youhu',         9975,  263, 1051, 125],
-  // ATK/DEF corrected 2026-08-18: were 337/879, truncated instead of rounded from the wiki's exact Lv.90
+  // ATK/DEF corrected 2026-08-18: were 337/879, truncated instead of rounded from the reference exact Lv.90
   // Ascensions and Stats table (8,500.00 / 337.50 / 879.98, rounds to 338/880), matching the source's own
   // Lv.90 stat screen (ATK 338, DEF 880).
   ['Lumi',          8500,  338, 880,  125],
-  // DEF corrected 2026-08-18: was 1258 vs the source's own Lv.90 stat screen (DEF 1259) and the wiki's
+  // DEF corrected 2026-08-18: was 1258 vs the source's own Lv.90 stat screen (DEF 1259) and the reference's
   // Ascensions and Stats table; HP/ATK (10625/225) already confirmed exact against both sources.
   ['Buling',        10625, 225, 1259, 125],
 ].forEach(([name, hp, atk, def, maxEnergy]) => {
@@ -2843,7 +2843,7 @@ const CHARACTER_DATA = {
 // totalMult: sum of ATK% multipliers in one full rotation (all skills used)
 // rotTime: full team rotation duration in seconds
 // onField: character's on-field time in seconds
-// Sources: the source, WutheringLab, community rotation testing
+// Sources: the source, a community database, community rotation testing
 [
   // 5★ Main DPS — high totalMult, long onField
   ['Rover: Havoc',  2300, 23, 15],  // Devastation → Dark Surge enhanced combo
@@ -2897,7 +2897,7 @@ const CHARACTER_DATA = {
   ['Luuk Herssen',  2400, 23, 16],  // Basic ATK chains
   ['Aemeath',       3800, 24, 15],  // Strongest DPS: Res. Liberation + Fusion Burst/Tune Rupture extra multipliers
   // totalMult corrected 2026-08-18: 2800 was lower than several T1.5/T2 units (Jinhsi 3200, Camellya
-  // 3100, Carlotta 3400) despite Sigrika being ranked T0 DPS by the source/driffle tier lists and
+  // 3100, Carlotta 3400) despite Sigrika being ranked T0 DPS by community tier lists and
   // explicitly called "arguably the strongest DPS" and "an insane ToA/Matrix DPS" by the source's own
   // review — raised to 3500 to sit alongside the other T0 Main DPS (Yangyang: Xuanling 3600, Hiyuki 3400).
   ['Sigrika',       3500, 24, 16],  // Echo Skill + Heavy ATK Aero DPS, Rune consumption
@@ -2919,7 +2919,7 @@ const CHARACTER_DATA = {
   // in the same order of magnitude as other Main DPS instead of ~49x inflated. His kit/build is still
   // "Unconfirmed" (unreleased, see his main CHARACTER_DATA entry) so this is a unit-conversion fix,
   // not a verified tier placement -- revisit once his real build guide exists.
-  // totalMult corrected 2026-09-12 against a fresh prydwen.gg build-guide snapshot (Data dump/Jingran/
+  // totalMult corrected 2026-09-12 against a fresh build-guide snapshot (Data dump/Jingran/
   // Jingran.md): was 60 with a comment claiming "totalMult is %HP, NOT %ATK" — that dump's own closing
   // Meta-position paragraph explicitly says the opposite: "HP-CONVERTING (like Brant is with Energy
   // Regen), not HP-scaling like Cartethyia — his multipliers apply to ATK, with HP only feeding the
@@ -3083,7 +3083,7 @@ const CHARACTER_DATA = {
   }
 });
 
-// [SECTION:TIER_DATA] — Tier rankings from the source.gg (ToA = Tower of Adversity, WW = Whimpering Waste)
+// [SECTION:TIER_DATA] — Tier rankings from the source (ToA = Tower of Adversity, WW = Whimpering Waste)
 // Best placement across DPS/Hybrid/Support roles. T0 = best, T4 = worst.
 [
   ['Aemeath',       'T0',   'T0.5'],
@@ -3208,7 +3208,7 @@ const CHARACTER_DATA = {
   // him was checked that pass). Standard-list values used, matching this table's established
   // convention (e.g. Augusta/Luuk Herssen use their standard T0/T1.5-style lists, not the Value list).
   ['Qingxiao',      'T0',   'T1'],
-  // Added 2026-09-12 against a fresh prydwen.gg build-guide snapshot (Data dump/Jingran/Jingran.md):
+  // Added 2026-09-12 against a fresh build-guide snapshot (Data dump/Jingran/Jingran.md):
   // his own Review section states "Tier: DPS T0 (Tower of Adversity), T1 (Whimpering Wastes) — same
   // split on the Value Tier List" explicitly (both lists agree, unlike some other characters above).
   ['Jingran',       'T0',   'T1'],
@@ -3248,7 +3248,7 @@ const CHARACTER_DATA = {
   ['Brant',        'Rinascita'], ['Cantarella',   'Rinascita'], ['Zani',         'Rinascita'],
   ['Ciaccona',     'Rinascita'], ['Cartethyia',   'Rinascita'], ['Lupa',         'Rinascita'],
   ['Phrolova',     'Rinascita'],
-  // Septimont (fixed 2026-08-17: Septimont is a city-state region OF Rinascita per the wiki's own Location
+  // Septimont (fixed 2026-08-17: Septimont is a city-state region OF Rinascita per the reference Location
   // Infobox `nation` field — same pattern as Jinzhou being a city within Huanglong — not a separate nation).
   ['Augusta',      'Rinascita'], ['Iuno',         'Rinascita'],
   // Lahai-Roi (Startorch Academy)
@@ -3257,14 +3257,14 @@ const CHARACTER_DATA = {
   ['Hiyuki',       'Lahai-Roi'], ['Denia',        'Lahai-Roi'], ['Lucilla',      'Lahai-Roi'],
   // Night City (Cyberpunk: Edgerunners collab, per both characters' own `nation` infobox field — a
   // real-world-fiction location outside the Solaris-3 nations above, not a Solaris-3 error; no dedicated
-  // wiki emblem exists for it, same "no icon" convention as New Federation elsewhere in this table).
+  // reference emblem exists for it, same "no icon" convention as New Federation elsewhere in this table).
   ['Lucy',         'Night City'], ['Rebecca',      'Night City'],
 ].forEach(([name, region]) => {
   if (CHARACTER_DATA[name]) Object.assign(CHARACTER_DATA[name], { region });
 });
 
 // [SECTION:BIRTHDAY_DATA] — Character birthdays (month-day format)
-// Source: the wiki, esportstales.com, gamerant.com
+// Source: the reference and two community guides
 // Characters without official birthdays are omitted
 [
   ['Jiyan',       '12-14'], ['Calcharo',    '07-08'], ['Encore',      '03-21'],
@@ -3276,8 +3276,8 @@ const CHARACTER_DATA = {
   ['Danjin',      '08-31'], ['Yangyang',    '10-11'], ['Sanhua',      '01-20'],
   ['Taoqi',       '02-25'], ['Yuanwu',      '10-02'], ['Mortefi',     '11-06'],
   ['Youhu',       '10-13'],
-  // Yangyang: Xuanling shares her 4★ counterpart Yangyang's birthday per the wiki's own infobox
-  // ('October 11th', confirmed 2026-08-18 via the MediaWiki API). Suisui's infobox leaves `birthday`
+  // Yangyang: Xuanling shares her 4★ counterpart Yangyang's birthday per the reference infobox
+  // ('October 11th', confirmed 2026-08-18 via the reference API). Suisui's infobox leaves `birthday`
   // blank — omitted per the established convention rather than guessed.
   ['Yangyang: Xuanling', '10-11'],
 ].forEach(([name, birthday]) => {
@@ -3285,16 +3285,16 @@ const CHARACTER_DATA = {
 });
 
 // [SECTION:IDENTITY_DATA] — Title, birthplace, in-game organization/faction, and voice actor(s).
-// Source: the wiki Resonator Infobox (title/title2, birthplace, nation, affiliation/
+// Source: the reference Resonator Infobox (title/title2, birthplace, nation, affiliation/
 // affiliation2, voiceEN/voiceCN/voiceJP/voiceKR). These are three DISTINCT associations, not one:
 //   - birthplace: where the character was born/raised (infobox `birthplace`)
 //   - region (separate REGION_DATA table below): the nation they currently operate in/are tied to
-//     (infobox `nation`, when the wiki has confirmed one — left unset when it doesn't, rather than
+//     (infobox `nation`, when the reference has confirmed one — left unset when it doesn't, rather than
 //     inferring it from an affiliation)
 //   - organization: their specific in-game faction (infobox `affiliation`), which is often a
 //     sub-group WITHIN a nation (e.g. Midnight Rangers operate in Huanglong) and can differ from
 //     nation/birthplace entirely (e.g. Calcharo: born in New Federation, leads Ghost Hounds, operates
-//     out of Jinzhou/Huanglong but the wiki's own `nation` field for him is blank/unconfirmed)
+//     out of Jinzhou/Huanglong but the reference `nation` field for him is blank/unconfirmed)
 // voiceActor is either a plain string (English-only, when that's all that's been sourced) or
 // { en, cn, jp, kr } for a full multi-language credit.
 // Only characters that have been audited so far are populated — this is not yet a complete roster table.
@@ -3303,11 +3303,11 @@ const CHARACTER_DATA = {
   ['Yinlin', 'Lightning of Execution', 'Huanglong', 'Public Security Bureau', { en: 'Naomi McDonald', cn: 'Xiao Liansha', jp: 'Ami Koshimizu', kr: 'Kang Sae-bom' }],
   ['Calcharo', 'Phantom Hunters', 'New Federation', 'Ghost Hounds', { en: 'Ben Cura', cn: 'Xu Xiang', jp: 'Toshiyuki Morikawa', kr: 'Park Min-gi' }],
   ['Encore', 'Wooly-Counting Game', 'New Federation', 'Black Shores', { en: 'Carina Reeves', cn: 'Xiao Sibai', jp: 'Ibuki Chikano', kr: 'Serena Lee' }],
-  // cn VA corrected 2026-08-17: the wiki's own wikitext link text ("Yu Tou") doesn't match the CN actor's
+  // cn VA corrected 2026-08-17: the reference page source link text ("Yu Tou") doesn't match the CN actor's
   // real name in its own linked moegirl URL (%E5%BC%A0%E6%98%B1 = 张昱, surname Zhang) — the source's
   // Voice Cast list confirms "Elise Zhang", used here instead as the more internally-consistent source.
   // title corrected 2026-08-17 (found while auditing Aemeath, whose real title turned out to be
-  // "Guiding Starlance" per both the source character/1210 and the wiki): Jianxin's title was wrongly
+  // "Guiding Starlance" per both the source character/1210 and the reference): Jianxin's title was wrongly
   // copied as "Guiding Starlance" too — the source character/1405 confirms her actual title is
   // "Cleansing Reflections".
   ['Jianxin', 'Cleansing Reflections', 'Huanglong', 'Jinzhou', { en: 'Ioanna Kimbook', cn: 'Elise Zhang', jp: 'Anzai Chika', kr: 'Lee Eunjo' }],
@@ -3323,7 +3323,7 @@ const CHARACTER_DATA = {
   // organization uses affiliation2 (Jinzhou City Hall, where she serves as Counselor to Jinhsi) over the
   // generic Jinzhou tie and her former, now-inactive affiliation3 (Mingting).
   ['Changli', 'Eternal Blaze', 'Huanglong', 'Jinzhou City Hall', { en: 'Ashleigh Haddad', cn: 'Mufei', jp: 'Chiwa Saitō', kr: 'Shin Nari' }],
-  // organization: the wiki's infobox has only a single affiliation field for her (Jinzhou) — no specific
+  // organization: the reference infobox has only a single affiliation field for her (Jinzhou) — no specific
   // sub-group like the Jiyan/Changli entries above, so the generic nation-tied org is used as-is.
   ['Zhezhi', 'Enchanted Brush', 'Huanglong', 'Jinzhou', { en: 'Shin-Fei Chen', cn: 'Miao Zi', jp: 'Yui Makino', kr: 'Kim Ha-ru' }],
   // organization: the source's infobox lists a single Affiliation (Jinzhou) for him, matching the
@@ -3350,17 +3350,17 @@ const CHARACTER_DATA = {
   // organization tie is what ties her to the Rinascita region (REGION_DATA below), same pattern as
   // Camellya's identity block above.
   ['Phrolova', 'Symphony of Beyond', 'Unknown', 'Fractsidus', { en: 'Rae Lim', cn: 'Zhang Qi', jp: 'Fujita Saki', kr: 'Choi Ha Ri' }],
-  // birthplace: the wiki's own infobox leaves both `birthday` and `birthplace` blank for Augusta — treated
+  // birthplace: the reference infobox leaves both `birthday` and `birthplace` blank for Augusta — treated
   // as "Unknown" per the Camellya/Phrolova convention above. organization uses her city-state affiliation
   // (Septimont) rather than the generic Rinascita nation tie, matching the Jinzhou City Hall convention.
   ['Augusta', 'Ephor of Septimont', 'Unknown', 'Septimont', { en: 'Alix Wilton Regan', cn: 'Mu Xueting', jp: 'Hikasa Yoko', kr: 'Lee Ji-hyun' }],
-  // birthplace: the wiki's own infobox leaves both `birthday` and `birthplace` blank for Iuno too — same
+  // birthplace: the reference infobox leaves both `birthday` and `birthplace` blank for Iuno too — same
   // "Unknown" convention as Augusta/Camellya/Phrolova above. organization uses affiliation2 (Tetragon
   // Temple, her specific priesthood) over the generic Septimont/Rinascita tie, matching the Jinzhou City
-  // Hall convention — no dedicated emblem exists for Tetragon Temple on the wiki (only a location photo),
+  // Hall convention — no dedicated emblem exists for Tetragon Temple on the reference (only a location photo),
   // so it's intentionally left out of FACTION_ICONS rather than guessed, same as the Jinzhou precedent.
   ['Iuno', 'Stasis, Cycle, Renewal', 'Unknown', 'Tetragon Temple', { en: 'Ella Boyes', cn: 'Jiang Yingjun', jp: 'Lynn', kr: 'Yoon Eun-seo' }],
-  // birthplace: the wiki's infobox literally lists 'Rinascita' for her (a real value this time, not blank)
+  // birthplace: the reference infobox literally lists 'Rinascita' for her (a real value this time, not blank)
   // — she's Septimont-born (a former Septimontian known as "Angel") but now serves as a Consultant of
   // the Black Shores, which is her REGION_DATA tie/organization, same birthplace-vs-nation-tie pattern
   // as Verina. organization uses her primary affiliation (Black Shores) rather than her origin
@@ -3368,52 +3368,52 @@ const CHARACTER_DATA = {
   ['Galbrena', 'Infernal Descent', 'Rinascita', 'Black Shores', { en: 'Devora Wilde', cn: 'Zhang Wenjie', jp: 'Shoji Umeka', kr: 'Lee Da-seul' }],
   // organization uses his primary affiliation (Mingting) over affiliation2 (Chongzhou) and the now-inactive
   // affiliation3 (Internal Security Agency, "formerly") — no dedicated emblem exists for Mingting on the
-  // wiki, so it's intentionally left out of FACTION_ICONS rather than guessed, same as the Jinzhou precedent.
+  // reference, so it's intentionally left out of FACTION_ICONS rather than guessed, same as the Jinzhou precedent.
   ['Qiuyuan', 'Bambooscape', 'Huanglong', 'Mingting', { en: 'Jeremy Ang Jones', cn: 'Gan Ziqi', jp: 'Miki Shinichiro', kr: 'Kim Min-ju' }],
   ['Chisa', 'Eye of Unravelling', 'Ashinohara', 'Startorch Academy', { en: 'Leader Looi', cn: 'Zhao Lingze', jp: 'Kanemoto Hisako', kr: 'Lee Joo-eun' }],
-  // Cross-checked the source character/1509 against the wiki's own infobox — both agree exactly:
+  // Cross-checked the source character/1509 against the reference infobox — both agree exactly:
   // birthplace New Federation (born in the Lawless Zone there, before stealing "Lynae"'s identity to
-  // attend Startorch Academy), organization Startorch Academy (her current affiliation; the wiki lists
+  // attend Startorch Academy), organization Startorch Academy (her current affiliation; the reference lists
   // "Lawless Zone" only as a "formerly" tag, not her active org). Birthday: both sources list "Unknown" —
   // intentionally left out of BIRTHDAY_DATA above rather than guessed, same as the "omitted" convention
   // documented there. cn/jp VA names/spellings confirmed identical on both sources.
   ['Lynae', 'Radiant Spectrum', 'New Federation', 'Startorch Academy', { en: 'Elsie Lovelock', cn: 'Zhu Jing', jp: 'Inoue Marina', kr: 'Choi Hyeon-ji' }],
   // Cross-checked the source character/1209 (matches its own infobox exactly): birthplace New
-  // Federation, organization 'Spacetrek Collective' (the wiki's short Affiliation field — her full
+  // Federation, organization 'Spacetrek Collective' (the reference short Affiliation field — her full
   // in-universe title is "Spacetrek Collective Research Institute engineer", already captured in her
   // `desc`). Birthday: 'Unknown' per the site — left out of BIRTHDAY_DATA above, same convention as
   // Lynae/Augusta/Camellya/etc.
   ['Mornye', 'Astral Mapping', 'New Federation', 'Spacetrek Collective', { en: 'Michelle Fox', cn: 'Tong Xinzhu', jp: 'Iwami Manaka', kr: 'Oh Ro-ah' }],
-  // Cross-checked the source character/1210 against the wiki's own infobox — both agree exactly.
+  // Cross-checked the source character/1210 against the reference infobox — both agree exactly.
   // birthplace: Roya Frostlands (she's a Roya Tribe native), distinct from her region/nation tie
   // (Lahai-Roi, in REGION_DATA above) — same birthplace-vs-nation-tie pattern as Verina/Galbrena.
-  // organization: the wiki's infobox lists two affiliations (Startorch Academy "on profile" + Roya Tribe);
+  // organization: the reference infobox lists two affiliations (Startorch Academy "on profile" + Roya Tribe);
   // 'Startorch Academy' is used to match the source's single Affiliation field and the Lynae/Mornye
   // convention for other Startorch-affiliated characters. Birthday: both sources list 'Unknown'.
   ['Aemeath', 'Guiding Starlance', 'Roya Frostlands', 'Startorch Academy', { en: 'Cara Theobold', cn: 'Wang Yaxin', jp: 'Sato Satomi', kr: 'Kim Ha-ru' }],
-  // Cross-checked the source character/1510 against the wiki's own infobox — both agree exactly:
-  // birthplace New Federation, organization 'Startorch Academy' (his primary affiliation; the wiki's
+  // Cross-checked the source character/1510 against the reference infobox — both agree exactly:
+  // birthplace New Federation, organization 'Startorch Academy' (his primary affiliation; the reference's
   // affiliation2/3 — Spacetrek Collective, Lollo Logistics — are secondary ties, matching the
   // Lynae/Mornye/Aemeath convention of using the primary Startorch Academy tie). Birthday: 'Unknown' on
   // both sources.
   ['Luuk Herssen', 'Phase Transition', 'New Federation', 'Startorch Academy', { en: 'Griffyn Bellah', cn: 'Ma Zhengyang', jp: 'Tachibana Shinnosuke', kr: 'Min Seung-woo' }],
-  // birthplace: the wiki's own infobox lists this as 'Roya Frostlands' (distinct from her Lahai-Roi
+  // birthplace: the reference infobox lists this as 'Roya Frostlands' (distinct from her Lahai-Roi
   // region/nation tie, in REGION_DATA above), same birthplace-vs-nation-tie pattern as Aemeath — both are
   // Roya Tribe natives. the source's own Birthplace field shows 'Lahai-Roi' instead (a discrepancy
-  // between the two sources); the wiki's is used here as the more granular/precise of the two, matching
+  // between the two sources); the reference is used here as the more granular/precise of the two, matching
   // the convention already established for Aemeath's identical Roya Frostlands birthplace.
   // organization: 'Roya Tribe' matches both sources' primary affiliation (the source's single Organization
-  // field, and the wiki's `affiliation` over `affiliation2` Startorch Academy) — the reverse of Aemeath's
+  // field, and the reference `affiliation` over `affiliation2` Startorch Academy) — the reverse of Aemeath's
   // primary tie, despite both characters sharing the same two affiliations.
   ['Sigrika', 'True Name Manifestation', 'Roya Frostlands', 'Roya Tribe', { en: 'Maya Lindh', cn: 'Qian Chen', jp: 'Akasaki Chinatsu', kr: 'Jang Ye-na' }],
-  // Cross-checked the source character/1108 against the wiki's own infobox — both agree exactly:
+  // Cross-checked the source character/1108 against the reference infobox — both agree exactly:
   // birthplace Ashinohara (a region distinct from Lahai-Roi, where she now resides — see REGION_DATA
-  // above), organization 'Miko of Flaming Sakura' (her primary affiliation on both sources; the wiki lists
+  // above), organization 'Miko of Flaming Sakura' (her primary affiliation on both sources; the reference lists
   // 3 more secondary ties — Special Response Force, Spacetrek Collective, Startorch Academy — but no
-  // dedicated emblem exists for any of them on the wiki, matching the Jinzhou-precedent convention of
+  // dedicated emblem exists for any of them on the reference, matching the Jinzhou-precedent convention of
   // leaving unconfirmed sub-org icons out rather than guessed). Birthday: 'Unknown' on both sources.
   ['Hiyuki', "Futures' Tithe", 'Ashinohara', 'Miko of Flaming Sakura', { en: 'Mei Mac', cn: 'Li Chanfei', jp: 'Tomatsu Haruka', kr: 'Jung Hye-won' }],
-  // Sourced via the wiki's MediaWiki API (action=parse&page=Denia&prop=wikitext&
+  // Sourced via the reference API (action=parse&page=Denia&prop=page source&
   // section=0), which bypasses the site's Cloudflare challenge. birthplace: the infobox's own
   // `birthplace` field is literally 'Redacted' (a deliberate in-lore mystery tied to her being a
   // Fractsidus-created Resonator for Aleph-1, not a sourcing gap — used verbatim rather than guessed).
@@ -3422,8 +3422,8 @@ const CHARACTER_DATA = {
   // 'Lahai-Roi' (REGION_DATA above) is a separate infobox field from either affiliation. Birthday: blank
   // on the infobox, omitted from BIRTHDAY_DATA per the established 'Unknown' convention.
   ['Denia', 'Bubbles of Nihility', 'Redacted', 'Fractsidus', { en: 'Jodie Bell Cortez', cn: 'Ge Zinyu', jp: 'Itō Miku', kr: 'Park Si-yoon' }],
-  // Cyberpunk: Edgerunners collab characters, sourced via the MediaWiki API (action=parse&page=Lucy/
-  // Rebecca&prop=wikitext&section=0). birthplace: both infoboxes list 'Unknown'. organization: Lucy's
+  // Cyberpunk: Edgerunners collab characters, sourced via the reference API (action=parse&page=Lucy/
+  // Rebecca&prop=page source&section=0). birthplace: both infoboxes list 'Unknown'. organization: Lucy's
   // primary affiliation is 'Lahai-Roi' itself (she's since settled there post-collab-arc, per "At
   // Dream's Edge" — a specific in-world tie distinct from her REGION_DATA nation, Night City, above);
   // Rebecca's primary affiliation is blank/'Unknown' on the infobox (she died before the game's events —
@@ -3433,24 +3433,24 @@ const CHARACTER_DATA = {
   // surfaced as a separate field here since no other audited character's realname is tracked yet.
   ['Lucy', 'Xeno-Domain Hacking', 'Unknown', 'Lahai-Roi', { en: 'Emi Lo', cn: 'Song Zhengnan', jp: 'Yūki Aoi', kr: 'Kim Ga-ryeong' }],
   ['Rebecca', 'Fury-Type Arsenal', 'Unknown', 'Collaboration Resonators', { en: 'Alex Cazares', cn: 'Chen Zhang', jp: 'Kurosawa Tomoyo', kr: 'Park Si-yoon' }],
-  // Cross-checked the wiki's own infobox via the MediaWiki API (action=parse&
-  // page=Lucilla&prop=wikitext&section=0). birthplace New Federation, distinct from her Lahai-Roi
+  // Cross-checked the reference infobox via the reference API (action=parse&
+  // page=Lucilla&prop=page source&section=0). birthplace New Federation, distinct from her Lahai-Roi
   // region tie (REGION_DATA above) — same birthplace-vs-nation-tie pattern as Verina/Galbrena.
   // organization uses her primary affiliation (Startorch Academy, where she's president) over
   // affiliation2 (Spacetrek Collective) and the now-inactive affiliation3 (Pioneer Association,
   // "formerly"), matching the Lynae/Mornye/Aemeath Startorch Academy convention. Birthday: blank on
   // the infobox, omitted from BIRTHDAY_DATA per the established 'Unknown' convention.
   ['Lucilla', 'Memory Palace', 'New Federation', 'Startorch Academy', { en: 'Luci Fish', cn: 'Liu Yinuo', jp: 'Itō Shizuka', kr: 'Min-ah' }],
-  // Cross-checked the wiki's own infobox via the MediaWiki API (action=parse&
-  // page=Yangyang:_Xuanling&prop=wikitext&section=0). title2 'Votary of the Voice' is also given but
+  // Cross-checked the reference infobox via the reference API (action=parse&
+  // page=Yangyang:_Xuanling&prop=page source&section=0). title2 'Votary of the Voice' is also given but
   // not surfaced here (no dual-title field exists yet in this table). birthplace/nation both Huanglong
   // (REGION_DATA above). organization uses affiliation3 'Xuan Triad' (the group whose members are
   // called "Xuan Watchers" per the infobox's own extra-effect note — matching her own `desc`'s "Xuan
   // Watcher of Xuanfang Hold") over the more generic primary affiliation 'Ministry of War' and the
   // now-inactive affiliation4 'Midnight Rangers' ("formerly"); no dedicated emblem exists for Xuan
-  // Triad on the wiki, so it's intentionally left out of FACTION_ICONS rather than guessed, same as
+  // Triad on the reference, so it's intentionally left out of FACTION_ICONS rather than guessed, same as
   // the Jinzhou/Mingting precedent.
-  // Sourced 2026-08-18 via the MediaWiki API (action=parse&page=Yangyang&prop=wikitext&section=0).
+  // Sourced 2026-08-18 via the reference API (action=parse&page=Yangyang&prop=page source&section=0).
   // birthplace/nation both Huanglong (REGION_DATA above, matches Xuanling's own entry — the two are
   // sisters). organization uses affiliation2 'Midnight Rangers' (matching her own `desc`'s "Midnight
   // Rangers outrider" and the source's own framing) over the primary affiliation 'Jinzhou', same
@@ -3463,30 +3463,30 @@ const CHARACTER_DATA = {
   // DIFFERENT ministry than Taoqi's 'Ministry of Development' ("Ministère du Développement", a
   // screenshot separately confirmed for her) — the two English keys are NOT the same real faction,
   // despite both containing "Ministry of". 'Ministry of War' itself was already this entry's own
-  // wiki-sourced primary-affiliation alternative (see the comment above), so no new key is invented.
+  // reference-sourced primary-affiliation alternative (see the comment above), so no new key is invented.
   ['Yangyang: Xuanling', 'Voices of Azure Plume', 'Huanglong', 'Ministry of War', { en: 'Rebecca Yeo', cn: 'Chongchong', jp: 'Ishikawa Yui', kr: 'Lee Yu-ri' }],
-  // Cross-checked the wiki's own infobox via the MediaWiki API (action=parse&
-  // page=Suisui&prop=wikitext&section=0). birthplace/nation both Huanglong (REGION_DATA above).
+  // Cross-checked the reference infobox via the reference API (action=parse&
+  // page=Suisui&prop=page source&section=0). birthplace/nation both Huanglong (REGION_DATA above).
   // organization uses her primary affiliation (Zhaoming Commerce Guild, where she's director, matching
   // her own `desc`) over affiliation2 (Mingting, her noble family of birth) — no dedicated emblem
-  // exists for Zhaoming Commerce Guild on the wiki, so it's intentionally left out of FACTION_ICONS
+  // exists for Zhaoming Commerce Guild on the reference, so it's intentionally left out of FACTION_ICONS
   // rather than guessed, same as the Jinzhou/Mingting precedent. Birthday: blank on the infobox.
   ['Suisui', 'Host of Harmony', 'Huanglong', 'Zhaoming Commerce Guild', { en: 'Emily Piggford', cn: 'Sun Yanqi', jp: 'Fukuen Misato', kr: 'Park Ji-yoon' }],
-  // Sourced 2026-08-18 via the MediaWiki API (action=parse&page=Qingxiao&prop=wikitext&section=0) from
-  // the wiki's own "Upcoming" stub infobox, 2 days ahead of her 2026-08-20 release — title/birthplace/
+  // Sourced 2026-08-18 via the reference API (action=parse&page=Qingxiao&prop=page source&section=0) from
+  // the reference "Upcoming" stub infobox, 2 days ahead of her 2026-08-20 release — title/birthplace/
   // nation/affiliations/VAs are already confirmed there even though the Combat subpage doesn't exist
   // yet. birthplace/nation both Huanglong (REGION_DATA above). organization corrected (2026-09-13,
   // user-provided against the real French client's Affiliation field, a screenshot) from 'Mengzhou'
-  // (the wiki's own primary-affiliation pick, "the city she's the Paragon of") to 'Ministry of War'
+  // (the reference primary-affiliation pick, "the city she's the Paragon of") to 'Ministry of War'
   // — the real client shows her Affiliation as "Ministère des Armées". A separate screenshot of
   // Taoqi confirmed her own 'Ministry of Development' is a DIFFERENT ministry ("Ministère du
   // Développement"), so this uses 'Ministry of War' instead — same ministry as Yangyang: Xuanling's
   // own corrected entry above — rather than reusing Taoqi's unrelated key. Birthday: blank on the
   // infobox, omitted from BIRTHDAY_DATA per the established convention.
   ['Qingxiao', 'Heart Sword', 'Huanglong', 'Ministry of War', { en: 'Kirsty Rider', cn: 'Jiang He', jp: 'Nabatame Hitomi', kr: 'Park Ri-na' }],
-  // Sourced 2026-08-18 via the MediaWiki API (action=parse&page=Jingran&prop=wikitext&section=0) from
-  // the wiki's own "Upcoming" stub infobox — note its `name` field is a stray copy-paste leftover from
-  // Qingxiao's own infobox (a wiki bug, not this table's error); every other field (title, gender,
+  // Sourced 2026-08-18 via the reference API (action=parse&page=Jingran&prop=page source&section=0) from
+  // the reference "Upcoming" stub infobox — note its `name` field is a stray copy-paste leftover from
+  // Qingxiao's own infobox (a reference bug, not this table's error); every other field (title, gender,
   // birthplace, nation, affiliation, VA, quote) is genuinely Jingran-specific and cross-checked against
   // his own quote/intro text and release-patch pairing with Qingxiao. birthplace/nation both Huanglong
   // (REGION_DATA above; Mengzhou is the specific city within Huanglong he's tied to, same schema
@@ -3497,7 +3497,7 @@ const CHARACTER_DATA = {
   // pre-release (Kawanishi Kengo); EN/CN/KR are blank on the infobox, left unset rather than guessed.
   // Birthday: blank, omitted from BIRTHDAY_DATA per the established convention.
   ['Jingran', 'Nether Qi Art', 'Huanglong', 'Abyssomancer', { jp: 'Kawanishi Kengo' }],
-  // 4★ Resonators — sourced via the MediaWiki API (action=parse&page=X&prop=wikitext&section=0).
+  // 4★ Resonators — sourced via the reference API (action=parse&page=X&prop=page source&section=0).
   // Aalto: birthplace New Federation, nation 'The Black Shores' (REGION_DATA above, corrected from the
   // prior Huanglong bug), organization 'Black Shores' (affiliation).
   ['Aalto', 'Mistcloak Strike', 'New Federation', 'Black Shores', { en: 'James Day', cn: 'Liang Dawei', jp: 'Iwasaki Ryōta', kr: 'Lim Chae-bin' }],
@@ -3507,14 +3507,14 @@ const CHARACTER_DATA = {
   // Chixia: birthplace/nation both Huanglong. organization uses affiliation2 'Public Security Bureau'
   // over the generic Jinzhou tie, matching the Yinlin precedent (no dedicated emblem exists for it).
   ['Chixia', 'Gallant Blaze', 'Huanglong', 'Public Security Bureau', { en: 'Harriet Carmichael', cn: 'Cai Na', jp: 'Nagase Anna', kr: 'Kang Eun-ae' }],
-  // Danjin: sourced 2026-08-18 via the wiki's own infobox (the wiki/Danjin).
+  // Danjin: sourced 2026-08-18 via the reference's own infobox (the Danjin reference page).
   // Title 'Scarlet Shade' confirmed by the page's own card/banner header. birthplace/nation both
   // Huanglong (REGION_DATA above). organization uses affiliation2 'Midnight Rangers' (her specific
   // in-game sub-group, matching the Jiyan/Lingyang convention) over the generic 'Jinzhou (on profile)'
   // tie. VAs cross-checked against the source's profile tab (exact match): EN Sophie Colquhoun,
   // CN Yi Kou Jing (一口井), JP Okasaki Miho, KR Lee Hyunjin.
   ['Danjin', 'Scarlet Shade', 'Huanglong', 'Midnight Rangers', { en: 'Sophie Colquhoun', cn: 'Yi Kou Jing', jp: 'Okasaki Miho', kr: 'Lee Hyunjin' }],
-  // Sanhua: sourced 2026-08-18 via the wiki's own infobox (the wiki/Sanhua).
+  // Sanhua: sourced 2026-08-18 via the reference's own infobox (the Sanhua reference page).
   // Title 'Snow Waltz' taken from the infobox's secondary_title field (no dedicated "Title" row exists
   // for her, unlike Danjin — same convention). birthplace/nation both Huanglong (REGION_DATA above).
   // organization uses affiliation2 'Jinzhou City Hall' (her specific in-game sub-group, per the source's
@@ -3522,7 +3522,7 @@ const CHARACTER_DATA = {
   // matching the Chixia/Danjin precedent. VAs cross-checked against the source's profile tab (exact
   // match): EN Jennifer Armour, CN Song Yuanyuan, JP Matsuda Risae, KR Yu Yeong (Yooyou).
   ['Sanhua', 'Snow Waltz', 'Huanglong', 'Jinzhou City Hall', { en: 'Jennifer Armour', cn: 'Song Yuanyuan', jp: 'Matsuda Risae', kr: 'Yu Yeong' }],
-  // Taoqi: added 2026-08-18, sourced via the MediaWiki API (action=parse&page=Taoqi&prop=wikitext).
+  // Taoqi: added 2026-08-18, sourced via the reference API (action=parse&page=Taoqi&prop=page source).
   // Title 'Blossom of Slashes' from the infobox `title` field. birthplace/nation both Huanglong
   // (REGION_DATA above). organization corrected (2026-09-13, user-provided screenshot of the real
   // French client) from 'Ministry of Development' to 'Jinzhou' — the real client's Affiliation field
@@ -3531,17 +3531,17 @@ const CHARACTER_DATA = {
   // VAs confirmed exact from the infobox: EN Clare Louise Connolly, CN KIYO, JP Yōmiya Hina
   // (羊宮妃那), KR Yi Sae-ah (이새아).
   ['Taoqi', 'Blossom of Slashes', 'Huanglong', 'Jinzhou', { en: 'Clare Louise Connolly', cn: 'KIYO', jp: 'Yōmiya Hina', kr: 'Yi Sae-ah' }],
-  // Yuanwu: added 2026-08-18, sourced via the MediaWiki API (action=parse&page=Yuanwu&prop=wikitext).
+  // Yuanwu: added 2026-08-18, sourced via the reference API (action=parse&page=Yuanwu&prop=page source).
   // Title 'Fist of Thunder' from the infobox `title` field. birthplace/nation both Huanglong
   // (REGION_DATA above). organization uses affiliation2 'Yuanwu Boxing Gym' (his own gym, per his
   // `desc`/Official Introduction) over the generic primary affiliation 'Jinzhou', matching the
   // Baizhi/Chixia/Danjin/Taoqi sub-group convention. No dedicated FACTION_ICONS emblem exists on the
-  // wiki for a personally-owned gym, so it's intentionally left unset rather than guessed (matches the
+  // reference for a personally-owned gym, so it's intentionally left unset rather than guessed (matches the
   // Jinzhou/Mingting/Ministry of Development precedent). VAs confirmed exact from the infobox: EN Adam
   // Diggle, CN Liu Beichen (刘北辰), JP Shirokuma Hiroshi (白熊寬嗣), KR Park Seong-tae (박성태) —
   // cross-checked and matching against the source's own Voice Actors tab.
   ['Yuanwu', 'Fist of Thunder', 'Huanglong', 'Yuanwu Boxing Gym', { en: 'Adam Diggle', cn: 'Liu Beichen', jp: 'Shirokuma Hiroshi', kr: 'Park Seong-tae' }],
-  // Mortefi: added 2026-08-18, sourced via the MediaWiki API (action=parse&page=Mortefi&prop=wikitext).
+  // Mortefi: added 2026-08-18, sourced via the reference API (action=parse&page=Mortefi&prop=page source).
   // Title 'Dragon's Breath' from the infobox `title` field. birthplace 'New Federation' (distinct from
   // his region/nation tie, Huanglong, in REGION_DATA above — same birthplace-vs-nation-tie pattern as
   // Verina/Calcharo). organization uses affiliation2 'Huaxu Academy' (he's head of the Branch of
@@ -3552,20 +3552,20 @@ const CHARACTER_DATA = {
   // infobox's own CN-VA citation footnote text is a stray copy-paste artifact referencing an unrelated
   // resonator's name — the CN VA name itself (Liu Yijia) is unaffected and matches the source independently.
   ['Mortefi', "Dragon's Breath", 'New Federation', 'Huaxu Academy', { en: 'Joseph May', cn: 'Liu Yijia', jp: 'Miura Katsuyuki', kr: 'Kim Da-ol' }],
-  // Youhu: added 2026-08-18, sourced via the MediaWiki API (action=parse&page=Youhu&prop=wikitext).
+  // Youhu: added 2026-08-18, sourced via the reference API (action=parse&page=Youhu&prop=page source).
   // Title 'Cryogenic Wonders' from the infobox `title` field. birthplace 'Huanglong' (matches her
   // region/nation tie in REGION_DATA above — the infobox's `birthplace` and `nation` fields are both
   // 'Huanglong' for her, unlike the split-tie characters commented elsewhere in this table). organization
   // uses the infobox's only `affiliation` field, 'Chongzhou' (a city within Huanglong, like Jinzhou/
-  // Mengzhou) — no dedicated FACTION_ICONS emblem exists on the wiki for Chongzhou (confirmed via a
-  // MediaWiki search for "Chongzhou Emblem" turning up no File: result), so it's intentionally left unset
+  // Mengzhou) — no dedicated FACTION_ICONS emblem exists on the reference for Chongzhou (confirmed via a
+  // reference search for "Chongzhou Emblem" turning up no File: result), so it's intentionally left unset
   // rather than guessed, matching the Jinzhou/Mingting precedent. VAs confirmed exact from the infobox:
   // EN Leonora Haig, CN Liu Yilei (刘一蕾), JP Tomita Miyu (富田美憂), KR Park Si-yoon (박시윤) — note
-  // one source's own Voice Actors tab is blank ('-') for all four languages for Youhu, so the wiki-style
+  // one source's own Voice Actors tab is blank ('-') for all four languages for Youhu, so the reference-style
   // source is the only sourced VA credit here.
   ['Youhu', 'Cryogenic Wonders', 'Huanglong', 'Chongzhou', { en: 'Leonora Haig', cn: 'Liu Yilei', jp: 'Tomita Miyu', kr: 'Park Si-yoon' }],
   // added 2026-08-18 for Lumi's audit — previously entirely missing. title/birthplace/VAs confirmed
-  // exact from the infobox wikitext (MediaWiki API, action=parse&page=Lumi&prop=wikitext): title
+  // exact from the infobox page source (reference API, action=parse&page=Lumi&prop=page source): title
   // 'Kaleido Refraction', birthplace/nation both 'Huanglong' (matching REGION_DATA above — no split
   // birthplace-vs-nation tie for her). The infobox lists two affiliation fields — 'Yuezhou' (a city
   // within Huanglong, no dedicated FACTION_ICONS emblem) and 'Lollo Logistics' (her actual employer,
@@ -3573,12 +3573,12 @@ const CHARACTER_DATA = {
   // FACTION_ICONS emblem already on file and is the affiliation her kit/lore actually centers on. VAs
   // confirmed exact from the infobox: EN Emily Cass, CN Jing Chen (静宸), JP Suzuki Minori (鈴木みのり),
   // KR Jeong Ha-eun (정해은) — note the source's own Voice Actors tab is blank ('-') for all four languages
-  // for Lumi, so the wiki is the only sourced VA credit here (same gap as Youhu's audit). No `birthday`
-  // field exists at all in her infobox wikitext, so it's left out of BIRTHDAY_DATA per the established
+  // for Lumi, so the reference is the only sourced VA credit here (same gap as Youhu's audit). No `birthday`
+  // field exists at all in her infobox page source, so it's left out of BIRTHDAY_DATA per the established
   // 'Unknown' convention rather than guessed.
   ['Lumi', 'Kaleido Refraction', 'Huanglong', 'Lollo Logistics', { en: 'Emily Cass', cn: 'Jing Chen', jp: 'Suzuki Minori', kr: 'Jeong Ha-eun' }],
   // added 2026-08-18 for Buling's audit — previously entirely missing. Sourced from the infobox
-  // wikitext (MediaWiki API, action=parse&page=Buling&prop=wikitext): three titles are given
+  // page source (reference API, action=parse&page=Buling&prop=page source): three titles are given
   // (title 'Divine Hearing', title2 'Spiritchaser Taoist', title3 'Earthly Immortal') — primary
   // `title` field used, matching the Yangyang: Xuanling precedent of using `title` over `title2`/
   // `title3`. birthplace='Huanglong' (distinct from her `nation`='The Black Shores', which drives her
@@ -3589,9 +3589,9 @@ const CHARACTER_DATA = {
   // actually centers on and already has a FACTION_ICONS emblem on file (Mengzhou also has one, added
   // for Qingxiao's audit, but isn't the better lore fit here). VAs confirmed exact from the infobox: EN
   // Elizabeth Chu, CN Zhang Ye (张晔), JP Senbongi Sayaka (千本木彩花), KR Lee I-ro (이이로) — the source's own
-  // Voice Actors tab is blank ('-') for all four languages for Buling, so the wiki is the only sourced VA
+  // Voice Actors tab is blank ('-') for all four languages for Buling, so the reference is the only sourced VA
   // credit here (same gap as Youhu/Lumi's audits). No `birthday` field exists at all in her infobox
-  // wikitext, so it's left out of BIRTHDAY_DATA per the established convention rather than guessed.
+  // page source, so it's left out of BIRTHDAY_DATA per the established convention rather than guessed.
   ['Buling', 'Divine Hearing', 'Huanglong', 'Black Shores', { en: 'Elizabeth Chu', cn: 'Zhang Ye', jp: 'Senbongi Sayaka', kr: 'Lee I-ro' }],
 ].forEach(([name, title, birthplace, organization, voiceActor]) => {
   if (CHARACTER_DATA[name]) Object.assign(CHARACTER_DATA[name], { title, birthplace, organization, voiceActor });
@@ -3602,7 +3602,7 @@ const CHARACTER_DATA = {
 // tags (see elementVisuals.js's COMBAT_ROLE_ICONS) where each character just carries a subset. Distinct from
 // the single `role` field elsewhere (Main DPS/Sub DPS/Healer) — these are the specific mechanical tags
 // from the character's own infobox `role` field (order preserved as listed there).
-// Source: the wiki infobox `role` field, pulled via the MediaWiki API's raw wikitext
+// Source: the reference infobox `role` field, pulled via the reference API's raw page source
 // (prop=revisions) — bypasses the site's Cloudflare challenge entirely. Only characters from Jiyan
 // through Aemeath (RELEASE_ORDER's 1.0–3.1 span) have been audited so far.
 [
@@ -3661,7 +3661,7 @@ const CHARACTER_DATA = {
   ['Aemeath', ['Main Damage Dealer', 'Resonance Liberation Damage', 'Tune Rupture Response', 'Fusion Burst', 'DMG Amplification']],
   // Remaining roster (post-3.1 releases + Rover) added 2026-08-17 so every character carries combatRoles
   // — otherwise the Combat Profile box silently falls back to the old iconless data.role/dmgFocus badges
-  // for anyone left out. Rover's 4 attunements pulled from their own per-attunement the wiki pages
+  // for anyone left out. Rover's 4 attunements pulled from their own per-attunement the reference pages
   // (Rover-Spectro/-Havoc/-Aero/-Electro), not the shared "Rover" page whose `role` field is all 4
   // attunements' tags concatenated together with no clean separation.
   ['Rover: Spectro', ['Concerto Efficiency', 'Stagnation', 'Spectro Frazzle']],
@@ -3678,7 +3678,7 @@ const CHARACTER_DATA = {
   ['Hiyuki', ['Main Damage Dealer', 'Resonance Liberation Damage', 'Glacio Chafe']],
   ['Suisui', ['Support and Healer', 'DMG Amplification', 'Glacio Chafe']],
   ['Qingxiao', ['Main Damage Dealer', 'Tune Strain Response']],
-  // Jingran intentionally omitted: unreleased (3.6, Aug 20 2026) — the wiki's own infobox has an empty
+  // Jingran intentionally omitted: unreleased (3.6, Aug 20 2026) — the reference infobox has an empty
   // `role` field since Kuro hasn't published her kit yet, matching the "Unconfirmed" placeholder already
   // used for her bestEchoes/weapon data elsewhere in this file rather than guessing.
 ].forEach(([name, combatRoles]) => {
@@ -3837,7 +3837,7 @@ const CHAR_BUFF_TABLE = {
     libBuffs: [],
     selfBuffs: [],
     debuffs: [{ stat: 'defShred', value: 5, duration: 30, condition: 'Spoofing Program: Breach Protocol' }],
-    // Added 2026-08-18 against the source's live kit page (JS-rendered fetch) + the wiki's Tune Break page
+    // Added 2026-08-18 against the source's live kit page (JS-rendered fetch) + the reference Tune Break page
     // (which explicitly lists Lucy's "Data Crash" as a Hack-family Tune Break skill, confirming Hack
     // is mechanically the same generic Tune Break system this file's tuneBreak schema models — not a
     // separate mechanic). Forte Circuit "Data Crash": "Responding to Hack - Interfered: when
@@ -3891,7 +3891,7 @@ const CHAR_BUFF_TABLE = {
     // Strain - Shifting" was never actually checked and every team got the max value for free. Fixed to
     // 15%, the guaranteed floor documented in both references/combat-db/characters/denia.json's
     // the source-sourced kit.skills.outro ("Tune Strain mode: next character gains 15% (40% if they apply
-    // Tune Strain) All-DMG Amplify for 16s") and the wiki's Outro Skill page (fetched 2026-08-31) — this
+    // Tune Strain) All-DMG Amplify for 16s") and the reference Outro Skill page (fetched 2026-08-31) — this
     // file's own `note` below already correctly said "15-40%", only the numeric entry was wrong.
     outroBuffs: [{ stat: 'allDmg', value: 15, target: 'next', duration: 16, condition: 'Tune Strain mode' }, { stat: 'elemDmg', value: 60, target: 'team', duration: 30, condition: 'Fusion Burst mode' }],
     libBuffs: [],
@@ -4007,8 +4007,8 @@ const CHAR_BUFF_TABLE = {
   // Performance. outroBuffs/debuffs were already accurate; libBuffs is correctly empty since her
   // Liberation's team buff is flat ATK points (up to 200, scaling with her own Crit Rate over 50%) —
   // not a percentage stat this table's schema represents — documented in the note instead.
-  // Re-verified verbatim 2026-08-31 against the wiki/Roccia/Combat: outroBuffs
-  // values (20%/25%/14s) confirmed exact; wiki text explicitly states the buff lasts "14s or until the
+  // Re-verified verbatim 2026-08-31 against the Roccia combat reference: outroBuffs
+  // values (20%/25%/14s) confirmed exact; reference text explicitly states the buff lasts "14s or until the
   // Resonator is switched out" — added to note since this file's schema has no swap-forfeit field (same
   // limitation flagged for Changli/Augusta's outro buffs). Liberation's team ATK buff duration confirmed
   // as 30s (was previously undocumented here).
@@ -4022,12 +4022,12 @@ const CHAR_BUFF_TABLE = {
     debuffs: [],
     note: 'Outro: +20% Havoc DMG Amp + 25% Basic ATK DMG Amp — lasts 14s OR ends immediately if the incoming Resonator is swapped out before then (not modeled, schema has no swap-forfeit field). Inherent 1: self ATK +20% (12s) on Skill/Heavy ATK. Liberation: flat team ATK +1 per 0.1% Crit Rate over 50%, up to +200 at 70%+ Crit Rate, lasting 30s — not a % buff, so untracked in libBuffs.',
   },
-  // selfBuffs condition corrected 2026-08-17 against the wiki/the source — was "After 4 Resonance Skill
+  // selfBuffs condition corrected 2026-08-17 against the reference sources — was "After 4 Resonance Skill
   // casts", which matched nothing in her kit. Fiery Feather is granted by casting Liberation (Radiance
   // of Fealty) and consumed by her next Forte Heavy ATK (Flaming Sacrifice) within 10s — already
   // correctly described in this same file's SKILL_MULTIPLIERS Changli/Liberation row, just not reflected
-  // here. Re-verified 2026-08-31 against the wiki/Changli/Combat (Outro Skill
-  // Strategy of Duality section): outroBuffs values (20%/25%/10s) confirmed exact; wiki text explicitly
+  // here. Re-verified 2026-08-31 against the Changli combat reference (Outro Skill
+  // Strategy of Duality section): outroBuffs values (20%/25%/10s) confirmed exact; reference text explicitly
   // states the buff lasts "10s or until the Resonator is switched out" — added to note since this file's
   // schema has no forfeit-on-swap field (same limitation flagged for Roccia/Augusta's outro buffs).
   'Changli': {
@@ -4044,7 +4044,7 @@ const CHAR_BUFF_TABLE = {
     debuffs: [],
     note: 'Outro: 20% Fusion DMG Amp + 25% Liberation DMG Amp — lasts 10s OR ends immediately if the incoming Resonator is swapped out before then (not modeled, schema has no swap-forfeit field). Self ATK ramp via Fiery Feather.',
   },
-  // Re-verified verbatim 2026-08-31 against the wiki/Yinlin/Combat's Outro Skill
+  // Re-verified verbatim 2026-08-31 against the Yinlin combat reference's Outro Skill
   // ("Strategist") and Inherent Skill ("Pain Immersion") entries: both matched exactly, unchanged. Added
   // the Outro's forfeit condition ("...for 14 seconds or until the Character is switched") to the note,
   // which was previously undocumented here — same pattern already caught on Cantarella's Outro.
@@ -4103,7 +4103,7 @@ const CHAR_BUFF_TABLE = {
   // Inherent Skill "Poison" (+6% Havoc DMG Bonus per Echo Skill cast, 10s, stacks up to 2x/12% cap) —
   // notable since several of her own kit abilities (Flowing Suffocation, Flickering Reverie, Perception
   // Drain) are themselves flagged as Echo Skill casts, so this self-buff is easy to trigger.
-  // Re-verified verbatim 2026-08-31 against the wiki/Cantarella/Combat's Outro Skill
+  // Re-verified verbatim 2026-08-31 against the Cantarella combat reference's Outro Skill
   // ("Gentle Tentacles") and Inherent Skill ("Poison") entries: both the Outro's +20%/+25%/14s figures and
   // Poison's +6%/10s/2-stack figures matched exactly, unchanged. Added the Outro's forfeit condition
   // ("Switching Resonators ends this effect") to the note, which was previously undocumented here.
@@ -4154,9 +4154,9 @@ const CHAR_BUFF_TABLE = {
     // short; added missing self-buff and weapon buff.
     note: 'Outro: +20% Fusion DMG + 25% Basic ATK DMG Amp (14s). Lib: up to 18% ATK team (35s), enables Wild Hunt. Fusion RES ignore up to 15% (35s), needs a mono-Fusion team for max value (S3 removes the requirement).',
   },
-  // Re-verified 2026-08-31 against the wiki/Iuno/Combat "Forte > Details" and "Ebb and
+  // Re-verified 2026-08-31 against the Iuno combat reference "Forte > Details" and "Ebb and
   // Flow" sections (Chrome/Windows UA + google.com referer + jsRender, load+9s wait): outro duration corrected
-  // 14s → 10s (wiki states "gains 50% Heavy Attack DMG Amplification for 10s. This effect ends early if they
+  // 14s → 10s (the reference states "gains 50% Heavy Attack DMG Amplification for 10s. This effect ends early if they
   // are switched off the field." — the file's prior 14s had no basis in the source text) and the swap-cancel
   // forfeit condition added. Blessing of the Wan Light's exact mechanic (source of the selfBuffs allDmg:40)
   // confirmed verbatim: gained by getting Shielded while standing in the 30s Full Moon Domain (max 1
@@ -4172,7 +4172,7 @@ const CHAR_BUFF_TABLE = {
     debuffs: [],
     // Outro duration corrected BACK to 14s 2026-09-02 — the 2026-08-31 change to 10s ("no source
     // basis for 14s") was itself wrong. Re-verified against two independent live sources
-    // (wuthering.gg, and a web search aggregating the source/sportskeeda) while auditing Augusta's
+    // (a community database, and a web search aggregating other guides) while auditing Augusta's
     // real-world curated recommendation list: "The incoming Resonator gains 50% Heavy Attack DMG
     // Amplification for 14s" — both agree, neither shows 10s anywhere.
     // Blessing of the Wan Light target corrected 2026-09-02 from 'self' to 'team' — same audit, same
@@ -4246,7 +4246,7 @@ const CHAR_BUFF_TABLE = {
   // real Forte Circuit "Final Bow" (+80% DMG Multiplier to all 3 Liberation abilities at full Substance).
   // debuffs was empty, missing her real "Deconstruction" debuff (18% DEF ignore on hit, applied by
   // Liberation and — via Inherent Skill Ars Gratia Artis — also her Intro/Chromatic Splendor/Forte Heavy).
-  // re-verified 2026-08-31 against the wiki/Carlotta/Combat: Final Bow (+80% Liberation
+  // re-verified 2026-08-31 against the Carlotta combat reference: Final Bow (+80% Liberation
   // DMG Multiplier at full 120 Substance, ends on swap-out during Twilight Tango or when Twilight Tango ends)
   // and Deconstruction (-18% DEF ignore, 4s, from Liberation base-kit + Intro/Chromatic Splendor/Death Knell/
   // Imminent Oblivion via Inherent Skill Ars Gratia Artis) both already matched source exactly — unchanged.
@@ -4276,7 +4276,7 @@ const CHAR_BUFF_TABLE = {
   // duplicated Blazing Justice's passive as a hardcoded always-on assumption, double-counting with
   // whatever weapon.pv the calculator already applies for the actually-equipped weapon (and using stale
   // pre-fix numbers besides — Blazing Justice's real passive is ATK+12%/DEF Ignore+8%, not +24%/+16%).
-  // Re-verified 2026-08-31 vs the wiki/Zani/Combat + the source kit tab: outroBuffs
+  // Re-verified 2026-08-31 vs the Zani combat reference + the source kit tab: outroBuffs
   // (+20% Spectro DMG Amp/20s to marked-target hits) and Quick Response selfBuff (+12% Spectro DMG/14s on
   // Intro cast) both confirmed exact, no change. Sunburst (Targeted Action/Forcible Riposte cast → +20%
   // Spectro Frazzle DMG for 14s) FIXED (documented-gaps sweep): a real frazzleDmg category/stat key was
@@ -4326,7 +4326,7 @@ const CHAR_BUFF_TABLE = {
   },
   'Danjin': {
     // Corrected back 2026-09-01: the 2026-08-18 change to 'amplify' was based on the source paraphrase.
-    // Re-verified directly against the wiki/Danjin/Combat and the source/
+    // Re-verified directly against the Danjin combat reference and the source/
     // character/1602 (both agree word-for-word): "The incoming Resonator has their Havoc DMG Amplified
     // by 23%" — this is a buff to the ally's own outgoing Havoc DMG (elemDmg), not a Amplify-type
     // vulnerability debuff on the enemy (a different mechanic — Amplify means the target takes more
@@ -4360,7 +4360,7 @@ const CHAR_BUFF_TABLE = {
     debuffs: [],
     note: 'Outro: 15% Amplify (6s per tick, refreshes on heal). Inherent: 15% ATK to the single Resonator who picks up Euphonia (20s), not the whole team — corrected 2026-09-08, see fix comment above. S6 separately upgrades a DIFFERENT effect (Glacio DMG Bonus+12%) to all nearby characters on the same pickup event — that one genuinely is team-wide, see RESONANCE_CHAIN_DATA[\'Baizhi\'].s6. Heal.',
   },
-  // corrected 2026-08-18: the wiki's Taoqi/Combat Forte Details table names her Outro Skill "Iron Will":
+  // corrected 2026-08-18: the Taoqi combat reference Forte Details table names her Outro Skill "Iron Will":
   // "The incoming Resonator has their Resonance Skill DMG Amplified by 38% for 14s or until they are
   // switched out." Was wrongly modeled as a generic 15% `amplify` outro (a value/stat that belongs to no
   // sourced Taoqi effect) plus a fabricated 12% DEF Shred debuff with no basis anywhere on the Combat
@@ -4375,7 +4375,7 @@ const CHAR_BUFF_TABLE = {
     debuffs: [],
     note: 'Outro Iron Will: 38% Resonance Skill DMG Amp to next (14s). Skill Fortified Defense grants 3 stacks of Rocksteady Shield (15% DMG reduction while active) + self-heal.',
   },
-  // corrected 2026-08-18: the wiki's Yuanwu/Combat Forte Details table for Outro Skill "Lightning
+  // corrected 2026-08-18: the Yuanwu combat reference Forte Details table for Outro Skill "Lightning
   // Manipulation" text is "Yuanwu unleashes thunderbolts in an area centered around the skill target,
   // greatly reducing the Vibration Strength of enemies upon impact" — no DMG buff of any kind, so the
   // unsourced 15% `amplify` outroBuff (no basis anywhere on the Combat page) is removed. His actual
@@ -4402,7 +4402,7 @@ const CHAR_BUFF_TABLE = {
     debuffs: [],
     note: 'Outro (Whispering Breeze) funnels 4 Energy/s for 5s to the incoming character — no direct DMG buff at S0. Minimal personal DMG contribution; value comes from Energy generation and quickswap-friendliness (buffs unlocked at higher Sequences).',
   },
-  // corrected 2026-08-18: outroBuffs was a fabricated '15% Amplify (14s)' — the wiki's Buling/Combat Forte
+  // corrected 2026-08-18: outroBuffs was a fabricated '15% Amplify (14s)' — the Buling combat reference Forte
   // Details table gives her Outro (Exorcism Spell) as "Heal the active Resonator by 18% of Buling's ATK
   // per second for 16s. All nearby Resonators in the team have their DMG Amplified by 15% for 30s" — a
   // general (non-elemental) team DMG Amp with no swap-out expiry, not a Amplify effect on the next
@@ -4419,7 +4419,7 @@ const CHAR_BUFF_TABLE = {
     note: 'Off-field healer (Heavy Attacks/Intro/Outro). Enhanced Liberation deploys Electro Flare array + ramping team Skill DMG Bonus on ally Intro casts (10%→25%, 50% at S6). Outro: 15% team DMG Amp (30s).',
   },
   'Aalto': {
-    // corrected 2026-08-18: outroBuffs was empty, missing Aalto's actual Outro Skill "Dissolving Mist" (the wiki Combat
+    // corrected 2026-08-18: outroBuffs was empty, missing Aalto's actual Outro Skill "Dissolving Mist" (the reference Combat
     // page: "The incoming Resonator has their Aero DMG Amplified by 23% for 14s or until they are switched out").
     // condition added 2026-09-01 (found via a recommendation-scoring audit): the correction comment
     // above already quotes "Aero DMG Amplified by 23%" — genuinely element-locked — and
@@ -4439,14 +4439,14 @@ const CHAR_BUFF_TABLE = {
   'Chixia': {
     outroBuffs: [],
     libBuffs: [],
-    // corrected 2026-08-18: value was 15%, but the actual Inherent Skill "Numbingly Spicy!" (the wiki Combat page)
+    // corrected 2026-08-18: value was 15%, but the actual Inherent Skill "Numbingly Spicy!" (the reference Combat page)
     // grants ATK+1% per Thermobaric Bullet hit during DAKA DAKA!, stacking up to 30 times (30% ATK at max stacks),
     // 10s per-stack duration — using the max-stack value like other stacking-buff entries in this table.
     selfBuffs: [{ stat: 'atkPct', value: 30, target: 'self', duration: 10, condition: 'Inherent: Numbingly Spicy! ATK stacks (max 30 stacks during DAKA DAKA!)' }],
     debuffs: [],
     note: 'Fusion DPS. Resonance Skill burst. Whizzing Fight Spirit sustained fire.',
   },
-  // corrected 2026-08-18: duration was 14s, but the wiki's Lumi/Combat Forte Details table (Escorting,
+  // corrected 2026-08-18: duration was 14s, but the Lumi combat reference Forte Details table (Escorting,
   // Outro Skill) reads exactly "Resonance Skill DMG Amplified by 38% for 10s or until they are switched
   // out" — 38% was already correct, only the duration had no basis (matches the source's Review tab wording
   // too, which also states 38%).
@@ -4457,7 +4457,7 @@ const CHAR_BUFF_TABLE = {
     debuffs: [],
     note: 'Outro (Escorting): 38% Resonance Skill DMG Amp to next for 10s or until they switch out. Electro Hybrid buffer.',
   },
-  // corrected 2026-08-18: the prior 'Lib: 12% ATK teamwide' buff had no basis anywhere on the wiki's
+  // corrected 2026-08-18: the prior 'Lib: 12% ATK teamwide' buff had no basis anywhere on the reference's
   // Combat page or the source's Kit tab — Fortune's Favor (Liberation) carries no team buff at all, it's a
   // DMG blast that grants an Antique. Her real, previously-missing standout buff is the Outro (Timeless
   // Classics): Coordinated ATK DMG Amplified +100% for 28s to the incoming character — "the single
@@ -4489,8 +4489,8 @@ const CHAR_BUFF_TABLE = {
     // Added 2026-08-31 — outroBuffs was empty despite Aemeath having a real team-wide Outro buff
     // (Silent Protection). Confirmed by two independent sources in references/combat-db: her own
     // the source-sourced kit.skills.outro text ("grants team (excl. Aemeath) 10-20% All-DMG Amplification
-    // for 20s depending on Resonance Mode responders") and the wiki's official Outro Skill page
-    // (the wiki/Outro_Skill, fetched 2026-08-31: "In Tune Rupture mode: team
+    // for 20s depending on Resonance Mode responders") and the reference official Outro Skill page
+    // (the Outro Skill reference page, fetched 2026-08-31: "In Tune Rupture mode: team
     // (except Aemeath) 10% All-DMG Amp for 20s (20% for Tune Rupture-Shifting inflictors). In Fusion
     // Burst mode: same 10%/20% structure."). Modeled at the guaranteed 10% floor (team-wide, both
     // Resonance Modes) rather than the conditional 20% ceiling, since the engine's `condition` field
@@ -4576,7 +4576,7 @@ const CHAR_BUFF_TABLE = {
     debuffs: [],
     note: 'Liberation → Death Messenger combo.',
   },
-  // Added 2026-08-31 (verified against wuthering.gg/characters/encore + the wiki/Encore/Combat):
+  // Added 2026-08-31 (verified against a community Encore page + the Encore combat reference):
   // Inherent Skill "Angry Cosmos" (+10% DMG during Cosmos Rave while HP > 70%) was completely missing from
   // selfBuffs — only Woolies Cheer Dance was present. Woolies Cheer Dance's own condition text was re-verified
   // verbatim and is unchanged (it really is triggered by "Resonance Skill Flaming Woolies or Resonance Skill
@@ -4810,7 +4810,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Tinkling Jade', '28.63% Max HP', 'Opener that enters Drizzle Stance.'],
     ['Outro', 'Rippling Waters', '25% All DMG Amp (30s) + stance-consumption team buffs', 'Buffs team All DMG; more Floral Epistle = bigger payoff.'],
   ],
-  // Full audit 2026-09-01 against the wiki/Qingxiao/Combat, cross-checked against
+  // Full audit 2026-09-01 against the Qingxiao combat reference, cross-checked against
   // the source/character/1413 (both agree on every value exactly — all pre-existing values were
   // already correct). Fixed a real zero-damage rotation bug: nearly every CHARACTER_ROTATIONS.Qingxiao
   // step used the full "Basic Attack - "/"Heavy Attack - " prefix (e.g. 'Heavy Attack - Stringblade'),
@@ -4833,7 +4833,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Tonality Shift', '39.79%+46.42%×2'],
     ['Outro', 'Lingering Song', '800% ATK'],
   ],
-  // Re-verified 2026-09-07 against a real nanoka.cc .mht snapshot (Data dump/Jingran/Jingran.md,
+  // Re-verified 2026-09-07 against a real .mht snapshot (Data dump/Jingran/Jingran.md,
   // he is now live as of that dump's capture) — every value below already matched the source exactly,
   // no numeric corrections needed. Added 3 real, previously entirely-missing rows: Mid-air Attack,
   // Dodge Counter (both stance variants — Nether Dive/Light Watch). The source is also explicit that
@@ -4878,11 +4878,11 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Skybound Feather', '116.59%', 'Opener that applies Havoc Bane.'],
     ['Outro', 'As the Wind Wills', '300% ATK + team Havoc DMG buff', "Buffs other Havoc Bane appliers' DMG."],
   ],
-  // Full audit 2026-09-01: the wiki/Hiyuki/Combat's Attribute Scaling collapsibles
+  // Full audit 2026-09-01: the Hiyuki combat reference's Attribute Scaling collapsibles
   // render the wrong content for this character (a template/Lua bug — the section wraps a Skill Upgrade
   // materials-cost table instead of the real damage tables, similar to the documented Jinhsi issue), so
   // its numbers were unusable, but the source/character/1108's full Lv.10 table supplied every value
-  // below, and the wiki's separately-rendered Resonance Chain section (unaffected by the bug) matched
+  // below, and the reference separately-rendered Resonance Chain section (unaffected by the bug) matched
   // the source's node text verbatim, cross-confirming the mechanics. Two serious bug classes fixed:
   // (1) Most of her Forte/Liberation/Intro moves were stored as placeholder description text instead of
   // real per-hit percentages (e.g. "3× arrow volley, considered Liberation DMG" instead of an actual
@@ -4964,7 +4964,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Outdated Hallucination', '69.14%×2', 'Opener that reveals enemies through walls.'],
     ['Outro', 'Countermeasure Program', '25% Basic ATK DMG Amp to next + team Hack-Shifting response', "Buffs next ally's Basic ATK DMG."],
   ],
-  // Full audit 2026-09-01 against the wiki/Rebecca/Combat, cross-checked against
+  // Full audit 2026-09-01 against the Rebecca combat reference, cross-checked against
   // the source/character/1308 (both agree on every value exactly, including the "Lucy" reference in
   // the Outro's Overlimit text — re-verified as a real cross-character interaction, not a copy/paste
   // error, since it's identical and independent across both sources). Fixed a real zero-damage rotation
@@ -5002,8 +5002,8 @@ const SKILL_MULTIPLIERS = {
     ['Intro', "Hey, Leadhead, Come 'n' Get Me!", '10.14%+30.42%+40.56%×4', 'Guts-mode opener that also swaps her to Huntress.'],
     ['Outro', 'Preem Choom', 'Turret (2.5% Electro DMG/hit, 14s) + Edgerunner Bonds (15% All DMG Amp, 14s) + Overlimit (0.5%/0.2s Heavy ATK DMG Amp, up to 35%)', "Leaves a turret; buffs next ally's All DMG and Heavy ATK DMG."],
   ],
-  // Full audit 2026-09-01 against the wiki/Denia/Combat, cross-checked against
-  // the source/character/1211 (both agree exactly, including a the wiki-side table for Banish -
+  // Full audit 2026-09-01 against the Denia combat reference, cross-checked against
+  // the source/character/1211 (both agree exactly, including a reference-side table for Banish -
   // Breakdown Form Stage 2 that's truncated at Lv.9 — extrapolating the same ~1.075x per-level growth
   // ratio every other row shows lands almost exactly on the source's stated Lv.10 112.01%, confirming it).
   // Nearly every row here was placeholder description text instead of a real number (same bug class as
@@ -5034,7 +5034,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Knock Knock', '51.74%×3', 'Breakdown-Form opener; grants Entropy Shift: Breakdown Form (12s) and 1 Dark Core.'],
     ['Outro', 'Unfinished Lies', '60% Fusion Burst DMG Amp for 30s (Fusion Burst mode) / 15% All DMG Amp for 16s, jumping to 40% once Tune Strain - Shifting is inflicted (Tune Strain mode)', 'Buffs Fusion Burst DMG near the active Resonator, or grants the incoming Resonator All DMG Amp.'],
   ],
-  // Full audit 2026-09-01 against the wiki/Lucilla/Combat, cross-checked against
+  // Full audit 2026-09-01 against the Lucilla combat reference, cross-checked against
   // the source/character/1109 (both agree on every value exactly). Fixed a real zero-damage rotation
   // bug: CHARACTER_ROTATIONS.Lucilla's 'Tracing Forms Stage 1-3' and 'Letting It Go' steps had nothing to
   // match — the entire Reminiscence-state combo (her actual Liberation payoff, not a minor side-move) was
@@ -5058,7 +5058,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Clip It: Hard Cut', '149.41%', 'Replaces Clip It while in Reminiscence.'],
     ['Outro', 'Montage', '60% Glacio Chafe DMG Amp (Chafe mode) / 50% Echo Skill DMG Amp to next (Echo mode)', 'Buffs Glacio Chafe DMG or next ally Echo Skill DMG.'],
   ],
-  // Re-audited verbatim 2026-09-02 against a fresh the source.gg Augusta page dump: every single one of
+  // Re-audited verbatim 2026-09-02 against a fresh Augusta page dump: every single one of
   // her 22 Lv.10 damage values below was off by a consistent ~1.988x ratio (i.e. roughly HALF the real
   // value) — the exact same "halving pattern" bug class already found and fixed for Camellya/Carlotta/
   // Roccia/Phoebe/Brant (see the comment on Brant's own row just below), just missed for Augusta until
@@ -5087,7 +5087,7 @@ const SKILL_MULTIPLIERS = {
     ['Forte', 'Undying Sunlight', 'Strike 139.17%×2 / Leap 222.67%+27.84%×2 / Plunge 86.59%+779.24%', 'Forte-empowered combo, Plunge consumes all Ascendancy for a big finisher.'],
     ['Forte', 'Dodge Counter - Undying Sunlight: Strike', '139.17%×2', 'Grounded/mid-air Dodge Counter variant at full Ascendancy, considered Resonance Skill DMG; confirmed unused in her real rotation.'],
     ['Intro', 'Stride of Goldenflare', '99.41%×2', 'Swap-in opener strike.'],
-    ['Outro', 'Battlesong of the Unyielding', '+15% All DMG Amp (14s)', 'Grants the next Resonator +15% All-Attribute DMG Amp for 14s, which ends immediately if they are swapped out. Conditional payoff: Augusta gains +1 Majesty stack AND +1 Crown of Wills stack ONLY if that SAME Resonator casts their own Outro Skill back to Augusta while this buff is still up — swap to a third character first and the buff (and the stack chance) is forfeited. Verified verbatim the wiki/Augusta/Combat, 2026-08-31.'],
+    ['Outro', 'Battlesong of the Unyielding', '+15% All DMG Amp (14s)', 'Grants the next Resonator +15% All-Attribute DMG Amp for 14s, which ends immediately if they are swapped out. Conditional payoff: Augusta gains +1 Majesty stack AND +1 Crown of Wills stack ONLY if that SAME Resonator casts their own Outro Skill back to Augusta while this buff is still up — swap to a third character first and the buff (and the stack chance) is forfeited. Verified verbatim the Augusta combat reference, 2026-08-31.'],
   ],
   'Aemeath': [
     ['Basic ATK', 'Aemeath Form Stage 1-4', '46.35% → 13.89%+20.84%+34.73% → 9.32%×3+18.63%+46.56% → 6.73%×5+100.94%', 'Standard human-form combo string, weaker but faster than Mech Form.'],
@@ -5123,14 +5123,14 @@ const SKILL_MULTIPLIERS = {
   // match his actual kit at all: 'Bravo!' (Liberation) → 'To the Horizon', 'Here I Am!' (Intro) →
   // 'Applaud for Me!', 'Standing Ovation' (Outro) → 'The Course is Set!' — the fabricated names would
   // have broken the skill-icon/rotation substring lookups against his real skill list.
-  // Re-audited verbatim 2026-08-31 against the wiki/Brant/Combat's Lv.10
+  // Re-audited verbatim 2026-08-31 against the Brant combat reference's Lv.10
   // Attribute Scaling tables (Chrome/Windows UA + google.com referer + jsRender, load+9s wait):
   // - Basic ATK Stage 3 was '233%' — that value doesn't correspond to anything in the source; the
   //   actual Lv.10 Stage 3 DMG is 22.06%*3+33.08%*2 = 132.34%, a ~100pp overstate (same class of
   //   magnitude bug as the earlier Returned from Ashes halving fix, just in the other direction).
   //   Stage 1/2/4 were already correct within rounding, tightened to source's exact decimals.
   // - Mid-air "Charged Combo" 5-value chain (Stage1 → Stage1 Charged Attack → Flip → Stage 3 → Stage 4)
-  //   was off by ~1pp per entry (stale pull); retightened to exact Lv.10 values. NOTE: the wiki's own
+  //   was off by ~1pp per entry (stale pull); retightened to exact Lv.10 values. NOTE: the reference own
   //   Mid-air description says the Charged Attack triggers off Stage 1 OR Stage 2's grapple swing, and
   //   Stage 2 has its own separate (lower) Charged Attack multiplier (32.87%*6=197.22%) not used here —
   //   which grapple-swing stage is actually chained in a real rotation is a player-input branch this
@@ -5179,10 +5179,10 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Applaud for Me!', '202.8% + 50.7%'],
     ['Outro', 'The Course is Set!', '+20% Fusion DMG + 25% Skill DMG Amp (14s, or until the buffed Resonator is swapped out)'],
   ],
-  // Re-verified 2026-08-31 against the wiki/Calcharo/Combat's Lv.10 Attribute Scaling
+  // Re-verified 2026-08-31 against the Calcharo combat reference's Lv.10 Attribute Scaling
   // tables (Chrome/Windows UA + google.com referer + jsRender, load+9s wait; 2nd attempt cleared Cloudflare),
   // cross-checked against the source/wuthering-waves/characters/calcharo's Skills/Gameplay tabs. This
-  // character's Combat page uses an older wiki template ({{Forte Table|Calcharo}}, category "ATK Scaling
+  // character's Combat page uses an older reference template ({{Forte Table|Calcharo}}, category "ATK Scaling
   // Skill Characters") whose "Details" section only renders full Attribute Scaling tables for Resonance Skill
   // Extermination Order and Resonance Liberation Phantom Etching (which bundles Deathblade Gear's Basic
   // ATK/Heavy ATK/Dodge Counter/"Necessary Means" sub-tables) — it does NOT expose separate tables for the
@@ -5190,34 +5190,34 @@ const SKILL_MULTIPLIERS = {
   // Skill, and the source's Skills tab gives mechanic text for those but not raw per-hit %. Rows below marked
   // "TODO: verify" could NOT be confirmed against either source this pass and are carried over unchanged from
   // the prior data rather than being touched without a citation. Rows confirmed EXACT matches against the
-  // wiki's Lv.10 columns: Skill (Extermination Order Part 1/2/3), Liberation (Hounds Roar Stages 1-5), Outro
+  // reference Lv.10 columns: Skill (Extermination Order Part 1/2/3), Liberation (Hounds Roar Stages 1-5), Outro
   // (Shadowy Raid, matches the source's kit text "195.98%+391.96% of Calcharo's ATK" too) — all correct, unchanged.
   // Two real corrections found and fixed:
-  // (1) NEW row added: Intro "Necessary Means" (198.81%×2 at Lv.10, matches wiki's "Necessary Means Damage"
+  // (1) NEW row added: Intro "Necessary Means" (198.81%×2 at Lv.10, matches reference "Necessary Means Damage"
   //   row exactly) — a real, previously entirely undocumented Intro-Skill-DMG source (see desc rewrite above).
   // (2) NEW row added: Heavy ATK / Dodge Counter "In Deathblade Gear" variants (62.03%×5 / 56.99%×6 at Lv.10,
-  //   both from the wiki's Phantom Etching sub-table, explicitly stated "considered as Resonance Liberation
+  //   both from the reference Phantom Etching sub-table, explicitly stated "considered as Resonance Liberation
   //   DMG") — previously entirely uncaptured; the old single "Standard" rows for Heavy ATK/Dodge Counter are
   //   the NORMAL-state values only and remain filed under their own categories, unchanged.
   // All "TODO: verify" rows below resolved 2026-09-08 (full re-audit): Data dump/Calcharo/Calcharo.md
-  // (a real prydwen.gg snapshot, unavailable to the 2026-08-31 wiki cross-check pass that left these
+  // (a real build-guide snapshot, unavailable to the 2026-08-31 reference cross-check pass that left these
   // TODOs) independently confirms every one of them exactly — Basic ATK Stage 1-4, Heavy ATK Standard,
   // Mid-air Plunging Attack, Dodge Counter Standard, Forte Mercy, Forte Death Messenger, and Intro
   // Wanted Outlaw all match this table's stored values verbatim. TODOs removed.
   'Calcharo': [
     ['Basic ATK', 'Gnawing Fangs Stage 1-4', '45.73%×2 → 99.41% → 85.18%+42.59%×3 → 79.51%×2+106.01%', "Confirmed 2026-09-08 against Data dump/Calcharo/Calcharo.md's own Part 1-4 Damage rows (exact match)."],
     ['Heavy ATK', 'Standard', '41.36%×5', 'Confirmed 2026-09-08 against the dump\'s own "Heavy Attack Damage: 41.36%×5" row (exact match). Do not confuse with the Deathblade Gear row below.'],
-    ['Heavy ATK', 'Standard (Deathblade Gear)', '62.03%×5', 'Confirmed 2026-08-31 against the wiki Lv.10 "Heavy Attack DMG" row under Phantom Etching. While in Deathblade Gear (11s after Phantom Etching), Heavy Attack deals this boosted value instead of the normal-state row above, and is counted as Resonance Liberation DMG, not Heavy ATK DMG.'],
+    ['Heavy ATK', 'Standard (Deathblade Gear)', '62.03%×5', 'Confirmed 2026-08-31 against the reference Lv.10 "Heavy Attack DMG" row under Phantom Etching. While in Deathblade Gear (11s after Phantom Etching), Heavy Attack deals this boosted value instead of the normal-state row above, and is counted as Resonance Liberation DMG, not Heavy ATK DMG.'],
     ['Mid-air', 'Plunging Attack', '123.27%', 'Confirmed 2026-09-08 against the dump\'s own "Mid-Air Attack Damage: 123.27%" row (exact match).'],
     ['Dodge Counter', 'Standard', '66.48%×3+85.47%', 'Confirmed 2026-09-08 against the dump\'s own "Dodge Counter Damage: 66.48%×3+85.47%" row (exact match). Do not confuse with the Deathblade Gear row below.'],
-    ['Dodge Counter', 'Standard (Deathblade Gear)', '56.99%×6', 'Confirmed 2026-08-31 against the wiki Lv.10 "Dodge Counter DMG" row under Phantom Etching. While in Deathblade Gear, Dodge Counter deals this boosted value instead of the normal-state row above, and is counted as Resonance Liberation DMG, not Dodge Counter DMG.'],
-    ['Skill', 'Extermination Order Stage 1-3', '51.57%×2+68.76% → 77.36%×2+103.14% → 214.87%×2', 'Confirmed exact match 2026-08-31 against the wiki Lv.10 Part 1/2/3 Damage rows (and again 2026-09-08 against the dump\'s own matching rows). 10s cooldown; does not interrupt the Basic ATK cycle. Each Skill hit grants 1 Cruelty (cap 3) — frozen while in Deathblade Gear.'],
+    ['Dodge Counter', 'Standard (Deathblade Gear)', '56.99%×6', 'Confirmed 2026-08-31 against the reference Lv.10 "Dodge Counter DMG" row under Phantom Etching. While in Deathblade Gear, Dodge Counter deals this boosted value instead of the normal-state row above, and is counted as Resonance Liberation DMG, not Dodge Counter DMG.'],
+    ['Skill', 'Extermination Order Stage 1-3', '51.57%×2+68.76% → 77.36%×2+103.14% → 214.87%×2', 'Confirmed exact match 2026-08-31 against the reference Lv.10 Part 1/2/3 Damage rows (and again 2026-09-08 against the dump\'s own matching rows). 10s cooldown; does not interrupt the Basic ATK cycle. Each Skill hit grants 1 Cruelty (cap 3) — frozen while in Deathblade Gear.'],
     ['Forte', 'Heavy ATK: "Mercy"', '39.11%×8+78.22%', 'Confirmed 2026-09-08 against the dump\'s own "Mercy Damage: 39.11%×8+78.22%" row (exact match). At 3 Cruelty, Heavy ATK becomes "Mercy" — consumes all 3 Cruelty, restores Resonance/Concerto Energy, counted as Heavy ATK DMG.'],
     ['Forte', 'Heavy ATK: "Death Messenger"', '97.77%×8+195.53%', 'Confirmed 2026-09-08 against the dump\'s own "Death Messenger Damage: 97.77%×8+195.53%" row (exact match). In Deathblade Gear, at 5 Killing Intent, Basic ATK becomes "Death Messenger" — consumes all 5 Killing Intent, restores Resonance/Concerto Energy, counted as Resonance Liberation DMG.'],
-    ['Liberation', 'Phantom Etching → Hounds Roar', '596.43% → 88.07%→35.23%×2+52.84%×2→163.84%→34.82%×6→150.19%×2', 'Confirmed exact match 2026-08-31 against the wiki Lv.10 Skill Damage / Hounds Roar Stage 1-5 rows (and again 2026-09-08 against the dump). Enters Deathblade Gear (11s, 125 Resonance Energy cost, 20 Concerto Energy regen): Basic ATK replaced by Hounds Roar (each hit grants 1 Killing Intent, cap 5), Heavy ATK/Dodge Counter deal Liberation DMG (see the Deathblade Gear rows above).'],
-    ['Intro', 'Wanted Outlaw', '39.77%×2+59.65%×2', 'Confirmed 2026-09-08 against the dump\'s own "Skill Damage: 39.77%×2+59.65%×2" row under Intro Skill Wanted Outlaw (exact match). Official skill name confirmed "Wanted Outlaw" per the wiki\'s own footnote (in-game Resonance Chain text mislabels it "Wanted Criminal").'],
-    ['Intro', '"Necessary Means"', '198.81%×2', 'Confirmed exact match 2026-08-31 against the wiki Lv.10 "\'Necessary Means\' Damage" row (also matches the dump\'s "Necessary Means Damage: 198.81%×2" row, re-confirmed 2026-09-08). Previously entirely undocumented: once Deathblade Gear ends, Calcharo\'s next Intro Skill cast is silently replaced by this move instead of "Wanted Outlaw", counted as Intro Skill DMG. TODO: needs Phase 2 schema to model the cross-rotation "which Intro fires next" state — CHARACTER_ROTATIONS below always uses the "Wanted Outlaw" opener as the baseline case.'],
-    ['Outro', 'Shadowy Raid', '195.98%+391.96%', 'Confirmed exact match 2026-08-31 against the wiki Lv.10 Outro Skill row and the source\'s kit text ("195.98%+391.96% of Calcharo\'s ATK"); re-confirmed 2026-09-08 against the dump.'],
+    ['Liberation', 'Phantom Etching → Hounds Roar', '596.43% → 88.07%→35.23%×2+52.84%×2→163.84%→34.82%×6→150.19%×2', 'Confirmed exact match 2026-08-31 against the reference Lv.10 Skill Damage / Hounds Roar Stage 1-5 rows (and again 2026-09-08 against the dump). Enters Deathblade Gear (11s, 125 Resonance Energy cost, 20 Concerto Energy regen): Basic ATK replaced by Hounds Roar (each hit grants 1 Killing Intent, cap 5), Heavy ATK/Dodge Counter deal Liberation DMG (see the Deathblade Gear rows above).'],
+    ['Intro', 'Wanted Outlaw', '39.77%×2+59.65%×2', 'Confirmed 2026-09-08 against the dump\'s own "Skill Damage: 39.77%×2+59.65%×2" row under Intro Skill Wanted Outlaw (exact match). Official skill name confirmed "Wanted Outlaw" per the reference\'s own footnote (in-game Resonance Chain text mislabels it "Wanted Criminal").'],
+    ['Intro', '"Necessary Means"', '198.81%×2', 'Confirmed exact match 2026-08-31 against the reference Lv.10 "\'Necessary Means\' Damage" row (also matches the dump\'s "Necessary Means Damage: 198.81%×2" row, re-confirmed 2026-09-08). Previously entirely undocumented: once Deathblade Gear ends, Calcharo\'s next Intro Skill cast is silently replaced by this move instead of "Wanted Outlaw", counted as Intro Skill DMG. TODO: needs Phase 2 schema to model the cross-rotation "which Intro fires next" state — CHARACTER_ROTATIONS below always uses the "Wanted Outlaw" opener as the baseline case.'],
+    ['Outro', 'Shadowy Raid', '195.98%+391.96%', 'Confirmed exact match 2026-08-31 against the reference Lv.10 Outro Skill row and the source\'s kit text ("195.98%+391.96% of Calcharo\'s ATK"); re-confirmed 2026-09-08 against the dump.'],
   ],
   // Corrected 2026-08-17 against the source's character #1603 sheet (Lv.10 skill attributes): every
   // row except Outro was roughly half its real value (e.g. Ephemeral was '635%' vs the real 1262.45%,
@@ -5251,7 +5251,7 @@ const SKILL_MULTIPLIERS = {
   // doesn't match her kit at all — her real Outro is 'Gentle Tentacles' (confirmed on both the source and
   // the source); the fabricated name would have broken skill-icon/rotation substring lookups. The Outro's
   // buff description (+20% Havoc DMG + 25% Skill DMG Amp) was already correct and is unchanged.
-  // Re-verified verbatim 2026-08-31 against the wiki/Cantarella/Combat's "Attribute
+  // Re-verified verbatim 2026-08-31 against the Cantarella combat reference's "Attribute
   // Scaling" tables (Lv.10 column, rightmost) — the 2026-08-17 pass fixed the halving bug but the multi-hit
   // Basic ATK Stage 2/3 and Forte Phantom Sting Stage 1-3 rows had been collapsed into a single summed total
   // per stage instead of the real per-hit breakdown (same class of error the 10-character reference pass
@@ -5285,7 +5285,7 @@ const SKILL_MULTIPLIERS = {
   // row except Outro was roughly half its real value (e.g. Era of New Wave — her core Liberation nuke —
   // was listed as '202.6%' vs the real 402.71%), the same halving pattern found and fixed in Camellya's
   // row. Outro (794.2%) was already correct and is unchanged.
-  // Re-verified verbatim 2026-08-31 against the wiki/Carlotta/Combat's "Attribute
+  // Re-verified verbatim 2026-08-31 against the Carlotta combat reference's "Attribute
   // Scaling" tables (Lv.10 column, rightmost): the 2026-08-17 pass fixed the halving bug but every row
   // still carried a small rounding/transcription drift from the exact per-hit figures — corrected below,
   // each old value shown in the per-row comment. Outro Closing Remark (794.2%) matched exactly, unchanged.
@@ -5322,7 +5322,7 @@ const SKILL_MULTIPLIERS = {
   // Freedom' Intro row was already exactly correct (4.28% + 9.97%HP), showing this wasn't a single
   // clean 2x scaling error but a row-by-row data entry issue. Every value below is now sourced directly
   // from the source's precise Lv.10 multipliers rather than doubled from the old figures.
-  // All Lv10 multipliers re-verified verbatim 2026-08-31 against the wiki/Cartethyia/Combat's
+  // All Lv10 multipliers re-verified verbatim 2026-08-31 against the Cartethyia combat reference's
   // "Attribute Scaling" tables (Basic Attack - Cartethyia, Sword to Bear Their Names, Blade of Howling Squall,
   // Sword to Mark Tide's Trace / Sword to Call for Freedom, Sword to Answer Waves' Call / May Tempest Break the
   // Tides sections) — every value already matched exactly (sums of per-hit % + flat %HP components check out to
@@ -5354,8 +5354,8 @@ const SKILL_MULTIPLIERS = {
     ['Intro', "Sword to Call for Freedom", '4.28% + 9.97%HP', 'Fleurdelys-form swap-in opener.'],
     ['Outro', "Wind's Divine Blessing", '+17.5% Aero DMG vs Negative Status (20s)', 'Swap-out buff to the active teammate against targets with a Negative Status.'],
   ],
-  // All Lv10 multipliers below re-verified verbatim 2026-08-31 against the wiki/
-  // Changli/Combat's "Attribute Scaling" tables (Basic Attack, Tripartite Flames, Radiance of Fealty,
+  // All Lv10 multipliers below re-verified verbatim 2026-08-31 against the Changli
+  // combat reference's "Attribute Scaling" tables (Basic Attack, Tripartite Flames, Radiance of Fealty,
   // Flaming Sacrifice, Obedience of Rules sections) — every value already matched exactly, no corrections
   // needed here (unlike the RESONANCE_CHAIN_DATA row below, where every node was wrong).
   'Changli': [
@@ -5392,7 +5392,7 @@ const SKILL_MULTIPLIERS = {
   // listed as '553.5%' vs the real 1100.42%), the same halving pattern already found and fixed across
   // Camellya/Carlotta/Roccia/Phoebe/Brant/Cantarella/Zani's rows. Outro (a DMG Amp buff description,
   // unaffected by this bug) is unchanged.
-  // Full audit 2026-09-01 against the wiki/Ciaccona/Combat, cross-checked against
+  // Full audit 2026-09-01 against the Ciaccona combat reference, cross-checked against
   // the source/character/1407 (both agree on every value exactly). Two bug classes fixed:
   // (1) multi-hit stages collapsed bug — Basic ATK Stage 1-4 was stored as one summed-total string
   // ('57.1% → 163.0% → 132.1% → 244.6%') instead of the real per-hit breakdown; split into 4 separate
@@ -5418,10 +5418,10 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Roaming with the Wind', '189.11%', 'Swap-in opener that inflicts Aero Erosion and lets her combo straight into Basic ATK Stage 3.'],
     ['Outro', 'Windcalling Tune', '+100% Aero Erosion DMG Amp (30s)', 'Swap-out buff amplifying Aero Erosion damage near the active Resonator.'],
   ],
-  // Re-verified 2026-08-31 against wuthering.gg/characters/encore's Lv.1 skill-detail widget (Lv.1→Lv.10 growth
+  // Re-verified 2026-08-31 against a community Encore page's Lv.1 skill-detail widget (Lv.1→Lv.10 growth
   // factor confirmed uniform at ×1.9881 across every existing row — e.g. Basic ATK Stage 1 28.00%→55.66%,
   // Skill 38.53%→76.61%, Forte Cloudy Frenzy 168.00%→334.00% — so all pre-existing Lv.10 numbers below check out
-  // and are unchanged), cross-checked against the wiki/Encore/Combat's Forte text.
+  // and are unchanged), cross-checked against the Encore combat reference's Forte text.
   // CRITICAL bug fixed: the four Cosmos Rave enhanced-state multipliers (Cosmos: Heavy Attack, Cosmos:
   // Frolicking, Cosmos: Rampage, and a completely missing Cosmos: Dodge Counter) were previously crammed into
   // one combined string under a single 'Liberation'/'Cosmos Rave' row. CHARACTER_ROTATIONS' steps for these
@@ -5448,7 +5448,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Woolies Helpers', '198.81%'],
     ['Outro', 'Thermal Field', '176.76% ATK per tick ×4 (6s, 1.5s interval)', 'AoE burn field around the Skill target — no team buff, so she\'s free to quickswap.'],
   ],
-  // Full audit 2026-09-01 against the wiki/Galbrena/Combat, cross-checked against
+  // Full audit 2026-09-01 against the Galbrena combat reference, cross-checked against
   // the source/character/1208 (both agree on every value exactly). CRITICAL BUG: every pre-existing row
   // except Outro was stored at Lv.1, not this file's Lv.10 baseline — e.g. Basic ATK Stage 1 was 29.8%
   // (real Lv.1) vs. the correct 59.18% (Lv.10), silently halving nearly her entire kit's DPS output, the
@@ -5497,7 +5497,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Hellflare Overload', '94.12%', 'Swap-in opener strike.'],
     ['Outro', 'Ashen Pursuit', '79.50%×3+556.50%', 'Pure-damage swap-out finisher; no team buff, so she\'s free to quickswap.'],
   ],
-  // Re-verified in full 2026-08-31 against the wiki/Iuno/Combat's Lv.10 Attribute
+  // Re-verified in full 2026-08-31 against the Iuno combat reference's Lv.10 Attribute
   // Scaling tables (Chrome/Windows UA + google.com referer + jsRender, load+9s wait to clear Cloudflare).
   // Prior values were ALL Level-1 numbers (not Lv.10, breaking this file's established convention — see
   // e.g. the Jinhsi re-verification comment above using Lv.10) with every multi-hit stage collapsed into a
@@ -5538,7 +5538,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Illuminated Manifestation', '15.91%×7 + 47.72%', 'Swap-in opener that also restores 40 Sentience. Lv.10.'],
     ['Outro', 'From Gloom to Gleam', '100%', 'Swap-out strike that grants the next Resonator +50% Heavy ATK DMG Amp for 14s (corrected 2026-09-04, Phase A audit — this row\'s note was a stale 10s left over from before CHAR_BUFF_TABLE.Iuno/CHARACTER_ROTATIONS.Iuno were both corrected back to the real 14s).'],
   ],
-  // Re-verified 2026-08-31 against the wiki/Jiyan/Combat's Lv.10 Attribute Scaling
+  // Re-verified 2026-08-31 against the Jiyan combat reference's Lv.10 Attribute Scaling
   // tables (Chrome/Windows UA + google.com referer + jsRender, load+9s wait; 2nd attempt cleared Cloudflare).
   // Corrections vs previous data: Basic ATK Stage 3 was wrongly '×2' — site's own table shows 5 sub-hits
   // ('36.38%*5'), corrected to ×5. Stage 5 was wrongly '×4' on the first term — site shows 7 sub-hits
@@ -5568,7 +5568,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Tactical Strike', '198.81%'],
     ['Outro', 'Discipline', '313.40% ATK per proc, up to 2', 'Coordinated ATK triggered when the incoming Resonator lands a Heavy ATK (8s window, once per second).'],
   ],
-  // Re-verified 2026-08-31 against the wiki/Jinhsi/Combat's Lv.10 Attribute Scaling
+  // Re-verified 2026-08-31 against the Jinhsi combat reference's Lv.10 Attribute Scaling
   // tables (Chrome/Windows UA + google.com referer + jsRender, load+9s wait to clear Cloudflare): Basic
   // ATK Stage 1-4, Heavy ATK, Mid-air, Dodge Counter, Liberation (499.81%+1166.22%), and Intro (159.05%)
   // all matched the site's Lv.10 row EXACTLY — no corrections needed. Trailing Lights of Eons/Overflowing
@@ -5603,7 +5603,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', "Loong's Halo", '159.05%'],
     ['Outro', 'Temporal Bender', 'Incandescence gain rate +1/s for 20s', 'Utility only — no direct DMG or team buff.'],
   ],
-  // Re-verified verbatim 2026-08-31 against the wiki/Jianxin/Combat's "Attribute
+  // Re-verified verbatim 2026-08-31 against the Jianxin combat reference's "Attribute
   // Scaling" tables at column 10 (Lv.10) for every row — all existing per-hit values already matched the
   // source exactly (Basic/Heavy/Mid-air/Dodge Counter/Skill/Liberation/Intro/Outro all confirmed correct,
   // no changes). One addition: the Forte row was missing "Zhoutian Progress Continuous Damage" (24.86% at
@@ -5625,7 +5625,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Essence of Tao', '33.80%×3+67.60%'],
     ['Outro', 'Transcendence', 'Resonance Liberation DMG Amp +38% (14s)', 'Grants the incoming Resonator this buff — no direct DMG.'],
   ],
-  // Re-verified verbatim 2026-08-31 against the wiki/Lingyang/Combat's Lv.10
+  // Re-verified verbatim 2026-08-31 against the Lingyang combat reference's Lv.10
   // "Attribute Scaling" tables (Chrome/Windows UA + google.com referer + jsRender) — every row below
   // already matched source exactly (Basic ATK stages, Heavy/Mid-air/Dodge Counter, Ancient Arts/Furious
   // Punches, all 5 Forte Circuit sub-hits, Liberation, Intro, Outro); no numeric corrections were needed
@@ -5664,7 +5664,7 @@ const SKILL_MULTIPLIERS = {
   // the recently-audited roster. The old Intro Try Focusing, Eh? note claiming "exact base number not
   // published" was also wrong — the source does publish it (29.76%+42.16%×4), so the apologetic note is
   // dropped along with the halved placeholder value.
-  // Full audit 2026-09-01 against the wiki/Lupa/Combat, cross-checked against
+  // Full audit 2026-09-01 against the Lupa combat reference, cross-checked against
   // the source/character/1207 (both agree on every value exactly). Multiple bug classes fixed:
   // (1) multi-hit stages collapsed bug — Basic ATK Stage 1-4 was one summed-total string, not per-hit
   // values; split into per-stage rows. (2) type miscategorization — Wolf's Claw was stored as type
@@ -5759,13 +5759,13 @@ const SKILL_MULTIPLIERS = {
   // row except Outro was roughly half its real value (e.g. Absolution Litany — her core Forte burst —
   // was listed as '321%' vs the real 638.19%) — the same halving pattern already found and fixed across
   // Camellya/Carlotta/Roccia's rows. Outro (528.4%, matching the source's 528.41% exactly) is unchanged.
-  // Re-verified verbatim 2026-08-31 against the wiki/Phoebe/Combat's Lv.10 Attribute
+  // Re-verified verbatim 2026-08-31 against the Phoebe combat reference's Lv.10 Attribute
   // Scaling tables. Basic ATK Stage 2 and Chamuel's Star Stage 2 were each stored as one collapsed number
   // (49.7%, 79.5%) that actually sums TWO separate hits (real: 22.37%+27.34% and 39.77%×2 respectively) —
   // corrected to the per-hit "A+B" / "A×N" notation used everywhere else in this table so the hit count
   // isn't lost. Every other row (Heavy ATK, Skill, Forte Starflash/Absolution Litany, Liberation, Intro,
-  // Outro) matches the the wiki Lv.10 row exactly, no further changes. Also added each skill's mode-gated
-  // Confession-side effect where the wiki text gives one (Liberation applies 8 Frazzle stacks instead of
+  // Outro) matches the reference Lv.10 row exactly, no further changes. Also added each skill's mode-gated
+  // Confession-side effect where the reference text gives one (Liberation applies 8 Frazzle stacks instead of
   // its Absolution DMG bump; Outro instead grants the Silent Prayer support buff) so the DMG-only number
   // isn't read as the whole picture.
   'Phoebe': [
@@ -5789,13 +5789,13 @@ const SKILL_MULTIPLIERS = {
   // as '234%' vs the real 465.22%) — the same halving pattern already found and fixed across most of
   // the recently-audited roster. The old Intro Suite of Quietus note claiming "exact base number not
   // published" was also wrong — the source does publish it (80.61%+120.91%) — so that note is dropped.
-  // Re-verified verbatim 2026-08-31 against the wiki/Phrolova/Combat Lv.10
+  // Re-verified verbatim 2026-08-31 against the Phrolova combat reference Lv.10
   // Attribute Scaling tables, cross-checked the source/character/1608's Skill Attributes (Lv.10)
   // panels — every row below, including Intro, matches both sources exactly; no corrections needed.
-  // (An initial the wiki-wiki text extraction seemed to show Suite of Quietus at Lv.10 as 74.96%+112.44%,
+  // (An initial the reference-reference text extraction seemed to show Suite of Quietus at Lv.10 as 74.96%+112.44%,
   // one row short of the other 10-level tables on the same page; the source's Skill Attributes panel
   // confirms the true Lv.10 value is 80.61%+120.9x%, matching the existing 80.6% + 120.9% below — the
-  // the wiki figure was simply the Lv.9 row, an artifact of a truncated column in that extraction.)
+  // the reference figure was simply the Lv.9 row, an artifact of a truncated column in that extraction.)
   // Added 2026-09-02 against a fresh the source dump: 'Movement of Fate and Finality' and 'Murmurs in a
   // Haunting Dream' previously had NO row at all despite being 3 real CHARACTER_ROTATIONS steps (Forte
   // follow-ups on Basic ATK Stage 3 / Skill while in Reincarnate) — left phrolova.blocks.js's S1 chain
@@ -5843,7 +5843,7 @@ const SKILL_MULTIPLIERS = {
   // damage row was roughly half its real value (e.g. Real Fantasy's 3 hits were '162% → 171% → 180%'
   // vs the real 322.08% → 339.97% → 357.86%) — the same halving pattern already found and fixed in
   // Camellya's/Carlotta's rows. Outro (a DMG Amp buff description, not a raw multiplier) is unaffected.
-  // Re-verified verbatim 2026-08-31 against the wiki/Roccia/Combat's Attribute
+  // Re-verified verbatim 2026-08-31 against the Roccia combat reference's Attribute
   // Scaling tables (Lv.10 column specifically, confirming this is not the Iuno-style Lv.1 bug):
   // Real Fantasy/Skill/Liberation/Intro numbers above were already correct. Basic ATK's 4 stages were
   // wrongly SUMMED into one number per stage instead of per-hit (Stage 2 '114.4%' = 38.14%×3 summed;
@@ -5851,7 +5851,7 @@ const SKILL_MULTIPLIERS = {
   // multi-hit bug already found/fixed on Camellya/Carlotta/Phoebe's rows, fixed here to real per-hit
   // values. Added Mid-air Attack and Dodge Counter rows (both present in the source's Attribute Scaling
   // table but previously missing entirely from this file). Outro's forfeit condition ("...or until the
-  // Resonator is switched out", confirmed present in the wiki's Outro text, same schema-gap flagged for
+  // Resonator is switched out", confirmed present in the reference Outro text, same schema-gap flagged for
   // Changli/Augusta's outro buffs) added to the note.
   'Roccia': [
     ['Basic ATK', 'Stage 1-4', '73.18% → 38.14%×3 → 33.80%×2+101.40% → 104.19%×2'],
@@ -5875,7 +5875,7 @@ const SKILL_MULTIPLIERS = {
     ['Forte', 'Resonating Echoes', '79.53%+159.05%', 'Separate Basic ATK combo cast after Resonating Spin fully ends.'],
     ['Liberation', 'Echoing Orchestra', '198.81%+675.96%', 'Delayed blast; applies 6 stacks of Spectro Frazzle.'],
     ['Intro', 'Waveshock', '168.99%'],
-    ['Outro', 'Instant', 'Stasis field (CC only, no DMG)', 'Generates an area of stasis centered on the incoming Resonator, lasting 3s. Re-verified 2026-09-01 against the wiki/the source: neither source lists any DMG Amp buff for this Outro — the previous "some sources credit +20% Spectro DMG Amp" note was unconfirmed speculation, removed.'],
+    ['Outro', 'Instant', 'Stasis field (CC only, no DMG)', 'Generates an area of stasis centered on the incoming Resonator, lasting 3s. Re-verified 2026-09-01 against the reference sources: neither source lists any DMG Amp buff for this Outro — the previous "some sources credit +20% Spectro DMG Amp" note was unconfirmed speculation, removed.'],
   ],
   'Rover: Havoc': [
     ['Basic ATK', 'Tuneslayer Stage 1-5', '56.67% → 56.67%×2 → 85% → 40.30%×3 → 94.44%×2', '5-stage Basic ATK combo, into an enhanced Stage 4 after a Heavy ATK.'],
@@ -5929,8 +5929,8 @@ const SKILL_MULTIPLIERS = {
     ['Dodge Counter', 'Standard', '87.48%×2'],
     ['Skill', 'Chaos Theory', '31.31%×5 (Dim Star Butterflies) + heal (1313+5.97% HP)', '16s cooldown; heals the team and summons 5 tracking butterflies.'],
     ['Forte', 'Flare Star Butterfly / Illation / Transmutation', '37.29% (Butterfly) · 18.97%×5 (Illation, Heavy ATK) · 73.96% (Transmutation, Mid-air)', 'At 5 Empirical Data, Heavy/Mid-air ATK consume it to pull in targets and convert Collapsed Cores into Flare Star Butterflies.'],
-    ['Liberation', 'End Loop', 'No direct DMG — Stellarealm heal (438+2.39% HP) every 3s', 'Lv.10 heal amount per tick; verified 2026-08-31 vs. the wiki Combat page (was previously undocumented). 30s duration, 25s CD, costs 175 Energy, grants 20 Concerto on cast. Evolves into Inner (team Crit Rate up to +12.5%) then Supernal Stellarealm (team Crit DMG up to +25%) scaling with her Energy Regen, as allies cast Intro Skills inside it.'],
-    ['Intro', 'Proof of Existence: Enlightenment / Discernment', '45.30%×5 + heal (259+1.20% HP) · 19.64%×3 HP-scaling + heal (289+1.32% HP)', 'Discernment Lv.10 heal amount verified 2026-08-31 vs. the wiki Combat page (was previously undocumented). Discernment only available once per Supernal Stellarealm; guaranteed Crit, counted as Liberation DMG, scales off HP not ATK. S6 adds +42% to Discernment\'s own DMG Multiplier and +500% Crit DMG on that hit specifically (not a persistent buff).'],
+    ['Liberation', 'End Loop', 'No direct DMG — Stellarealm heal (438+2.39% HP) every 3s', 'Lv.10 heal amount per tick; verified 2026-08-31 vs. the reference Combat page (was previously undocumented). 30s duration, 25s CD, costs 175 Energy, grants 20 Concerto on cast. Evolves into Inner (team Crit Rate up to +12.5%) then Supernal Stellarealm (team Crit DMG up to +25%) scaling with her Energy Regen, as allies cast Intro Skills inside it.'],
+    ['Intro', 'Proof of Existence: Enlightenment / Discernment', '45.30%×5 + heal (259+1.20% HP) · 19.64%×3 HP-scaling + heal (289+1.32% HP)', 'Discernment Lv.10 heal amount verified 2026-08-31 vs. the reference Combat page (was previously undocumented). Discernment only available once per Supernal Stellarealm; guaranteed Crit, counted as Liberation DMG, scales off HP not ATK. S6 adds +42% to Discernment\'s own DMG Multiplier and +500% Crit DMG on that hit specifically (not a persistent buff).'],
     ['Outro', 'Binary Butterfly', 'All DMG Amp +15%', 'Also grants the on-field Resonator up to 5 free interrupt-recoveries (tap Dodge) for 30s — no direct DMG.'],
   ],
   'Sigrika': [
@@ -5962,12 +5962,12 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Solsworn Etymology', '163.42%', 'Standard combo-starting opener hit.'],
     ['Outro', 'In This Very Moment', '795%', 'Finishing hit that stagnates enemies on ally Echo Skill casts.'],
   ],
-  // Re-verified per-hit at Lv.10 2026-08-31 against the wiki/Verina/Combat's
+  // Re-verified per-hit at Lv.10 2026-08-31 against the Verina combat reference's
   // "Attribute Scaling" tables (Chrome UA + google.com referer + jsRender) and cross-checked against
   // the source/character/1503 — every existing % value matched exactly, no numeric corrections needed.
   // Row-name bug fixed: the Forte row was 'Heavy/Mid-air ATK: Starflower Blooms' (using the abbreviation
   // "ATK"), but CHARACTER_ROTATIONS.Verina's Forte step names the move 'Mid-air Attack: Starflower Blooms'
-  // (spelled out, matching the wiki's own text) — 'Heavy/Mid-air ATK: Starflower Blooms'.includes('Mid-air
+  // (spelled out, matching the reference text) — 'Heavy/Mid-air ATK: Starflower Blooms'.includes('Mid-air
   // Attack: Starflower Blooms') is false (no "ATK"/"Attack" match), so the calc engine's
   // rowName.includes(step.skill) lookup silently resolved that rotation step to ZERO damage. Renamed to
   // 'Heavy/Mid-air Attack: Starflower Blooms' (spelled out, matching both source sites) to fix the match.
@@ -5983,13 +5983,13 @@ const SKILL_MULTIPLIERS = {
     ['Outro', 'Blossom', 'All-Type DMG Amplify +15% (30s) + heal', 'Heals the incoming Resonator 19% ATK/s for 6s and grants the whole nearby team All-Type DMG Amplify +15% (30s). Corrected 2026-09-02 against a fresh, user-pasted the source text (priority source) — was wrongly noted as "Amplified" (a prior session\'s claim); the kit text explicitly says "Amplify", matching this file\'s own dmgFocus buff-tag entry.'],
   ],
   // Full audit 2026-09-01. Base rows (Probe/Standard/Plunging/Deduction→Decipher/Cogitation
-  // Model/Principle/Chain Rule) re-verified verbatim against wuwa.build's character #1305 sheet
+  // Model/Principle/Chain Rule) re-verified verbatim against a community database's character #1305 sheet
   // (Lv.10 exact multipliers, per-hit — not collapsed) — matched this file's pre-existing values
   // exactly, no changes needed there. Two real bugs found and fixed:
   // (1) the combined 'Intuition: Law of Reigns / Revamp' row lumped two different Forte-triggered
   // moves' formulas into one string cell — split into two rows so each is independently addressable.
   // (2) the combined 'Intuition: Pivot-Impale / Divergence / Unfathomed' row lumped THREE different
-  // moves under a single `type: 'Liberation'`, when per wutheringwaves.gg/thegamer.com's Forte
+  // moves under a single `type: 'Liberation'`, when per two community guides' Forte
   // breakdown only Unfathomed (the Dodge Counter replacement) is actually "counted as Resonance
   // Liberation DMG" — Pivot-Impale (Basic ATK replacement) and Divergence (Resonance Skill
   // replacement) are their own native DMG types. Split into 3 rows with correct `type` per move
@@ -6002,16 +6002,16 @@ const SKILL_MULTIPLIERS = {
     ['Mid-air', 'Plunging Attack', '123.27%'],
     ['Dodge Counter', 'Standard', '238.58%'],
     ['Skill', 'Deduction → Decipher', '198.81% → 397.82%', '5s cooldown; at 100 Capacity, Skill becomes Decipher instead (Liberation DMG).'],
-    ['Forte', 'Law of Reigns', '95.73%×4+255.28%', 'Skill auto-replaced once Performance Capacity hits 5/5 in Intuition; consumes 1 of 3 Hypercubes per cast, counted as Resonance Liberation DMG per wutheringwaves.gg.'],
-    ['Forte', 'Revamp', '21.87%×4+65.61%×2', 'Mid-air Attack cast right after Divergence/Decipher; grants 3 Performance Capacity per hit, counted as Resonance Liberation DMG per wutheringwaves.gg.'],
+    ['Forte', 'Law of Reigns', '95.73%×4+255.28%', 'Skill auto-replaced once Performance Capacity hits 5/5 in Intuition; consumes 1 of 3 Hypercubes per cast, counted as Resonance Liberation DMG per a community guide.'],
+    ['Forte', 'Revamp', '21.87%×4+65.61%×2', 'Mid-air Attack cast right after Divergence/Decipher; grants 3 Performance Capacity per hit, counted as Resonance Liberation DMG per a community guide.'],
     ['Liberation', 'Cogitation Model', '1466.06%', '25s cooldown; enters Intuition (24s) — enhances Basic ATK, Skill, and Dodge Counter.'],
-    ['Basic ATK', 'Intuition: Pivot-Impale', '119.67% → 60.92%×4 → 133.25%×2', 'Basic/Heavy ATK replacement in Intuition (3-stage combo); Stage 1 hit grants 1 Performance Capacity, Stage 2/3 hits grant 2 each (5 total). Counted as Basic ATK DMG, NOT Liberation DMG, per wutheringwaves.gg — previously mis-lumped under a Liberation-type row.'],
-    ['Skill', 'Intuition: Divergence', '49.59%×3+173.55%×2', 'Resonance Skill replacement in Intuition; grants 2 Performance Capacity per cast. Counted as Skill DMG, NOT Liberation DMG, per wutheringwaves.gg — previously mis-lumped under a Liberation-type row.'],
-    ['Dodge Counter', 'Intuition: Unfathomed', '38.83%×2+310.58%', 'Dodge Counter replacement in Intuition; grants 2 Performance Capacity per cast. Counted as Resonance Liberation DMG per wutheringwaves.gg (the one sub-move of the old lumped row that really was Liberation-type).'],
+    ['Basic ATK', 'Intuition: Pivot-Impale', '119.67% → 60.92%×4 → 133.25%×2', 'Basic/Heavy ATK replacement in Intuition (3-stage combo); Stage 1 hit grants 1 Performance Capacity, Stage 2/3 hits grant 2 each (5 total). Counted as Basic ATK DMG, NOT Liberation DMG, per a community guide — previously mis-lumped under a Liberation-type row.'],
+    ['Skill', 'Intuition: Divergence', '49.59%×3+173.55%×2', 'Resonance Skill replacement in Intuition; grants 2 Performance Capacity per cast. Counted as Skill DMG, NOT Liberation DMG, per a community guide — previously mis-lumped under a Liberation-type row.'],
+    ['Dodge Counter', 'Intuition: Unfathomed', '38.83%×2+310.58%', 'Dodge Counter replacement in Intuition; grants 2 Performance Capacity per cast. Counted as Resonance Liberation DMG per a community guide (the one sub-move of the old lumped row that really was Liberation-type).'],
     ['Intro', 'Principle', '99.41%×2'],
     ['Outro', 'Chain Rule', '237.63% ATK ×3 procs (8s, 2s ICD)', "Laser strikes on the incoming Resonator's first Basic ATK hit — pure DMG proc, no team buff."],
   ],
-  // Re-verified per-hit at Lv.10 2026-08-31 against the wiki/Yinlin/Combat's
+  // Re-verified per-hit at Lv.10 2026-08-31 against the Yinlin combat reference's
   // "Attribute Scaling" tables (re-fetched, Chrome UA + google.com referer + jsRender, 2 attempts needed
   // past a Cloudflare interstitial) — Basic ATK (28.81%/33.82%×2/13.99%×7/75.16%), Heavy ATK (29.83%×2),
   // Mid-air (123.27%), Dodge Counter (24.22%×7), Magnetic Roar (59.65%×3), Lightning Execution (89.47%×4,
@@ -6020,7 +6020,7 @@ const SKILL_MULTIPLIERS = {
   // Lv.10 (not Lv.1 — cross-checked against the source's Lv.1 table, which shows visibly smaller numbers
   // e.g. Basic ATK Stage 1 14.49% vs. this file's correct 28.81%, confirming this row was NOT accidentally
   // Lv.1 data). No changes needed to any of those rows.
-  // TODO: verify — Electromagnetic Blast's 19.89% could not be confirmed: neither the wiki's Magnetic Roar
+  // TODO: verify — Electromagnetic Blast's 19.89% could not be confirmed: neither the reference Magnetic Roar
   // "Attribute Scaling" table nor the source's multiplier tables list a distinct value for it (both only
   // publish Magnetic Roar Damage and Lightning Execution Damage under that skill's scaling table);
   // kept as-is rather than guessing, pending a source that actually publishes this figure.
@@ -6042,7 +6042,7 @@ const SKILL_MULTIPLIERS = {
   // was listed as '68% + 132% (+5% per Blaze)' vs the real 135.20%+262.43% with +9.95% per Blaze), the
   // same halving pattern already found and fixed across Camellya/Carlotta/Roccia/Phoebe/Brant/
   // Cantarella's rows. Outro (150%, matching the source's Lv.1 value exactly) was already correct.
-  // Re-verified in full 2026-08-31 against the wiki/Zani/Combat's "Attribute Scaling"
+  // Re-verified in full 2026-08-31 against the Zani combat reference's "Attribute Scaling"
   // tables (Lv.10/max-skill-level column, matching this file's existing convention) cross-checked against
   // the source/wuthering-waves/characters/zani's Kit tab — every pre-existing row (Basic ATK, Heavy ATK,
   // Pinpoint Strike, Targeted Action, Heavy Slash Daybreak/Dawning/Nightfall, Rekindle, The Last Stand,
@@ -6079,7 +6079,7 @@ const SKILL_MULTIPLIERS = {
     ['Forte', 'Heavy Slash: Dawning', '424.1%', 'Second, stronger stage of the Forte Heavy ATK; consumes 20 Blaze.'],
     ['Forte', 'Heavy Slash: Nightfall', '135.2% + 262.4% (+9.95% per Blaze)', 'Forte finisher, consumes up to 40 Blaze; scales with consumed Blaze.'],
     ['Forte', 'Heavy Slash: Daybreak → Dawning → Nightfall', '198.8% + 424.1% + 135.2%+262.4%(+9.95%/Blaze)', "2nd full pass of the 3-hit string, same per-hit values as the 1st pass — the rotation's own step collapses the 3 stages into one combined entry."],
-    // added 2026-08-31 via the wiki/Zani/Combat + the source cross-check — was missing
+    // added 2026-08-31 via the Zani combat reference + the source cross-check — was missing
     // entirely; parry payoff of the pre-Daybreak Ready Stance, same DMG as Dawning at every level.
     ['Forte', 'Heavy Slash: Lightsmash', '424.1%', 'Parry counter cast automatically if Zani is hit during Scorching Light\'s Ready Stance, before releasing into Daybreak.'],
     ['Liberation', 'Rekindle', '318.5%', 'Ultimate that raises max Blaze and enters Inferno state.'],
@@ -6102,11 +6102,11 @@ const SKILL_MULTIPLIERS = {
   // ── 4★ Characters ──
   // Aalto/Baizhi/Chixia rewritten 2026-08-18: the previous rows used generic "Stage 1-4" labels and
   // approximated/wrong multipliers and skill names (e.g. Baizhi's Liberation was mislabeled "Momentary
-  // Presence" — the real name is "Momentary Union") that didn't match any real the wiki skill name, so
+  // Presence" — the real name is "Momentary Union") that didn't match any real reference skill name, so
   // getSkillIcon() could never resolve an icon for them. Replaced with real Lv.10 Attribute Scaling
-  // values and exact move names from the wiki's Combat pages (Forte Details tables),
+  // values and exact move names from the reference Combat pages (Forte Details tables),
   // matching the Suisui-quality format (real names + desc column) instead of the old placeholder style.
-  // Full audit 2026-09-01 against the wiki/Aalto/Combat, cross-checked against
+  // Full audit 2026-09-01 against the Aalto combat reference, cross-checked against
   // the source/character/1403 (both agree exactly) — every pre-existing value was already correct.
   // Added the two entirely missing rows (Mid-air Attack, Dodge Counter).
   'Aalto': [
@@ -6120,7 +6120,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Feint Shot', '66.27%×3', 'Rapid continuous shooting on entry.'],
     ['Outro', 'Dissolving Mist', '+23% Aero DMG Amp (14s)', 'Buffs the incoming Resonator.'],
   ],
-  // Full audit 2026-09-01 against the wiki/Baizhi/Combat, cross-checked against
+  // Full audit 2026-09-01 against the Baizhi combat reference, cross-checked against
   // the source/character/1103 (both agree exactly) — every pre-existing value was already correct.
   // Added the two entirely missing rows (Mid-air Attack, Dodge Counter).
   'Baizhi': [
@@ -6138,8 +6138,8 @@ const SKILL_MULTIPLIERS = {
   // "Electro Spark"/"Lightning Storm"/"Static Entry"/"Discharge" don't exist on the real kit, and the
   // Outro "+12% Electro DMG" was wrong — her real Outro carries no elemental DMG buff at all, only a
   // general team DMG Amp, see CHAR_BUFF_TABLE above) with real move names and Lv.10 Attribute Scaling
-  // values from the wiki/Buling/Combat's Forte Details table (rendered — the raw
-  // wikitext only transcludes {{Skill Upgrade|Buling|totalOnly}}), cross-checked against the source's own
+  // values from the Buling combat reference's Forte Details table (rendered — the raw
+  // page source only transcludes {{Skill Upgrade|Buling|totalOnly}}), cross-checked against the source's own
   // Kit tab (identical multiplier text). Trigram-consuming Heavy Attacks, Mid-air Attack, Dodge Counter,
   // and the enhanced Forte Circuit Liberation (Flashing Thunder Spell: Harmony) were entirely missing.
   'Buling': [
@@ -6161,7 +6161,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Summon and Smite', '131.10%', 'Heals all nearby team Resonators on cast; Inherent Skill grants 4 Electro Flare stacks to targets hit (once per 10s).'],
     ['Outro', 'Exorcism Spell', 'No DMG (Heal + 15% team DMG Amp, 30s)', "Heals the active Resonator by 18% of Buling's ATK/s for 16s. All nearby team Resonators have DMG Amplified by 15% for 30s."],
   ],
-  // Full audit 2026-09-01 against the wiki/Chixia/Combat, cross-checked against
+  // Full audit 2026-09-01 against the Chixia combat reference, cross-checked against
   // the source/character/1202 (both agree exactly) — every pre-existing value was already correct.
   // Added the two entirely missing rows (Mid-air Attack, Dodge Counter).
   'Chixia': [
@@ -6178,9 +6178,9 @@ const SKILL_MULTIPLIERS = {
   ],
   // Danjin/Yangyang/Sanhua rewritten 2026-08-18: same issue as Aalto/Baizhi/Chixia above — Danjin's row
   // in particular had two fabricated skill names ("Crimson Moonrise" and "Crimson Arrival") that don't
-  // exist anywhere on the wiki; her real Liberation is "Crimson Bloom" and Intro is "Vindication".
-  // Replaced with real Lv.10 values and exact move names from each character's the wiki Combat page.
-  // Full audit 2026-09-01 against the wiki/Danjin/Combat, cross-checked against
+  // exist anywhere on the reference; her real Liberation is "Crimson Bloom" and Intro is "Vindication".
+  // Replaced with real Lv.10 values and exact move names from each character's reference Combat page.
+  // Full audit 2026-09-01 against the Danjin combat reference, cross-checked against
   // the source/character/1602 (both agree exactly) — every damage value was already correct. Corrected
   // the Outro's mechanic label from "Amplify" to "Amp" (see CHARACTER_DATA.Danjin's comment above) and
   // added the two entirely missing rows (Mid-air Attack, Dodge Counter).
@@ -6207,8 +6207,8 @@ const SKILL_MULTIPLIERS = {
   // "Luminal Strike"/"Daybreak Signal"/"Light Surge" don't exist on the real kit, and the Outro
   // "Radiant Blessing"/"+12% Glacio DMG" was doubly wrong — Lumi is Electro, not Glacio, and her real
   // Outro buffs Resonance Skill DMG, not elemental DMG) with real move names and Lv.10 Attribute Scaling
-  // values from the wiki/Lumi/Combat's Forte Details table (rendered — the raw
-  // wikitext only transcludes {{Forte Table|Lumi}}), cross-checked against the source's own Kit tab
+  // values from the Lumi combat reference's Forte Details table (rendered — the raw
+  // page source only transcludes {{Forte Table|Lumi}}), cross-checked against the source's own Kit tab
   // (identical multiplier values). Her dual Yellow Light (ranged)/Red Light (melee) Basic ATK stances,
   // Signal Light Forte Circuit's Energized Pounce/Rebound/Glare/Red Spotlight/Laser rows, and Heavy
   // ATK/Plunging Attack/Dodge Counter rows were entirely missing before.
@@ -6234,8 +6234,8 @@ const SKILL_MULTIPLIERS = {
   ],
   // corrected 2026-08-18: replaced the old generic "Stage 1-4" placeholder values (fabricated move names
   // "Violent Crescendo"/"Fury Overture"/"Flame Reprise" don't exist on the real kit at all) with real
-  // Lv.10 Attribute Scaling values and move names from the wiki/Mortefi/Combat's
-  // Forte Details table (rendered — the raw wikitext only transcludes {{Forte Table|Mortefi}}), cross-
+  // Lv.10 Attribute Scaling values and move names from the Mortefi combat reference's
+  // Forte Details table (rendered — the raw page source only transcludes {{Forte Table|Mortefi}}), cross-
   // checked against the source's own Kit tab. Basic ATK's real 4-part combo, Heavy ATK/Mid-air/Dodge Counter
   // rows, Forte Circuit's Fury Fugue, and both Inherent Skills were entirely missing.
   'Mortefi': [
@@ -6251,7 +6251,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Dissonance', '168.99%', 'Fusion DMG opener.'],
     ['Outro', 'Rage Transposition', '+38% Heavy ATK DMG Amp (14s or until swapped)', 'Grants the incoming character Heavy ATK DMG Amplification.'],
   ],
-  // Full audit 2026-09-01 against the wiki/Sanhua/Combat, cross-checked against
+  // Full audit 2026-09-01 against the Sanhua combat reference, cross-checked against
   // the source/character/1102 (both agree exactly) — every damage value was already correct. Added the
   // two entirely missing rows (Mid-air Attack, Dodge Counter).
   'Sanhua': [
@@ -6268,7 +6268,7 @@ const SKILL_MULTIPLIERS = {
   ],
   // corrected 2026-08-18: replaced the old generic "Stage 1-4"/placeholder multipliers (which didn't
   // match any real move name or value) with real Lv.10 Attribute Scaling values and move names from
-  // the wiki/Taoqi/Combat's Forte Details table. Liberation is real-name
+  // the Taoqi combat reference's Forte Details table. Liberation is real-name
   // 'Unmovable' (DEF-scaling nuke), not 'Iron Will' — that name actually belongs to her Outro Skill
   // (a pure Resonance Skill DMG Amp buff, no direct multiplier, matching the Lumi/Youhu Outro-row
   // convention below). Forte Circuit 'Power Shift' (Timed Counters combo) was entirely missing.
@@ -6284,7 +6284,7 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Defense Formation', '208.76%', 'Havoc DMG opener; Basic ATK afterward casts Timed Counters directly.'],
     ['Outro', 'Iron Will', '+38% Resonance Skill DMG Amp (14s)', 'Buffs the incoming Resonator\'s Resonance Skill DMG.'],
   ],
-  // Full audit 2026-09-01 against the wiki/Yangyang/Combat, cross-checked against
+  // Full audit 2026-09-01 against the Yangyang combat reference, cross-checked against
   // the source/character/1402 (both agree exactly) — every damage value was already correct. Added the
   // two entirely missing rows (Mid-air Attack, Dodge Counter).
   'Yangyang': [
@@ -6304,11 +6304,11 @@ const SKILL_MULTIPLIERS = {
   // "Cleansing Blaze"/"Spirit Congregation"/"PoeticErta" that don't exist on the real kit, and a
   // fabricated "+23% Glacio DMG Amp" Outro that has no basis anywhere — her real Outro carries no Glacio
   // DMG at all, only a Coordinated ATK buff) with real Lv.10 Attribute Scaling values and move names from
-  // the wiki/Youhu/Combat's Forte Details table (rendered section-by-section via
-  // the MediaWiki API). No Basic ATK/Heavy ATK/Mid-air/Dodge Counter rows exist in her Forte Details
+  // the Youhu combat reference's Forte Details table (rendered section-by-section via
+  // the reference API). No Basic ATK/Heavy ATK/Mid-air/Dodge Counter rows exist in her Forte Details
   // table at all (unlike Yuanwu/Mortefi) — her 4-part Basic Attack combo and Heavy ATK: Frostfall have no
-  // published DMG% scaling on the wiki or the source, so none are invented here.
-  // Full audit 2026-09-01 against the wiki/Youhu/Combat, cross-checked against
+  // published DMG% scaling on the reference or the source, so none are invented here.
+  // Full audit 2026-09-01 against the Youhu combat reference, cross-checked against
   // the source/character/1106 (both agree exactly). Fixed a real zero-damage rotation bug:
   // CHARACTER_ROTATIONS.Youhu's 'Basic ATK'/'Frosty Punches' step had no matching row at all — her entire
   // Basic ATK combo was missing from this table. Added that plus the other missing moves (Heavy Attack:
@@ -6331,12 +6331,12 @@ const SKILL_MULTIPLIERS = {
   // corrected 2026-08-18: replaced the old generic "Stage 1-5" placeholder values (which didn't match
   // any real move name — Yuanwu never has an unsourced "Liberation DMG Amp" Outro or "shield" on
   // Liberation) with real Lv.10 Attribute Scaling values and move names from
-  // the wiki/Yuanwu/Combat's Forte Details table (rendered, since the raw
-  // wikitext only transcludes the {{Forte Table}} template). Skill's off-field Coordinated ATK and
+  // the Yuanwu combat reference's Forte Details table (rendered, since the raw
+  // page source only transcludes the {{Forte Table}} template). Skill's off-field Coordinated ATK and
   // Forte Circuit's Thunder Wedge Detonation/Rumbling Spark/Thunder Uprising/Thunderweaver rows were
   // entirely missing. Outro Lightning Manipulation has no DMG multiplier at all (pure Vibration
   // Strength depletion) — the old "+15% Liberation DMG Amp" value had no basis anywhere on the page.
-  // Full audit 2026-09-01 against the wiki/Yuanwu/Combat, cross-checked against
+  // Full audit 2026-09-01 against the Yuanwu combat reference, cross-checked against
   // the source/character/1303 (both agree exactly) — every pre-existing value was already correct.
   // Added the three entirely missing Lightning Infused enhanced-state rows.
   'Yuanwu': [
@@ -6367,7 +6367,7 @@ const SKILL_MULTIPLIERS = {
 const CHARACTER_ROTATIONS = {
   // Standard Rotation — sourced from the source's "Gameplay and teams" tab for Cantarella (2026-08-17,
   // Chrome UA + google.com referer + jsRender). This section was previously entirely missing for her.
-  // Re-verified and expanded 2026-08-31 against both the wiki/Cantarella/Combat (exact
+  // Re-verified and expanded 2026-08-31 against both the Cantarella combat reference (exact
   // Trance/Shiver/Mirage/Abyssal Rebirth mechanics and durations) and the source's Gameplay tab (rotation step
   // order, unchanged from the 2026-08-17 pass). Corrections: the Heavy ATK step's `skill` field was 'Delusive
   // Dive' with no matching SKILL_MULTIPLIERS row (fixed above — see that section's comment) so this step was
@@ -6390,7 +6390,7 @@ const CHARACTER_ROTATIONS = {
   // UA + google.com referer + jsRender). This section was previously entirely missing for him. Exact
   // conditional mechanics (Aflame's Bravo-gain doubling scope, Interlude Applause's forfeit condition,
   // Returned from Ashes' shield duration, Outro's swap-forfeit) verified 2026-08-31 against
-  // the wiki/Brant/Combat (Chrome/Windows UA + google.com referer + jsRender).
+  // the Brant combat reference (Chrome/Windows UA + google.com referer + jsRender).
   'Brant': [
     { type: 'Intro', skill: 'Applaud for Me!', note: 'Swap into him — fires automatically. Fills a quarter of his Forte gauge ("Bravo") and grants Interlude Applause: his next Mid-air Attack starts at Stage 2 instead of Stage 1. Interlude Applause is FORFEITED (removed with no effect) if he lands early or is swapped out before that next Mid-air Attack.' },
     { type: 'Liberation', skill: 'To the Horizon', note: 'Cast Liberation right after Intro — heals the team, instantly puts Brant airborne (skipping the slow jump-up), and enters Aflame for 12s: Bravo gain from Basic ATK and Resonance Skill hits is doubled (Intro Skill\'s Bravo gain is NOT boosted), and his passive ATK-from-ER conversion is upgraded from Theatrical Moment to the stronger "My" Moment for the duration.' },
@@ -6407,7 +6407,7 @@ const CHARACTER_ROTATIONS = {
   // Chrome UA + google.com referer + jsRender). This section was previously entirely missing for her.
   // Uses her Absolution (self-DPS) rotation, the source's higher-rated mode (T1.5 DPS vs T2 Hybrid) —
   // Confession mode swaps the Forte cast for Utter Confession and only loops 2x instead of 4x.
-  // Exact resource numbers re-verified 2026-08-31 against the wiki/Phoebe/Combat's
+  // Exact resource numbers re-verified 2026-08-31 against the Phoebe combat reference's
   // "Forte" section: Prayer caps at 120, +5/s passive regen (0→120 = 24s, matching the existing note);
   // Divine Voice caps at 60, refilled to 60 by either Absolution Litany or Utter Confession; entering one
   // of Absolution/Confession ends the other and the two casts "cannot coexist"; while Divine Voice > 0,
@@ -6438,7 +6438,7 @@ const CHARACTER_ROTATIONS = {
   ],
   // Standard Rotation — sourced from the source's "Gameplay and teams" tab for Roccia (2026-08-17,
   // Chrome UA + google.com referer + jsRender). This section was previously entirely missing for her.
-  // Re-verified 2026-08-31 verbatim against the wiki/Roccia/Combat's Forte
+  // Re-verified 2026-08-31 verbatim against the Roccia combat reference's Forte
   // Details section (exact Imagination gain/spend amounts, Beyond Imagination entry/exit conditions,
   // Liberation's Crit-Rate-scaling team ATK buff, Outro's forfeit-on-swap condition). Also fixes a
   // zero-damage bug: step 2's `skill` was 'Pero, Easy Stage 4', which does NOT appear as a substring of
@@ -6457,7 +6457,7 @@ const CHARACTER_ROTATIONS = {
   ],
   // Standard Rotation — sourced from the source's "Gameplay and teams" tab for Carlotta (re-fetched
   // 2026-08-18, Chrome UA + google.com referer + jsRender). Step-by-step mechanics re-verified 2026-08-31
-  // verbatim against the wiki/Carlotta/Combat's Forte Details table (exact ammo counts,
+  // verbatim against the Carlotta combat reference's Forte Details table (exact ammo counts,
   // gain/consume events, and Twilight Tango's forced-press/forfeit structure) — the action sequence already
   // matched; only the per-step conditional detail was tightened (e.g. Chromatic Splendor's Substance gain is
   // per-crystal, 10 per Moldable Crystal consumed, not a flat "60").
@@ -6491,7 +6491,7 @@ const CHARACTER_ROTATIONS = {
   ],
   // Standard Rotation — sourced from Jianxin's kit flow on the source character/1405 (the source's
   // "Gameplay and teams" tab was unreachable this audit — 403/blank JS-render).
-  // Re-verified 2026-08-31 against the wiki/Jianxin/Combat's Forte/Details text
+  // Re-verified 2026-08-31 against the Jianxin combat reference's Forte/Details text
   // directly: every step's `skill` string still substring-matches its SKILL_MULTIPLIERS.Jianxin row name
   // under the calc engine's rowName.includes(step.skill) lookup ('Essence of Tao'->Intro row, 'Fengyiquan
   // Stage 1-4'->Basic ATK row, 'Calming Air'->the 'Calming Air: Chi Counter / Chi Parry' Skill row,
@@ -6508,7 +6508,7 @@ const CHARACTER_ROTATIONS = {
     { type: 'Liberation', skill: 'Purification Force Field', note: 'Press Liberation to group enemies together — the field explodes for damage when it expires; 20s cooldown.' },
     { type: 'Outro', skill: 'Transcendence', note: 'Swap out to trigger this automatically — grants the incoming Resonator +38% Resonance Liberation DMG for 14s.' },
   ],
-  // Standard Rotation — re-verified verbatim 2026-08-31 against the wiki/Lingyang/Combat's
+  // Standard Rotation — re-verified verbatim 2026-08-31 against the Lingyang combat reference's
   // Forte "Details" text (Chrome/Windows UA + google.com referer + jsRender), cross-checked against
   // the source/wuthering-waves/characters/lingyang's "Gameplay and teams" tab for cast order. Every step's
   // `skill` string still substring-matches its SKILL_MULTIPLIERS.Lingyang row name. Prior notes were vague
@@ -6552,7 +6552,7 @@ const CHARACTER_ROTATIONS = {
   ],
   // Standard Rotation (S0) — re-verified 2026-08-31 against the source/wuthering-waves/characters/verina's
   // "Gameplay and teams" tab (Chrome UA + google.com referer + jsRender; total listed time 3.75s at S0,
-  // 2.35s at S2) and cross-checked against the wiki/Verina/Combat and
+  // 2.35s at S2) and cross-checked against the Verina combat reference and
   // the source/character/1503 for the per-step numbers. Her Intro Skill is explicitly skipped — the source
   // calls it "unusable," sending her airborne and lengthening her already-shortest-in-game rotation — so
   // she swaps in cold and her Basic ATK cycle starts from Stage 3. Cast-order note: Skill Botany Experiment
@@ -6564,7 +6564,7 @@ const CHARACTER_ROTATIONS = {
     { type: 'Forte', skill: 'Mid-air Attack: Starflower Blooms', note: 'Jump, then tap Basic Attack up to 3 times to spend all 4 Photosynthesis Energy stacks (1 per cast, cap 4) on Starflower Blooms — each cast heals the team (1188 + 29.75% ATK at Lv.10) and refills 12 Concerto Energy. A Concerto-generating weapon (Variation/Stellar Symphony) lets the last cast be skipped.' },
     { type: 'Outro', skill: 'Blossom', note: 'Swap out to trigger this automatically — heals the incoming Resonator for 19% ATK/s over 6s and grants the whole nearby team +15% All-Type DMG Amplify for 30s.' },
   ],
-  // Standard Rotation — re-verified verbatim 2026-08-31 against the wiki/Jinhsi/Combat
+  // Standard Rotation — re-verified verbatim 2026-08-31 against the Jinhsi combat reference
   // (Chrome/Windows UA + google.com referer + jsRender, load+9s wait to clear Cloudflare). This is the
   // baseline single-Incarnation-cycle rotation (no swap/animation/jump cancels) — she also has advanced/
   // expert cancel-heavy variants that push her damage further, omitted here as too execution-dependent
@@ -6584,7 +6584,7 @@ const CHARACTER_ROTATIONS = {
   // no-swap-cancel rotation — she also has Double-Intro and heavy Swap-Cancel variants for advanced
   // quickswap play, omitted here as too execution/team-dependent for a standard reference rotation. Goal
   // each rotation: land 4 True Sight follow-ups to fill Enflamement for 2 Forte Heavy casts. Step notes
-  // re-verified 2026-08-31 against the wiki/Changli/Combat ("Instructions" and
+  // re-verified 2026-08-31 against the Changli combat reference ("Instructions" and
   // Forte "Details" sections): each True Sight window (12s) is consumed by exactly ONE follow-up
   // (Conquest on a ground Basic ATK, or Charge on jump/mid-air) — landing both per window is not
   // possible, so a fresh True Sight trigger is required before every Enflamement tick; this is the one
@@ -6620,17 +6620,17 @@ const CHARACTER_ROTATIONS = {
   // Encore (re-fetched 2026-08-18, Chrome UA + google.com referer + jsRender). the source also lists
   // Advanced and "No Forte" combos that squeeze in extra Basic Attacks via Dash/Skill-cancels — omitted
   // here as too execution-heavy for a standard reference rotation.
-  // Zero-damage bug fixed 2026-08-31 (re-verified against wuthering.gg/characters/encore + SKILL_MULTIPLIERS.Encore,
+  // Zero-damage bug fixed 2026-08-31 (re-verified against a community Encore page + SKILL_MULTIPLIERS.Encore,
   // same bug class already caught on Calcharo/Yinlin/Roccia/Jiyan): FIVE separate step skill strings did NOT
   // substring-match their SKILL_MULTIPLIERS row name under the calc engine's `rowName.includes(step.skill)`
   // lookup, so every one of them (7 total steps) silently resolved to ZERO damage. (1) The Intro step used the
-  // invented flavor phrase "Woolies Can Help!" — her real Intro Skill name (per both the wiki and wuthering.gg) is
+  // invented flavor phrase "Woolies Can Help!" — her real Intro Skill name (per both references) is
   // "Woolies Helpers"; no row existed for the fake name at all. (2)-(3) The 3 "Cosmos: Rampage" Skill steps and
   // 2 "Cosmos: Frolicking 1-4" Basic ATK steps referenced names that only existed buried mid-string inside the
   // old combined 'Liberation'/'Cosmos Rave' row (see that section's fix) — now resolved by the new dedicated
   // 'Skill'/'Basic ATK' rows. (4) The Forte finisher step used "Heavy Attack: Cosmos Rupture" (with "Attack")
   // against the row name 'Heavy ATK: Cosmos Rupture' (with "ATK") — corrected to match. (5) "Dissonance" was
-  // also corrected to "Mayhem" throughout — the Forte gauge's actual in-game name (wuthering.gg's own skill text
+  // also corrected to "Mayhem" throughout — the Forte gauge's actual in-game name (a community database's skill text
   // calls it "Mayhem"; "Dissonance" appears nowhere in either source and was an unsourced invention).
   'Encore': [
     { type: 'Echo', skill: 'Use Echo', note: 'Use your equipped Echo\'s skill before swapping her in (Inferno Rider is best-in-slot but needs a swap-cancel to use smoothly).' },
@@ -6956,7 +6956,7 @@ const CHARACTER_ROTATIONS = {
   // Moon — neither matches the source's actual "Standard Sub DPS Rotation" (used alongside Augusta), which
   // opens Intro straight into Liberation, then Flux into the Moonbow combo, and skips the base Skill
   // entirely (Closing Refrain is only used in the longer "Extended"/Main DPS variants).
-  // Re-verified and expanded 2026-08-31 against the wiki/Iuno/Combat's "Forte > Details"
+  // Re-verified and expanded 2026-08-31 against the Iuno combat reference's "Forte > Details"
   // section (Chrome/Windows UA + google.com referer + jsRender). Each step's `skill` string re-checked as a
   // substring of a SKILL_MULTIPLIERS.Iuno row name — see the critical bug fix noted in that table's comment
   // above ('Flux: Moonbow' had no matching row before this pass, so that step resolved to 0 DMG). Corrections:
@@ -6978,7 +6978,7 @@ const CHARACTER_ROTATIONS = {
   // skipped her Mid-air Attack entirely — the step that recalls all 3 Sword Shadows and grants their
   // buffs to Fleurdelys, central to her kit — and collapsed her two-phase Fleurdelys Skill 1/Skill 2
   // loop into a single generic Basic ATK line. Rebuilt to match the source's actual "Basic Rotation".
-  // Re-verified and expanded 2026-08-31 against the wiki/Cartethyia/Combat's "Forte"
+  // Re-verified and expanded 2026-08-31 against the Cartethyia combat reference's "Forte"
   // section for exact resource numbers, the Skill1→Skill2 cast-order window, and Liberation2's exact payload
   // (previously just "removes stacked Erosion... for bonus DMG", now the real +20%/stack, max 5 stacks, formula).
   'Cartethyia': [
@@ -7013,7 +7013,7 @@ const CHARACTER_ROTATIONS = {
     { type: 'Liberation', skill: 'Symphonic Poem: Tonic', note: 'Optional: tap the on-screen prompt once to switch her Recital mode to Spectro Frazzle if your team needs it instead of Aero Erosion — otherwise she stays on Aero Erosion by default.' },
     { type: 'Outro', skill: 'Windcalling Tune', duration: 30, note: 'Swap out to trigger this automatically (Recital persists off-field, still pulsing Tonics on its own). Amplifies Aero Erosion DMG near the active Resonator by +100% for 30s.' },
   ],
-  // Standard DPS Rotation — re-verified in full 2026-08-31 against the wiki/Zani/Combat
+  // Standard DPS Rotation — re-verified in full 2026-08-31 against the Zani combat reference
   // (Instructions + Forte Details sections) cross-checked against the source/wuthering-waves/characters/zani's
   // Kit + "Gameplay and teams" tabs (Chrome UA + google.com referer + jsRender, both live). Needs a Spectro
   // Frazzle applier (Phoebe ideally) on the team — Zani converts their Frazzle into Heliacal Ember/Blaze
@@ -7022,7 +7022,7 @@ const CHARACTER_ROTATIONS = {
   // "up to 2s, 100% reduction for 1 hit" with no swap-cancel note); Targeted Action/Forcible Riposte step now
   // states the exact Sunburst payoff (+20% Spectro Frazzle DMG, 14s) both casts grant, not just "applies 1
   // Heliacal Ember and grants Blaze"; Rekindle step now states its exact +25% Basic ATK DMG Multiplier buff
-  // (source: the wiki's "Basic Attack Multiplier Increase 25%" Forte attribute) which was previously omitted
+  // (source: the reference "Basic Attack Multiplier Increase 25%" Forte attribute) which was previously omitted
   // entirely; a parry-branch Heavy Slash: Lightsmash step added (was missing — see SKILL_MULTIPLIERS note
   // above) as an alternative to Daybreak when Zani is hit during the pre-Daybreak Ready Stance; The Last Stand
   // step's forfeit-window wording tightened to make clear the 8s/Blaze<30 gate is an OR, not an AND. Per-hit
@@ -7049,7 +7049,7 @@ const CHARACTER_ROTATIONS = {
   // Standard Rotation — sourced from the source's "Gameplay and teams" tab for Xiangli Yao (2026-08-18,
   // Chrome UA + google.com referer + jsRender). His 24s Intuition window is long and forgiving — dodges,
   // swaps, even mistakes fit inside it without losing the buffed state.
-  // Full audit 2026-09-01, sourced from wutheringwaves.gg's Xiangli Yao guide + wuwa.build/wutheringlab.com
+  // Full audit 2026-09-01, sourced from a community Xiangli Yao guide + two community databases
   // cross-references. Fixed a zero-damage-display bug affecting 4 of the original steps: `skill` strings
   // 'Pivot-Impale P1/P2/P3', 'Mid-air Attack: Revamp', and 'Skill: Law of Reigns' were never a substring of
   // any SKILL_MULTIPLIERS row name (the `type === step.type && n.includes(step.skill)` lookup), so those
@@ -7113,9 +7113,9 @@ const CHARACTER_ROTATIONS = {
   // used only the first time she's switched in from another character, skips the Intro and starts at
   // Basic 2 instead). Forte: Basic (Movement of Fate and Finality) is used vs. bosses; Forte: Skill
   // (Murmurs in a Haunting Dream) groups adds instead — pick whichever fits the fight each time it's due.
-  // Corrected 2026-08-31 against the wiki/Phrolova/Combat, cross-checked
+  // Corrected 2026-08-31 against the Phrolova combat reference, cross-checked
   // the source/character/1608: Outro entry previously stated the +20%/+25% buff with no forfeit
-  // condition at all — added "ends if swapped out" (wiki: "...for 14s or until they are switched out")
+  // condition at all — added "ends if swapped out" (reference: "...for 14s or until they are switched out")
   // and separated the Maestro-only 2-bonus-Hecate-attack clause, which is conditioned on Phrolova still
   // being in Maestro state at the moment Unfinished Piece is cast, not merely "cast during Maestro" in
   // general. Liberation entry's gate (Resolving Chord state only, 0 max Resonance Energy) confirmed
@@ -7195,7 +7195,7 @@ const CHARACTER_ROTATIONS = {
     { type: 'Forte', skill: 'Clarity of Mind: Detonate', note: 'second detonate to fully spend the loop before swapping' },
     { type: 'Outro', skill: 'Silversnow', duration: 14, note: 'grants next Resonator 38% Basic ATK DMG Amp — time this to land on the intended DPS' },
   ],
-  // Standard Rotations added 2026-08-18 for Aalto/Baizhi/Chixia — sourced from the wiki's
+  // Standard Rotations added 2026-08-18 for Aalto/Baizhi/Chixia — sourced from the reference's
   // Combat pages (Instructions + Forte text). These were entirely missing before.
   'Aalto': [
     { type: 'Intro', skill: 'Feint Shot', note: 'rapid burst on entry, builds Mist Drops' },
@@ -7242,7 +7242,7 @@ const CHARACTER_ROTATIONS = {
     { type: 'Liberation', skill: 'Blazing Flames', note: 'AoE rapid-fire burst hitting all nearby enemies' },
     { type: 'Outro', skill: 'Leaping Flames', note: 'AoE shockwave around the target, sets up the next Resonator' },
   ],
-  // Standard Rotation added 2026-08-18 — sourced from the wiki's Danjin/Combat
+  // Standard Rotation added 2026-08-18 — sourced from the Danjin combat reference
   // Instructions + Forte text (Crimson Erosion/Sanguine Pulse combo strings, Forte Circuit conditions).
   // This section was previously entirely missing for her.
   // Step types/names corrected 2026-09-01 to match SKILL_MULTIPLIERS.Danjin's row types/names above:
@@ -7258,7 +7258,7 @@ const CHARACTER_ROTATIONS = {
     { type: 'Forte', skill: 'Serene Vigil: Chaoscleave', note: 'once Ruby Blossom reaches 60+, unleash Chaoscleave (heals Danjin, counts as Heavy ATK) into the Scatterbloom follow-up' },
     { type: 'Outro', skill: 'Duality', duration: 14, note: 'grants the incoming Resonator 23% Havoc DMG Amp for 14s' },
   ],
-  // Standard Rotation added 2026-08-18 — sourced from the wiki's Yangyang/Combat
+  // Standard Rotation added 2026-08-18 — sourced from the Yangyang combat reference
   // Instructions/Forte text and the source's review ("the main and most reliable way to access Feather
   // Release... by jumping", "we will mostly be counting on Heavy Attacks and Resonance Skills to
   // generate Forte stacks"). One of the shortest rotations in the game, built for quickswap. This
@@ -7274,7 +7274,7 @@ const CHARACTER_ROTATIONS = {
     { type: 'Liberation', skill: 'Wind Spirals', note: 'Cyclone burst groups enemies and generates Concerto Energy' },
     { type: 'Outro', skill: 'Whispering Breeze', duration: 5, note: 'funnels 4 Resonance Energy/s to the incoming Resonator for 5s — quickswap into the main DPS' },
   ],
-  // Added 2026-08-18 (previously entirely missing) — sourced from the wiki's
+  // Added 2026-08-18 (previously entirely missing) — sourced from the reference's
   // Taoqi/Combat Instructions/Forte text. She's a shield support: Skill grants 3 Rocksteady Shield
   // stacks (each absorbing a hit), Liberation is a DEF-scaling nuke, and the Outro's 38% Resonance
   // Skill DMG Amp is timed onto the incoming Resonator's own Skill DPS window.
@@ -7287,7 +7287,7 @@ const CHARACTER_ROTATIONS = {
     { type: 'Outro', skill: 'Iron Will', duration: 14, note: 'grants the incoming Resonator 38% Resonance Skill DMG Amp for 14s — time this to land on the intended DPS\'s Skill window' },
   ],
   // Added 2026-08-18 (previously entirely missing) — sourced from the source's Gameplay and teams "Ability
-  // Priority" list and the wiki's Yuanwu/Combat Instructions/Forte text. He's a near-zero-field-time
+  // Priority" list and the Yuanwu combat reference Instructions/Forte text. He's a near-zero-field-time
   // support: deploy Thunder Wedge, detonate it with Liberation, swap off. the source explicitly notes he
   // "features no set rotation" — this models the documented Ability Priority order for calc purposes.
   'Yuanwu': [
@@ -7299,7 +7299,7 @@ const CHARACTER_ROTATIONS = {
     { type: 'Outro', skill: 'Lightning Manipulation', note: 'swap out — depletes enemy Vibration Strength, no DMG; quickswap into the main DPS immediately' },
   ],
   // Added 2026-08-18 (previously entirely missing) — sourced from the source's Gameplay and teams "Rotation"
-  // list and the wiki's Mortefi/Combat Instructions/Forte text. His Concerto rotation is one of the
+  // list and the Mortefi combat reference Instructions/Forte text. His Concerto rotation is one of the
   // fastest in the game: build Annoyance to trigger Fury Fugue twice, then Liberation right before
   // swapping so Burning Rhapsody's off-field Coordinated ATKs and the Outro's Heavy ATK buff both land
   // on the incoming Heavy Attacker.
@@ -7313,7 +7313,7 @@ const CHARACTER_ROTATIONS = {
     { type: 'Outro', skill: 'Rage Transposition', note: 'swap into the main Heavy Attacker — grants them 38% Heavy ATK DMG Amp for 14s; Impermanence Heron\'s swap-cancel adds a further buff on the same swap' },
   ],
   // Added 2026-08-18 (previously entirely missing) — sourced from the source's Gameplay and teams "Rotation
-  // 1" (her simplest loop, 6.5s, works with any weapon) and the wiki's Youhu/Combat Instructions text.
+  // 1" (her simplest loop, 6.5s, works with any weapon) and the Youhu combat reference Instructions text.
   // Every Antique Appraisal (Chime/Ruyi/Ding/Mask, drawn at random unless chosen via Liberation) refills
   // an Auspice; Poetic Essence fires once all 4 are gathered. the source recommends picking Mask or Ruyi from
   // Liberation's choice prompt against bosses.
@@ -7328,7 +7328,7 @@ const CHARACTER_ROTATIONS = {
     { type: 'Outro', skill: 'Timeless Classics', note: 'swap into the Coordinated ATK dealer — grants +100% Coordinated ATK DMG Amp for 28s' },
   ],
   // Added 2026-08-18 (previously entirely missing) — sourced from the source's Gameplay and teams "Rotation"
-  // tab and the wiki's Lumi/Combat Instructions text. Alternates Yellow Light/Red Light stances by consuming
+  // tab and the Lumi combat reference Instructions text. Alternates Yellow Light/Red Light stances by consuming
   // full Sparks with Energized Pounce/Rebound; ends on a swap-cancelled Echo into Outro for the incoming
   // Resonance Skill DMG dealer (Jinhsi/Carlotta). the source notes the rotation is "fairly long for a hybrid
   // character" and recommends swap-cancelling the marked steps to shorten field time.
@@ -7344,7 +7344,7 @@ const CHARACTER_ROTATIONS = {
     { type: 'Outro', skill: 'Escorting', duration: 10, note: 'swap-cancel her Echo right before this — grants the incoming Resonator +38% Resonance Skill DMG Amp for 10s' },
   ],
   // Added 2026-08-18 (previously entirely missing) — sourced from the source's Gameplay and teams "Rotation"
-  // tab (her "Loop Rotation", used when an Intro is available) and the wiki's Buling/Combat Forte Details/
+  // tab (her "Loop Rotation", used when an Intro is available) and the Buling combat reference Forte Details/
   // Instructions text. Builds 4 Trigrams (Mountain via Basic 2, Thunder via Mid-air Attack + Skill +
   // Basic 4) to unlock 2 Heavy Attacks that grant Minor Yang + Minor Yin, entering Yin-Yang Balance for
   // the enhanced Liberation. Echo best used right before Outro per the source's own timing tip.
@@ -7432,9 +7432,9 @@ const CHARACTER_ROTATIONS = {
     { type: 'Echo', skill: 'Use Echo', note: "Swap-cancel your Echo skill right after the Liberation lands, just before swapping out for the Outro." },
     { type: 'Outro', skill: 'Lingering Song', note: 'Swap out to trigger this automatically — deals Aero DMG equal to 800% of her ATK.' },
   ],
-  // Added 2026-09-12 against a fresh prydwen.gg build-guide snapshot (Data dump/Jingran/Jingran.md)
+  // Added 2026-09-12 against a fresh build-guide snapshot (Data dump/Jingran/Jingran.md)
   // — previously entirely absent (his guide content had no rotation section written yet when this
-  // repo's characters.js entry was first built from an earlier nanoka.cc snapshot). Standard (S0-S1)
+  // repo's characters.js entry was first built from an earlier snapshot). Standard (S0-S1)
   // Rotation used, matching the convention of using the lower-sequence/most-accessible rotation as the
   // stored CHARACTER_ROTATIONS entry (see Phoebe's own comment above) — the dump's separate S2+
   // rotation (openable Stardome Meander pre-Intro) is a real, sourced alternative not modeled here.
@@ -7466,9 +7466,9 @@ const CHARACTER_ROTATIONS = {
 // Stat types must match damage formula: atkPct, critRate, critDmg, elemDmg, skillDmg,
 // basicDmg, heavyDmg, libDmg, echoDmg, amplify, defIgnore, defShred, resShred, totalMult, allDmg, coordDmg
 // totalMult = rotation-averaged DPS contribution for utility/multiplier nodes
-// Sources: the source sequence nodes, the source, wutheringlab, cross-verified Apr 2026
+// Sources: the source sequence nodes, the source, a community database, cross-verified Apr 2026
 const RESONANCE_CHAIN_DATA = {
-  // Full re-audit 2026-09-01 against the wiki/Suisui/Combat, cross-checked against
+  // Full re-audit 2026-09-01 against the Suisui combat reference, cross-checked against
   // the source/character/1110 (both agree exactly). The prior version of this row deliberately stored
   // "scaled down" approximations instead of the real sourced numbers on S5/S6 — against this project's own
   // hard rule against inventing/guessing values. Corrected to the real, unscaled numbers throughout:
@@ -7493,14 +7493,14 @@ const RESONANCE_CHAIN_DATA = {
   // DPS-focused schema.
   'Suisui':       { s1: {}, s2: { critDmg: 50 }, s3: {}, s4: {}, s5: { basicDmg: 100, heavyDmg: 100 }, s6: { critDmg: 500 } },
   // Qingxiao S2: Heavy ATK mult+40% (confirmed). S3: Liberation Crit DMG+100% (confirmed). S4: ATK+20% on team Tune Strain trigger. S5: Skill mult+100% (confirmed)
-  // Re-audited 2026-09-01 against the wiki/Qingxiao/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Qingxiao combat reference, cross-checked against
   // the source/character/1413 (both agree exactly) — every node already correct, no changes needed.
   // S6's amplify: 40 is scoped narrower than a universal vulnerability in the real text (only applies to
   // Heavy Attack - Stringblade, Heaven's Reckoning: Ephemeral Transcendence, Billows Beneath Heaven, and
   // Juque Perdition, not her full kit), but 'amplify' is the closest available category and the value is
   // exact, so kept as-is.
   'Qingxiao':     { s1: { critRate: 16 }, s2: { heavyDmg: 40 }, s3: { critDmg: 100 }, s4: { atkPct: 20 }, s5: { skillDmg: 100 }, s6: { amplify: 40 } },
-  // Re-audited 2026-09-07 against a real nanoka.cc .mht snapshot (Data dump/Jingran/Jingran.md,
+  // Re-audited 2026-09-07 against a real .mht snapshot (Data dump/Jingran/Jingran.md,
   // his real live kit) — S1/S3/S4/S5 were all unsourced placeholders, not real values:
   // S1 was skillDmg:80, an unscoped approximation of a real effect scoped to exactly 4 named moves
   //   (Encroaching Yin, Netherworld Traverse, Scorching Yang, Afterlife's Guide) — 2 of which
@@ -7550,7 +7550,7 @@ const RESONANCE_CHAIN_DATA = {
   // tier, which per the engine-architecture history (git log) item 2 only runs for the Jingran mixed-team case today.
   'Yangyang: Xuanling': { s1: {}, s2: { heavyDmg: 100 }, s3: { heavyDmg: 175 }, s4: { atkPct: 20 }, s5: {}, s6: { heavyDmg: 40 } },
   // Hiyuki S1/S2: Foreclaimed/Iai skills are "considered Resonance Liberation DMG" per kit.
-  // Full re-audit 2026-09-01 against the wiki/Hiyuki/Combat — its Attribute Scaling
+  // Full re-audit 2026-09-01 against the Hiyuki combat reference — its Attribute Scaling
   // collapsibles render the wrong content for this character (a template/Lua bug specific to this page,
   // similar to the documented Jinhsi issue: the section wraps a Skill Upgrade materials-cost table
   // instead of the actual damage tables), so its per-hit numbers couldn't be used, but the Resonance
@@ -7600,7 +7600,7 @@ const RESONANCE_CHAIN_DATA = {
   // documented as a real, sourced gap rather than force-fit into the wrong category.
   'Lucy':         { s1: { atkPct: 20 }, s2: { totalMult: 290 }, s3: { libDmg: 50, critDmg: 100 }, s4: { allDmg: 20 }, s5: {}, s6: { heavyDmg: 40 } },
   // Rebecca S2: team +20% All-Attribute DMG on Intro/Lib (confirmed exact). S3: Liberation DMG Mult+60% (confirmed exact)
-  // Re-audited 2026-09-01 against the wiki/Rebecca/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Rebecca combat reference, cross-checked against
   // the source/character/1308 (both agree exactly). S1 (basicDmg: 50, "Huntress/Guts core moves DMG
   // Mult +50%") and S5 (basicDmg: 20, "+20% Basic ATK DMG Bonus for 8s on inflicting Hack - Shifting")
   // both confirmed exact. S4 was totalMult: 15 with no basis in either source — real effect is "+60%
@@ -7615,7 +7615,7 @@ const RESONANCE_CHAIN_DATA = {
   'Rebecca':      { s1: { basicDmg: 50 }, s2: { allDmg: 20 }, s3: { libDmg: 60 }, s4: {}, s5: { basicDmg: 20 }, s6: { basicDmg: 40 } },
   // Denia S3: Final Act - Breakdown Form DMG+80% (confirmed exact, Tune Strain/Fusion Burst dual mode averaged elsewhere).
   // S5: Final Act - Stagecraft Form DMG+100% (confirmed exact via the source 2026-08-16 cross-check; was 50 previously)
-  // Re-audited 2026-09-01 against the wiki/Denia/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Denia combat reference, cross-checked against
   // the source/character/1211 (both agree exactly). S1 (critDmg: 30), S2 (libDmg: 40, the unconditional
   // Banish - Breakdown Form Stage 2 DMG Mult bonus — that move's own text says "The skill deals Resonance
   // Liberation DMG", confirming the libDmg category), S3, and S5 all confirmed correct, unchanged.
@@ -7627,7 +7627,7 @@ const RESONANCE_CHAIN_DATA = {
   // S6 was missing a second real component: the node grants BOTH "+60% ATK" AND "+60% Fusion DMG Bonus"
   // simultaneously while in Entropy Shift (only the elemDmg half was captured). Added atkPct: 60.
   'Denia':        { s1: { critDmg: 30 }, s2: { libDmg: 40 }, s3: { libDmg: 80 }, s4: { totalMult: 15 }, s5: { libDmg: 100 }, s6: { atkPct: 60, elemDmg: 60 } },
-  // Lucilla re-audited 2026-09-01 against the wiki/Lucilla/Combat, cross-checked
+  // Lucilla re-audited 2026-09-01 against the Lucilla combat reference, cross-checked
   // against the source/character/1109 (both agree on every node's exact wording and value). S3/S5/S6
   // all buff Letting It Go and/or Oblivion, whose own move text makes their damage type mode-dependent —
   // "considered Basic Attack DMG" in Resonance Mode: Glacio Chafe, "considered Echo Skill DMG" in
@@ -7647,7 +7647,7 @@ const RESONANCE_CHAIN_DATA = {
   // Go — a full 3-Photo Reminiscence reliably hits max, so using the max value +600% (value confirmed
   // exact, category fixed as above).
   'Lucilla':      { s1: { critRate: 20 }, s2: { echoDmg: 40 }, s3: { basicDmg: 100, echoDmg: 100 }, s4: { atkPct: 30 }, s5: { basicDmg: 50, echoDmg: 50 }, s6: { basicDmg: 600, echoDmg: 600 } },
-  // Camellya S1-S6 re-verified verbatim 2026-08-31 against the wiki/Camellya/Combat:
+  // Camellya S1-S6 re-verified verbatim 2026-08-31 against the Camellya combat reference:
   // S1 Somewhere No One Travelled: casting Intro Skill Everblooming gives +28% Crit DMG for 18s, triggerable
   //   once every 25s; also grants interruption immunity while casting Ephemeral (not modeled — no immunity field).
   // S2 Calling Upon the Silent Rose: Ephemeral's DMG Multiplier +120% (was wrongly 40 — corrected).
@@ -7675,7 +7675,7 @@ const RESONANCE_CHAIN_DATA = {
   //   Dream's bonus raised to 250%, immune to interruption while casting — TODO: needs Phase 2 schema, not
   //   representable as a flat stat bonus).
   'Camellya':     { s1: { critDmg: 28 }, s2: { totalMult: 120 }, s3: { atkPct: 58, totalMult: 50 }, s4: { basicDmg: 25 }, s5: { totalMult: 303 }, s6: { totalMult: 150 } },
-  // Carlotta S1-S6 re-verified verbatim 2026-08-31 against the wiki/Carlotta/Combat:
+  // Carlotta S1-S6 re-verified verbatim 2026-08-31 against the Carlotta combat reference:
   // S1 Beauty Blazes Brightest Before It Fades: +12.5% Crit Rate on that instance of DMG when hitting a
   //   Deconstructed target (confirmed, unchanged) — PLUS Chromatic Splendor hitting a Dispersion target
   //   additionally restores 30 Substance (resource-economy effect, not a DPS stat; no schema field for it).
@@ -7697,7 +7697,7 @@ const RESONANCE_CHAIN_DATA = {
   //   totalMult:50, well under a third of the real value) — also doubles Death Knell's crystal-shard count
   //   and adds a 1.5s Scattering immobilize on hit (CC, not a DPS stat; no schema field for it).
   'Carlotta':     { s1: { critRate: 12.5 }, s2: { totalMult: 126 }, s3: { totalMult: 93 }, s4: { skillDmg: 25 }, s5: { totalMult: 47 }, s6: { totalMult: 186.6 } },
-  // Jiyan S1-S6 re-verified verbatim 2026-08-31 against the wiki/Jiyan/Combat's
+  // Jiyan S1-S6 re-verified verbatim 2026-08-31 against the Jiyan combat reference's
   // "Resonance Chain" section (Chrome/Windows UA + google.com referer + jsRender, load+9s wait; 2nd attempt
   // cleared Cloudflare). Node names (Benevolence/Versatility/Spectation/Prudence/Resolution/Fortitude) at
   // line ~6739 already matched verbatim — unchanged. Corrections to the numeric/stat data below:
@@ -7727,7 +7727,7 @@ const RESONANCE_CHAIN_DATA = {
     s2: { atkPct: 28 }, s3: { critRate: 16, critDmg: 32 }, s4: { heavyDmg: 25 },
     s5: { atkPct: 45, totalMult: 120 }, /* TODO: needs Phase 2 schema — atkPct is a per-hit stack (max 15×, 8s duration, instant-maxed by Tactical Strike), not a flat buff */
     s6: { totalMult: 240 } /* TODO: needs Phase 2 schema — real value is +120%/Momentum stack (cap 2) on Emerald Storm: Finale only, consumed on cast; 240 is the 2-stack-max case, not a flat constant */ },
-  // Jinhsi S1-S6 re-verified verbatim 2026-08-31 against the wiki/Jinhsi/Combat
+  // Jinhsi S1-S6 re-verified verbatim 2026-08-31 against the Jinhsi combat reference
   // (Chrome/Windows UA + google.com referer + jsRender, load+9s wait to clear Cloudflare):
   // S1 Abyssal Ascension: casting Incarnation-Basic Attack OR Crescent Divinity grants 1 stack of Herald
   //   of Revival (max 4 stacks, 6s duration each); casting Illuminous Epiphany consumes ALL stacks, each
@@ -7764,7 +7764,7 @@ const RESONANCE_CHAIN_DATA = {
   // basis in this effect — matches the 'zero, don't guess' rule for defensive/utility nodes") and
   // Jianxin's S1/S2/S3/S5. jinhsi.chain.s2-chronofrost-repose's own `effects` cleared to match.
   'Jinhsi':       { s1: { skillDmg: 40 }, s2: {}, s3: { atkPct: 50 }, s4: { allDmg: 20 }, s5: { libDmg: 120 }, s6: { skillDmg: 45 } },
-  // Calcharo S1-S6 re-verified verbatim 2026-08-31 against the wiki/Calcharo/Combat's
+  // Calcharo S1-S6 re-verified verbatim 2026-08-31 against the Calcharo combat reference's
   // "Resonance Chain" section (Chrome/Windows UA + google.com referer + jsRender, load+9s wait; 2nd attempt
   // cleared Cloudflare), cross-checked against the source/wuthering-waves/characters/calcharo (identical
   // text). Node names (Covert Negotiation/Zero-Sum Game/Iron Fist Diplomacy/Dark Alliance/Unconventional
@@ -7800,7 +7800,7 @@ const RESONANCE_CHAIN_DATA = {
     s3: { elemDmg: 25 }, s4: { elemDmg: 20 },
     s5: { totalMult: 50 }, /* FIXED (calcharo.blocks.js): calcharo.chain.s5 is scoped to Wanted Outlaw's own block via scopedToBlockId, not a generic total multiplier — see comment above */
     s6: { totalMult: 200 } /* FIXED (calcharo.blocks.js): calcharo.chain.s6-phantoms is a real damage block (2 hits × 100% ATK, libDmg), not a %DMG multiplier — see comment above; this flat totalMult:200 stays as the legacy-fallback approximation */ },
-  // Encore — re-verified verbatim 2026-08-31 against the wiki/Encore/Combat + wuthering.gg/characters/encore.
+  // Encore — re-verified verbatim 2026-08-31 against the Encore combat reference + a community Encore page.
   // S1: "Fusion DMG Bonus +3%, stacking up to 4 times for 6s" on Basic ATK hit = 12% max (elemDmg, confirmed correct category+value).
   // S2 corrected: previous `totalMult: 5` was a fabricated placeholder for a node that has ZERO DPS component —
   // real effect is "additionally restores 10 Resonance Energy when casting Basic Attack Wooly Attack or Resonance
@@ -7810,7 +7810,7 @@ const RESONANCE_CHAIN_DATA = {
   // S4: "Heavy Attack Cosmos Rupture increases team Fusion DMG Bonus by 20% for 30s" (elemDmg, confirmed correct).
   // S5: "Resonance Skill DMG Bonus +35%" (skillDmg, confirmed correct).
   // S6: "gains 1 stack of Lost Lamb per damage instance during Cosmos Rave, each +5% ATK for 10s, stacking up to
-  // 5 times" = 25% max (atkPct, confirmed correct) per the wiki's Combat page and wuthering.gg's Resonance Chain
+  // 5 times" = 25% max (atkPct, confirmed correct) per the reference Combat page and a community database's Resonance Chain
   // section (both independently say 5 stacks / 25%). NOTE: the source's live character page states "stacking up to
   // 6 time(s)" for this same node — an outlier vs. two independent sources agreeing on 5; kept at 25% (5 stacks)
   // per the two-source majority and this project's designated primary source, discrepancy flagged here rather
@@ -7825,8 +7825,8 @@ const RESONANCE_CHAIN_DATA = {
   // bonus was silently applying to nothing.
   'Encore':       { s1: { elemDmg: 12 }, s2: { totalMult: 0 }, /* TODO: needs Phase 2 schema — Sheep-counting Lullaby's Resonance Energy recovery (10 Energy, once per 10s) is pure utility with no DPS component */
     s3: { libDmg: 40 }, s4: { elemDmg: 20 }, s5: { skillDmg: 35 }, s6: { atkPct: 25 } },
-  // Xiangli Yao — full audit 2026-09-01 against wuwa.build's character #1305 Resonance Chain panel,
-  // cross-checked against wutheringlab.com/arabwuwa.com (all three agree on wording/values below).
+  // Xiangli Yao — full audit 2026-09-01 against a community database's character #1305 Resonance Chain panel,
+  // cross-checked against two community databases (all three agree on wording/values below).
   // S1 "Prodigy of Protégés": Law of Reigns additionally launches 6 Convolution Matrices, each dealing
   // Resonance Liberation DMG = 8% of Law of Reigns' own DMG Multiplier — 6 extra proc hits scaling off
   // another move's multiplier, not a flat stat buff. Previous `totalMult: 10` was a fabricated filler
@@ -7855,12 +7855,12 @@ const RESONANCE_CHAIN_DATA = {
   // this flat table's own s5 stays libDmg-only below since it's a one-key-per-node object shape.
   // S6 "Solace of the Ordinary": was totalMult: 15 (fabricated, wrong category and value); real effect
   // is Law of Reigns' own DMG Multiplier +76% (re-verified 2026-09-01 against
-  // the wiki/Xiangli_Yao/Combat node text via the MediaWiki API AND
+  // the Xiangli_Yao combat reference node text via the reference API AND
   // the source/character/1305, both agreeing on 76% — supersedes the prior 75% taken from the
-  // secondary wuwa.build/arabwuwa cross-reference). Law of Reigns counted as Liberation DMG, so
+  // secondary community-database cross-reference). Law of Reigns counted as Liberation DMG, so
   // category totalMult -> libDmg, value 15 -> 76.
   // Intro Skill "Principle" (CHARACTER_ROTATIONS above): briefly miscorrected 2026-09-01 to 79.32%×2
-  // from a malformed the wiki Attribute Scaling table row (value sat under column 7 of a 1-10 level
+  // from a malformed the reference Attribute Scaling table row (value sat under column 7 of a 1-10 level
   // table, not column 10 — colspan padding made it look like the table's only entry). Reverted back to
   // the correct 99.41%×2 after cross-checking the source/character/1305, which explicitly labels its
   // Skill Attributes table "(Lv.10)" and lists 99.41%×2 — no change needed, original value was correct.
@@ -7898,7 +7898,7 @@ const RESONANCE_CHAIN_DATA = {
   // s2 +20% Crit Rate + Targeted Action/Forcible Riposte DMG Mult +80% (was critRate:20 + unfounded totalMult:25); s3 The Last Stand DMG Mult scales up to +1200% with full Blaze consumption,
   // used a conservative rotation-representative libDmg:200 instead of the theoretical max (was totalMult:15, no basis); s4 team +20% ATK on Intro cast confirmed correct;
   // s5 Rekindle DMG Mult +120% (was totalMult:40, wrong category); s6 Heavy Slash Daybreak/Dawning/Nightfall/Lightsmash Mult +40% (was totalMult:40 + duplicate heavyDmg:40, consolidated).
-  // Re-verified node-by-node 2026-08-31 via the wiki/Zani/Combat's "Resonance Chain"
+  // Re-verified node-by-node 2026-08-31 via the Zani combat reference's "Resonance Chain"
   // section, cross-checked against the source/wuthering-waves/characters/zani's "Resonance Chain (Dupes)" tab
   // (both live, Chrome UA + google.com referer + jsRender). All six 2026-08-16 values confirmed exact against
   // primary source, no numeric changes this pass — but two genuinely stateful/threshold effects the flat
@@ -7925,13 +7925,13 @@ const RESONANCE_CHAIN_DATA = {
   //   total value, not a per-point rate) — see zani.blocks.js's own zani.chain.s6-nightfall-mult block.
   //   This flat table's own s6 stays heavyDmg:40 (the broader bonus only) since it has no
   //   scopedToBlockId mechanism to represent a Nightfall-specific 2nd bonus.
-  // Note: one wiki-style source's own S3 text refers to the Liberation by the name "Judgement Day" whereas
+  // Note: one reference source's own S3 text refers to the Liberation by the name "Judgement Day" whereas
   // other sources and the skill's own in-game name is "The Last Stand" — treated as a stale/inconsistent
   // translation label for the same skill (other sources and the Forte/Liberation section of that same
-  // wiki-style source's own page agree it's The Last Stand), not a separate mechanic; does not affect the
+  // reference source's own page agree it's The Last Stand), not a separate mechanic; does not affect the
   // stored value.
   // Phoebe S1: Liberation mult increase ≈ libDmg 15. S3: Heavy ATK+40%
-  // Phoebe R-chain re-verified verbatim 2026-08-31 against the wiki/Phoebe/Combat's
+  // Phoebe R-chain re-verified verbatim 2026-08-31 against the Phoebe combat reference's
   // "Resonance Chain" section (Chrome UA + google.com referer + jsRender). Every node was previously wrong
   // — the old {libDmg:15, skillDmg:25, heavyDmg:40, atkPct:15, totalMult:15, critDmg:25} placeholder set
   // had no basis in the real text at all (wrong category on 4 of 6 nodes, and Phoebe has no Crit Rate/DMG
@@ -7960,7 +7960,7 @@ const RESONANCE_CHAIN_DATA = {
   //   and the node's non-DPS extended-stagnation utility (+2s stagnation, all-target application) can't be
   //   represented by this flat {stat:value} schema and are left out rather than force-fit into atkPct.
   'Phoebe':       { s1: { libDmg: 225 }, s2: { amplify: 120 }, s3: { heavyDmg: 91 }, s4: { resShred: 10 }, s5: { elemDmg: 12 }, s6: { atkPct: 10 } },
-  // Phrolova R-chain re-verified 2026-08-31 verbatim against the wiki/Phrolova/Combat
+  // Phrolova R-chain re-verified 2026-08-31 verbatim against the Phrolova combat reference
   // (Resonance Chain section), cross-checked the source/character/1608. Every node checked individually,
   // per the Changli lesson that existing values can be wrong in stat category, not just magnitude:
   // S1 "A Key to Netherworld's Secrets": Movement of Fate and Finality DMG Mult +80% AND Murmurs in a
@@ -7972,7 +7972,7 @@ const RESONANCE_CHAIN_DATA = {
   //   move) until a fresh the source dump gave real values for Movement of Fate and Finality/Murmurs in a
   //   Haunting Dream (see SKILL_MULTIPLIERS['Phrolova'] above) — now a live +80% totalMult on real damage.
   // S2 "A Rope Tied to a Life Beyond": Scarlet Coda DMG Mult +75% (magnitude was already correct) BUT the
-  //   wiki explicitly states "This instance of damage is considered Resonance Skill DMG" — so the correct
+  //   the reference explicitly states "This instance of damage is considered Resonance Skill DMG" — so the correct
   //   stat category is skillDmg, NOT heavyDmg (Scarlet Coda replaces Heavy Attack as an input, but its
   //   damage type is Skill; the old heavyDmg categorization was wrong exactly the way Changli's nodes were).
   //   Node also doubles Aftersound's per-stack bonus to Scarlet Coda's multiplier (+75% instead of the
@@ -8007,7 +8007,7 @@ const RESONANCE_CHAIN_DATA = {
   //   entry on phrolova.chain.s6 in phrolova.blocks.js, via scopedToBlockId, not representable in this
   //   flat table (RESONANCE_CHAIN_DATA has one stat per node, not a list).
   'Phrolova':     { s1: { totalMult: 80 }, s2: { skillDmg: 75 }, s3: { echoDmg: 80 }, s4: { allDmg: 20 }, s5: {}, s6: { elemDmg: 60 } },
-  // Brant R-chain — verified verbatim 2026-08-31 against the wiki/Brant/Combat
+  // Brant R-chain — verified verbatim 2026-08-31 against the Brant combat reference
   // (Chrome/Windows UA + google.com referer + jsRender, load+9s wait to clear Cloudflare):
   // s1 "By Currents and Winds": casting Intro Skill or each Mid-air Attack flip grants +20% DMG dealt
   //   for 5s, STACKING up to 3 times = 60% at max stacks — was stored as the single-stack value (20),
@@ -8053,7 +8053,7 @@ const RESONANCE_CHAIN_DATA = {
   // both correctly zeroed elsewhere in this table for the identical reason) — Glory's Favor shield
   // value +50% is a purely defensive stat, zero DPS component, per the comment block below.
   'Augusta':      { s1: { critDmg: 30 }, s2: { critRate: 40 }, s3: { totalMult: 25 }, s4: { atkPct: 20 }, s5: {}, s6: { heavyDmg: 200 } },
-  // Augusta R-chain — verified verbatim 2026-08-31 against the wiki/Augusta/Combat
+  // Augusta R-chain — verified verbatim 2026-08-31 against the Augusta combat reference
   // (Chrome/Windows UA + google.com referer + jsRender, load+8s wait to clear Cloudflare):
   // s1 "Stained in Scorched Earth": Crown of Wills +15% Crit DMG per stack (max stack raised 1→2) = 30% at 2 stacks. Confirmed correct.
   // s2 "Cleansed in Crimson War": Crown of Wills +20% Crit Rate per stack (2 stacks = 40%, modeled) — PLUS a separate
@@ -8079,8 +8079,8 @@ const RESONANCE_CHAIN_DATA = {
   // switched out." While that buff is still active on them, if THAT SAME resonator casts THEIR OWN Outro Skill
   // (swapping back out), Augusta gains +1 Majesty stack AND +1 Crown of Wills stack. Swapping to a third character
   // first ends the 14s buff early and the Outro-back condition can no longer be met — exactly the "gains the point only
-  // if the same character Outros back before a third swap" mechanic. Source: the wiki/Augusta/Combat, 2026-08-31.
-  // Cartethyia R-chain re-verified verbatim 2026-08-31 against the wiki/Cartethyia/Combat
+  // if the same character Outros back before a third swap" mechanic. Source: the Augusta combat reference, 2026-08-31.
+  // Cartethyia R-chain re-verified verbatim 2026-08-31 against the Cartethyia combat reference
   // "Resonance Chain" section (Chrome UA + google.com referer + jsRender):
   // s1 "Crown Destined by Fate": when Fleurdelys's Conviction hits 30/60/90/120, Crit DMG +25% for 15s, up to 4
   //     stacks (25%*4 = 100% at full stack); duration does not reset on a new stack; all stacks removed after
@@ -8111,7 +8111,7 @@ const RESONANCE_CHAIN_DATA = {
   //     Erosion on an already-max-stack target immediately procs Erosion DMG once — both unmodeled (no
   //     Erosion-stack/proc stat in this schema).
   'Cartethyia':   { s1: { critDmg: 100 }, s2: { basicDmg: 50, totalMult: 200 }, s3: { libDmg: 100 }, s4: { allDmg: 20 }, s5: { totalMult: 0 }, s6: { elemDmg: 40 } },
-  // Lingyang S1-S6 re-verified verbatim 2026-08-31 against the wiki/Lingyang/Combat's
+  // Lingyang S1-S6 re-verified verbatim 2026-08-31 against the Lingyang combat reference's
   // Resonance Chain section (Chrome/Windows UA + google.com referer + jsRender).
   // s1 "Lion of Light, Blessings Abound": "During Resonance Liberation Lion's Vigor, Lingyang's
   //     Anti-Interruption is enhanced." ZEROED 2026-08-31 (was totalMult:10, fabricated) — pure poise/
@@ -8133,7 +8133,7 @@ const RESONANCE_CHAIN_DATA = {
   //     capturable by the flat schema — TODO: needs Phase 2 schema for per-hit conditional buff windows).
   'Lingyang':     { s1: { totalMult: 0 }, s2: { totalMult: 0 }, s3: { basicDmg: 20, skillDmg: 10 }, s4: { elemDmg: 20 }, s5: { totalMult: 200 }, s6: { basicDmg: 100 } },
   // Galbrena S1: +2% CD per Afterflame (up to 80%). Averaged ~40
-  // Full re-audit 2026-09-01 against the wiki/Galbrena/Combat, cross-checked
+  // Full re-audit 2026-09-01 against the Galbrena combat reference, cross-checked
   // against the source/character/1208 (both agree on every node's exact wording and value):
   // S5: was skillDmg: 150 (wrong category) — the three buffed moves (Encroach, Ascent of Malice,
   // Ravage) are each explicitly "considered Heavy Attack DMG" in their own move text despite being cast
@@ -8147,7 +8147,7 @@ const RESONANCE_CHAIN_DATA = {
   // S1 (critDmg: 80), S2 (atkPct: 90), S3 (libDmg: 130), S4 (allDmg: 20) already correct — value and
   // category confirmed exact against both sources.
   'Galbrena':     { s1: { critDmg: 80 }, s2: { atkPct: 90 }, s3: { libDmg: 130 }, s4: { allDmg: 20 }, s5: { heavyDmg: 150 }, s6: { heavyDmg: 60 } },
-  // Iuno R-chain re-verified verbatim 2026-08-31 against the wiki/Iuno/Combat
+  // Iuno R-chain re-verified verbatim 2026-08-31 against the Iuno combat reference
   // "Resonance Chain" section (Chrome/Windows UA + google.com referer + jsRender):
   // s1 "Wax or Wane, All Gild the Bough": ATK +40% while in Lunar Cycle (atkPct:40, confirmed unchanged) —
   //     PLUS, while inside the Full Moon Domain, +1 Resonance Energy/s, AND Arc Beyond the Edge/Absolute
@@ -8228,7 +8228,7 @@ const RESONANCE_CHAIN_DATA = {
   // STAT NAME rather than VALUE).
   'Luuk Herssen': { s1: { basicDmg: 15 }, s2: { libDmg: 60 }, s3: { totalMult: 15 }, s4: { allDmg: 20 }, s5: { totalMult: 15 }, s6: { libDmg: 120 } },
   // Lupa S1: CR+20% for 10s (not elemDmg)
-  // Full re-audit 2026-09-01 against the wiki/Lupa/Combat, cross-checked against
+  // Full re-audit 2026-09-01 against the Lupa combat reference, cross-checked against
   // the source/character/1207 (both agree on every node's exact wording). Found a stale comment/data
   // mismatch below: the 2026-08-16 sourcing comment already documented the correct S3/S4 values (+100%/
   // +125%) but the stored object still had totalMult: 20 / totalMult: 25 — off by a factor of 5, never
@@ -8249,7 +8249,7 @@ const RESONANCE_CHAIN_DATA = {
   // damage block (a proportional 2nd hit) in lupa.blocks.js instead of a stat here — this table's own
   // s4.libDmg:125 stays as the documented real value/category, just no longer the thing the engine reads.
   'Lupa':         { s1: { critRate: 20 }, s2: { elemDmg: 40 }, s3: { libDmg: 100 }, s4: { libDmg: 125 }, s5: { libDmg: 15 }, s6: { defIgnore: 30 } },
-  // Verina S1-S6 re-verified verbatim 2026-08-31 against the wiki/Verina/Combat's
+  // Verina S1-S6 re-verified verbatim 2026-08-31 against the Verina combat reference's
   // Resonance Chain section (Chrome UA + google.com referer + jsRender), cross-checked against
   // the source/character/1503 and the source (all three agree verbatim on every node's text):
   // S1 "Moment of Emergence": Outro Skill Blossom grants the next character a continuous heal, 20% of
@@ -8277,8 +8277,8 @@ const RESONANCE_CHAIN_DATA = {
   //   The Coordinated Attack proc is ALSO now modeled (verina.chain.s6-coordinated-attack, 9.95% ATK
   //   coordDmg) — its team heal stays unmodeled (no DPS component).
   'Verina':       { s1: {}, s2: {}, s3: {}, s4: { elemDmg: 15 }, s5: {}, s6: { totalMult: 20 } },
-  // Shorekeeper S1-S6 re-verified verbatim 2026-08-31 against the wiki/Shorekeeper/Combat
-  // (MediaWiki API action=parse, section=Resonance Chain — bypassed the Combat page's Cloudflare interstitial),
+  // Shorekeeper S1-S6 re-verified verbatim 2026-08-31 against the Shorekeeper combat reference
+  // (reference API action=parse, section=Resonance Chain — bypassed the Combat page's Cloudflare interstitial),
   // cross-checked against the source's live kit page (Chrome UA + google.com referer + jsRender):
   // S1 "Unspoken Conjecture": Stellarealm effective range +150%, duration +10s, and casting Intro Skill
   //   Discernment no longer ends the existing Stellarealm early. Pure utility/duration node, zero DPS
@@ -8356,7 +8356,7 @@ const RESONANCE_CHAIN_DATA = {
   // Flagged as a known, schema-level modeling gap rather than silently dropped or force-fit — see
   // REMAINING_WORK.md.
   'Mornye':       { s1: {}, s2: { critDmg: 32 }, s3: {}, s4: {}, s5: { libDmg: 40 }, s6: { libDmg: 400 } },
-  // Roccia R-chain re-verified verbatim 2026-08-31 against the wiki/Roccia/Combat's
+  // Roccia R-chain re-verified verbatim 2026-08-31 against the Roccia combat reference's
   // Resonance Chain section (Chrome/Windows UA + google.com referer + jsRender). Every prior value was
   // fabricated (no basis in any node's real effect):
   // s1 "When Shadows Engulf the Hull": Skill Acrobatic Trick grants +100 additional Imagination and +10
@@ -8401,8 +8401,8 @@ const RESONANCE_CHAIN_DATA = {
   // Detonate hit) plus unconditional Ice Creation auto-explode -> critDmg weighted average (was
   // basicDmg:10, no basis). S6 team ATK+10%/stack up to 2 (=20% max) for 20s after detonating an Ice
   // Prism/Glacier, not a DMG Amplify -> atkPct (was amplify:15, wrong stat).
-  // Re-verified 2026-08-18 against the wiki's Chain Node pages (Solitude's Embrace/Snowy Clarity/Anomalous
-  // Vision/Blade Mastery/Unraveling Fate/Daybreak Radiance wikitext, matches the source's Kit tab wording):
+  // Re-verified 2026-08-18 against the reference Chain Node pages (Solitude's Embrace/Snowy Clarity/Anomalous
+  // Vision/Blade Mastery/Unraveling Fate/Daybreak Radiance page source, matches the source's Kit tab wording):
   // S1 critRate:15 confirmed exact (Basic Attack V, +15% Crit Rate for 10s), unchanged. S2 STA cost
   // reduction + interruption resist on Skill cast is pure utility with no matching DPS stat, kept as a
   // small totalMult. S3 DMG dealt +35% vs targets below 70% HP — corrected from an unsourced totalMult:18
@@ -8413,13 +8413,13 @@ const RESONANCE_CHAIN_DATA = {
   // Burst Crit DMG+100% (confirmed exact, conditional to that one hit) — corrected from an unsourced 50 to
   // the real value 100. S6 team ATK+10%/stack, stacking to 2 (=20% max) for 20s (confirmed exact),
   // unchanged.
-  // Re-audited 2026-09-01 against the wiki/Sanhua/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Sanhua combat reference, cross-checked against
   // the source/character/1102 (both agree exactly). S2 (totalMult: 5) was undocumented — real effect is
   // purely Heavy Attack Detonate STA cost -10 plus interruption-resistance utility on Eternal Frost cast,
   // zero DPS component. Zeroed to {}. S1/S3/S4/S5/S6 confirmed correct, unchanged.
   'Sanhua':       { s1: { critRate: 15 }, s2: {}, s3: { totalMult: 35 }, s4: { heavyDmg: 120 }, s5: { critDmg: 100 }, s6: { atkPct: 20 } },
   // corrected 2026-08-18: prior values (heavyDmg/totalMult/coordDmg guesses on every node) had no basis
-  // in Mortefi's real chain kit (the wiki Combat page rendered Resonance Chain table, matches the source's Kit
+  // in Mortefi's real chain kit (the reference Combat page rendered Resonance Chain table, matches the source's Kit
   // tab wording exactly) — none of his nodes touch Heavy ATK DMG at all. Real effects: S1 Solitary Etude —
   // during Burning Rhapsody, Coordinated Attacks also trigger off the on-field character's Resonance
   // Skill hits, firing 2 Marcato (extra proc source, no DMG% stat in schema, kept as small totalMult). S2
@@ -8429,7 +8429,7 @@ const RESONANCE_CHAIN_DATA = {
   // DMG stat). S5 Funerary Quartet — Skill/Fury Fugue hits fire 4 bonus Marcato hits at 50% reduced DMG
   // (extra proc source). S6 Apoplectic Instrumental — on Liberation cast, team ATK+20% for 20s (confirmed
   // exact, modeled as atkPct).
-  // Re-audited 2026-09-01 against the wiki/Mortefi/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Mortefi combat reference, cross-checked against
   // the source/character/1204 (both agree exactly). S1/S5 were undocumented placeholders for a
   // bonus-hit-at-flat-Marcato-value mechanic (2 or 4 extra Marcato procs) — no flat-schema fit, same
   // unrepresentable class as other bonus-hit nodes this pass. S2 was a placeholder for pure Resonance
@@ -8437,7 +8437,7 @@ const RESONANCE_CHAIN_DATA = {
   // exists for "+7s uptime"). All four zeroed to {} per this project's hard rule against inventing values.
   // TODO: needs Phase 2 schema for bonus-hit, utility, and duration-extension mechanics.
   'Mortefi':      { s1: {}, s2: {}, s3: { critDmg: 30 }, s4: {}, s5: {}, s6: { atkPct: 20 } },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's Combat page rendered
+  // added 2026-08-18 — previously entirely missing. Sourced from the reference Combat page rendered
   // Resonance Chain table (matches the source's Kit tab wording exactly). Real effects: S1 Waterside
   // Respite — 10% chance of DMG/interruption immunity for 5s after Lucky Draw (utility, no DMG stat,
   // kept as small totalMult). S2 Sunroom Siesta — Antithesis/Triplet/Perfect Rhyme DMG bonus on Poetic
@@ -8447,7 +8447,7 @@ const RESONANCE_CHAIN_DATA = {
   // 14s after Intro Skill (confirmed exact -> critRate). S6 Slumber Evermore — Sky Blue stacks (max 4,
   // 7s) each granting Crit DMG+15%, so max 60% Crit DMG (confirmed exact at max stacks -> critDmg,
   // matching this table's convention of using max-stack totals, e.g. Chixia S5/Mortefi S1).
-  // Re-audited 2026-09-01 against the wiki/Youhu/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Youhu combat reference, cross-checked against
   // the source/character/1106 (both agree exactly). S1 (totalMult: 3) was undocumented — real effect is
   // a 10% chance of 5s damage/interruption immunity on Lucky Draw, pure defensive utility, zero DPS
   // component. Zeroed to {}. S2 (totalMult: 5) was undocumented — real effect is "the DMG bonus of
@@ -8466,8 +8466,8 @@ const RESONANCE_CHAIN_DATA = {
   // never fires in this character's real modeled rotation, the same zero-DPS-in-this-context boundary
   // already established for Chisa's S4/Mornye's S1/S4.
   'Youhu':        { s1: {}, s2: {}, s3: { atkPct: 20 }, s4: {}, s5: { critRate: 15 }, s6: { critDmg: 60 } },
-  // Danjin re-verified 2026-08-18 against the wiki's Chain Node pages (Crimson Heart of Justice/Dusted
-  // Mirror/Fleeting Blossom/Solitary Carnation/Reigning Blade/Bloodied Jade wikitext, cross-checked with
+  // Danjin re-verified 2026-08-18 against the reference Chain Node pages (Crimson Heart of Justice/Dusted
+  // Mirror/Fleeting Blossom/Solitary Carnation/Reigning Blade/Bloodied Jade page source, cross-checked with
   // the source's Kit tab Resonance Chain text — identical wording): S1 ATK+5% per stack on Incinerating Will
   // hits, stacking up to 6 times (max 30%, lost 1 stack per hit taken) — corrected from an unsourced flat
   // 15% to the real max-stack value 30% (matches this table's convention of using max-stack totals
@@ -8502,7 +8502,7 @@ const RESONANCE_CHAIN_DATA = {
   // pattern already fixed on Carlotta's/Cartethyia's own chain-S6-style personal bonuses this session).
   'Chisa':        { s1: { atkPct: 30 }, s2: { allDmg: 50 }, s3: { libDmg: 120, totalMult: 120 }, s4: {}, s5: { libDmg: 100 }, s6: { amplify: 30, elemDmg: 40 } },
   // Ciaccona S1: ATK+35% after Basic ATK (conditional)
-  // Full re-audit 2026-09-01 against the wiki/Ciaccona/Combat, cross-checked
+  // Full re-audit 2026-09-01 against the Ciaccona combat reference, cross-checked
   // against the source/character/1407 (both agree on every node's exact wording):
   // S2: was allDmg: 40 (wrong category) — real effect is team +40% Aero DMG Bonus specifically
   // (elemDmg), not an all-element DMG buff. Corrected allDmg -> elemDmg.
@@ -8522,7 +8522,7 @@ const RESONANCE_CHAIN_DATA = {
   // TODO: needs Phase 2 schema — S3's resource/charge grant still has no home in a single-category flat
   // node (S6's flat-%-of-ATK bonus hit no longer needs one — see ciaccona.blocks.js).
   'Ciaccona':     { s1: { atkPct: 35 }, s2: { elemDmg: 40 }, s3: {}, s4: { defIgnore: 45 }, s5: { libDmg: 40 }, s6: {} },
-  // Cantarella S1-S6 fully re-verified 2026-08-31 against the wiki/Cantarella/Combat's
+  // Cantarella S1-S6 fully re-verified 2026-08-31 against the Cantarella combat reference's
   // "Resonance Chain" table (verbatim node text below) — every prior value was an unsourced approximation
   // with no basis in her real chain kit, and 2 of 6 nodes carried a fabricated DPS number on what are actually
   // partly or fully non-DPS mechanics (S4 heal-only, S5 a hit-count cap increase). Real node effects:
@@ -8556,7 +8556,7 @@ const RESONANCE_CHAIN_DATA = {
   // confirms 0% real Liberation share — S3's real +370% Flowing Suffocation multiplier follows that
   // same override to basicDmg, now scoped via scopedToBlockId in the engine block.
   'Cantarella':   { s1: { totalMult: 50 }, s2: { totalMult: 245 }, s3: { basicDmg: 370 }, s4: {}, s5: {}, s6: { basicDmg: 80, defIgnore: 30 } },
-  // Re-verified verbatim 2026-08-31 against the wiki/Yinlin/Combat's Resonance Chain
+  // Re-verified verbatim 2026-08-31 against the Yinlin combat reference's Resonance Chain
   // section (cross-checked against the source/wuthering-waves/characters/yinlin, both matched exactly):
   // S1 "Morality's Crossroad": Resonance Skill Magnetic Roar and Lightning Execution deal 70% more damage
   //   -> skillDmg:70 (already correct, kept).
@@ -8585,9 +8585,9 @@ const RESONANCE_CHAIN_DATA = {
   // skillDmg-categorized moves (Magnetic Roar, Lightning Execution, Furious Thunder) while never
   // touching Judgment Strike, its actual intended target.
   'Yinlin':       { s1: { skillDmg: 70 }, s2: {}, s3: { coordDmg: 55 }, s4: { atkPct: 20 }, s5: { libDmg: 100 }, s6: {} },
-  // Changli S1-S6 re-verified verbatim 2026-08-31 against the wiki/Changli/Combat
+  // Changli S1-S6 re-verified verbatim 2026-08-31 against the Changli combat reference
   // (Resonance Chain section) — every prior value in this row was wrong (placeholder-looking, no basis
-  // found in the wiki text), same pattern already caught for Jinhsi/Camellya/Yinlin/Chisa/etc:
+  // found in the reference text), same pattern already caught for Jinhsi/Camellya/Yinlin/Chisa/etc:
   // S1 Hidden Thoughts: "Resonance Skill Tripartite Flames and Heavy Attack Flaming Sacrifice increase
   //   Changli's DMG dealt by 10%" (+interruption resistance, no stat field for that) — was elemDmg:10
   //   (wrong: this is conditional to those 2 specific casts, not general Fusion DMG; modeled as the
@@ -8615,7 +8615,7 @@ const RESONANCE_CHAIN_DATA = {
   'Changli':      { s1: { skillDmg: 10, heavyDmg: 10 }, s2: { critRate: 25 }, s3: { libDmg: 80 }, s4: { atkPct: 20 }, s5: { heavyDmg: 50, totalMult: 50 }, s6: { defIgnore: 40 } },
   // Corrected against the source character/1105 — prior values (coordDmg/elemDmg on S1/S3/S4) didn't
   // match her real chain effects (Crit Rate, ATK stacking, team ATK — no Glacio DMG anywhere in her chain).
-  // Full re-audit 2026-09-01 against the wiki/Zhezhi/Combat, cross-checked against
+  // Full re-audit 2026-09-01 against the Zhezhi combat reference, cross-checked against
   // the source/character/1105 (both agree on every node's exact wording):
   // S1 "Brushwork's Finish": critRate: 10 already correct (Crit Rate +10% for 27s on Creation's Zenith
   // cast) — the node also restores 15 Resonance Energy, pure utility, not represented here.
@@ -8654,7 +8654,7 @@ const RESONANCE_CHAIN_DATA = {
   // convention for a category-scoped chain node value (real engine effect is totalMult scoped to the
   // qiuyuan.forte.to-teach block, see qiuyuan.blocks.js).
   // 4★ + missing characters
-  // Jianxin S1-S6 re-verified verbatim 2026-08-31 against the wiki/Jianxin/Combat's
+  // Jianxin S1-S6 re-verified verbatim 2026-08-31 against the Jianxin combat reference's
   // Resonance Chain section — every node re-read directly, replacing the prior 2026-08-17 pass's generic
   // totalMult placeholders (which had no basis in her real, mostly non-damage chain):
   // S1 "Verdant Branchlet": after casting Intro Skill Essence of Tao, gain 100% extra Chi from Basic
@@ -8687,14 +8687,14 @@ const RESONANCE_CHAIN_DATA = {
   //   up to 1 use per 5s, gated behind Pushing Punch during the Forte channel" stat shape.
   'Jianxin':      { s1: {}, s2: {}, s3: {}, s4: { libDmg: 80 }, s5: {}, s6: {} },
   // Confirmed via the source character pages 1502 (Spectro), 1604 (Havoc), 1406 (Aero), 1309 (Electro).
-  // Re-audited 2026-09-01 against the wiki/Rover/Combat (all 4 attunements share
+  // Re-audited 2026-09-01 against the Rover combat reference (all 4 attunements share
   // this one unified page). S3 (Energy Regen +20%) and S4 (team heal on Liberation cast) have zero real
   // DPS component and no matching category in this schema — the prior totalMult approximations had no
   // real derivation. Zeroed both to {} per this project's hard rule against inventing values, rather than
   // the previous "approximated as totalMult" convention. TODO: needs Phase 2 schema for Energy Regen% and
   // healing-bonus effects. S1/S2/S5/S6 confirmed correct, unchanged.
   'Rover: Spectro': { s1: { critRate: 15 }, s2: { elemDmg: 20 }, s3: {}, s4: {}, s5: { libDmg: 40 }, s6: { resShred: 10 } },
-  // Re-audited 2026-09-01 against the wiki/Rover/Combat (unified page), cross-checked
+  // Re-audited 2026-09-01 against the Rover combat reference (unified page), cross-checked
   // against the source/character/1604 (both agree exactly). S2 (Skill cooldown reset on Devastation
   // cast) and S3 (Basic Attack 5 heals 10% of HP lost) have zero real DPS component and no matching
   // category in this schema — zeroed both to {} per this project's hard rule against inventing values.
@@ -8703,14 +8703,14 @@ const RESONANCE_CHAIN_DATA = {
   // as a bonus hit" via the matching Basic-ATK-type category — a reasonable fit since the value is exact,
   // though technically scoped to Stage 5 only rather than all Basic ATK hits.
   'Rover: Havoc':   { s1: { skillDmg: 30 }, s2: {}, s3: {}, s4: { resShred: 10 }, s5: { basicDmg: 50 }, s6: { critRate: 25 } },
-  // Re-audited 2026-09-01 against the wiki/Rover/Combat (unified page), cross-checked
+  // Re-audited 2026-09-01 against the Rover combat reference (unified page), cross-checked
   // against the source/character/1406 (both agree exactly). S1 (interruption resistance on Cloudburst
   // Dance) and S2 (continuous team healing on Unbound Flow) have zero real DPS component and no matching
   // category in this schema — zeroed both to {} per this project's hard rule against inventing values.
   // TODO: needs Phase 2 schema for S1's interruption-resistance and S2's healing-bonus mechanics.
   // S3/S4/S5/S6 confirmed correct, unchanged.
   'Rover: Aero':    { s1: {}, s2: {}, s3: { elemDmg: 15 }, s4: { skillDmg: 15 }, s5: { libDmg: 20 }, s6: { skillDmg: 30 } },
-  // Re-audited 2026-09-01 against the wiki/Rover/Combat (unified page), cross-checked
+  // Re-audited 2026-09-01 against the Rover combat reference (unified page), cross-checked
   // against the source/character/1309 (both agree). S1 (Celestial Ingenuity, interruption resistance
   // utility) and S2 (Thousandfold Artifice, Electro Flare stack utility) have zero real DPS component and
   // no matching category in this schema — the prior totalMult:5/totalMult:8 values had no basis in the
@@ -8721,12 +8721,12 @@ const RESONANCE_CHAIN_DATA = {
   // Sounds/Thunder Bane DMG+20%) confirmed correct, unchanged.
   'Rover: Electro': { s1: {}, s2: {}, s3: { skillDmg: 20 }, s4: { libDmg: 20 }, s5: { critDmg: 20 }, s6: { skillDmg: 20 } },
   // corrected 2026-08-18: prior values (elemDmg:8/totalMult:10/elemDmg:8/atkPct:10/totalMult:10/elemDmg:12) had no basis
-  // in Aalto's actual chain kit (the wiki Combat page, Resonance Chain table). Real effects: S1 Shift Trick CD-4s (no
+  // in Aalto's actual chain kit (the reference Combat page, Resonance Chain table). Real effects: S1 Shift Trick CD-4s (no
   // direct DPS stat, modeled as small totalMult utility). S2 Mist Avatar ATK+15% on taunted-target attacks (conditional
   // atkPct). S3 +2 Mist bullets at 50% Basic/Mid-air DMG (utility totalMult). S4 Mist Bullets (Resonance Skill) DMG+30%
   // (skillDmg, confirmed exact) + 30% DMG reduction in Mistcloak Dash (defensive, not modeled). S5 Aero DMG Bonus+25%
   // for 6s in Mistcloak Dash (elemDmg, confirmed exact). S6 Liberation Crit Rate+8% (critRate, confirmed exact).
-  // Re-audited 2026-09-01 against the wiki/Aalto/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Aalto combat reference, cross-checked against
   // the source/character/1403 (both agree exactly). S1: was totalMult: 4 (undocumented placeholder) —
   // real effect is purely a Resonance Skill cooldown -4s, zero DPS component. Zeroed to {}. S3: was
   // totalMult: 8 (undocumented placeholder) — real effect is "2 more Mist Bullets, each dealing 50% of
@@ -8738,14 +8738,14 @@ const RESONANCE_CHAIN_DATA = {
   // components of the same node.
   'Aalto':        { s1: {}, s2: { atkPct: 15 }, s3: {}, s4: { skillDmg: 30 }, s5: { elemDmg: 25 }, s6: { critRate: 8, heavyDmg: 50 } },
   // corrected 2026-08-18: prior values (all totalMult:5, s6 amplify:10) were unsourced placeholders — Baizhi's real
-  // chain (the wiki Combat page) is mostly healing/utility with no "amplify" (enemy DMG-taken debuff) node at all. S1
+  // chain (the reference Combat page) is mostly healing/utility with no "amplify" (enemy DMG-taken debuff) node at all. S1
   // Emergency Plan +2.5 Resonance Energy per Concentration (utility, not modeled). S2 Emergency Plan (at 4
   // Concentration) grants Glacio DMG Bonus+15% and Healing+15% for 12s (elemDmg, confirmed exact — healing half not
   // modeled). S3 Intro Skill grants Max HP+12% for 10s (no HP% stat in schema, kept as small utility totalMult). S4
   // Remnant Entities gets 2 extra casts + Healing Mult+20% + extra Glacio DMG (healing-focused, kept as small
   // totalMult). S5 revives a KO'd teammate once per 10 min (pure utility, no DPS stat fits). S6 Euphonia pickup grants
   // team Glacio DMG Bonus+12% for 20s (elemDmg, confirmed exact).
-  // Re-audited 2026-09-01 against the wiki/Baizhi/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Baizhi combat reference, cross-checked against
   // the source/character/1103 (both agree exactly). S1: was totalMult: 4 (undocumented placeholder) —
   // real effect is purely restoring 2.5 extra Resonance Energy per Concentration consumed on Emergency
   // Plan, zero DPS component. Zeroed to {}. S3: was totalMult: 6 — real effect is Overflowing Frost
@@ -8760,7 +8760,7 @@ const RESONANCE_CHAIN_DATA = {
   // this DPS-focused flat-{stat: value} schema.
   'Baizhi':       { s1: {}, s2: { elemDmg: 15 }, s3: {}, s4: {}, s5: {}, s6: { elemDmg: 12 } },
   // corrected 2026-08-18: prior values (atkPct/amplify on every node) had no basis in Buling's real
-  // chain kit (the wiki Combat page, rendered Resonance Chain table, cross-checked against the source's own
+  // chain kit (the reference Combat page, rendered Resonance Chain table, cross-checked against the source's own
   // Kit tab) — she has no ATK% node and no DMG Amplify node at all. Real effects: S1 Exorcist Gadgets,
   // Lend Me Your Power — enhanced Liberation (Flashing Thunder Spell: Harmony) Crit Rate+20% upon
   // dealing DMG (confirmed exact -> critRate). S2 Talisman Burns, Spirits Turn — restores 25 Resonance
@@ -8774,7 +8774,7 @@ const RESONANCE_CHAIN_DATA = {
   // same treatment). S6 "Almighty Forum Lord of Thunder Spell" — upgrades the enhanced Liberation's
   // Thunder Spell - Heaven, Earth, Mind state from 25% to 50% Resonance Skill DMG Bonus to the active
   // Resonator (confirmed exact -> skillDmg, matches CHAR_BUFF_TABLE's libBuffs note above).
-  // Re-audited 2026-09-01 against the wiki/Buling/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Buling combat reference, cross-checked against
   // the source/character/1307 (both agree exactly). S2-S5's totalMult: 3 placeholders had no real
   // derivation — none of them have a DPS component: S2 is pure Resonance Energy restore, S3 and S4 are
   // healing-only stats, S5 is an extra Electro Flare stack application with no flat DMG% conversion.
@@ -8789,12 +8789,12 @@ const RESONANCE_CHAIN_DATA = {
   // schema mechanism to fix cleanly — not attempted in this pass.
   'Buling':       { s1: { critRate: 20 }, s2: {}, s3: {}, s4: {}, s5: {}, s6: { skillDmg: 50 } },
   // corrected 2026-08-18: prior values (atkPct:8/skillDmg:10/atkPct:8/skillDmg:10/totalMult:10/elemDmg:12) had no basis
-  // in Chixia's real chain kit (the wiki Combat page). S1 Boom Boom hits always Crit (utility, no %-stat fits). S2
+  // in Chixia's real chain kit (the reference Combat page). S1 Boom Boom hits always Crit (utility, no %-stat fits). S2
   // Liberation kill-refund of Resonance Energy (utility). S3 Liberation Blazing Flames DMG+40% vs targets below 50%
   // HP (libDmg, confirmed exact, conditional). S4 Liberation grants 60 Thermobaric Bullets + resets Skill CD (utility).
   // S5 ATK+30% at max Numbingly Spicy! stacks (atkPct, confirmed exact, conditional). S6 Boom Boom grants team Basic
   // ATK DMG Bonus+25% for 15s (basicDmg, confirmed exact, team buff).
-  // Re-audited 2026-09-01 against the wiki/Chixia/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Chixia combat reference, cross-checked against
   // the source/character/1202 (both agree exactly). S1: was totalMult: 5 (undocumented placeholder) —
   // real effect is Resonance Skill Boom Boom hits always Critical, a conditional 100% Crit Rate scoped to
   // one specific infrequent proc rather than a flat kit-wide Crit Rate buff; no clean conversion exists.
@@ -8804,7 +8804,7 @@ const RESONANCE_CHAIN_DATA = {
   // direct DPS stat). Zeroed to {}. TODO: needs Phase 2 schema for S1's scoped-crit-guarantee mechanic.
   'Chixia':       { s1: {}, s2: {}, s3: { libDmg: 40 }, s4: {}, s5: { atkPct: 30 }, s6: { basicDmg: 25 } },
   // corrected 2026-08-18: prior values (skillDmg/atkPct on every node) had no basis in Lumi's real chain
-  // kit (the wiki Combat page, rendered Resonance Chain table) — she has no ATK% node and no Resonance
+  // kit (the reference Combat page, rendered Resonance Chain table) — she has no ATK% node and no Resonance
   // Skill DMG node at all. Real effects: S1 Parcel To Be Delivered — after Energized Rebound, +60 STA
   // within 3s (utility, no STA-regen stat in schema, kept as small totalMult). S2 Lollo Logistics, Ready
   // to Help — Energized Pounce/Rebound ignore 20% target DEF (confirmed exact -> defIgnore). S3 Priority
@@ -8816,7 +8816,7 @@ const RESONANCE_CHAIN_DATA = {
   // S4's basicDmg). S6 Give Me A Five-star Rating — casting Squeakie Express grants all team members
   // ATK+20% for 20s (confirmed exact -> atkPct, team buff, matches this table's convention elsewhere,
   // e.g. Danjin/Taoqi S6).
-  // Re-audited 2026-09-01 against the wiki/Lumi/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Lumi combat reference, cross-checked against
   // the source/character/1504 (both agree exactly). S1 (totalMult: 5) was undocumented — real effect is
   // purely +60 STA restore within 3s after Energized Rebound, zero DPS component. Zeroed to {}. S2/S3/S4/
   // S5/S6 confirmed correct, unchanged.
@@ -8832,7 +8832,7 @@ const RESONANCE_CHAIN_DATA = {
   // would contradict the rotation's own real cast order. Zeroed to `{}`, matching S1's precedent.
   'Lumi':         { s1: {}, s2: { defIgnore: 20 }, s3: { libDmg: 30 }, s4: { basicDmg: 30 }, s5: {}, s6: { atkPct: 20 } },
   // corrected 2026-08-18: prior values (defShred/amplify on every node) had no basis in Taoqi's real
-  // chain kit (the wiki Combat page, Resonance Chain table) — she has no DEF Shred or DMG Amplify node at
+  // chain kit (the reference Combat page, Resonance Chain table) — she has no DEF Shred or DMG Amplify node at
   // all. Real effects: S1 Essense of Tranquility — Forte Circuit Power Shift's Shield +40% (utility,
   // no shield-% stat in schema, kept as small totalMult). S2 Silent Strength — Liberation Unmovable
   // Crit Rate+20% AND Crit DMG+20% (both confirmed exact; only critRate modeled, single-stat schema).
@@ -8843,7 +8843,7 @@ const RESONANCE_CHAIN_DATA = {
   // per its own Forte text, modeled as basicDmg) + restores 20 Resonance Energy on hit (utility, not
   // modeled). S6 Defender of Peace — Basic ATK and Heavy ATK DMG+40% while Rocksteady Shield holds
   // (confirmed exact, conditional).
-  // Re-audited 2026-09-01 against the wiki/Taoqi/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Taoqi combat reference, cross-checked against
   // the source/character/1601 (both agree exactly). S1 (totalMult: 4) and S3 (totalMult: 6) were
   // undocumented placeholders — real effects are Power Shift's Shield +40% and Rocksteady Shield
   // duration extended to 30s, both shield/utility with zero DPS component. Zeroed both to {}. S2 was
@@ -8865,10 +8865,10 @@ const RESONANCE_CHAIN_DATA = {
   // S4: Mid-Air Feather Release DMG+95% (was totalMult:8, far too low).
   // S5: Resonance Liberation Wind Spirals DMG+85% (was atkPct:8, no basis).
   // S6: team-wide ATK+20% for 20s after casting Feather Release (was elemDmg:10, no basis).
-  // Re-verified 2026-08-18 against the wiki's Chain Node pages (Sapphire Skies/Nesting Twigs/Nature Sings/
-  // Close Your Eyes/Winds Whisper/A Tribute to Life's Sweet Hymn wikitext) — all 6 values above confirmed
+  // Re-verified 2026-08-18 against the reference Chain Node pages (Sapphire Skies/Nesting Twigs/Nature Sings/
+  // Close Your Eyes/Winds Whisper/A Tribute to Life's Sweet Hymn page source) — all 6 values above confirmed
   // exact against the real node text, no changes needed.
-  // Re-audited 2026-09-01 against the wiki/Yangyang/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Yangyang combat reference, cross-checked against
   // the source/character/1402 (both agree exactly). S2 (totalMult: 5) was undocumented — real effect is
   // purely 10 extra Resonance Energy on Heavy Attack hit (1/20s), zero DPS component. Zeroed to {}. S4's
   // totalMult: 95 is the closest available fallback for a named-move DMG Mult buff (Feather Release) with
@@ -8880,7 +8880,7 @@ const RESONANCE_CHAIN_DATA = {
   // object (see the real, sourced values a few lines up) — JS object literals let the later duplicate
   // key win, so this dead entry was masking the real data at runtime despite the audit looking complete.
   // corrected 2026-08-18: prior values (atkPct/amplify on every node) had no basis in Yuanwu's real
-  // chain kit (the wiki Combat page, rendered Resonance Chain table) — he has no ATK% or DMG Amplify node
+  // chain kit (the reference Combat page, rendered Resonance Chain table) — he has no ATK% or DMG Amplify node
   // at all. Real effects: S1 Steaming Cup of Justice — Lightning Infused Basic/Heavy Attack Speed+20%
   // each (utility, no attack-speed stat in schema, kept as small totalMult). S2 Fierce Heart, Serene
   // Mind — Intro Thunder Bombardment recovers +15 Resonance Energy (utility, not modeled). S3 Upholder
@@ -8892,7 +8892,7 @@ const RESONANCE_CHAIN_DATA = {
   // Resonance Liberation DMG Bonus+50% (confirmed exact, modeled as libDmg). S6 Defender of All Realms —
   // nearby team members gain +32% DEF for 3s while within Thunder Wedge's range (confirmed exact,
   // team-wide DEF buff; no team-DEF% stat in schema, kept as totalMult).
-  // Re-audited 2026-09-01 against the wiki/Yuanwu/Combat, cross-checked against
+  // Re-audited 2026-09-01 against the Yuanwu combat reference, cross-checked against
   // the source/character/1303 (both agree exactly). Yuanwu's kit is almost entirely DEF-scaling, and
   // this schema has no DEF%/attack-speed/shield category, so the prior "kept as small totalMult"
   // placeholders on S1/S2/S3/S4/S6 had no real derivation — replaced with {} per this project's hard
@@ -8921,15 +8921,15 @@ const RESONANCE_CHAIN_DATA = {
 
 // [SECTION:SKILL_ICONS] — Per-character skill-name → icon URL, matched against SKILL_MULTIPLIERS/
 // CHARACTER_ROTATIONS skill names the same way CHARACTER_ROTATIONS looks up its DMG row (substring match).
-// Source: the wiki per-character Skill_* image assets, re-hosted on ibb.co.
+// Source: the reference per-character Skill_* image assets, re-hosted on ibb.co.
 // Only characters that have been audited so far are populated.
 const SKILL_ICONS = {
   // Aalto/Baizhi/Chixia: Intro/Outro icons added 2026-08-18 (previously missing entirely — only
   // Basic/Skill/Liberation/Forte were populated). Aalto's Forte Circuit's real name is 'Misty Cover'
   // (was wrongly keyed 'Mistcloak Dash', the Forte's internal dash mechanic, not its own skill name) —
   // fixed to use the correct name while keeping 'Mistcloak Dash' as an alias to the same icon so any
-  // existing reference to it still resolves. All new icons sourced directly from the wiki's
-  // the wiki's the wiki Skill_*.png assets, re-hosted on ibb.co (2026-08-19).
+  // existing reference to it still resolves. All new icons sourced directly from the reference's
+  // the reference Skill_*.png assets, re-hosted on ibb.co (2026-08-19).
   'Aalto': {
     'Half Truths': './characters/_shared/8gYdwYCF-skill-pistols.webp', // Basic ATK — shared generic Pistols icon
     'Standard': './characters/_shared/8gYdwYCF-skill-pistols.webp',
@@ -8947,7 +8947,7 @@ const SKILL_ICONS = {
     'Momentary Union': './characters/baizhi/fsP021g-baizhi-liberation.webp',
     'Cycle of Life': './characters/baizhi/d0nRGZwy-baizhi-forte.webp',
     'Overflowing Frost': './characters/baizhi/bghHsrhw-Skill-Overflowing-Frost.webp',
-    'Rejuvinating Flow': './characters/baizhi/Zps3MW2N-Skill-Rejuvinating-Flow.webp', // the wiki's own spelling ("Rejuvinating") — kept verbatim to match the wiki's file name
+    'Rejuvinating Flow': './characters/baizhi/Zps3MW2N-Skill-Rejuvinating-Flow.webp', // the reference spelling ("Rejuvinating") — kept verbatim to match the reference file name
   },
   'Chixia': {
     'POW POW': './characters/_shared/xq4xPQNP-Lynae-basic.webp', // Basic ATK — shared generic Pistols icon
@@ -8964,7 +8964,7 @@ const SKILL_ICONS = {
     'Cosmos: Frolicking': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // Cosmos Rave's Basic ATK replacement — same generic weapon icon
     'Cosmos: Heavy Attack': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // Cosmos Rave's Heavy Attack replacement, considered Heavy Attack DMG — same generic weapon icon
     'Flaming Woolies': './characters/encore/twHsyRRM-Skill-Flaming-Woolies.webp',
-    'Cosmos Rampage': './characters/encore/twHsyRRM-Skill-Flaming-Woolies.webp', // Cosmos Rave's Resonance Skill replacement, same wiki icon as the base Skill
+    'Cosmos Rampage': './characters/encore/twHsyRRM-Skill-Flaming-Woolies.webp', // Cosmos Rave's Resonance Skill replacement, same icon as the base Skill
     'Cosmos Rave': './characters/encore/CKy2Dkf5-Skill-Cosmos-Rave.webp',
     'Heavy ATK: Cloudy Frenzy': './characters/encore/whstB0k3-Skill-Black-White-Woolies.webp', // Forte Circuit's own icon, covers both Forte states
     'Heavy ATK: Cosmos Rupture': './characters/encore/whstB0k3-Skill-Black-White-Woolies.webp',
@@ -8991,7 +8991,7 @@ const SKILL_ICONS = {
     "Zapstring's Dance": './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // Basic ATK — shared generic Rectifier icon, also covers Heavy ATK/Mid-air/Dodge Counter
     'Standard': './characters/_shared/RkMykBkT-Skill-Rectifier.webp',
     'Magnetic Roar': './characters/yinlin/6785t0vK-Skill-Magnetic-Roar.webp',
-    'Lightning Execution': './characters/yinlin/6785t0vK-Skill-Magnetic-Roar.webp', // second phase of the same Resonance Skill, no separate wiki icon
+    'Lightning Execution': './characters/yinlin/6785t0vK-Skill-Magnetic-Roar.webp', // second phase of the same Resonance Skill, no separate icon
     'Electromagnetic Blast': './characters/yinlin/6785t0vK-Skill-Magnetic-Roar.webp', // proc triggered by Basic/Skill/Dodge Counter hits on a Sinner's-Mark target, documented under the Resonance Skill section, same icon
     'Chameleon Cipher': './characters/yinlin/ymCP6ZNM-Skill-Chameleon-Cipher.webp',
     'Judgment Strike': './characters/yinlin/ymCP6ZNM-Skill-Chameleon-Cipher.webp', // Forte Circuit's own auto-trigger, same icon
@@ -9000,7 +9000,7 @@ const SKILL_ICONS = {
     'Strategist': './characters/yinlin/dJzzqS1V-Skill-Strategist.webp',
   },
   'Jiyan': {
-    'Lone Lance': './characters/_shared/CpPvLLVt-Skill-Broadblade.webp', // Basic ATK — shared generic Broadblade icon on the wiki, also covers Heavy ATK/Mid-air/Dodge Counter
+    'Lone Lance': './characters/_shared/CpPvLLVt-Skill-Broadblade.webp', // Basic ATK — shared generic Broadblade icon on the reference, also covers Heavy ATK/Mid-air/Dodge Counter
     'Standard': './characters/_shared/CpPvLLVt-Skill-Broadblade.webp', // Heavy ATK / Dodge Counter rows
     'Windqueller': './characters/jiyan/Rk9XDRW3-Skill-Windqueller.webp',
     'Lance of Qingloong': './characters/_shared/CpPvLLVt-Skill-Broadblade.webp', // Qingloong Mode's Heavy Attack replacement, same generic weapon icon
@@ -9009,7 +9009,7 @@ const SKILL_ICONS = {
     'Tactical Strike': './characters/jiyan/33s8c1p-Skill-Tactical-Strike.webp',
     'Discipline': './characters/jiyan/TBjWQSR1-Skill-Discipline.webp',
   },
-  // Source: the wiki Skill_*.png assets for Jianxin, re-hosted on ibb.co (2026-08-17,
+  // Source: the reference Skill_*.png assets for Jianxin, re-hosted on ibb.co (2026-08-17,
   // matching the convention used for the other audited characters above — all 6 URLs verified 200/live
   // before upload).
   'Jianxin': {
@@ -9021,8 +9021,8 @@ const SKILL_ICONS = {
     'Essence of Tao': './characters/jianxin/jZvd35BH-Skill-Essence-of-Tao.webp', // Intro Skill
     'Transcendence': './characters/jianxin/jP7RDt0b-Skill-Transcendence.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Lingyang, re-hosted on ibb.co (2026-08-17),
-  // resolved via the MediaWiki imageinfo API — all 6 URLs verified 200/live before upload.
+  // Source: the reference Skill_*.png assets for Lingyang, re-hosted on ibb.co (2026-08-17),
+  // resolved via the image-info API — all 6 URLs verified 200/live before upload.
   'Lingyang': {
     'Majestic Fists': './characters/lingyang/Cs76xkJK-Skill-Majestic-Fists.webp', // Basic ATK — also covers Heavy ATK/Mid-air/Dodge Counter
     'Stormy Kicks': './characters/lingyang/Cs76xkJK-Skill-Majestic-Fists.webp', // Basic Attack replacement below 10 Lion's Spirit, same generic weapon icon
@@ -9033,8 +9033,8 @@ const SKILL_ICONS = {
     'Lion Awakens': './characters/lingyang/v4t5F4cP-Skill-Lion-Awakens.webp', // Intro Skill
     'Frosty Marks': './characters/lingyang/SwNjm5nr-Skill-Frosty-Marks.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Verina, re-hosted on ibb.co (2026-08-17),
-  // resolved via the MediaWiki imageinfo API — all 6 URLs verified 200/live before upload. Cultivation
+  // Source: the reference Skill_*.png assets for Verina, re-hosted on ibb.co (2026-08-17),
+  // resolved via the image-info API — all 6 URLs verified 200/live before upload. Cultivation
   // (Basic ATK) uses the same generic Skill_Rectifier.png icon already re-hosted for Encore/Yinlin.
   'Verina': {
     'Cultivation': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // Basic ATK — shared generic Rectifier icon, also covers Heavy ATK/Mid-air/Dodge Counter
@@ -9045,47 +9045,47 @@ const SKILL_ICONS = {
     'Verdant Growth': './characters/verina/kgxDz6Xv-Skill-Verdant-Growth.webp', // Intro Skill
     'Blossom': './characters/verina/1fVPJtzv-Skill-Blossom.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Jinhsi, re-hosted on ibb.co (2026-08-17),
-  // resolved via the MediaWiki imageinfo API (Forte table section fetched directly by section index to
+  // Source: the reference Skill_*.png assets for Jinhsi, re-hosted on ibb.co (2026-08-17),
+  // resolved via the image-info API (Forte table section fetched directly by section index to
   // dodge the page's huge collapsed ascension tables) — all 6 URLs verified 200/live before upload.
   'Jinhsi': {
     'Slash of Breaking Dawn': './characters/jinhsi/tMmTFPJH-Skill-Broadblade.webp', // Basic ATK — also covers Heavy ATK/Mid-air/Dodge Counter
     'Standard': './characters/jinhsi/tMmTFPJH-Skill-Broadblade.webp',
     'Trailing Lights of Eons': './characters/jinhsi/zVbYMXzG-Skill-Trailing-Lights-of-Eons.webp',
-    'Crescent Divinity': './characters/jinhsi/zVbYMXzG-Skill-Trailing-Lights-of-Eons.webp', // explicitly "an alternative Resonance Skill" per the Data dump, same wiki icon
-    'Overflowing Radiance': './characters/jinhsi/zVbYMXzG-Skill-Trailing-Lights-of-Eons.webp', // Resonance Skill mechanic (alt-cast after Basic Attack 4/Intro), same wiki icon as Trailing Lights of Eons
-    'Incarnation': './characters/jinhsi/zVbYMXzG-Skill-Trailing-Lights-of-Eons.webp', // Resonance Skill state entered via Overflowing Radiance, same wiki icon
-    'Illuminous Epiphany': './characters/jinhsi/zVbYMXzG-Skill-Trailing-Lights-of-Eons.webp', // Resonance Skill mechanic cast from within Incarnation, same wiki icon
+    'Crescent Divinity': './characters/jinhsi/zVbYMXzG-Skill-Trailing-Lights-of-Eons.webp', // explicitly "an alternative Resonance Skill" per the Data dump, same icon
+    'Overflowing Radiance': './characters/jinhsi/zVbYMXzG-Skill-Trailing-Lights-of-Eons.webp', // Resonance Skill mechanic (alt-cast after Basic Attack 4/Intro), same icon as Trailing Lights of Eons
+    'Incarnation': './characters/jinhsi/zVbYMXzG-Skill-Trailing-Lights-of-Eons.webp', // Resonance Skill state entered via Overflowing Radiance, same icon
+    'Illuminous Epiphany': './characters/jinhsi/zVbYMXzG-Skill-Trailing-Lights-of-Eons.webp', // Resonance Skill mechanic cast from within Incarnation, same icon
     'Luminal Synthesis': './characters/jinhsi/R5sPDCC-Skill-Luminal-Synthesis.webp',
     'Purge of Light': './characters/jinhsi/cSS7ms3Z-Skill-Purge-of-Light.webp',
     "Loong's Halo": './characters/jinhsi/cKXv3P1y-Skill-Loong-Halo.webp', // Intro Skill
     'Temporal Bender': './characters/jinhsi/qZDp0Jz-Skill-Temporal-Bender.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Changli, re-hosted on ibb.co (2026-08-17),
-  // resolved via the MediaWiki imageinfo API — all 6 URLs verified 200/live before upload. Blazing
-  // Enlightenment (Basic ATK) has no dedicated wiki asset, uses the shared generic Skill_Sword.png icon.
+  // Source: the reference Skill_*.png assets for Changli, re-hosted on ibb.co (2026-08-17),
+  // resolved via the image-info API — all 6 URLs verified 200/live before upload. Blazing
+  // Enlightenment (Basic ATK) has no dedicated asset, uses the shared generic Skill_Sword.png icon.
   'Changli': {
     'Blazing Enlightenment': './characters/_shared/4w6tSxmb-Skill-Sword.webp', // Basic ATK — also covers Heavy ATK/Mid-air/Dodge Counter
     'Standard': './characters/_shared/4w6tSxmb-Skill-Sword.webp',
     'Tripartite Flames': './characters/changli/DDwNWX8M-Skill-Tripartite-Flames.webp',
-    'True Sight: Capture': './characters/changli/DDwNWX8M-Skill-Tripartite-Flames.webp', // Resonance Skill mechanic (plunging finisher after True Sight), same wiki icon as Tripartite Flames
+    'True Sight: Capture': './characters/changli/DDwNWX8M-Skill-Tripartite-Flames.webp', // Resonance Skill mechanic (plunging finisher after True Sight), same icon as Tripartite Flames
     'Flaming Sacrifice': './characters/changli/39K3xvGn-Skill-Flaming-Sacrifice.webp',
     'Radiance of Fealty': './characters/changli/Df83Zv7v-Skill-Radiance-of-Fealty.webp',
     'Obedience of Rules': './characters/changli/4w1N13zp-Skill-Obedience-of-Rules.webp', // Intro Skill
     'Strategy of Duality': './characters/changli/sdkt9Yhd-Skill-Strategy-of-Duality.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Zhezhi, re-hosted on ibb.co (2026-08-17),
-  // resolved via the MediaWiki imageinfo API — all 6 URLs verified 200/live before upload. Dimming Brush
+  // Source: the reference Skill_*.png assets for Zhezhi, re-hosted on ibb.co (2026-08-17),
+  // resolved via the image-info API — all 6 URLs verified 200/live before upload. Dimming Brush
   // (Basic ATK) uses the same generic Skill_Rectifier.png icon already re-hosted for Encore/Yinlin/Verina.
   'Zhezhi': {
     'Dimming Brush': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // Basic ATK — also covers Heavy ATK/Mid-air/Dodge Counter
     'Standard': './characters/_shared/RkMykBkT-Skill-Rectifier.webp',
-    'Heavy ATK: Conjuration': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // Heavy Attack's own name on the wiki, no dedicated icon — generic weapon icon
+    'Heavy ATK: Conjuration': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // Heavy Attack's own name on the reference, no dedicated icon — generic weapon icon
     'Manifestation': './characters/zhezhi/DDNMwsCy-Skill-Manifestation.webp',
     // Split from a single combined key: getSkillIcon() does `skillName.includes(key)`, so a rotation
     // step naming just "Stroke of Genius" (the real in-game move name, shorter than the combined
     // string) never contained it and silently got no icon. Both are named cast-states of the same
-    // Resonance Skill (Manifestation), no separate wiki icon.
+    // Resonance Skill (Manifestation), no separate icon.
     'Stroke of Genius': './characters/zhezhi/DDNMwsCy-Skill-Manifestation.webp',
     'Creation\'s Zenith': './characters/zhezhi/DDNMwsCy-Skill-Manifestation.webp',
     'Ink and Wash': './characters/zhezhi/8DYg2f8z-Skill-Ink-and-Wash.webp',
@@ -9093,26 +9093,26 @@ const SKILL_ICONS = {
     'Radiant Ruin': './characters/zhezhi/LX3NLrxP-Skill-Radiant-Ruin.webp', // Intro Skill
     'Carve and Draw': './characters/zhezhi/V0s9WpHG-Skill-Carve-and-Draw.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Xiangli Yao, re-hosted on ibb.co
-  // (2026-08-17), resolved via the MediaWiki imageinfo API — all 6 URLs verified 200/live before
-  // upload. Probe (Basic ATK) has no dedicated wiki asset (it's itself a redirect to the generic
+  // Source: the reference Skill_*.png assets for Xiangli Yao, re-hosted on ibb.co
+  // (2026-08-17), resolved via the image-info API — all 6 URLs verified 200/live before
+  // upload. Probe (Basic ATK) has no dedicated asset (it's itself a redirect to the generic
   // Gauntlets icon), also covers Heavy ATK/Mid-air/Dodge Counter, same as Jianxin's shared icon.
   'Xiangli Yao': {
     'Probe': './characters/_shared/dsbWXdtk-Skill-Gauntlets.webp',
     'Standard': './characters/_shared/dsbWXdtk-Skill-Gauntlets.webp',
     'Revamp': './characters/_shared/dsbWXdtk-Skill-Gauntlets.webp', // rotation-step phrasing for the Mid-air Attack, same generic weapon icon (renamed 2026-09-01 from 'Mid-air Attack: Revamp' to match the CHARACTER_ROTATIONS step's shortened `skill` string under getSkillIcon's `skillName.includes(k)` lookup)
     'Deduction': './characters/xiangli-yao/8D4YCpRh-skill-deduction.webp',
-    'Decipher': './characters/xiangli-yao/8D4YCpRh-skill-deduction.webp', // Forte-upgraded Skill, same wiki icon as base Deduction
-    'Divergence': './characters/xiangli-yao/8D4YCpRh-skill-deduction.webp', // Intuition state's Resonance Skill replacement for Deduction, same wiki icon (matches 'Intuition: Divergence' rotation step via substring)
-    'Law of Reigns': './characters/xiangli-yao/8D4YCpRh-skill-deduction.webp', // Resonance Skill repeatedly cast during Intuition, no dedicated wiki icon — same as Deduction (renamed 2026-09-01 from 'Skill: Law of Reigns' to match the CHARACTER_ROTATIONS step's shortened `skill` string)
+    'Decipher': './characters/xiangli-yao/8D4YCpRh-skill-deduction.webp', // Forte-upgraded Skill, same icon as base Deduction
+    'Divergence': './characters/xiangli-yao/8D4YCpRh-skill-deduction.webp', // Intuition state's Resonance Skill replacement for Deduction, same icon (matches 'Intuition: Divergence' rotation step via substring)
+    'Law of Reigns': './characters/xiangli-yao/8D4YCpRh-skill-deduction.webp', // Resonance Skill repeatedly cast during Intuition, no dedicated icon — same as Deduction (renamed 2026-09-01 from 'Skill: Law of Reigns' to match the CHARACTER_ROTATIONS step's shortened `skill` string)
     'Pivot-Impale': './characters/_shared/dsbWXdtk-Skill-Gauntlets.webp', // Intuition state's Basic Attack replacement, same generic weapon icon (matches 'Intuition: Pivot-Impale' rotation step via substring)
     'Forever Seeking': './characters/xiangli-yao/TMjphf6y-skill-forever-seeking.webp',
     'Cogitation Model': './characters/xiangli-yao/CKYDdBRY-skill-cogitation.webp',
     'Principle': './characters/xiangli-yao/cXpS7bBx-skill-principle.webp', // Intro Skill
     'Chain Rule': './characters/xiangli-yao/spxqcJ3K-skill-chain-rule.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Shorekeeper, re-hosted on ibb.co
-  // (2026-08-17), resolved via the MediaWiki imageinfo API — all 5 URLs verified 200/live before
+  // Source: the reference Skill_*.png assets for Shorekeeper, re-hosted on ibb.co
+  // (2026-08-17), resolved via the image-info API — all 5 URLs verified 200/live before
   // upload. Origin Calculus (Basic ATK) uses the same generic Skill_Rectifier.png icon already
   // re-hosted for Encore/Yinlin/Verina/Zhezhi.
   'Shorekeeper': {
@@ -9124,17 +9124,17 @@ const SKILL_ICONS = {
     // is the short 'Illation' (see CHARACTER_ROTATIONS['Shorekeeper']), which does NOT contain the
     // longer 'Heavy Attack: Illation' string — the lookup was silently failing for that step, exact
     // same bug class already fixed for Xiangli Yao's Revamp key.
-    'Illation': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // Forte-gauge-gated Heavy Attack, no dedicated wiki icon — generic weapon icon
+    'Illation': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // Forte-gauge-gated Heavy Attack, no dedicated icon — generic weapon icon
     'Chaos Theory': './characters/shorekeeper/zTGgrNMM-skill-chaos-theory.webp',
     'Astral Chord': './characters/shorekeeper/pkXPr5P-skill-astral-chord.webp',
     'End Loop': './characters/shorekeeper/MD3NpydF-skill-end-loop.webp',
     'Proof of Existence': './characters/shorekeeper/RGFGH8d9-skill-proof-of-existence.webp', // Intro Skill
-    'Discernment': './characters/shorekeeper/RGFGH8d9-skill-proof-of-existence.webp', // Supernal Stellarealm's Intro Skill replacement for Proof of Existence, same wiki icon
+    'Discernment': './characters/shorekeeper/RGFGH8d9-skill-proof-of-existence.webp', // Supernal Stellarealm's Intro Skill replacement for Proof of Existence, same icon
     'Binary Butterfly': './characters/shorekeeper/bjjhnD3f-skill-binary-butterfly.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Camellya, re-hosted on ibb.co
-  // (2026-08-17), resolved via the MediaWiki imageinfo API — all 6 URLs verified 200/live before
-  // upload. Burgeoning (Basic ATK) has no dedicated wiki asset, uses the shared generic Skill_Sword.png
+  // Source: the reference Skill_*.png assets for Camellya, re-hosted on ibb.co
+  // (2026-08-17), resolved via the image-info API — all 6 URLs verified 200/live before
+  // upload. Burgeoning (Basic ATK) has no dedicated asset, uses the shared generic Skill_Sword.png
   // icon (same as Changli's).
   'Camellya': {
     'Burgeoning': './characters/_shared/x86mmjbD-skill-sword.webp',
@@ -9143,42 +9143,42 @@ const SKILL_ICONS = {
     'Atonement': './characters/_shared/x86mmjbD-skill-sword.webp', // Dodge Counter move, considered Basic Attack DMG per the Data dump
     'Standard': './characters/_shared/x86mmjbD-skill-sword.webp',
     'Valse of Bloom and Blight': './characters/camellya/wrNPQ1TC-skill-valse.webp',
-    'Crimson Blossom': './characters/camellya/wrNPQ1TC-skill-valse.webp', // Resonance Skill mechanic (a named hit within Valse of Bloom and Blight), same wiki icon
+    'Crimson Blossom': './characters/camellya/wrNPQ1TC-skill-valse.webp', // Resonance Skill mechanic (a named hit within Valse of Bloom and Blight), same icon
     'Vining Waltz': './characters/camellya/wrNPQ1TC-skill-valse.webp', // Blossom Mode's Basic ATK replacement, same Skill icon
     'Blazing Waltz': './characters/camellya/wrNPQ1TC-skill-valse.webp',
-    'Floral Ravage': './characters/camellya/wrNPQ1TC-skill-valse.webp', // Blossom Mode's Resonance Skill replacement, same wiki icon
+    'Floral Ravage': './characters/camellya/wrNPQ1TC-skill-valse.webp', // Blossom Mode's Resonance Skill replacement, same icon
     'Fervor Efflorescent': './characters/camellya/ynCScFqJ-skill-fervor.webp',
     'Vegetative Universe': './characters/camellya/xqcjjVmq-skill-vegetative.webp',
     'Ephemeral': './characters/camellya/xqcjjVmq-skill-vegetative.webp', // Forte Circuit's own upgraded skill, same icon
     'Everblooming': './characters/camellya/M5ckbVnH-skill-everblooming.webp', // Intro Skill
     'Twining': './characters/camellya/vvrfhcLs-skill-twining.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Carlotta, re-hosted on ibb.co
-  // (2026-08-17), resolved via the MediaWiki imageinfo API — all 6 URLs verified 200/live before
-  // upload. Silent Execution (Basic ATK) has no dedicated wiki asset, uses the shared generic
+  // Source: the reference Skill_*.png assets for Carlotta, re-hosted on ibb.co
+  // (2026-08-17), resolved via the image-info API — all 6 URLs verified 200/live before
+  // upload. Silent Execution (Basic ATK) has no dedicated asset, uses the shared generic
   // Skill_Pistols.png icon.
   'Carlotta': {
     'Silent Execution': './characters/_shared/NG3jXXG-skill-pistols.webp',
     'Stage 1-2': './characters/_shared/NG3jXXG-skill-pistols.webp', // SKILL_MULTIPLIERS' combined Basic ATK combo row (Silent Execution's real name), same generic weapon icon
-    'Containment Tactics': './characters/_shared/NG3jXXG-skill-pistols.webp', // Heavy Attack's Substance-full replacement, listed under "Active skills" (no dedicated wiki asset) per the Data dump
+    'Containment Tactics': './characters/_shared/NG3jXXG-skill-pistols.webp', // Heavy Attack's Substance-full replacement, listed under "Active skills" (no dedicated asset) per the Data dump
     'Customary Greetings': './characters/_shared/NG3jXXG-skill-pistols.webp', // Mid-air Attack, same "Active skills" generic icon
     'Riposte': './characters/_shared/NG3jXXG-skill-pistols.webp', // Dodge Counter's real cast name, same "Active skills" generic icon
     'Standard': './characters/_shared/NG3jXXG-skill-pistols.webp',
     'Necessary Measures': './characters/_shared/NG3jXXG-skill-pistols.webp', // Moldable-Crystal Basic ATK replacement, same generic weapon icon
-    'Plunging Attack': './characters/_shared/NG3jXXG-skill-pistols.webp', // Mid-air Basic ATK finisher, same generic weapon icon (no dedicated wiki asset)
+    'Plunging Attack': './characters/_shared/NG3jXXG-skill-pistols.webp', // Mid-air Basic ATK finisher, same generic weapon icon (no dedicated asset)
     'Art of Violence': './characters/carlotta/JwZzgLS1-skill-artofviolence.webp',
-    'Chromatic Splendor': './characters/carlotta/JwZzgLS1-skill-artofviolence.webp', // 2nd-press of the same Resonance Skill, no separate wiki icon
+    'Chromatic Splendor': './characters/carlotta/JwZzgLS1-skill-artofviolence.webp', // 2nd-press of the same Resonance Skill, no separate icon
     'Lethal Repertoire': './characters/carlotta/d49NGW0G-skill-lethalrepertoire.webp',
     'Imminent Oblivion': './characters/carlotta/d49NGW0G-skill-lethalrepertoire.webp', // Forte Circuit's own upgraded Heavy ATK, same icon
     'Era of New Wave': './characters/carlotta/7dRxcfdg-skill-eraofnewwave.webp',
-    'Death Knell': './characters/carlotta/7dRxcfdg-skill-eraofnewwave.webp', // Twilight Tango's Liberation-replacement attacks, same wiki icon
+    'Death Knell': './characters/carlotta/7dRxcfdg-skill-eraofnewwave.webp', // Twilight Tango's Liberation-replacement attacks, same icon
     'Fatal Finale': './characters/carlotta/7dRxcfdg-skill-eraofnewwave.webp',
     'Wintertime Aria': './characters/carlotta/d4gxw6J8-skill-wintertimearia.webp', // Intro Skill
     'Closing Remark': './characters/carlotta/qMFKhW2G-skill-closingremark.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Roccia, re-hosted on ibb.co (2026-08-17),
-  // resolved via the MediaWiki imageinfo API — all 6 URLs verified 200/live before upload. Pero, Easy
-  // (Basic ATK) has no dedicated wiki asset (a redirect to the generic Gauntlets icon, same as
+  // Source: the reference Skill_*.png assets for Roccia, re-hosted on ibb.co (2026-08-17),
+  // resolved via the image-info API — all 6 URLs verified 200/live before upload. Pero, Easy
+  // (Basic ATK) has no dedicated asset (a redirect to the generic Gauntlets icon, same as
   // Jianxin/Xiangli Yao's shared icon).
   'Roccia': {
     'Pero, Easy': './characters/_shared/dsbWXdtk-Skill-Gauntlets.webp',
@@ -9195,8 +9195,8 @@ const SKILL_ICONS = {
     'Pero, Help': './characters/roccia/kstN6pTM-skill-perohelp.webp', // Intro Skill
     'Applause, Please!': './characters/roccia/v4xJNxgk-skill-applauseplease.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Phoebe, re-hosted on ibb.co (2026-08-17),
-  // resolved via the MediaWiki imageinfo API — all 5 URLs verified 200/live before upload. O Come Divine
+  // Source: the reference Skill_*.png assets for Phoebe, re-hosted on ibb.co (2026-08-17),
+  // resolved via the image-info API — all 5 URLs verified 200/live before upload. O Come Divine
   // Light (Basic ATK) uses the same generic Skill_Rectifier.png icon already re-hosted for
   // Encore/Yinlin/Verina/Zhezhi/Shorekeeper.
   'Phoebe': {
@@ -9213,9 +9213,9 @@ const SKILL_ICONS = {
     'Golden Grace': './characters/phoebe/gbGWpjwC-skill-goldengrace.webp', // Intro Skill
     'Attentive Heart': './characters/phoebe/HTZ5ppLG-skill-attentiveheart.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Brant, re-hosted on ibb.co (2026-08-17),
-  // resolved via the MediaWiki imageinfo API — all 5 URLs verified 200/live before upload. Captain's
-  // Rhapsody (Basic ATK) has no dedicated wiki asset, uses the shared generic Skill_Sword.png icon
+  // Source: the reference Skill_*.png assets for Brant, re-hosted on ibb.co (2026-08-17),
+  // resolved via the image-info API — all 5 URLs verified 200/live before upload. Captain's
+  // Rhapsody (Basic ATK) has no dedicated asset, uses the shared generic Skill_Sword.png icon
   // (same as Changli/Camellya's).
   'Brant': {
     "Captain's Rhapsody": './characters/_shared/x86mmjbD-skill-sword.webp',
@@ -9234,8 +9234,8 @@ const SKILL_ICONS = {
     'Applaud for Me!': './characters/brant/Xk8TCww5-skill-applaudforme.webp', // Intro Skill
     'The Course is Set!': './characters/brant/HpqFG4gz-skill-thecourseisset.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Cantarella, re-hosted on ibb.co
-  // (2026-08-17), resolved via the MediaWiki imageinfo API — all 6 URLs verified 200/live before
+  // Source: the reference Skill_*.png assets for Cantarella, re-hosted on ibb.co
+  // (2026-08-17), resolved via the image-info API — all 6 URLs verified 200/live before
   // upload. Illusion Collapse (Basic ATK) has a dedicated icon (not a shared generic weapon one).
   'Cantarella': {
     // Cross-checked against Data dump/Cantarella/Cantarella.md: every SKILL_MULTIPLIERS row uses
@@ -9255,16 +9255,16 @@ const SKILL_ICONS = {
     'Delusive Dive': './characters/cantarella/Jw0SD1X0-skill-illusioncollapse.webp', // Trance's Heavy Attack replacement, same generic Basic/Heavy icon
     'Phantom Sting': './characters/cantarella/Jw0SD1X0-skill-illusioncollapse.webp', // Mirage's Basic ATK replacement, same icon
     'Dance with Shadows': './characters/cantarella/VWcwSf2F-skill-dancewithshadows.webp',
-    'Flickering Reverie': './characters/cantarella/VWcwSf2F-skill-dancewithshadows.webp', // Mirage's Resonance Skill replacement, same wiki icon
+    'Flickering Reverie': './characters/cantarella/VWcwSf2F-skill-dancewithshadows.webp', // Mirage's Resonance Skill replacement, same icon
     'Between Illusion and Reality': './characters/cantarella/SDPF5pzn-skill-betweenillusion.webp',
     'Perception Drain': './characters/cantarella/SDPF5pzn-skill-betweenillusion.webp', // Forte Circuit's own upgraded Skill, same icon
     'Beneath the Sea': './characters/cantarella/60bNqfnF-skill-beneaththesea.webp',
     'Cruise': './characters/cantarella/DgDVdZ3T-skill-cruise.webp', // Intro Skill
     'Gentle Tentacles': './characters/cantarella/fVyzhpgr-skill-gentletentacles.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Zani, re-hosted on ibb.co (2026-08-17),
-  // resolved via the MediaWiki imageinfo API — all 5 URLs verified 200/live before upload. Routine
-  // Negotiation (Basic ATK) has no dedicated wiki asset, uses the shared generic Skill_Gauntlets.webp
+  // Source: the reference Skill_*.png assets for Zani, re-hosted on ibb.co (2026-08-17),
+  // resolved via the image-info API — all 5 URLs verified 200/live before upload. Routine
+  // Negotiation (Basic ATK) has no dedicated asset, uses the shared generic Skill_Gauntlets.webp
   // icon (same as Jianxin/Xiangli Yao/Roccia's).
   'Zani': {
     // getSkillIcon() does `skillName.includes(key)` and returns the FIRST key (in this object's
@@ -9287,7 +9287,7 @@ const SKILL_ICONS = {
     'Stage 3': './characters/_shared/dsbWXdtk-Skill-Gauntlets.webp', // rotation-step phrasing for the Basic ATK combo, same icon
     'Heavy Slash': './characters/_shared/dsbWXdtk-Skill-Gauntlets.webp', // Inferno Mode's Basic ATK replacement (bare "Heavy Slash", no colon), same generic weapon icon
     'Restless Watch': './characters/zani/Cpng0BLF-skill-restlesswatch.webp',
-    'Pinpoint Strike': './characters/zani/Cpng0BLF-skill-restlesswatch.webp', // same Resonance Skill's parry counter, same wiki icon
+    'Pinpoint Strike': './characters/zani/Cpng0BLF-skill-restlesswatch.webp', // same Resonance Skill's parry counter, same icon
     'Targeted Action': './characters/zani/Cpng0BLF-skill-restlesswatch.webp',
     'There Will Be A Light': './characters/zani/0jtmQHtM-skill-therewillbealight.webp',
     'Between Dawn and Dusk': './characters/zani/tpPYsMpx-skill-betweendawndusk.webp',
@@ -9296,9 +9296,9 @@ const SKILL_ICONS = {
     'Immediate Execution': './characters/zani/Xx8gjJV2-skill-immediateexecution.webp', // Intro Skill
     'Beacon For the Future': './characters/zani/yczmx4Lj-skill-beaconforfuture.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Ciaccona, re-hosted on ibb.co (2026-08-17),
-  // resolved via the MediaWiki imageinfo API — all 5 URLs verified 200/live before upload. Quadruple
-  // Time Steps (Basic ATK) has no dedicated wiki asset, uses the shared generic Skill_Pistols.webp icon
+  // Source: the reference Skill_*.png assets for Ciaccona, re-hosted on ibb.co (2026-08-17),
+  // resolved via the image-info API — all 5 URLs verified 200/live before upload. Quadruple
+  // Time Steps (Basic ATK) has no dedicated asset, uses the shared generic Skill_Pistols.webp icon
   // (same as Carlotta's).
   'Ciaccona': {
     'Quadruple Time Steps': './characters/_shared/NG3jXXG-skill-pistols.webp',
@@ -9315,13 +9315,13 @@ const SKILL_ICONS = {
     'Symphony of Wind and Verse': './characters/ciaccona/rDrSyYC-skill-symphonywindverse.webp',
     'Quadruple Downbeat': './characters/ciaccona/rDrSyYC-skill-symphonywindverse.webp', // Forte Circuit's own upgraded Heavy ATK, same icon
     "Singer's Triple Cadenza": './characters/ciaccona/Q3SvKHzY-skill-singerstriplecadenza.webp',
-    'Symphonic Poem: Tonic': './characters/ciaccona/Q3SvKHzY-skill-singerstriplecadenza.webp', // the Improvised Symphonic Poem hit within Singer's Triple Cadenza, same wiki icon
+    'Symphonic Poem: Tonic': './characters/ciaccona/Q3SvKHzY-skill-singerstriplecadenza.webp', // the Improvised Symphonic Poem hit within Singer's Triple Cadenza, same icon
     'Roaming with the Wind': './characters/ciaccona/RGVC6MLt-skill-roamingwithwind.webp', // Intro Skill
     'Windcalling Tune': './characters/ciaccona/wFNRyDTB-skill-windcallingtune.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Cartethyia, re-hosted on ibb.co
-  // (2026-08-17), resolved via the MediaWiki imageinfo API — all 5 URLs verified 200/live before
-  // upload. Sword to Carve My Forms (Basic ATK) has no dedicated wiki asset, uses the shared generic
+  // Source: the reference Skill_*.png assets for Cartethyia, re-hosted on ibb.co
+  // (2026-08-17), resolved via the image-info API — all 5 URLs verified 200/live before
+  // upload. Sword to Carve My Forms (Basic ATK) has no dedicated asset, uses the shared generic
   // Skill_Sword.webp icon (same as Changli/Camellya/Brant's).
   'Cartethyia': {
     'Sword to Carve My Forms': './characters/_shared/x86mmjbD-skill-sword.webp',
@@ -9335,7 +9335,7 @@ const SKILL_ICONS = {
     // before the generic 'Fleurdelys' key so they win.
     'Base Form 1-4': './characters/_shared/x86mmjbD-skill-sword.webp', // Basic ATK's real combo-stage phrasing
     'Base Form': './characters/cartethyia/cX7v4GDm-skill-swordbeartheirnames.webp', // Resonance Skill's base cast ("Resonance Skill - Cartethyia" per the Data dump), same icon as its Fleurdelys variant below
-    'Plunging Attack': './characters/_shared/x86mmjbD-skill-sword.webp', // matches "Cartethyia Plunging Attack" rotation step via includes(); Mid-air Basic ATK finisher, no dedicated wiki asset
+    'Plunging Attack': './characters/_shared/x86mmjbD-skill-sword.webp', // matches "Cartethyia Plunging Attack" rotation step via includes(); Mid-air Basic ATK finisher, no dedicated asset
     'Fleurdelys 1-2': './characters/cartethyia/cX7v4GDm-skill-swordbeartheirnames.webp', // Resonance Skill's Fleurdelys-form cast (real name "May Tempest Break the Tides"), same icon
     // CHARACTER_ROTATIONS' own phrasing splits the same Skill cast into two exact steps "Fleurdelys
     // 1"/"Fleurdelys 2" — both are themselves substrings of the Basic ATK row "Fleurdelys 1-5", so
@@ -9347,7 +9347,7 @@ const SKILL_ICONS = {
     'Fleurdelys 2': './characters/cartethyia/cX7v4GDm-skill-swordbeartheirnames.webp',
     'Fleurdelys': './characters/_shared/x86mmjbD-skill-sword.webp',
     'Sword to Bear Their Names': './characters/cartethyia/cX7v4GDm-skill-swordbeartheirnames.webp',
-    'Sword to Answer Waves': './characters/cartethyia/cX7v4GDm-skill-swordbeartheirnames.webp', // Fleurdelys Resonance Skill replacement, same wiki icon
+    'Sword to Answer Waves': './characters/cartethyia/cX7v4GDm-skill-swordbeartheirnames.webp', // Fleurdelys Resonance Skill replacement, same icon
     'May Tempest Break the Tides': './characters/cartethyia/cX7v4GDm-skill-swordbeartheirnames.webp',
     'Tempest': './characters/cartethyia/z3B1sYY-skill-tempest.webp',
     "A Knight's Heartfelt Prayers": './characters/cartethyia/BVqRm8KJ-skill-knightsheartfelt.webp',
@@ -9356,9 +9356,9 @@ const SKILL_ICONS = {
     'Sword to Call for Freedom': './characters/cartethyia/k2KS9cv0-skill-swordmarktidestrace.webp', // Fleurdelys Intro replacement, same icon
     "Wind's Divine Blessing": './characters/cartethyia/KzFYk17W-skill-windsdivineblessing.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Lupa, re-hosted on ibb.co (2026-08-17),
-  // resolved via the MediaWiki imageinfo API — all 6 URLs verified 200/live before upload. Flaming Star
-  // (Basic ATK) has no dedicated wiki asset, uses the shared generic Skill_Broadblade.webp icon.
+  // Source: the reference Skill_*.png assets for Lupa, re-hosted on ibb.co (2026-08-17),
+  // resolved via the image-info API — all 6 URLs verified 200/live before upload. Flaming Star
+  // (Basic ATK) has no dedicated asset, uses the shared generic Skill_Broadblade.webp icon.
   'Lupa': {
     'Flaming Star': './characters/lupa/RGn44dhM-skill-broadblade.webp',
     'Stage 1': './characters/lupa/RGn44dhM-skill-broadblade.webp', // SKILL_MULTIPLIERS' individual Basic ATK combo-stage rows (Flaming Star's real name), same icon
@@ -9368,22 +9368,22 @@ const SKILL_ICONS = {
     'Standard': './characters/lupa/RGn44dhM-skill-broadblade.webp',
     'Stage 1-2': './characters/lupa/RGn44dhM-skill-broadblade.webp', // rotation-step phrasing for the Basic ATK combo, same icon
     "Wolf's Gnawing": './characters/lupa/RGn44dhM-skill-broadblade.webp', // Heavy Attack's 50-Wolflame replacement, no dedicated icon
-    'Firestrike': './characters/lupa/RGn44dhM-skill-broadblade.webp', // Mid-air Attack, no dedicated wiki icon — generic weapon icon
+    'Firestrike': './characters/lupa/RGn44dhM-skill-broadblade.webp', // Mid-air Attack, no dedicated icon — generic weapon icon
     "Wolf's Claw": './characters/lupa/RGn44dhM-skill-broadblade.webp', // Forte-enhanced Heavy ATK, same generic weapon icon
     'Starfall': './characters/lupa/RGn44dhM-skill-broadblade.webp',
     "Shewolf's Hunt": './characters/lupa/5WbyTxzD-skill-shewolfshunt.webp',
-    'Feral Fang': './characters/lupa/5WbyTxzD-skill-shewolfshunt.webp', // same Resonance Skill's follow-up, same wiki icon
+    'Feral Fang': './characters/lupa/5WbyTxzD-skill-shewolfshunt.webp', // same Resonance Skill's follow-up, same icon
     'Set the Arena Ablaze': './characters/lupa/5WbyTxzD-skill-shewolfshunt.webp', // "Resonance Skill slot" per the Data dump — a pseudo-Coordinated-Attack cast from the same Skill
     'Ignis Lupa': './characters/lupa/S7W3d25X-skill-ignislupa.webp',
     'Dance With the Wolf': './characters/lupa/S7W3d25X-skill-ignislupa.webp', // Forte Circuit's own upgraded Skill (and its Climax variant, matched via substring), same icon
     'Fire-Kissed Glory': './characters/lupa/mrPk9FF3-skill-firekissedglory.webp',
-    'Foebreaker': './characters/lupa/mrPk9FF3-skill-firekissedglory.webp', // Liberation follow-up, same wiki icon
+    'Foebreaker': './characters/lupa/mrPk9FF3-skill-firekissedglory.webp', // Liberation follow-up, same icon
     'Try Focusing, Eh?': './characters/lupa/jkNfHp2y-skill-tryfocusingeh.webp', // Intro Skill
     'Nowhere to Run!': './characters/lupa/jkNfHp2y-skill-tryfocusingeh.webp', // Intro's Wild Hunt upgrade, same icon
     'Stand by Me, Warrior': './characters/lupa/bjzbJyCH-skill-standbymewarrior.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Phrolova, re-hosted on ibb.co
-  // (2026-08-17), resolved via the MediaWiki imageinfo API — all 5 URLs verified 200/live before
+  // Source: the reference Skill_*.png assets for Phrolova, re-hosted on ibb.co
+  // (2026-08-17), resolved via the image-info API — all 5 URLs verified 200/live before
   // upload. Movement of Life and Death (Basic ATK) uses the shared generic Skill_Rectifier.webp icon
   // (same as Encore/Yinlin/Verina/Zhezhi/Shorekeeper/Phoebe's).
   'Phrolova': {
@@ -9404,12 +9404,12 @@ const SKILL_ICONS = {
     'Suite of Immortality': './characters/phrolova/7dWwXT4m-skill-suiteofquietus.webp', // Maestro-enhanced Intro, same icon
     'Unfinished Piece': './characters/phrolova/DDQz9zyk-skill-unfinishedpiece.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Augusta, re-hosted on ibb.co (2026-08-17).
+  // Source: the reference Skill_*.png assets for Augusta, re-hosted on ibb.co (2026-08-17).
   'Augusta': {
-    "Hunter's Path": './characters/_shared/CpPvLLVt-Skill-Broadblade.webp', // Basic ATK — generic Broadblade icon (the wiki's own File:Skill_Hunter's_Path.png resolves to this same asset)
-    'Steelclash': './characters/_shared/CpPvLLVt-Skill-Broadblade.webp', // SKILL_MULTIPLIERS' bare Heavy ATK row name (no dedicated wiki icon), was NULL — the colon-suffixed 'Thunderoar: Backstep' etc. below don't match this shorter phrasing
+    "Hunter's Path": './characters/_shared/CpPvLLVt-Skill-Broadblade.webp', // Basic ATK — generic Broadblade icon (the reference File:Skill_Hunter's_Path.png resolves to this same asset)
+    'Steelclash': './characters/_shared/CpPvLLVt-Skill-Broadblade.webp', // SKILL_MULTIPLIERS' bare Heavy ATK row name (no dedicated icon), was NULL — the colon-suffixed 'Thunderoar: Backstep' etc. below don't match this shorter phrasing
     'Thunderoar': './characters/_shared/CpPvLLVt-Skill-Broadblade.webp', // SKILL_MULTIPLIERS' bare combined Heavy ATK row (Backstep/Spinslash/Uppercut), same fix
-    'Thunderoar: Backstep': './characters/_shared/CpPvLLVt-Skill-Broadblade.webp', // Prowess-gated Heavy Attack variant, no dedicated wiki icon — generic weapon icon
+    'Thunderoar: Backstep': './characters/_shared/CpPvLLVt-Skill-Broadblade.webp', // Prowess-gated Heavy Attack variant, no dedicated icon — generic weapon icon
     'Thunderoar: Spinslash': './characters/_shared/CpPvLLVt-Skill-Broadblade.webp',
     "Warrior's Blade": './characters/augusta/Mxg3Z8k9-warriors-blade.webp',
     // Was wrongly mapped to Warrior's Blade's (Skill) icon. Per Data dump/Augusta/Augusta.md,
@@ -9429,9 +9429,9 @@ const SKILL_ICONS = {
     'Stride of Goldenflare': './characters/augusta/Kj6cSTM0-stride-goldenflare.webp', // Intro Skill
     'Battlesong of the Unyielding': './characters/augusta/20CntVcB-battlesong-unyielding.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Iuno, re-hosted on ibb.co (2026-08-17).
+  // Source: the reference Skill_*.png assets for Iuno, re-hosted on ibb.co (2026-08-17).
   'Iuno': {
-    'Moon Steps': './characters/_shared/dsbWXdtk-Skill-Gauntlets.webp', // Basic ATK — generic Gauntlets icon (the wiki's own File:Skill_Moon_Steps.png resolves to this same asset)
+    'Moon Steps': './characters/_shared/dsbWXdtk-Skill-Gauntlets.webp', // Basic ATK — generic Gauntlets icon (the reference File:Skill_Moon_Steps.png resolves to this same asset)
     'Moonring': './characters/_shared/dsbWXdtk-Skill-Gauntlets.webp',
     'Moonbow': './characters/_shared/dsbWXdtk-Skill-Gauntlets.webp',
     'Foresight Fugue': './characters/iuno/Q7YyYGJL-skill-foresight-fugue.webp',
@@ -9447,9 +9447,9 @@ const SKILL_ICONS = {
     'Illuminated Manifestation': './characters/iuno/TqYmWyr5-skill-illuminated-manifestation.webp', // Intro Skill
     'From Gloom to Gleam': './characters/iuno/V0xjgmx3-skill-from-gloom-to-gleam.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Galbrena, re-hosted on ibb.co (2026-08-17).
+  // Source: the reference Skill_*.png assets for Galbrena, re-hosted on ibb.co (2026-08-17).
   'Galbrena': {
-    "Slayer's Trigger": './characters/_shared/8gYdwYCF-skill-pistols.webp', // Basic ATK — generic Pistols icon (the wiki's own File:Skill_Slayer's_Trigger.png resolves to this same asset)
+    "Slayer's Trigger": './characters/_shared/8gYdwYCF-skill-pistols.webp', // Basic ATK — generic Pistols icon (the reference File:Skill_Slayer's_Trigger.png resolves to this same asset)
     'Basic Attack Stage': './characters/_shared/8gYdwYCF-skill-pistols.webp', // SKILL_MULTIPLIERS' individual-stage rows (Stage 1/2/3/4), Slayer's Trigger's real name, same icon
     'Blood for Blood': './characters/_shared/8gYdwYCF-skill-pistols.webp', // Dodge Counter's real cast name, no dedicated icon per the Data dump
     'Ashfall Barrage': './characters/_shared/8gYdwYCF-skill-pistols.webp', // Mid-air Attack's real cast name (tap = Plunging Attack, hold = Sustained Fire), no dedicated icon
@@ -9472,9 +9472,9 @@ const SKILL_ICONS = {
     'Hellflare Overload': './characters/galbrena/fYZhFW4t-skill-hellflare-overload.webp', // Intro Skill
     'Ashen Pursuit': './characters/galbrena/ch99n99W-skill-ashen-pursuit.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Qiuyuan, re-hosted on ibb.co (2026-08-17).
+  // Source: the reference Skill_*.png assets for Qiuyuan, re-hosted on ibb.co (2026-08-17).
   'Qiuyuan': {
-    'Inkwash': './characters/_shared/YTdT2Yxf-skill-sword.webp', // Basic ATK — generic Sword icon (the wiki's own File:Skill_Inkwash.png resolves to this same asset)
+    'Inkwash': './characters/_shared/YTdT2Yxf-skill-sword.webp', // Basic ATK — generic Sword icon (the reference File:Skill_Inkwash.png resolves to this same asset)
     'Stage 1-3': './characters/_shared/YTdT2Yxf-skill-sword.webp', // SKILL_MULTIPLIERS' combined Basic ATK combo row (Inkwash's real name), same icon
     'Standard': './characters/_shared/YTdT2Yxf-skill-sword.webp', // base Heavy Attack/Dodge Counter, no dedicated icon at all previously
     'Thus Spoke the Blade': './characters/_shared/YTdT2Yxf-skill-sword.webp', // Forte-enhanced Basic ATK/Heavy ATK replacements, same generic weapon icon
@@ -9492,9 +9492,9 @@ const SKILL_ICONS = {
     'Strike Before Ready': './characters/qiuyuan/m5YJ7bBB-skill-strike-before-ready.webp', // Outro Skill
     'Sheath Fallen, New Shoots Revealed': './characters/qiuyuan/m5YJ7bBB-skill-strike-before-ready.webp', // S3's Outro replacement (counted as Echo Skill DMG per the Data dump), same Outro icon
   },
-  // Source: the wiki Skill_*.png assets for Chisa, re-hosted on ibb.co (2026-08-17).
+  // Source: the reference Skill_*.png assets for Chisa, re-hosted on ibb.co (2026-08-17).
   'Chisa': {
-    'Reign of Silence': './characters/chisa/39ZxR3C4-skill-broadblade.webp', // Basic ATK — generic Broadblade icon (the wiki's own File:Skill_Reign_of_Silence.png resolves to this same asset)
+    'Reign of Silence': './characters/chisa/39ZxR3C4-skill-broadblade.webp', // Basic ATK — generic Broadblade icon (the reference File:Skill_Reign_of_Silence.png resolves to this same asset)
     'Stage 1-2': './characters/chisa/39ZxR3C4-skill-broadblade.webp', // SKILL_MULTIPLIERS' combined Basic ATK combo row (Reign of Silence's real name), same icon
     'Rending Lunge': './characters/chisa/39ZxR3C4-skill-broadblade.webp',
     'Death Snip': './characters/chisa/39ZxR3C4-skill-broadblade.webp',
@@ -9510,10 +9510,10 @@ const SKILL_ICONS = {
     'Reverberance - Return': './characters/chisa/KxsFThC1-skill-reverberance-return.webp', // Intro Skill
     'Unraveling - Law Zero': './characters/chisa/mC9hRxyB-skill-unraveling-law-zero.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Lynae/Mornye/Aemeath, pulled via the
-  // MediaWiki API (bypasses the site's Cloudflare challenge entirely) and re-hosted on ibb.co (2026-08-17).
+  // Source: the reference Skill_*.png assets for Lynae/Mornye/Aemeath, pulled via the
+  // reference API (bypasses the site's Cloudflare challenge entirely) and re-hosted on ibb.co (2026-08-17).
   'Lynae': {
-    'Stage 1-3': './characters/_shared/xq4xPQNP-Lynae-basic.webp', // Basic ATK — generic Pistols icon (the wiki's own File:Skill_Chroma_Drift.png resolves to this same asset)
+    'Stage 1-3': './characters/_shared/xq4xPQNP-Lynae-basic.webp', // Basic ATK — generic Pistols icon (the reference File:Skill_Chroma_Drift.png resolves to this same asset)
     'Kaleidoscopic 1-5': './characters/_shared/xq4xPQNP-Lynae-basic.webp',
     'Spark Collision': './characters/_shared/xq4xPQNP-Lynae-basic.webp',
     'Lynae-Style Palettes': './characters/lynae/KxK0V0g9-Lynae-res-Skill.webp', // Resonance Skill
@@ -9555,10 +9555,10 @@ const SKILL_ICONS = {
     'Debut of Meteoric Radiance': './characters/aemeath/prZnwGKQ-Aemeath-skill-intro.webp',
     'Silent Protection': './characters/aemeath/svSPtz0x-Aemeath-outro.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Luuk Herssen, pulled via the MediaWiki API
+  // Source: the reference Skill_*.png assets for Luuk Herssen, pulled via the reference API
   // (bypasses the site's Cloudflare challenge) and re-hosted on ibb.co (2026-08-17).
   'Luuk Herssen': {
-    'Stage 1-4': './characters/_shared/rR5XytVJ-Luuk-skill-basic.webp', // Basic ATK — generic Gauntlets icon (the wiki's own File:Skill_Such_is_Light.png resolves to this same asset)
+    'Stage 1-4': './characters/_shared/rR5XytVJ-Luuk-skill-basic.webp', // Basic ATK — generic Gauntlets icon (the reference File:Skill_Such_is_Light.png resolves to this same asset)
     'Scythe: Dissection': './characters/_shared/rR5XytVJ-Luuk-skill-basic.webp', // Mid-air Attack strings — considered Basic ATK
     'Scythe: Resection': './characters/_shared/rR5XytVJ-Luuk-skill-basic.webp',
     'Scythe Resection Stage': './characters/_shared/rR5XytVJ-Luuk-skill-basic.webp', // rotation-step phrasing without the colon ('Jump: Scythe Resection Stage 2-3'), same icon
@@ -9573,7 +9573,7 @@ const SKILL_ICONS = {
     'Bow to the Last Light': './characters/luuk-herssen/W4MMpcrv-Luuk-skill-outro.webp', // Outro Skill
     'Silent Debate of Light': './characters/luuk-herssen/BHdBsKjP-Luuk-skill-tune.webp', // Tune Break
   },
-  // Source: the wiki Skill_*.png assets for Sigrika, pulled via the MediaWiki API
+  // Source: the reference Skill_*.png assets for Sigrika, pulled via the reference API
   // (bypasses the site's Cloudflare challenge) and re-hosted on ibb.co (2026-08-17).
   // Key order fixed 2026-09-04 (Phase A audit, fresh dump): getSkillIcon() does
   // skillName.includes(key), returning the FIRST matching key in insertion order. The generic
@@ -9595,15 +9595,15 @@ const SKILL_ICONS = {
     'Chain Whip': './characters/sigrika/1Ydcf5Gb-Sigrika-skill-forte.webp', // Runic Chain Whip Forte Heavy ATK variant, same Forte icon
     'Runic Soliskin': './characters/sigrika/1Ydcf5Gb-Sigrika-skill-forte.webp',
     'Learn My True Name': './characters/sigrika/1Ydcf5Gb-Sigrika-skill-forte.webp',
-    'Heavy ATK: Schemata of Runes': './characters/_shared/rR5XytVJ-Luuk-skill-basic.webp', // Heavy Attack fallback, no dedicated wiki icon — generic weapon icon; kept LAST so specific Runic-variant keys above match first
+    'Heavy ATK: Schemata of Runes': './characters/_shared/rR5XytVJ-Luuk-skill-basic.webp', // Heavy Attack fallback, no dedicated icon — generic weapon icon; kept LAST so specific Runic-variant keys above match first
     "Where Trust Leads Me!": './characters/sigrika/tTFS1w8x-Sigrika-skill-liberation.webp', // Resonance Liberation
     'Solsworn Etymology': './characters/sigrika/Qj6rsbGF-Sigrika-skill-intro.webp', // Intro Skill
     'In This Very Moment': './characters/sigrika/q3yGzhyX-Sigrika-skill-outro.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Hiyuki, pulled via the MediaWiki API
+  // Source: the reference Skill_*.png assets for Hiyuki, pulled via the reference API
   // (bypasses the site's Cloudflare challenge) and re-hosted on ibb.co (2026-08-17).
   'Hiyuki': {
-    'Present Self Stage': './characters/_shared/YTdT2Yxf-skill-sword.webp', // Basic ATK — generic Sword icon (the wiki's own File:Skill_Flaming_Sakura_Blade_Art.png resolves to this same asset)
+    'Present Self Stage': './characters/_shared/YTdT2Yxf-skill-sword.webp', // Basic ATK — generic Sword icon (the reference File:Skill_Flaming_Sakura_Blade_Art.png resolves to this same asset)
     'Foreclaimed Self Stage': './characters/_shared/YTdT2Yxf-skill-sword.webp',
     'Heavy Attack - Foreclaimed Self': './characters/_shared/YTdT2Yxf-skill-sword.webp', // base Foreclaimed-Self Heavy Attack (not Forte-gated, unlike Frost Splinter/Bitterfrost below), same generic weapon icon
     'Iai Stance': './characters/_shared/YTdT2Yxf-skill-sword.webp', // rotation-step phrasing for the Basic ATK combo ('Iai Stance x3'), same icon
@@ -9617,20 +9617,20 @@ const SKILL_ICONS = {
     'Frostedge': './characters/hiyuki/NRt7X9T-Hiyuki-skill-intro.webp', // Intro Skill
     'Snowlight Blessing': './characters/hiyuki/Ng7S6X8j-Hiyuki-skill-outro.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Denia, pulled via the MediaWiki API
+  // Source: the reference Skill_*.png assets for Denia, pulled via the reference API
   // (bypasses the site's Cloudflare challenge) and re-hosted on ibb.co (2026-08-17).
   'Denia': {
     'Stage 1-4': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // Basic ATK — generic Rectifier icon (same asset already used for Encore/Yinlin)
     'Stagecraft Form Stage 4': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // rotation-step phrasing for the Basic ATK combo, same icon
     'Phantom Bubble': './characters/denia/ZpdRC3Kx-denia-res-Skill.webp', // Resonance Skill — Bubbles and Baits
-    'Banish': './characters/denia/ZpdRC3Kx-denia-res-Skill.webp', // Breakdown Form's Resonance Skill replacement, same wiki icon
-    'Beckon': './characters/denia/ZpdRC3Kx-denia-res-Skill.webp', // Breakdown Form's other Resonance Skill cast (shares CD with Banish), same wiki icon
+    'Banish': './characters/denia/ZpdRC3Kx-denia-res-Skill.webp', // Breakdown Form's Resonance Skill replacement, same icon
+    'Beckon': './characters/denia/ZpdRC3Kx-denia-res-Skill.webp', // Breakdown Form's other Resonance Skill cast (shares CD with Banish), same icon
     'Final Act: Stagecraft': './characters/denia/xtj5xwht-denia-liberation.webp', // Resonance Liberation — 1st Ultimate
-    'Final Act: Breakdown': './characters/denia/xtj5xwht-denia-liberation.webp', // Resonance Liberation — 2nd Ultimate, same wiki icon
+    'Final Act: Breakdown': './characters/denia/xtj5xwht-denia-liberation.webp', // Resonance Liberation — 2nd Ultimate, same icon
     'Erosion Field': './characters/denia/PGHNXhY3-denia-forte.webp', // Forte Circuit "Flawless"
     "It's Been A While!": './characters/denia/hx2nmhpT-denia-intro.webp', // Intro Skill — Formal Greetings
     'Formal Greetings': './characters/denia/hx2nmhpT-denia-intro.webp',
-    'Knock Knock': './characters/denia/hx2nmhpT-denia-intro.webp', // Breakdown Form's own Intro Skill cast, same wiki icon as Stagecraft Form's "It's Been A While!"
+    'Knock Knock': './characters/denia/hx2nmhpT-denia-intro.webp', // Breakdown Form's own Intro Skill cast, same icon as Stagecraft Form's "It's Been A While!"
     'Unfinished Lies': './characters/denia/BVB2jBsW-denia-outro.webp', // Outro Skill
     // These two are declared LAST and deliberately generic: 'Stagecraft Form'/'Breakdown Form' are
     // substrings of several of the more specific keys above (e.g. 'Phantom Bubble - Stagecraft
@@ -9640,7 +9640,7 @@ const SKILL_ICONS = {
     'Stagecraft Form': './characters/_shared/RkMykBkT-Skill-Rectifier.webp',
     'Breakdown Form': './characters/_shared/RkMykBkT-Skill-Rectifier.webp',
   },
-  // Source: the wiki Skill_*.png assets for Lucy/Rebecca, pulled via the MediaWiki
+  // Source: the reference Skill_*.png assets for Lucy/Rebecca, pulled via the reference
   // API (bypasses the site's Cloudflare challenge) and re-hosted on ibb.co (2026-08-17).
   'Lucy': {
     'Locked Thread': './characters/_shared/NG3jXXG-skill-pistols.webp', // Basic ATK — generic Pistols icon (same asset already used elsewhere)
@@ -9650,9 +9650,9 @@ const SKILL_ICONS = {
     'Dual Threading': './characters/_shared/NG3jXXG-skill-pistols.webp', // Root Access's Heavy Attack replacement, same generic weapon icon
     'Payload': './characters/lucy/Z6KMgzkb-lucy-res-Skill.webp', // Resonance Skill — Protocol Breach
     'Pulse Interference': './characters/lucy/Z6KMgzkb-lucy-res-Skill.webp',
-    'Deadlock': './characters/lucy/Z6KMgzkb-lucy-res-Skill.webp', // Max-TCP Resonance Skill upgrade, same wiki icon
+    'Deadlock': './characters/lucy/Z6KMgzkb-lucy-res-Skill.webp', // Max-TCP Resonance Skill upgrade, same icon
     'Netrunner': './characters/lucy/qFDfbxtV-lucy-liberation.webp', // Resonance Liberation
-    'Old Net Deep Dive': './characters/lucy/qFDfbxtV-lucy-liberation.webp', // Multi-threading's Resonance Liberation replacement, same wiki icon
+    'Old Net Deep Dive': './characters/lucy/qFDfbxtV-lucy-liberation.webp', // Multi-threading's Resonance Liberation replacement, same icon
     'Multi-threading': './characters/lucy/hJfyn0s6-lucy-forte.webp', // Forte-gated Heavy ATK — Depths of Blackwall
     'Hack Response': './characters/lucy/hJfyn0s6-lucy-forte.webp', // Forte Circuit
     'Outdated Hallucination': './characters/lucy/TBQxkbJy-lucy-intro.webp', // Intro Skill
@@ -9671,36 +9671,36 @@ const SKILL_ICONS = {
     'Huntress Stage 1-3': './characters/_shared/NG3jXXG-skill-pistols.webp',
     'Standard': './characters/_shared/NG3jXXG-skill-pistols.webp', // Heavy ATK — 'Standard - Huntress' / 'Standard - Guts'
     "Yo, It's Big Boomin' Time!": './characters/rebecca/4RZv4Pks-rebecca-intro.webp', // Intro Skill — My Turn! (must precede the shorter Skill-row key below)
-    "Hey, Leadhead": './characters/rebecca/4RZv4Pks-rebecca-intro.webp', // Guts-mode Intro alternative, same wiki icon
+    "Hey, Leadhead": './characters/rebecca/4RZv4Pks-rebecca-intro.webp', // Guts-mode Intro alternative, same icon
     "It's Big Boomin' Time!": './characters/rebecca/8n7M3D1K-rebecca-res-Skill.webp', // Resonance Skill — Tactical Tweaks
     "Come 'n' Get Me!": './characters/rebecca/8n7M3D1K-rebecca-res-Skill.webp',
     "Party 'til Dawn!": './characters/rebecca/KcVy8tQW-rebecca-liberation.webp', // Resonance Liberation
-    'BOOM! Fireworks!': './characters/rebecca/KcVy8tQW-rebecca-liberation.webp', // fired when Overload is consumed as Mk. 31 HMG (Liberation) ends, same wiki icon
+    'BOOM! Fireworks!': './characters/rebecca/KcVy8tQW-rebecca-liberation.webp', // fired when Overload is consumed as Mk. 31 HMG (Liberation) ends, same icon
     'Rat-tat-tat': './characters/rebecca/tGfyYTJ-rebecca-forte.webp', // Forte-gated Heavy ATK — Gloves Are Comin' Off!
     'Bang-bang-bang': './characters/rebecca/tGfyYTJ-rebecca-forte.webp',
     'Hack Response': './characters/rebecca/tGfyYTJ-rebecca-forte.webp', // Forte Circuit
     'Preem Choom': './characters/rebecca/zhQshWzF-rebecca-outro.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Lucilla, pulled via the MediaWiki API
+  // Source: the reference Skill_*.png assets for Lucilla, pulled via the reference API
   // (bypasses the site's Cloudflare challenge) and re-hosted on ibb.co (2026-08-17).
   'Lucilla': {
     'Snapshot': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // Basic ATK — generic Rectifier icon (same asset already used elsewhere)
     'Tracing Forms Stage 1-3': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // rotation-step phrasing for the Basic ATK combo, same icon
     'Letting It Go': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // auto-follow-up after Basic Attack - Tracing Forms Stage 3, same generic weapon icon
     'Phantom Frame': './characters/lucilla/G4jbSdr2-lucilla-res-Skill.webp', // Resonance Skill
-    'Compensate': './characters/lucilla/G4jbSdr2-lucilla-res-Skill.webp', // release-outside-Focus variant of Phantom Frame, same wiki icon
+    'Compensate': './characters/lucilla/G4jbSdr2-lucilla-res-Skill.webp', // release-outside-Focus variant of Phantom Frame, same icon
     'Spotlight': './characters/lucilla/G4jbSdr2-lucilla-res-Skill.webp', // release-inside-Focus variant of Phantom Frame — used standalone in the rotation guide, unlike SKILL_MULTIPLIERS' combined row name
     'Clear As Day': './characters/lucilla/Q7dvwN32-lucilla-liberation.webp', // Resonance Liberation
     'Oblivion': './characters/lucilla/qYZ1pTZ0-lucilla-forte.webp', // Forte Circuit — Memory Palace
     'Clip It': './characters/lucilla/7JWJhpcF-lucilla-intro.webp', // Intro Skill
     'Montage': './characters/lucilla/RGZrzfTY-lucilla-outro.webp', // Outro Skill
   },
-  // Source: the wiki Skill_*.png assets for Yangyang: Xuanling/Suisui, pulled via
-  // the MediaWiki API (bypasses the site's Cloudflare challenge) and re-hosted on ibb.co (2026-08-18).
+  // Source: the reference Skill_*.png assets for Yangyang: Xuanling/Suisui, pulled via
+  // the reference API (bypasses the site's Cloudflare challenge) and re-hosted on ibb.co (2026-08-18).
   'Yangyang: Xuanling': {
     'Azure/Feather Stance': './characters/_shared/x86mmjbD-skill-sword.webp', // Basic ATK — generic Sword icon (same asset already used elsewhere)
     'Havoc in Bloom Stage 1-3': './characters/_shared/x86mmjbD-skill-sword.webp', // rotation-step phrasing for the Basic ATK combo, same icon
-    'Feather Fall': './characters/_shared/x86mmjbD-skill-sword.webp', // Mid-air Attack, no dedicated wiki icon — generic weapon icon
+    'Feather Fall': './characters/_shared/x86mmjbD-skill-sword.webp', // Mid-air Attack, no dedicated icon — generic weapon icon
     'Sword Stance Switch': './characters/yangyang-xuanling/NgDz5JK6-yx-res-Skill.webp', // Resonance Skill — Feather's Edge
     'Azure Sword Stance': './characters/yangyang-xuanling/N6yKBC9r-yx-forte.webp', // Forte-gated Heavy ATK — The Way of Ten Thousand Voices
     'Feather Sword Stance': './characters/yangyang-xuanling/N6yKBC9r-yx-forte.webp',
@@ -9713,7 +9713,7 @@ const SKILL_ICONS = {
     'Zephyr Stance Stage 1-4': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // Basic ATK — generic Rectifier icon (same asset already used elsewhere)
     'Zephyr Stance thrust': './characters/suisui/rKYhDsHw-suisui-res-Skill.webp', // Resonance Skill — Vernal Screen
     'Drizzle Stance Stage 1-4': './characters/_shared/RkMykBkT-Skill-Rectifier.webp',
-    'Awakening Spring': './characters/suisui/rKYhDsHw-suisui-res-Skill.webp', // Zephyr Skill's max-Cloud Breath upgrade, same wiki icon
+    'Awakening Spring': './characters/suisui/rKYhDsHw-suisui-res-Skill.webp', // Zephyr Skill's max-Cloud Breath upgrade, same icon
     'Drizzle Stance thrust': './characters/suisui/rKYhDsHw-suisui-res-Skill.webp',
     'Zephyr Stance': './characters/_shared/RkMykBkT-Skill-Rectifier.webp', // Mid-air Attack row, generic weapon icon (must follow the longer Zephyr-prefixed keys above)
     'Drizzle Stance': './characters/suisui/cRkfdDc-suisui-forte.webp', // Forte-gated Heavy ATK — Lambent Gold (must follow the longer Drizzle-prefixed keys above)
@@ -9721,8 +9721,8 @@ const SKILL_ICONS = {
     'Tinkling Jade': './characters/suisui/fdXb5bgm-suisui-intro.webp', // Intro Skill
     'Rippling Waters': './characters/suisui/fhrX8pF-suisui-outro.webp', // Outro Skill
   },
-  // Danjin/Yangyang/Sanhua icons added 2026-08-18, sourced directly from the wiki's
-  // own the wiki Skill_*.png assets, re-hosted on ibb.co (2026-08-19).
+  // Danjin/Yangyang/Sanhua icons added 2026-08-18, sourced directly from the reference's
+  // own the reference Skill_*.png assets, re-hosted on ibb.co (2026-08-19).
   'Danjin': {
     'Execution': './characters/_shared/prZWKCtm-Skill-Sword.webp', // Basic ATK — generic Sword icon, also covers Heavy ATK/Mid-air/Dodge Counter
     'Standard': './characters/_shared/prZWKCtm-Skill-Sword.webp',
@@ -9739,7 +9739,7 @@ const SKILL_ICONS = {
     'Feather as Blade': './characters/_shared/prZWKCtm-Skill-Sword.webp', // Basic ATK — generic Sword icon, also covers Heavy ATK/Mid-air/Dodge Counter
     'Standard': './characters/_shared/prZWKCtm-Skill-Sword.webp',
     'Zephyr Domain': './characters/yangyang/VW0qky4r-Skill-Zephyr-Domain.webp',
-    'Zephyr Song': './characters/_shared/prZWKCtm-Skill-Sword.webp', // Heavy ATK follow-up, no dedicated the wiki icon — generic Sword icon (same convention as Basic/Heavy ATK above)
+    'Zephyr Song': './characters/_shared/prZWKCtm-Skill-Sword.webp', // Heavy ATK follow-up, no dedicated icon — generic Sword icon (same convention as Basic/Heavy ATK above)
     'Wind Spirals': './characters/yangyang/934FW2wW-Skill-Wind-Spirals.webp',
     'Echoing Feathers': './characters/yangyang/s9HtLNhg-Skill-Echoing-Feathers.webp',
     'Feather Release': './characters/yangyang/s9HtLNhg-Skill-Echoing-Feathers.webp', // Forte Circuit's Mid-air Attack finisher, same Forte icon
@@ -9757,7 +9757,7 @@ const SKILL_ICONS = {
     'Silversnow': './characters/sanhua/CpzvZz5K-Skill-Silversnow.webp',
   },
   // added 2026-08-18 — previously entirely missing (was falling back to no icon for every Taoqi skill
-  // row). Sourced from the wiki's own the wiki Skill_*.png assets, re-hosted on ibb.co (2026-08-19).
+  // row). Sourced from the reference Skill_*.png assets, re-hosted on ibb.co (2026-08-19).
   'Taoqi': {
     'Concealed Edge': './characters/_shared/B5n54GNt-Skill-Broadblade.webp', // Basic/Heavy/Mid-air/Dodge Counter — generic Broadblade icon
     'Standard': './characters/_shared/B5n54GNt-Skill-Broadblade.webp',
@@ -9769,8 +9769,8 @@ const SKILL_ICONS = {
     'Iron Will': './characters/taoqi/G3bg0S5R-Skill-Iron-Will.webp',
   },
   // added 2026-08-18 — previously entirely missing (was falling back to no icon for every Yuanwu skill
-  // row). Sourced from the wiki's own the wiki Skill_*.png assets, re-hosted on ibb.co (2026-08-19).
-  // 'Leihuangquan' itself has no dedicated skill icon file on the wiki — it redirects to the generic
+  // row). Sourced from the reference Skill_*.png assets, re-hosted on ibb.co (2026-08-19).
+  // 'Leihuangquan' itself has no dedicated skill icon file on the reference — it redirects to the generic
   // Gauntlets weapon-type icon.
   'Yuanwu': {
     'Leihuangquan': './characters/_shared/QvdmVfvF-Skill-Gauntlets.webp',
@@ -9785,9 +9785,9 @@ const SKILL_ICONS = {
     'Lightning Manipulation': './characters/yuanwu/7dB9SgTZ-Skill-Lightning-Manipulation.webp',
   },
   // added 2026-08-18 — previously entirely missing (Mortefi's SKILL_MULTIPLIERS rows had no icon
-  // lookup at all). Sourced from the wiki's own the wiki Skill_*.png assets via the
-  // MediaWiki API (action=query&titles=File:Skill X.png&prop=imageinfo&iiprop=url). 'Marcato' (the
-  // Coordinated ATK hit fired during Burning Rhapsody) has no dedicated icon file on the wiki — it's a
+  // lookup at all). Sourced from the reference Skill_*.png assets via the
+  // reference API (action=query&titles=File:Skill X.png&prop=imageinfo&iiprop=url). 'Marcato' (the
+  // Coordinated ATK hit fired during Burning Rhapsody) has no dedicated icon file on the reference — it's a
   // sub-effect of Resonance Liberation Violent Finale, so it reuses that icon.
   'Mortefi': {
     'Impromptu Show': './characters/mortefi/FbhQWDHw-Skill-Pistols.webp',
@@ -9798,12 +9798,12 @@ const SKILL_ICONS = {
     'Dissonance': './characters/mortefi/60NBXg5j-Skill-Dissonance.webp',
     'Rage Transposition': './characters/mortefi/Dfg4cLZs-Skill-Rage-Transposition.webp',
   },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's own the wiki
-  // Skill_*.png assets via the MediaWiki API (Forte Details table image thumbnails + a direct
+  // added 2026-08-18 — previously entirely missing. Sourced from the reference
+  // Skill_*.png assets via the reference API (Forte Details table image thumbnails + a direct
   // action=query&titles=File:Skill_Timeless_Classics.png&prop=imageinfo lookup for the Outro icon, which
   // wasn't inline in the Forte Table's collapsed scaling section). The four Antique Appraisal variants
   // (Chime/Ruyi/Ding/Mask) share Scroll Divination's icon since they're all sub-effects of the same
-  // Resonance Skill row on the wiki, with no separate per-variant icon files uploaded.
+  // Resonance Skill row on the reference, with no separate per-variant icon files uploaded.
   'Youhu': {
     'Frosty Punches': './characters/_shared/QvdmVfvF-Skill-Gauntlets.webp',
     'Frostfall': './characters/_shared/QvdmVfvF-Skill-Gauntlets.webp', // base Heavy Attack at full Frost, no dedicated icon
@@ -9817,8 +9817,8 @@ const SKILL_ICONS = {
     'Scroll of Wonders': './characters/youhu/SX5rWz0L-Skill-Scroll-of-Wonders.webp',
     'Timeless Classics': './characters/youhu/RTxh31Pp-Skill-Timeless-Classics.webp',
   },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's own the wiki
-  // Skill_*.png assets via the MediaWiki API (Forte Details table image thumbnails, section=4 of
+  // added 2026-08-18 — previously entirely missing. Sourced from the reference
+  // Skill_*.png assets via the reference API (Forte Details table image thumbnails, section=4 of
   // Lumi/Combat). 'Energized' is listed before 'Pounce'/'Rebound' so getSkillIcon's substring match
   // resolves 'Energized Pounce'/'Energized Rebound' (Forte Circuit moves) to Signal Light's icon rather
   // than falling through to the plain Resonance Skill (Searchlight Service) icon.
@@ -9836,10 +9836,10 @@ const SKILL_ICONS = {
     'Special Delivery': './characters/lumi/Xxx7gYgj-Skill-Special-Delivery.webp',
     'Escorting': './characters/lumi/N2dQ7Kyg-Skill-Escorting.webp',
   },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's own the wiki
-  // Skill_*.png assets via the MediaWiki API (action=query&titles=File:Skill+...&prop=imageinfo, section
+  // added 2026-08-18 — previously entirely missing. Sourced from the reference
+  // Skill_*.png assets via the reference API (action=query&titles=File:Skill+...&prop=imageinfo, section
   // 3 of Buling/Combat). 'File:Skill Hexagram Calls, Lightning Falls.png' itself resolves (redirects) to
-  // the shared generic Skill_Rectifier.png weapon-type icon on the wiki, used here for all her un-enhanced
+  // the shared generic Skill_Rectifier.png weapon-type icon on the reference, used here for all her un-enhanced
   // Basic ATK/Heavy Attack/Mid-air Attack moves.
   'Buling': {
     'Hexagram Calls': './characters/buling/rKNB0p6J-Skill-Rectifier.webp',
@@ -9852,8 +9852,8 @@ const SKILL_ICONS = {
     'Exorcism Spell': './characters/buling/R4hYk7rh-Skill-Exorcism-Spell.webp',
   },
   // added 2026-08-18 — previously entirely missing (zero SKILL_ICONS coverage for all 4 Rover
-  // attunements). Sourced from the wiki's own the wiki Skill_*.png assets via the
-  // MediaWiki API (Rover/Combat's tabbed Forte tables, one tab per element). All 4 Rovers share the
+  // attunements). Sourced from the reference Skill_*.png assets via the
+  // reference API (Rover/Combat's tabbed Forte tables, one tab per element). All 4 Rovers share the
   // same generic Skill_Sword.png Basic ATK icon (also covers Heavy ATK/Mid-air/Dodge Counter).
   'Rover: Havoc': {
     'Tuneslayer': './characters/_shared/prZWKCtm-Skill-Sword.webp', // Basic ATK
@@ -9865,7 +9865,7 @@ const SKILL_ICONS = {
     'Umbra: Heavy Attack': './characters/rover-havoc/nNpvGF4L-Skill-Umbra-Eclipse.webp', // Dark Surge's enhanced Heavy Attack, same Forte icon
     'Umbra: Thwackblade': './characters/rover-havoc/nNpvGF4L-Skill-Umbra-Eclipse.webp', // Dark Surge's Basic-after-Heavy follow-up, same Forte icon
     'Deadening Abyss': './characters/rover-havoc/bgvHXLqr-Skill-Deadening-Abyss.webp', // Resonance Liberation
-    'Umbra: Lifetaker': './characters/rover-havoc/bgvHXLqr-Skill-Deadening-Abyss.webp', // Umbra-state Liberation nuke, same wiki icon
+    'Umbra: Lifetaker': './characters/rover-havoc/bgvHXLqr-Skill-Deadening-Abyss.webp', // Umbra-state Liberation nuke, same icon
     'Instant of Annihilation': './characters/rover-havoc/chtkVHd2-Skill-Instant-of-Annihilation.webp', // Intro Skill
     'Soundweaver': './characters/rover-havoc/4wsczBtt-Skill-Soundweaver.webp', // Outro Skill
   },
@@ -9875,7 +9875,7 @@ const SKILL_ICONS = {
     'Resonance': './characters/_shared/prZWKCtm-Skill-Sword.webp', // Heavy Attack: Resonance/Aftertune combo timing hits, no dedicated icon — generic weapon icon
     'Aftertune': './characters/_shared/prZWKCtm-Skill-Sword.webp',
     'Resonating Slashes': './characters/rover-spectro/tw4hy1Ck-Skill-Resonating-Slashes.webp', // Resonance Skill
-    'Resonating Spin': './characters/rover-spectro/tw4hy1Ck-Skill-Resonating-Slashes.webp', // Forte-Gauge-enhanced Resonance Skill state, same wiki icon
+    'Resonating Spin': './characters/rover-spectro/tw4hy1Ck-Skill-Resonating-Slashes.webp', // Forte-Gauge-enhanced Resonance Skill state, same icon
     'Resonating Whirl': './characters/rover-spectro/tw4hy1Ck-Skill-Resonating-Slashes.webp',
     'Resonating Echoes': './characters/rover-spectro/tw4hy1Ck-Skill-Resonating-Slashes.webp',
     'Echoing Orchestra': './characters/rover-spectro/PvNGkhk3-Skill-Echoing-Orchestra.webp', // Resonance Liberation
@@ -9887,11 +9887,11 @@ const SKILL_ICONS = {
     'Standard': './characters/_shared/prZWKCtm-Skill-Sword.webp',
     'Plunge': './characters/_shared/prZWKCtm-Skill-Sword.webp', // Mid-air Attack plunging attack, no dedicated icon — generic weapon icon
     'Illusion Breaker': './characters/rover-aero/JFC1QjWX-Skill-Illusion-Breaker.webp', // Resonance Skill
-    'Awakening Gale': './characters/rover-aero/JFC1QjWX-Skill-Illusion-Breaker.webp', // Resonance Skill's mid-air jump-attack cast, same wiki icon
-    'Skyfall Severance': './characters/rover-aero/JFC1QjWX-Skill-Illusion-Breaker.webp', // Resonance Skill's mid-air follow-up cast, same wiki icon
-    'Unbound Flow': './characters/rover-aero/JFC1QjWX-Skill-Illusion-Breaker.webp', // max-Windstrings Resonance Skill upgrade, same wiki icon
+    'Awakening Gale': './characters/rover-aero/JFC1QjWX-Skill-Illusion-Breaker.webp', // Resonance Skill's mid-air jump-attack cast, same icon
+    'Skyfall Severance': './characters/rover-aero/JFC1QjWX-Skill-Illusion-Breaker.webp', // Resonance Skill's mid-air follow-up cast, same icon
+    'Unbound Flow': './characters/rover-aero/JFC1QjWX-Skill-Illusion-Breaker.webp', // max-Windstrings Resonance Skill upgrade, same icon
     'Cycle of Wind': './characters/rover-aero/Q7gm1B2G-Skill-Cycle-of-Wind.webp', // Forte Circuit
-    'Cloudburst Dance': './characters/rover-aero/Q7gm1B2G-Skill-Cycle-of-Wind.webp', // Forte Circuit's Mid-air Attack replacement, same wiki icon
+    'Cloudburst Dance': './characters/rover-aero/Q7gm1B2G-Skill-Cycle-of-Wind.webp', // Forte Circuit's Mid-air Attack replacement, same icon
     'Omega Storm': './characters/rover-aero/4nCR1X2f-Skill-Omega-Storm.webp', // Resonance Liberation
     'Relentless Squall': './characters/rover-aero/bjqZf19b-Skill-Relentless-Squall.webp', // Intro Skill
     "Storm's Echo": './characters/rover-aero/N69CQqFv-Skill-Storm-s-Echo.webp', // Outro Skill
@@ -9903,8 +9903,8 @@ const SKILL_ICONS = {
     'Riposte Strike': './characters/_shared/prZWKCtm-Skill-Sword.webp', // Basic ATK's parry-window follow-up (or its Crumble variant), no dedicated icon
     'Thunderclap': './characters/rover-electro/2YyS74Pn-Skill-Thunderclap.webp', // Resonance Skill
     "Myriad Omens' Mandate": './characters/rover-electro/7NKRhwQH-Skill-Myriad-Omens-Mandate.webp', // Forte Circuit
-    'Apex Resonance': './characters/rover-electro/7NKRhwQH-Skill-Myriad-Omens-Mandate.webp', // Forte Circuit's own signature combo (Thrum of All Sounds), same wiki icon
-    'Overshock': './characters/rover-electro/7NKRhwQH-Skill-Myriad-Omens-Mandate.webp', // Forte Circuit's capped-Electric-Surge Skill replacement, same wiki icon
+    'Apex Resonance': './characters/rover-electro/7NKRhwQH-Skill-Myriad-Omens-Mandate.webp', // Forte Circuit's own signature combo (Thrum of All Sounds), same icon
+    'Overshock': './characters/rover-electro/7NKRhwQH-Skill-Myriad-Omens-Mandate.webp', // Forte Circuit's capped-Electric-Surge Skill replacement, same icon
     'Ultimate Tactics': './characters/rover-electro/wNFW43BD-Skill-Ultimate-Tactics.webp', // Resonance Liberation
     'Thunderous Fury': './characters/rover-electro/Kj3cKLdS-Skill-Thunderous-Fury.webp', // Intro Skill
     'Rumbling Thunders': './characters/rover-electro/Zpw7cvMr-Skill-Rumbling-Thunders.webp', // Outro Skill
@@ -9954,7 +9954,7 @@ const SKILL_ICONS = {
     'Rising Fortune and Ebbing Evil': './characters/jingran/cctRq3Yp-jingran-skill-Y.webp', // Outro Skill
   },
 };
-// Mid-air Attack / Dodge Counter / Plunging Attack moves very often have no dedicated wiki icon
+// Mid-air Attack / Dodge Counter / Plunging Attack moves very often have no dedicated icon
 // of their own across the roster (they're minor combo extensions, not a named Resonance Skill/
 // Forte/etc.) — auditing every character's SKILL_MULTIPLIERS rows against SKILL_ICONS found 138
 // such rows resolving to no icon at all. Rather than hand-adding a redundant alias key per
@@ -9987,7 +9987,7 @@ const getSkillIcon = (name, skillName, type) => {
 };
 
 // [SECTION:CHAIN_NODE_ICONS] — Per-character S1-S6 Resonance Chain sequence-node icons.
-// Source: the wiki Sequence_Node_* image assets (order matches each character's
+// Source: the reference Sequence_Node_* image assets (order matches each character's
 // Combat page infobox gallery, which lists nodes S1→S6 top to bottom), re-hosted on ibb.co.
 // Only characters that have been audited so far are populated.
 const CHAIN_NODE_ICONS = {
@@ -10047,7 +10047,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/jiyan/fzZxFxmw-Sequence-Node-Resolution.webp',
     s6: './characters/jiyan/0jYkwNc5-Sequence-Node-Fortitude.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Jianxin, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Jianxin, re-hosted on ibb.co
   // (2026-08-17, matching the convention above) — order confirmed S1→S6 against the Chain Table on
   // Jianxin/Combat, all 6 URLs verified 200/live before upload.
   'Jianxin': {
@@ -10058,7 +10058,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/jianxin/DHW1ndcQ-Sequence-Node-Mirroring-Introspection.webp',
     s6: './characters/jianxin/hFH1wK8g-Sequence-Node-Truth-from-Within.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Lingyang, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Lingyang, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Chain Table on the source/character/1104, all 6
   // URLs verified 200/live before upload.
   'Lingyang': {
@@ -10069,7 +10069,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/lingyang/hRYWXtX5-Sequence-Node-Seven-Stars-Shine.webp',
     s6: './characters/lingyang/Z1myY6Sc-Sequence-Node-Demons-Tremble.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Verina, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Verina, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Chain Table on the source/character/1503, all 6
   // URLs verified 200/live before upload.
   'Verina': {
@@ -10080,7 +10080,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/verina/xtHvxT1F-Sequence-Node-Miraculous-Blooms.webp',
     s6: './characters/verina/fYjvXxRB-Sequence-Node-Joyous-Harvest.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Jinhsi, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Jinhsi, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 directly against the Resonance Chain table on Jinhsi/Combat
   // (fetched by section index), all 6 URLs verified 200/live before upload.
   'Jinhsi': {
@@ -10091,7 +10091,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/jinhsi/SDksbmM6-Sequence-Node-Frostfire-Illumination.webp',
     s6: './characters/jinhsi/63m9q28-Sequence-Node-Thawing-Triumph.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Changli, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Changli, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 directly against the Resonance Chain table on Changli/Combat
   // (fetched by section index), all 6 URLs verified 200/live before upload.
   'Changli': {
@@ -10102,7 +10102,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/changli/39jsTQRB-Sequence-Node-Sacrificed-Gains.webp',
     s6: './characters/changli/wZJn2XcV-Sequence-Node-Realized-Plans.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Zhezhi, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Zhezhi, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 directly against the Resonance Chain table on Zhezhi/Combat
   // (fetched by section index), all 6 URLs verified 200/live before upload.
   'Zhezhi': {
@@ -10113,7 +10113,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/zhezhi/8gCVrMWV-Sequence-Node-Compositions-Clue.webp',
     s6: './characters/zhezhi/MDqdsTLR-Sequence-Node-Infinite-Legacy.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Xiangli Yao, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Xiangli Yao, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain table on both the source's live build
   // page and the source/character/1305, all 6 URLs verified 200/live before upload.
   'Xiangli Yao': {
@@ -10124,7 +10124,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/xiangli-yao/DPTYYfnj-node-s5-end.webp',
     s6: './characters/xiangli-yao/bg0ffhj0-node-s6-solace.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Shorekeeper, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Shorekeeper, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain table on both the source's live
   // build page and the source/character/1505, all 6 URLs verified 200/live before upload.
   'Shorekeeper': {
@@ -10135,7 +10135,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/shorekeeper/S4R3jKr6-node-s5-echoes.webp',
     s6: './characters/shorekeeper/d45HxqB9-node-s6-newworld.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Camellya, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Camellya, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain table on both the source's live
   // build page and the source/character/1603, all 6 URLs verified 200/live before upload.
   'Camellya': {
@@ -10146,7 +10146,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/camellya/yFZ91RMt-node-s5-infinityheld.webp',
     s6: './characters/camellya/FbpkkPqC-node-s6-bloomfor.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Carlotta, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Carlotta, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain table on both the source's live
   // build page and the source/character/1107, all 6 URLs verified 200/live before upload.
   'Carlotta': {
@@ -10157,7 +10157,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/carlotta/tPpvpmFC-node-s5-toast.webp',
     s6: './characters/carlotta/Kx65J6sT-node-s6-curtain.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Roccia, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Roccia, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain table on both the source's live
   // build page and the source/character/1606, all 6 URLs verified 200/live before upload.
   'Roccia': {
@@ -10168,7 +10168,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/roccia/BHYrDMBc-node-s5-dreams.webp',
     s6: './characters/roccia/3yGZ0kCy-node-s6-goldenwings.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Phoebe, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Phoebe, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain table on both the source's live
   // build page and the source/character/1506, all 6 URLs verified 200/live before upload.
   'Phoebe': {
@@ -10179,7 +10179,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/phoebe/HDfvkYsV-node-s5-prayer.webp',
     s6: './characters/phoebe/HT7qsxPx-node-s6-whispering.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Brant, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Brant, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain table on both the source's live
   // build page and the source/character/1206, all 6 URLs verified 200/live before upload.
   'Brant': {
@@ -10190,7 +10190,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/brant/chfPWLFw-node-s5-actorsstage.webp',
     s6: './characters/brant/xnDJCdF-node-s6-captainscarnevale.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Cantarella, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Cantarella, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain table on both the source's live
   // build page and the source/character/1607, all 6 URLs verified 200/live before upload.
   'Cantarella': {
@@ -10201,7 +10201,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/cantarella/0g4C5hH-node-s5-restreflection.webp',
     s6: './characters/cantarella/KxGNqZtQ-node-s6-falldream.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Zani, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Zani, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain table on both the source's live
   // build page and the source/character/1507, all 6 URLs verified 200/live before upload.
   'Zani': {
@@ -10212,7 +10212,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/zani/tpwvvSMk-node-s5-delivered.webp',
     s6: './characters/zani/Q3vpqhCQ-node-s6-clockout.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Ciaccona, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Ciaccona, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain table on both the source's live
   // build page and the source/character/1407, all 6 URLs verified 200/live before upload.
   'Ciaccona': {
@@ -10223,7 +10223,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/ciaccona/4n8DXGQZ-node-s5-eternalidyll.webp',
     s6: './characters/ciaccona/8gp4zwSF-node-s6-unendingcadence.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Cartethyia, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Cartethyia, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain table on both the source's live
   // build page and the source/character/1409, all 6 URLs verified 200/live before upload.
   'Cartethyia': {
@@ -10234,7 +10234,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/cartethyia/4wX7vYgB-node-s5-hopereshaped.webp',
     s6: './characters/cartethyia/ycVQfbhB-node-s6-freedomfound.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Lupa, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Lupa, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain table on both the source's live
   // build page and the source/character/1207, all 6 URLs verified 200/live before upload.
   'Lupa': {
@@ -10245,7 +10245,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/lupa/99p0trjM-node-s5-embracethunderous.webp',
     s6: './characters/lupa/MT1mRss-node-s6-brightestflaming.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Phrolova, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Phrolova, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain table on both the source's live
   // build page and the source/character/1608, all 6 URLs verified 200/live before upload.
   'Phrolova': {
@@ -10256,7 +10256,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/phrolova/1f1yj3zj-node-s5-forkedroad.webp',
     s6: './characters/phrolova/dStZKfy-node-s6-nighttodepart.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Augusta, re-hosted on ibb.co
+  // Source: the reference Sequence_Node_*.png assets for Augusta, re-hosted on ibb.co
   // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain list on the source's live build page.
   'Augusta': {
     s1: './characters/augusta/HTwqDr5n-node-s1.webp',
@@ -10266,8 +10266,8 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/augusta/ccxMpt1c-node-s5.webp',
     s6: './characters/augusta/cKP8919X-node-s6.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Iuno, re-hosted on ibb.co
-  // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain list on the character's the wiki page.
+  // Source: the reference Sequence_Node_*.png assets for Iuno, re-hosted on ibb.co
+  // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain list on the character reference page.
   'Iuno': {
     s1: './characters/iuno/kWsh4y7-node-s1.webp',
     s2: './characters/iuno/QRQmjWq-node-s2.webp',
@@ -10276,8 +10276,8 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/iuno/604PG1hL-node-s5.webp',
     s6: './characters/iuno/67Frp4bF-node-s6.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Galbrena, re-hosted on ibb.co
-  // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain list on the character's the wiki page.
+  // Source: the reference Sequence_Node_*.png assets for Galbrena, re-hosted on ibb.co
+  // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain list on the character reference page.
   'Galbrena': {
     s1: './characters/galbrena/jNH3nSM-node-s1.webp',
     s2: './characters/galbrena/2VQC6y5-node-s2.webp',
@@ -10286,8 +10286,8 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/galbrena/0VRF3CBL-node-s5.webp',
     s6: './characters/galbrena/gb17vj3m-node-s6.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Qiuyuan, re-hosted on ibb.co
-  // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain list on the character's the wiki page.
+  // Source: the reference Sequence_Node_*.png assets for Qiuyuan, re-hosted on ibb.co
+  // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain list on the character reference page.
   'Qiuyuan': {
     s1: './characters/qiuyuan/84TqFSG3-node-s1.webp',
     s2: './characters/qiuyuan/qLkrYVXv-node-s2.webp',
@@ -10296,8 +10296,8 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/qiuyuan/0RBWxffy-node-s5.webp',
     s6: './characters/qiuyuan/LdNkcSqg-node-s6.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Chisa, re-hosted on ibb.co
-  // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain list on the character's the wiki page.
+  // Source: the reference Sequence_Node_*.png assets for Chisa, re-hosted on ibb.co
+  // (2026-08-17) — order confirmed S1→S6 against the Resonance Chain list on the character reference page.
   'Chisa': {
     s1: './characters/chisa/3mw4Nw94-node-s1.webp',
     s2: './characters/chisa/nN9MKSTV-node-s2.webp',
@@ -10306,8 +10306,8 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/chisa/GffX5Qbj-node-s5.webp',
     s6: './characters/chisa/1S0brGY-node-s6.webp',
   },
-  // Source: the wiki Sequence_Node_*.png assets for Lynae/Mornye/Aemeath, pulled via the
-  // MediaWiki API (bypasses the site's Cloudflare challenge entirely) and re-hosted on ibb.co (2026-08-17)
+  // Source: the reference Sequence_Node_*.png assets for Lynae/Mornye/Aemeath, pulled via the
+  // reference API (bypasses the site's Cloudflare challenge entirely) and re-hosted on ibb.co (2026-08-17)
   // — order confirmed S1→S6 against each character's own Resonance Chain section (action=parse, section
   // "Resonance Chain", Node 1→Node 6 in document order).
   'Lynae': {
@@ -10382,14 +10382,14 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/suisui/vMRL5cr-suisui-s5.webp',
     s6: './characters/suisui/tM5fJd43-suisui-s6.webp',
   },
-  // Lucy/Rebecca (2026-08-17): NOT populated — verified via direct MediaWiki titles queries
+  // Lucy/Rebecca (2026-08-17): NOT populated — verified via direct reference titles queries
   // (action=query&titles=File:Sequence Node <exact S1-S6 node name>.png for all 18 node names across
-  // all three characters) that the wiki has not uploaded Sequence Node icon assets
+  // all three characters) that the reference has not uploaded Sequence Node icon assets
   // for either of them yet (their own Chain Table template renders an empty icon column on both
-  // /Combat pages — a genuine wiki content gap for these June-2026-release characters, not a fetch
+  // /Combat pages — a genuine reference content gap for these June-2026-release characters, not a fetch
   // failure). Node NAMES are still populated below in CHAIN_NODE_NAMES since the modal renders names
-  // independently of icons; add icons here once the wiki uploads them.
-  // Lucilla added 2026-08-21: the wiki still has no Sequence Node icons for her, but the source's
+  // independently of icons; add icons here once the reference uploads them.
+  // Lucilla added 2026-08-21: the reference still has no Sequence Node icons for her, but the source's
   // rendered character page (the source/character/1109) references the real datamined game assets
   // directly — the source/assets/ww/UIResources/Common/Image/IconDevice/T_IconDevice_LuoselaM1-6_UI.webp
   // ("Luosela" = Lucilla's internal CN codename) — fetched and re-hosted on imgbb 2026-08-21.
@@ -10403,7 +10403,7 @@ const CHAIN_NODE_ICONS = {
   },
   // Jingran added 2026-08-21 (calendar-planner audit for the v3.6-p2 banner, ~2026-09-10): same
   // the source datamine source as Lucilla — the source/.../IconDevice/T_IconDevice_JingranM1-6_UI.webp,
-  // re-hosted on imgbb. the wiki has no Sequence Node uploads for him yet either (expected, pre-banner).
+  // re-hosted on imgbb. the reference has no Sequence Node uploads for him yet either (expected, pre-banner).
   'Jingran': {
     s1: './characters/jingran/DH7pqgVK-jingran-chain-s1.webp',
     s2: './characters/jingran/7xQdnkRG-jingran-chain-s2.webp',
@@ -10412,10 +10412,10 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/jingran/cX6rbZV6-jingran-chain-s5.webp',
     s6: './characters/jingran/rGv9DbkF-jingran-chain-s6.webp',
   },
-  // Danjin/Yangyang/Sanhua added 2026-08-18: the wiki DOES have these Sequence_Node_*.png assets
-  // uploaded (unlike the June-2026 characters above) — fetched directly via the MediaWiki API
+  // Danjin/Yangyang/Sanhua added 2026-08-18: the reference DOES have these Sequence_Node_*.png assets
+  // uploaded (unlike the June-2026 characters above) — fetched directly via the reference API
   // (action=query&titles=File:Sequence Node <exact S1-S6 node name>.png&prop=imageinfo) and linked
-  // the wiki's the wiki Skill_*.png assets, re-hosted on ibb.co (2026-08-19). This closes the gap the
+  // the reference Skill_*.png assets, re-hosted on ibb.co (2026-08-19). This closes the gap the
   // earlier audit pass missed (only CHAIN_NODE_NAMES was filled in, not the icon table).
   'Danjin': {
     s1: './characters/danjin/5g9W42c0-Sequence-Node-Crimson-Heart-of-Justice.webp',
@@ -10441,8 +10441,8 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/sanhua/7Nj6QGLK-Sequence-Node-Unraveling-Fate.webp',
     s6: './characters/sanhua/CsBNd2c9-Sequence-Node-Daybreak-Radiance.webp',
   },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's own the wiki
-  // Sequence_Node_*.png assets via the MediaWiki API (action=query&titles=Taoqi/Combat&prop=images).
+  // added 2026-08-18 — previously entirely missing. Sourced from the reference
+  // Sequence_Node_*.png assets via the reference API (action=query&titles=Taoqi/Combat&prop=images).
   'Taoqi': {
     s1: './characters/taoqi/SXh4R3Vq-Sequence-Node-Essense-of-Tranquility.webp',
     s2: './characters/taoqi/m5XCTx1C-Sequence-Node-Silent-Strength.webp',
@@ -10451,8 +10451,8 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/taoqi/DPqM6zwH-Sequence-Node-Benevolent-Guardian.webp',
     s6: './characters/taoqi/5XzTbxBV-Sequence-Node-Defender-of-Peace.webp',
   },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's own the wiki
-  // Sequence_Node_*.png assets via the MediaWiki API (action=query&titles=Yuanwu/Combat&prop=images).
+  // added 2026-08-18 — previously entirely missing. Sourced from the reference
+  // Sequence_Node_*.png assets via the reference API (action=query&titles=Yuanwu/Combat&prop=images).
   'Yuanwu': {
     s1: './characters/yuanwu/ycfKwWWG-Sequence-Node-Steaming-Cup-of-Justice.webp',
     s2: './characters/yuanwu/B20h0wfN-Sequence-Node-Fierce-Heart-Serene-Mind.webp',
@@ -10461,8 +10461,8 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/yuanwu/ZpNBLSt6-Sequence-Node-Neighborhood-Protector.webp',
     s6: './characters/yuanwu/nGN7G1z-Sequence-Node-Defender-of-All-Realms.webp',
   },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's own the wiki
-  // Sequence_Node_*.png assets via the MediaWiki API (action=query&titles=Mortefi/Combat&prop=images).
+  // added 2026-08-18 — previously entirely missing. Sourced from the reference
+  // Sequence_Node_*.png assets via the reference API (action=query&titles=Mortefi/Combat&prop=images).
   'Mortefi': {
     s1: './characters/mortefi/s9ygxXYL-Sequence-Node-Solitary-Etude.webp',
     s2: './characters/mortefi/Z64664sR-Sequence-Node-Hypocritical-Hymn.webp',
@@ -10471,8 +10471,8 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/mortefi/yF2s64FP-Sequence-Node-Funerary-Quartet.webp',
     s6: './characters/mortefi/dspC2MzV-Sequence-Node-Apoplectic-Instrumental.webp',
   },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's own the wiki
-  // Sequence_Node_*.png assets via the MediaWiki API (action=parse&page=Youhu/Combat&prop=text&section=9).
+  // added 2026-08-18 — previously entirely missing. Sourced from the reference
+  // Sequence_Node_*.png assets via the reference API (action=parse&page=Youhu/Combat&prop=text&section=9).
   'Youhu': {
     s1: './characters/youhu/cX15STLS-Sequence-Node-Waterside-Respite.webp',
     s2: './characters/youhu/840rck5k-Sequence-Node-Sunroom-Siesta.webp',
@@ -10481,8 +10481,8 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/youhu/nqjLTh0J-Sequence-Node-Dreamland-Meander.webp',
     s6: './characters/youhu/qLYPfdcj-Sequence-Node-Slumber-Evermore.webp',
   },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's own the wiki
-  // Sequence_Node_*.png assets via the MediaWiki API (action=parse&page=Lumi/Combat&prop=text&section=9).
+  // added 2026-08-18 — previously entirely missing. Sourced from the reference
+  // Sequence_Node_*.png assets via the reference API (action=parse&page=Lumi/Combat&prop=text&section=9).
   'Lumi': {
     s1: './characters/lumi/TqHQ8XjX-Sequence-Node-Parcel-To-Be-Delivered.webp',
     s2: './characters/lumi/fVcQnMDm-Sequence-Node-Lollo-Logistics-Ready-to-Help.webp',
@@ -10491,8 +10491,8 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/lumi/bgzPXf0f-Sequence-Node-Parcel-Collected-On-Time.webp',
     s6: './characters/lumi/5XyLn8f0-Sequence-Node-Give-Me-A-Five-star-Rating.webp',
   },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's own the wiki
-  // Sequence_Node_*.png assets via the MediaWiki API (action=query&titles=File:Sequence+Node+...&prop=
+  // added 2026-08-18 — previously entirely missing. Sourced from the reference
+  // Sequence_Node_*.png assets via the reference API (action=query&titles=File:Sequence+Node+...&prop=
   // imageinfo, from Buling/Combat's image list).
   'Buling': {
     s1: './characters/buling/Nd55rsFn-Sequence-Node-Exorcist-Gadgets-Lend-Me-Your-Power.webp',
@@ -10503,7 +10503,7 @@ const CHAIN_NODE_ICONS = {
     s6: './characters/buling/bRH5Fycd-Sequence-Node-Almighty-Forum-Lord-of-Thunder-Spell.webp',
   },
   // added 2026-08-20 — fills the dead-end logged in the 2026-08-20 (session 4) the content-refresh history (git log) entry.
-  // the wiki still has zero Sequence_Node_*/Skill_* uploads for Qingxiao, but DV's JS-capable web_fetch
+  // the reference still has zero Sequence_Node_*/Skill_* uploads for Qingxiao, but DV's JS-capable web_fetch
   // recovered this session and rendered the source/character/1413 directly; its network requests
   // exposed the game's own the source CDN asset paths (SkillIcon/SkillIconQingxiao/SP_IconQingxiao*
   // and Image/IconDevice/T_IconDevice_QingxiaoM1-6_UI), fetched with a browser UA + referer (no JS
@@ -10517,7 +10517,7 @@ const CHAIN_NODE_ICONS = {
     s5: './characters/qingxiao/1t4yB6YJ-qingxiao-s5.webp',
     s6: './characters/qingxiao/cGpCS76-qingxiao-s6.webp',
   },
-  // Added 2026-09-07 — user-supplied uploads (not a wiki re-host like the entries above), moved
+  // Added 2026-09-07 — user-supplied uploads (not a reference re-host like the entries above), moved
   // from the repo root into their character folders and wired in here. Closes 5 of the 6
   // "no CHAIN_NODE_ICONS entry at all" gaps flagged by the full-roster CharacterDetailModal audit
   // (Rover: Aero's set was not supplied and is still missing).
@@ -10576,7 +10576,7 @@ const CHAIN_NODE_ICONS = {
 
 // [SECTION:CHAIN_NODE_NAMES] — Per-character S1-S6 Resonance Chain sequence-node names
 // (e.g. "Benevolence", "Versatility"...), confirmed against the source's character JSON
-// (the source/ww/<version>/en/character/<id>.json) and the wiki.
+// (the source/ww/<version>/en/character/<id>.json) and the reference.
 // Only characters that have been audited so far are populated.
 const CHAIN_NODE_NAMES = {
   'Aalto': { s1: "Trickster's Opening Show", s2: "Mistweaver's Debut", s3: 'Hazey Transition', s4: 'Blake Bloom for Finale', s5: 'Applause of the Lost', s6: "Broker's Secrets" },
@@ -10622,35 +10622,35 @@ const CHAIN_NODE_NAMES = {
   'Lucilla': { s1: 'Distant Noon', s2: 'Slumbering Moonlight', s3: 'Days Fade Unheard', s4: 'The Past Fades Into Silence', s5: 'Time is Like a Stream', s6: 'Gazing In the Mist of Time' },
   'Yangyang: Xuanling': { s1: "At the Wind's Breath, the Blossoms Wake", s2: 'River Carries Her Song Away', s3: 'My Grief Follows You into the Clouds', s4: 'Across the Miles, a Letter and My Longing', s5: 'Take Wing. Take Wing.', s6: 'Let the Azure Keep Its Light' },
   // Yangyang's real node names corrected 2026-08-18: the source's Kit tab shows only generic "Sequence
-  // Node 1"-"Sequence Node 6" labels, but the wiki's Yangyang/Combat page (Resonance Chain table +
+  // Node 1"-"Sequence Node 6" labels, but the Yangyang combat reference page (Resonance Chain table +
   // Sequence_Node_*.png filenames) does have unique flavor names — the source just doesn't surface them.
   'Yangyang': { s1: 'Sapphire Skies, Soaring Sparrows', s2: 'Nesting Twigs, in Beaks They Harrow', s3: 'Nature Sings in Symphony', s4: 'Close Your Eyes and Listen in', s5: 'Winds Whisper in Harmony', s6: "A Tribute to Life's Sweet Hymn" },
-  // Sanhua's node names confirmed 2026-08-18 via the wiki's own infobox image filenames
+  // Sanhua's node names confirmed 2026-08-18 via the reference's own infobox image filenames
   // (Sequence Node <name>.png assets, S1-S6 in order).
   'Sanhua': { s1: "Solitude's Embrace", s2: 'Snowy Clarity', s3: 'Anomalous Vision', s4: 'Blade Mastery', s5: 'Unraveling Fate', s6: 'Daybreak Radiance' },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's Taoqi/Combat Resonance Chain table.
+  // added 2026-08-18 — previously entirely missing. Sourced from the Taoqi combat reference Resonance Chain table.
   'Taoqi': { s1: 'Essense of Tranquility', s2: 'Silent Strength', s3: 'Keen-eyed Observer', s4: 'Heavylifting Duty', s5: 'Benevolent Guardian', s6: 'Defender of Peace' },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's Yuanwu/Combat Resonance Chain table.
+  // added 2026-08-18 — previously entirely missing. Sourced from the Yuanwu combat reference Resonance Chain table.
   'Yuanwu': { s1: 'Steaming Cup of Justice', s2: 'Fierce Heart, Serene Mind', s3: 'Upholder of Integrity', s4: 'Retributive Knuckles', s5: 'Neighborhood Protector', s6: 'Defender of All Realms' },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's Mortefi/Combat Resonance Chain table.
+  // added 2026-08-18 — previously entirely missing. Sourced from the Mortefi combat reference Resonance Chain table.
   'Mortefi': { s1: 'Solitary Etude', s2: 'Hypocritical Hymn', s3: 'Flaming Recitativo', s4: 'Cathartic Waltz', s5: 'Funerary Quartet', s6: 'Apoplectic Instrumental' },
   // added 2026-08-18 — previously entirely missing.
   'Youhu': { s1: 'Waterside Respite', s2: 'Sunroom Siesta', s3: 'Restless Sleep', s4: 'Frosted Lullaby', s5: 'Dreamland Meander', s6: 'Slumber Evermore' },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's Lumi/Combat Resonance Chain table.
+  // added 2026-08-18 — previously entirely missing. Sourced from the Lumi combat reference Resonance Chain table.
   'Lumi': { s1: 'Parcel To Be Delivered', s2: 'Lollo Logistics, Ready to Help', s3: 'Priority Parcel In Transit', s4: 'Captain Lumi, At Your Service', s5: 'Parcel Collected On Time', s6: 'Give Me A Five-star Rating' },
-  // added 2026-08-18 — previously entirely missing. Sourced from the wiki's Buling/Combat Resonance Chain table.
+  // added 2026-08-18 — previously entirely missing. Sourced from the Buling combat reference Resonance Chain table.
   'Buling': { s1: 'Exorcist Gadgets, Lend Me Your Power', s2: 'Talisman Burns, Spirits Turn', s3: 'Summoner of Spirits, Seeker of Fate', s4: 'Wanderer of Solaris, Blessed by Fortune', s5: 'Forum Ban? New Account!', s6: '"Almighty Forum Lord of Thunder Spell"' },
-  // Danjin's node names added 2026-08-18 via the wiki's Danjin/Combat page (Resonance
+  // Danjin's node names added 2026-08-18 via the Danjin combat reference page (Resonance
   // Chain table + Sequence_Node_*.png filenames) — was previously missing entirely.
   'Danjin': { s1: 'Crimson Heart of Justice', s2: 'Dusted Mirror', s3: 'Fleeting Blossom', s4: 'Solitary Carnation', s5: 'Reigning Blade', s6: 'Bloodied Jade' },
   'Suisui': { s1: 'Mountains Washed Into Paintings', s2: 'Clouds Pour Like Molten Gold', s3: 'Sparse Curtains Invite Evening Glow', s4: 'Autumn Mountains in Choir Sing', s5: 'I Long To Ride The Eastern Wind', s6: 'Staying True To This Splendid Realm' },
   // Qingxiao's node names confirmed 2026-08-18 via the source's pre-release datamine (character/1413)
-  // — icons NOT populated in CHAIN_NODE_ICONS above: the wiki has no Sequence Node assets uploaded yet
-  // (verified via direct MediaWiki titles queries, all "missing"), a genuine pre-release gap 2 days
+  // — icons NOT populated in CHAIN_NODE_ICONS above: the reference has no Sequence Node assets uploaded yet
+  // (verified via direct reference titles queries, all "missing"), a genuine pre-release gap 2 days
   // ahead of her release, not a fetch failure.
   'Qingxiao': { s1: 'Like Clouds That Meet and Drift Apart', s2: 'Like Petals That Fall Without a Sound', s3: 'Dreams Fade, Sword Abides', s4: 'Wherever the Road Leads, Side by Side', s5: 'Cold Steel That Longs to Warm the Snow', s6: 'Cleanse This Tarnished Age, Till All Runs Clear' },
   // Jingran's node names confirmed 2026-08-20 via the source (character/1212, now live with v3.6) —
-  // the wiki's own page still has no Sequence Node table populated ("Jingran doesn't have any Sequence
+  // the reference page still has no Sequence Node table populated ("Jingran doesn't have any Sequence
   // Nodes yet"), so the source is the sole source here, same as Qingxiao's pre-release pass.
   'Jingran': { s1: 'Yin and Yang in Harmony, the Ultimate Law of Being', s2: 'A Solitary Lantern, Across Lands Shade-Trodden', s3: "World's Course Shifts, Each to Their Rightful Paths", s4: 'Where Reality Meets Illusion, Where Living Meet Dead', s5: 'Ends Return to Beginnings, Truth of Life Laid Bare', s6: 'As Favors and Feuds Fade, New Stories Await' },
 };

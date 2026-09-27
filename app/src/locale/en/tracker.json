@@ -48,7 +48,7 @@
   "sortMostPulled": "Most Pulled",
   "lastAppearance": "Last: v{{version}} P{{phase}}",
   "pullsCount": "{{count}} tracked pulls",
-  "mostPulledSourceNote": "Community-sample data from wuwatracker.com, not the full playerbase",
+  "mostPulledSourceNote": "Community-sample data, not the full playerbase",
   "conveneInfo": {
     "buttonAria": "Convene system information",
     "title": "Convene System",

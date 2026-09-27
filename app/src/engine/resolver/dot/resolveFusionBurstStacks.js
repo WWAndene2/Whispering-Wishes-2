@@ -7,11 +7,11 @@
 // not a true cross-character interleaved timeline (that's a bigger, separate architecture project;
 // this answers "how many detonations per rotation-length window", not "at which exact instant").
 //
-// Real, sourced mechanic (2026-09-06, cross-checked against a live fetch of wuthering.gg's own
+// Real, sourced mechanic (2026-09-06, cross-checked against a live fetch of a community database's
 // Fusion Burst page, corroborating what was ALREADY in Aemeath's/Denia's own primary dumps — see
 // each constant's own citation below):
 //
-// 1. GENERIC passive rule (any team, any character, confirmed via wuthering.gg's own Fusion Burst
+// 1. GENERIC passive rule (any team, any character, confirmed via a community database's Fusion Burst
 //    page): Fusion Burst stacks accumulate on a target; at the default cap (FUSION_BURST_THRESHOLD,
 //    10), the game auto-detonates and clears all stacks. Every dotApplier-tagged block's own real
 //    `value` (stacks per qualifying hit) feeds this — e.g. Aemeath's own Basic Stage 3/4/Sync

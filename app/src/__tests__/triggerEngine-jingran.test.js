@@ -3,7 +3,7 @@ import { JINGRAN_BLOCKS } from '../engine/characterBlocks/jingran.blocks.js';
 import { expectValidBlockFile } from '../engine/schema/validate.js';
 import { resolveTriggerBlocks } from '../engine/resolver/gating/triggerEngine.js';
 
-// Updated 2026-09-12: CHARACTER_ROTATIONS['Jingran'] was added against a fresh prydwen.gg
+// Updated 2026-09-12: CHARACTER_ROTATIONS['Jingran'] was added against a fresh build-guide
 // build-guide snapshot (Data dump/Jingran/Jingran.md), so he is now keyed into
 // BLOCKS_BY_CHARACTER — the "no rotation-derived test" limitation this comment used to document no
 // longer applies to that specific gap, though a full rotation-derived hit-composed-DPS test is still
@@ -48,7 +48,7 @@ describe('triggerEngine parity — Jingran', () => {
   });
 
   it('every damage block uses ATK basis (corrected 2026-09-12 — he is HP-CONVERTING, not HP-scaling)', () => {
-    // A fresh prydwen.gg snapshot's own Meta-position paragraph states Jingran's multipliers apply
+    // A fresh build-guide snapshot's own Meta-position paragraph states Jingran's multipliers apply
     // to ATK, with HP only feeding an ATK-conversion passive — not HP-scaling like Cartethyia. Every
     // damage.basis in this file was corrected from 'HP' to 'ATK' to match (see jingran.blocks.js's
     // own header comment for the full sourcing).

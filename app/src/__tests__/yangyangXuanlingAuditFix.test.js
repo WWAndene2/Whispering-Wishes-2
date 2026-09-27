@@ -1,4 +1,4 @@
-// Cross-check of Yangyang: Xuanling against a fresh the source.gg source dump (following the same
+// Cross-check of Yangyang: Xuanling against a fresh source dump (following the same
 // treatment already applied to Augusta/Aemeath/Hiyuki/Luuk Herssen/Qingxiao/Sigrika). dmgFocus,
 // base stats bracket, tier, statScaling, CHAR_BUFF_TABLE, and S2/S4/S6 chain nodes already matched.
 // Real gaps found:

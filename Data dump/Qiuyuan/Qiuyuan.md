@@ -1,6 +1,6 @@
-# Qiuyuan — Prydwen.gg source dump (cleaned)
+# Qiuyuan — build-guide source dump (cleaned)
 
-Source: prydwen.gg/wuthering-waves/characters/qiuyuan
+Source: build-guide page (qiuyuan)
 Last updated (per page): 20/August/2026 · Last review update: Patch 2.7 · Last major build/calcs update: Patch 2.7
 
 5★ Aero Sword, Hybrid (Echo Skill DMG buffer).
@@ -202,7 +202,7 @@ As DPS, always runs 3pc Law of Harmony with Reminiscence: Fenrico as main Echo, 
 
 ## Calculations
 
-### Real Damage-Type Breakdown (Prydwen's own simulated rotation, S0, solo/no buffs)
+### Real Damage-Type Breakdown (the guide's own simulated rotation, S0, solo/no buffs)
 | Type | DMG | Share |
 |---|---|---|
 | Basic ATK | 0 | 0% |

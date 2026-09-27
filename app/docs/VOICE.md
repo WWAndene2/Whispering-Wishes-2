@@ -232,7 +232,6 @@ Use these sparingly — over-use breaks the tactical register.
 
 Wrong terminology = off-brand AND confuses the audience. Before shipping new copy, verify against:
 
-- [Fandom Wiki (Wuthering Waves)](https://wutheringwaves.fandom.com/) for terminology
 - The game's in-game UI for naming conventions
 - Community Discord for vernacular (only for trophies / humor moments)
 

@@ -1,7 +1,7 @@
 # Danjin
 
-Source: a real prydwen.gg .mht browser snapshot (confirmed genuine via its own
-`Snapshot-Content-Location: https://www.prydwen.gg/wuthering-waves/characters/danjin` header),
+Source: a real .mht browser snapshot (confirmed genuine via its own
+`Snapshot-Content-Location` header),
 last updated 20/August/2026. 4★ Havoc Sword Hybrid (free character).
 
 ## Kit
@@ -88,7 +88,7 @@ Havoc DMG. Multiplier: 49.71%×4. Con. Energy Regen 10.
 
 ### Outro Skill — Duality
 The next character (or another nearby team member activating an Outro) gains 23% Havoc DMG Deepen for
-14s or until they're switched out. (Prydwen's own "Deepen" wording here is a DMG Amplify buff to the
+14s or until they're switched out. (the guide's own "Deepen" wording here is a DMG Amplify buff to the
 buffed ally's own outgoing damage, not an enemy-side vulnerability debuff — consistent with how other
 characters' identically-worded Outros are described on this site, e.g. Sanhua's Silversnow.)
 
@@ -240,7 +240,7 @@ Calc build used: weapon Emerald of Genesis (R1), Echo set Moonlit Clouds, main E
 
 No dump file existed before this pass — created. RESONANCE_CHAIN_DATA (S1-S6, including S5's already-
 documented conditional-HP-threshold limitation), CHARACTER_ROTATIONS, base stats, DPS tier, `bestWeapon`
-(matches source's #1), Outro buff (confirmed the "Deepen" wording is Prydwen's own site convention for
+(matches source's #1), Outro buff (confirmed the "Deepen" wording is the guide's own site convention for
 an ally-side DMG Amp, not a real vulnerability debuff — cross-checked against Sanhua's identically-
 worded Outro in this same audit pass), and `weaponAlts.alt4` all already matched this source exactly.
 

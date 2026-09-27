@@ -80,9 +80,9 @@ const MATERIAL_IMAGES = {
   'Unfading Glory': './materials/ascension-boss-drops/ZzS375yW-Item-Unfading-Glory.webp',
   'Truth in Lies': './materials/ascension-boss-drops/H93NgjR-Item-Truth-in-Lies.webp',
   // Qingxiao & Jingran's shared v3.6 boss-drop ascension material, confirmed via
-  // the wiki (both characters' Ascension Materials tables list "46 Forged
-  // Empyrean's Sigh"). Real icon sourced 2026-08-20 from the wiki's own
-  // File:Item_Forged_Empyrean's_Sigh.png via the MediaWiki API (bypasses Cloudflare), uploaded
+  // the reference (both characters' Ascension Materials tables list "46 Forged
+  // Empyrean's Sigh"). Real icon sourced 2026-08-20 from the reference own
+  // File:Item_Forged_Empyrean's_Sigh.png via the reference API (bypasses Cloudflare), uploaded
   // to imgbb 2026-08-20.
   "Forged Empyrean's Sigh": './materials/ascension-boss-drops/9mZJHrQ4-forged-empyreans-sigh.webp',
   // === Common Enemy Drops (all 4 tiers) ===
@@ -90,7 +90,7 @@ const MATERIAL_IMAGES = {
   // LF-/MF- prefixed) were entirely missing before this pass. Most icons pulled from the user's own
   // pre-existing "Wuthering Waves - Weapon & Skills materials" imgbb album (already uploaded there);
   // a handful not in that album (Adagio Helix, Monowing Polarizer, Broken String) were freshly
-  // sourced via the wiki's rarity field + Recipe synthesis chain (e.g. MF Mech Core's own recipe
+  // sourced via the reference's rarity field + Recipe synthesis chain (e.g. MF Mech Core's own recipe
   // reads "LF Mech Core×3"), not guessed.
   // Whisperin Core family
   'LF-Whisperin Core': './materials/common-enemy-drops/39gtHhnL-Item-LF-Whisperin-Core.webp',
@@ -148,7 +148,7 @@ const MATERIAL_IMAGES = {
   'HF-Waveworn Shard': './materials/forgery/KpS51SLv-Item-HF-Waveworn-Shard.webp',
   'FF-Waveworn Shard': './materials/forgery/TxB4P0Cp-Item-FF-Waveworn-Shard.webp',
   // String family — real tier names: Broken String (T1) → Spliced String (T2) → Solidified String
-  // (T3) → Melodic String (T4), per the wiki's own item pages.
+  // (T3) → Melodic String (T4), per the reference item pages.
   'Broken String': './materials/forgery/XxQdg8mq-Broken-String.webp',
   'Spliced String': './materials/forgery/hFLktLwq-Item-Spliced-String.webp',
   'Solidified String': './materials/forgery/8D4cwT2p-Item-Solidified-String.webp',
@@ -165,7 +165,7 @@ const MATERIAL_IMAGES = {
   'Extracted Phlogiston': './materials/forgery/R4dGRr6q-Item-Extracted-Phlogiston.webp',
   'Refined Phlogiston': './materials/forgery/HTJ13kQy-Item-Refined-Phlogiston.webp',
   'Flawless Phlogiston': './materials/forgery/gZmPFYzP-Item-Flawless-Phlogiston.webp',
-  // Mask family — verified via wiki rarity fields (Constraint r2, Erosion r3, Distortion r4, Insanity r5)
+  // Mask family — verified via reference rarity fields (Constraint r2, Erosion r3, Distortion r4, Insanity r5)
   // and Distortion's own Recipe ("Mask of Erosion×3"), confirming this exact tier order.
   'Mask of Constraint': './materials/forgery/MDzkHzLK-Item-Mask-of-Constraint.webp',
   'Mask of Erosion': './materials/forgery/RpbfQLKL-Item-Mask-of-Erosion.webp',
@@ -216,7 +216,7 @@ const MATERIAL_IMAGES = {
 
 // [SECTION:COMMON_MAT_TIERS] — Maps common material family name → [tier1, tier2, tier3, tier4] names
 // Fixed 2026-08-21 (Planner audit): was [tier3, tier4] only — real names for tiers 1-2 sourced via
-// the wiki's rarity field + Recipe synthesis chain for every family below.
+// the reference rarity field + Recipe synthesis chain for every family below.
 const COMMON_MAT_TIERS = {
   'Whisperin Core': ['LF-Whisperin Core', 'MF-Whisperin Core', 'HF-Whisperin Core', 'FF-Whisperin Core'],
   'Ring': ['Crude Ring', 'Basic Ring', 'Improved Ring', 'Tailored Ring'],
@@ -256,13 +256,13 @@ const FORGERY_MAT_TIERS = {
 // Fixed 2026-08-21 (Planner audit): every cost below previously tracked only 2 of the game's real 4
 // material tiers per family (T3/T4, the two most expensive), silently omitting T1/T2 entirely — a
 // 30-50% undercount on every material total the app has ever shown. Re-derived from
-// the wiki's own live Lua rendering code (Module:Character Ascensions and Stats,
+// the reference live Lua rendering code (Module:Character Ascensions and Stats,
 // Module:Weapon Ascensions and Stats — the exact formulas used to generate every character/weapon
 // page's "Total Cost" figures) plus cross-verification against Lucilla's real rendered total on
 // the source (170,000 / 4 / 12 / 12 / 4 / 46 / 60 matches exactly). commonT1/commonT2 and
 // forgeryT1/forgeryT2 are the newly-added tiers.
 
-// Resonator Lv 1→90 ascension costs (all 6 phases). Per-phase (wiki Module:Character Ascensions and
+// Resonator Lv 1→90 ascension costs (all 6 phases). Per-phase (reference Module:Character Ascensions and
 // Stats asc_costs, A0-1 through A5-6): shell 5k/10k/15k/20k/40k/80k; commonT1 x4 (A0-1); specialty
 // x4/8/12/16/20 (A1-2..A5-6, total 60); commonT2 x4/8 (A1-2,A2-3, total 12); boss x3/6/9/12/16
 // (A1-2..A5-6, total 46); commonT3 x4/8 (A3-4,A4-5, total 12); commonT4 x4 (A5-6).
@@ -296,7 +296,7 @@ const SKILL_UPGRADE_COSTS = {
 // Standard WuWa scaling: each refinement adds 25% of base passive bonus
 const WEAPON_REFINE_SCALE = [1, 1.25, 1.5, 1.75, 2];
 
-// 5★ Weapon Lv 1→90 ascension costs (all 6 phases). Per-phase (wiki Module:Weapon Ascensions and
+// 5★ Weapon Lv 1→90 ascension costs (all 6 phases). Per-phase (reference Module:Weapon Ascensions and
 // Stats getAscensionCosts, rarity==5): shell 10k/20k/40k/60k/80k/120k; commonT1 x6; forgeryT1 x6,
 // commonT2 x6; forgeryT2 x8, commonT3 x4; forgeryT3 x6, commonT3 x6 (commonT3 total 10); forgeryT4
 // x8, commonT4 x4; forgeryT4 x12, commonT4 x8 (forgeryT4 total 20, commonT4 total 12).
@@ -306,7 +306,7 @@ const WEAPON_ASCENSION_COSTS_5 = {
   shell: 330000,
 };
 
-// 4★ Weapon Lv 1→90 ascension costs (same wiki module, rarity==4)
+// 4★ Weapon Lv 1→90 ascension costs (same reference module, rarity==4)
 const WEAPON_ASCENSION_COSTS_4 = {
   forgeryT1: 5, forgeryT2: 7, forgeryT3: 5, forgeryT4: 17,
   commonT1: 5, commonT2: 5, commonT3: 9, commonT4: 11,

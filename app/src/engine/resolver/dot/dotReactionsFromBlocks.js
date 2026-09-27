@@ -245,7 +245,7 @@ function resolveAemeathFusionTrailAmp(blocksByOwner, rotationsByOwner, stanceOve
 
 /**
  * Electro Flare — the engine-merge history (git log) 1.4. Same boolean gate as Fusion Burst; the starting stack
- * seed (10) and halving-on-tick are both unsourced/wiki-approximated per calcElectroFlareDmg's own
+ * seed (10) and halving-on-tick are both unsourced/approximated per calcElectroFlareDmg's own
  * comment, ported verbatim rather than "fixed" without a real source.
  */
 export function resolveElectroFlareFromBlocks(blocksByOwner, rotTime, defMult, resMult, rotationsByOwner = null) {

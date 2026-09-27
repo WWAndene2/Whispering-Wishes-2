@@ -1,6 +1,6 @@
-# Hiyuki — Prydwen.gg source dump (cleaned)
+# Hiyuki — build-guide source dump (cleaned)
 
-Source: prydwen.gg/wuthering-waves/characters/hiyuki
+Source: build-guide page (hiyuki)
 Last updated (per page): 20/August/2026 · Last review update: Patch 3.3 · Last major build/calcs update: Patch 3.5
 
 5★ Glacio Sword, Main DPS. Dual-form (Present Self / Foreclaimed Self) Glacio Chafe/Liberation DPS.
@@ -148,7 +148,7 @@ HP 10300 · ATK 463 · DEF 1112 · Max Energy 125 · Crit Rate 5% · Crit DMG 15
 
 ## Build
 
-### Best Weapons (buffs assumed: Lucilla + Chisa team, per Prydwen's own calc note)
+### Best Weapons (buffs assumed: Lucilla + Chisa team, per the guide's own calc note)
 | Weapon | Score |
 |---|---|
 | Frostburn (R1, signature) | 100.00% |
@@ -206,7 +206,7 @@ Her Tune Break Skill chains directly into Foreclaimed-Self Basic Stage 3; pre-In
 
 ## Calculations
 
-### Real Damage-Type Breakdown (Prydwen's own simulated rotation, S0, buffed team: Lucilla+Chisa)
+### Real Damage-Type Breakdown (the guide's own simulated rotation, S0, buffed team: Lucilla+Chisa)
 | Type | DMG | Share |
 |---|---|---|
 | Basic ATK | 0 | 0% |

@@ -1,6 +1,6 @@
-# Mornye — Prydwen.gg source dump (cleaned)
+# Mornye — build-guide source dump (cleaned)
 
-Source: prydwen.gg/wuthering-waves/characters/mornye
+Source: build-guide page (mornye)
 Last updated (per page): 20/August/2026 · Last review update: Patch 3.0 · Last major build/calcs update: Patch 3.0
 
 5★ Fusion Broadblade, Support (Tune Break-oriented buffer/healer).
@@ -180,7 +180,7 @@ Main Echo: **Fallacy of No Return** — same buffs as Halo of Starry Radiance on
 HP 15000+ · ATK 1000+ · DEF 3000+ · Crit Rate 20%+ · Crit DMG 220%+ · Energy Regen 240% (before Echo and Passive) · Fusion DMG Bonus 0–30% (only possible with Signature equipped).
 
 ### Sequence Review
-No personal-damage calc table provided — her value is almost entirely team-dependent. Prydwen's own value summary:
+No personal-damage calc table provided — her value is almost entirely team-dependent. the guide's own value summary:
 - **S1**: High value outside Tune Rupture/Strain teams, medium inside them — makes Interfered Marker permanent uptime and removes the Tune Rupture/Strain-presence condition; more Interruption Resistance. Skippable if only used in Tune Rupture/Strain teams.
 - **S2**: Medium value — extra team-wide Crit DMG + Off-Tune Buildup Rate.
 - **S3**: Medium-low value — speeds up her own rotation, but the team-context gain doesn't justify the cost.

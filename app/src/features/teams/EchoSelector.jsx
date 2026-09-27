@@ -255,8 +255,8 @@ export default function EchoSelector({
             const echoData = ECHO_DATA[echoName];
             // Per-cost main stat options — Energy Regen is a 3-cost-only main stat (never rolls on
             // 4-cost), and only flat ATK (3-cost) / flat HP (1-cost) are real flat-stat main stat
-            // rolls; flat ATK/DEF are NOT valid on 1-cost echoes (the wiki/wiki/
-            // Echo/Stats § "Mainstats").
+            // rolls; flat ATK/DEF are NOT valid on 1-cost echoes (the Echo stats
+            // reference § "Mainstats").
             const mainStatOptions = costNum === 4
               ? ['ATK%', 'HP%', 'DEF%', 'Crit Rate', 'Crit DMG', 'Healing Bonus']
               : costNum === 3

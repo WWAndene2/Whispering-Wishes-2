@@ -712,7 +712,7 @@ function WhisperingWishesInner() {
         try { localStorage.setItem('ww-import-diagnostic', JSON.stringify({ timestamp: new Date().toISOString(), log: data._diagnostic, pullCount: pulls.length })); } catch {}
       }
 
-      // Detect import source — API direct fetch vs WuWaTracker/file import
+      // Detect import source — API direct fetch vs third-party tracker/file import
       const isApiSource = data._source === 'api';
 
       // FIX #2: Warn if importing from a different account
@@ -760,9 +760,9 @@ function WhisperingWishesInner() {
         localStorage.setItem('whispering-wishes-pre-import-backup', preImportBackup);
       } catch {} // best-effort - don't block import if backup fails
 
-      // Detect numbering: Kuro API (from our direct fetch) swaps 1↔3 and 2↔4 vs WuWaTracker export
+      // Detect numbering: Kuro API (from our direct fetch) swaps 1↔3 and 2↔4 vs third-party tracker exports
       // API:         1=FeatRes, 2=FeatWeap, 3=PermRes,  4=PermWeap,  5/6/7=Beginner
-      // WuWaTracker: 1=PermRes, 2=PermWeap, 3=FeatRes,  4=FeatWeap,  5/6/7=Beginner
+      // Tracker export: 1=PermRes, 2=PermWeap, 3=FeatRes,  4=FeatWeap,  5/6/7=Beginner
       const isApiNumbering = isApiSource;
       const FEAT_RES  = isApiNumbering ? 1 : 3;
       const FEAT_WEAP = isApiNumbering ? 2 : 4;
@@ -823,7 +823,7 @@ function WhisperingWishesInner() {
           
           // Ensure timestamp is always a valid ISO string in UTC
           // API returns "2026-02-07 04:40:02" (no timezone) — treat as UTC
-          // WuWaTracker returns "2026-02-07T03:40:02+00:00" (explicit UTC)
+          // Tracker exports return "2026-02-07T03:40:02+00:00" (explicit UTC)
           let rawTs = p.timestamp || p.time || '';
           // Normalize API format: "YYYY-MM-DD HH:mm:ss" → append Z for UTC
           if (rawTs && !rawTs.includes('T') && !rawTs.includes('+') && !rawTs.includes('Z')) {

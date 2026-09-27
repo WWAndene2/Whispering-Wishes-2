@@ -1,4 +1,4 @@
-// Cross-check of Lucilla against a fresh the source.gg source dump (following the same treatment
+// Cross-check of Lucilla against a fresh source dump (following the same treatment
 // already applied to Augusta/Yuanwu/Aemeath/Hiyuki/Luuk Herssen/Qingxiao/Sigrika/Yangyang: Xuanling/
 // Denia). SKILL_MULTIPLIERS, CHARACTER_ROTATIONS, base stats, tier, and RESONANCE_CHAIN_DATA's S1/S2/
 // S4 nodes already matched the fresh dump exactly (S3/S5/S6 had already been recategorized off libDmg

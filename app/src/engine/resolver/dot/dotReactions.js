@@ -3,7 +3,7 @@
 // [RESOLVER · DOT] Applies dotFormulas.js's math against a live team/rotation context.
 // PHASE3_PLAN.md Stage 3, item 2/5: closes the "DOT reactions have no engine model at all" gap from
 // Stage 0's coverage table. Frazzle/Erosion/Fusion Burst/Electro Flare/Tune Break are ICD-aware,
-// hand-verified-against-the-wiki mechanics that already live correctly in calcEngine.js
+// hand-verified-against-the-reference mechanics that already live correctly in calcEngine.js
 // (calcFrazzleDmg etc.) — porting their stack/tick math into TriggerBlocks would mean re-deriving
 // already-correct formulas from scratch for no benefit. Per Stage 0's own conclusion for gear
 // ("stays composed around the engine, not ported into TriggerBlocks"), this file applies the same
@@ -94,7 +94,7 @@ export function resolveDotReactionDps(members, rotTime, defMult, resShred, getEn
   // Erosion: only prefer blocks when every frazzle-flagged member present has a dotApplier block.
   const hasPhoebe = members.some(m => m.name === 'Phoebe');
   // Zani suppression (2026-09-08, direct user correction with real, verified community sourcing —
-  // three independent Reddit threads confirming "Frazzle caps at 10, period... If Zani is in your
+  // three independent community threads confirming "Frazzle caps at 10, period... If Zani is in your
   // team, you NEVER are stacking Frazzle. You instead stack Heliacal Embers"): this file's own prior
   // comments (characters.js line 611-613/637-640, CHAR_BUFF_TABLE['Zani'].note) already documented
   // this exact mechanic in prose — Zani instantly converts 100% of any teammate's real Frazzle

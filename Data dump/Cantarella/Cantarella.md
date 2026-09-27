@@ -1,7 +1,7 @@
 # Cantarella
 
-Source: a real prydwen.gg .mht browser snapshot (confirmed genuine via its own
-`Snapshot-Content-Location: https://www.prydwen.gg/wuthering-waves/characters/cantarella` header),
+Source: a real .mht browser snapshot (confirmed genuine via its own
+`Snapshot-Content-Location` header),
 last updated 20/August/2026. 5★ Havoc Rectifier Hybrid (DPS/Buffer/Healer).
 
 ## Kit

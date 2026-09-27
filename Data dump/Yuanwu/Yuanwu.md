@@ -1,6 +1,6 @@
-# Yuanwu — Prydwen.gg source dump (cleaned)
+# Yuanwu — build-guide source dump (cleaned)
 
-Source: prydwen.gg/wuthering-waves/characters/yuanwu
+Source: build-guide page (yuanwu)
 Last updated (per page): 20/August/2026 · Last review update: Patch 2.1 · Last major build/calcs update: Patch 2.1
 
 4★ Electro Gauntlets, Support/Hybrid. Free character (Ephor's Boxing Gym owner).
@@ -159,7 +159,7 @@ Rotation time: 2.96s. Solo DPS scaling by sequence:
 
 (Build used for calcs: Amity Accord R1, 5pc Void Thunder, Nightmare: Tempest Mephis main echo — Crit Rate/Electro DMG/Electro DMG/DEF%/DEF% cost lineup, substats weighted toward Crit Rate/Crit DMG/Energy Regen.)
 
-**Prydwen's own caveat**: these numbers are solo (no team/weapon/echo buffs from allies), meant only for comparing his own sequences/rotations against each other — not a tier-list metric.
+**the guide's own caveat**: these numbers are solo (no team/weapon/echo buffs from allies), meant only for comparing his own sequences/rotations against each other — not a tier-list metric.
 
 ### Best Weapons
 Two build contexts:

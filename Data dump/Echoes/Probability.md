@@ -1,6 +1,6 @@
 # Echo Stats — Probability Data
 
-Source: Wuthering Waves Wiki (Fandom), "Echo/Stats" page. Pasted verbatim by the user 2026-09-06.
+Source: reference page "Echo/Stats" page. Pasted verbatim by the user 2026-09-06.
 
 ## Classification
 
@@ -116,7 +116,7 @@ This is the probability of a given main stat being picked as the Echo's primary 
 
 ## Detailed substat values distribution
 
-Due to Korean gaming-disclosure laws, Kuro Games disclosed all probabilities of possible substat roll values — https://wutheringwaves.kurogames.com/p/language_ko/product_info.html
+Due to Korean gaming-disclosure laws, Kuro Games disclosed all probabilities of possible substat roll values (official Korean product-info page)
 
 This is the probability of a given substat TYPE being picked (as opposed to which value/grade it rolls once picked) — 1/13 pool at the first roll, shrinking as substats already on the Echo are removed from the pool.
 
@@ -183,7 +183,7 @@ Summary — there is a 1/||SUBSTAT_POOL|| chance for each substat at each stage,
 | Crit. DMG | 12.6% | 13.8% | 15.0% | 16.2% | 17.4% | 18.6% | 19.8% | 21.0% |
 | **Chance to roll** | 23.3333% | 23.3333% | 23.3333% | 8.0000% | 8.0000% | 8.0000% | 3.0000% | 3.0000% |
 
-This distribution correlates with a community data sample of ~9000 substat rolls ("Data Gathering - Echo Summary" spreadsheet, referenced by the wiki).
+This distribution correlates with a community data sample of ~9000 substat rolls ("Data Gathering - Echo Summary" spreadsheet, referenced by the reference page).
 
 ## Possible minimum and maximum total substat rolls
 

@@ -1,4 +1,4 @@
-// Cross-check of Qingxiao against a fresh the source.gg source dump (following the same treatment
+// Cross-check of Qingxiao against a fresh source dump (following the same treatment
 // already applied to Augusta/Yuanwu/Aemeath/Hiyuki/Luuk Herssen). Her SKILL_MULTIPLIERS,
 // RESONANCE_CHAIN_DATA, statScaling, rotation and CHAR_BUFF_TABLE's other entries were already
 // audited and matched the fresh dump exactly. Three real gaps found:

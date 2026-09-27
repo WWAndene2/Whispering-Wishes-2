@@ -1,7 +1,7 @@
 # Yangyang
 
-Source: a real prydwen.gg .mht browser snapshot (confirmed genuine via its own
-`Snapshot-Content-Location: https://www.prydwen.gg/wuthering-waves/characters/yangyang` header),
+Source: a real .mht browser snapshot (confirmed genuine via its own
+`Snapshot-Content-Location` header),
 last updated 20/August/2026. 4★ Aero Sword Hybrid/Sub DPS (free character).
 
 ## Kit

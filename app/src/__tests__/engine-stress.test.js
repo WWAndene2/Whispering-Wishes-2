@@ -1,7 +1,7 @@
 // ── Engine stress test — VERACITY, not crash-safety ────────────────────
-// damage-calc.test.js checks calcEngine.js's formulas against Kuro's wiki
+// damage-calc.test.js checks calcEngine.js's formulas against Kuro's reference
 // reference at a handful of hand-picked points. This file does the same
-// comparison — real export vs. wiki-transcribed reference — but at scale:
+// comparison — real export vs. transcribed reference — but at scale:
 // hundreds of randomized real character/weapon/enemy/rotation inputs,
 // asserting the real function's OUTPUT VALUE matches the reference
 // formula's value (toBeCloseTo), not just that it "didn't crash" or
@@ -38,29 +38,29 @@ const ALL_CHAR_NAMES = Object.keys(CHARACTER_DATA);
 const ALL_WEAPON_NAMES = Object.keys(WEAPON_DATA);
 const ALL_ENEMIES = [...new Set([...ALL_1COST_ECHOES, ...ALL_3COST_ECHOES, ...ALL_4COST_ECHOES])];
 
-// ── Wiki-transcribed reference formulas (same source as damage-calc.test.js:
-// the wiki/Damage, action=parse, fetched 2026-08-19) ──
-function WIKI_calcDefMult(attackerFactor, enemyDef, defShredPct, defIgnorePct) {
+// ── Transcribed reference formulas (same source as damage-calc.test.js:
+// the Damage reference page, action=parse, fetched 2026-08-19) ──
+function REF_calcDefMult(attackerFactor, enemyDef, defShredPct, defIgnorePct) {
   const shreddedDef = enemyDef * Math.max(0, 1 - defShredPct / 100);
   const denom = attackerFactor + shreddedDef * Math.max(0, 1 - defIgnorePct / 100);
   return Math.min(2, attackerFactor / denom);
 }
-function WIKI_calcResMult(baseResPct, shredPct) {
+function REF_calcResMult(baseResPct, shredPct) {
   const res = (baseResPct - shredPct) / 100;
   if (res < 0) return 1 - res / 2;
   if (res < 0.8) return 1 - res;
   return 1 / (1 + 5 * res);
 }
-function WIKI_calcDmgBonus(elemDmgPct, skillDmgPct, amplifyPct) {
+function REF_calcDmgBonus(elemDmgPct, skillDmgPct, amplifyPct) {
   return (1 + (elemDmgPct + skillDmgPct) / 100) * (1 + amplifyPct / 100);
 }
-function WIKI_calcAvgCrit(crPct, cdPct) {
+function REF_calcAvgCrit(crPct, cdPct) {
   const cr = Math.min(crPct, 100) / 100;
   return 1 + cr * (cdPct / 100 - 1);
 }
 
-// ── §1. calcDefMult veracity: 150 randomized (def, shred, ignore) triples must equal the wiki formula exactly ──
-describe('Veracity: calcDefMult matches the wiki reference exactly across 150 randomized real-scale inputs', () => {
+// ── §1. calcDefMult veracity: 150 randomized (def, shred, ignore) triples must equal the reference formula exactly ──
+describe('Veracity: calcDefMult matches the reference exactly across 150 randomized real-scale inputs', () => {
   for (let i = 0; i < 150; i++) {
     const enemy = pick(ALL_ENEMIES);
     const level = 1 + Math.floor(rng() * 120);
@@ -69,21 +69,21 @@ describe('Veracity: calcDefMult matches the wiki reference exactly across 150 ra
     const defIgnore = Math.floor(rng() * 60);  // 0-60%
     it(`[${i}] ${enemy} Lv.${level} (DEF=${def.toFixed(0)}), shred=${defShred}%, ignore=${defIgnore}%`, () => {
       const real = calcDefMult(def, defShred, defIgnore);
-      const expected = WIKI_calcDefMult(ATTACKER_FACTOR, def, defShred, defIgnore);
+      const expected = REF_calcDefMult(ATTACKER_FACTOR, def, defShred, defIgnore);
       expect(real).toBeCloseTo(expected, 9);
     });
   }
 });
 
 // ── §2. calcResMult veracity: 100 randomized (baseRes, shred) pairs, spanning all 3 piecewise branches ──
-describe('Veracity: calcResMult matches the wiki 3-tier piecewise reference exactly across 100 randomized inputs', () => {
+describe('Veracity: calcResMult matches the reference 3-tier piecewise reference exactly across 100 randomized inputs', () => {
   for (let i = 0; i < 100; i++) {
     const baseRes = pick([10, 40, 100]);
     // deliberately range shred wide enough to hit all three branches (negative, 0-0.8, >=0.8 net RES)
     const shred = Math.floor(rng() * 140) - 40; // -40 to 100
     it(`[${i}] baseRes=${baseRes}, shred=${shred} → net RES ${(baseRes - shred)}%`, () => {
       const real = calcResMult(baseRes, shred);
-      const expected = WIKI_calcResMult(baseRes, shred);
+      const expected = REF_calcResMult(baseRes, shred);
       expect(real).toBeCloseTo(expected, 9);
     });
   }
@@ -103,14 +103,14 @@ describe('Veracity: calcResMult matches the wiki 3-tier piecewise reference exac
 });
 
 // ── §3. calcDmgBonus / calcAvgCrit veracity across randomized realistic stat spreads ──
-describe('Veracity: calcDmgBonus and calcAvgCrit match wiki reference across 80 randomized realistic stat spreads', () => {
+describe('Veracity: calcDmgBonus and calcAvgCrit match reference across 80 randomized realistic stat spreads', () => {
   for (let i = 0; i < 80; i++) {
     const elemDmg = rng() * 80;      // 0-80%
     const skillDmg = rng() * 60;     // 0-60%
     const amplify = rng() * 40 + rng() * 30; // 0-70% (was two separate layers: amplify 0-40, deepen 0-30 — merged)
     it(`[${i}] elemDmg=${elemDmg.toFixed(1)} skillDmg=${skillDmg.toFixed(1)} amplify=${amplify.toFixed(1)}`, () => {
       const real = calcDmgBonus(elemDmg, skillDmg, amplify);
-      const expected = WIKI_calcDmgBonus(elemDmg, skillDmg, amplify);
+      const expected = REF_calcDmgBonus(elemDmg, skillDmg, amplify);
       expect(real).toBeCloseTo(expected, 9);
     });
   }
@@ -120,17 +120,17 @@ describe('Veracity: calcDmgBonus and calcAvgCrit match wiki reference across 80 
     const cd = 150 + rng() * 250; // 150-400
     it(`[${i}] CR=${cr.toFixed(1)}% CD=${cd.toFixed(1)}%`, () => {
       const real = calcAvgCrit(cr, cd);
-      const expected = WIKI_calcAvgCrit(cr, cd);
+      const expected = REF_calcAvgCrit(cr, cd);
       expect(real).toBeCloseTo(expected, 9);
     });
   }
 });
 
 // ── §4. Full pipeline veracity: build real character/weapon stats, then independently recompute the
-// expected multiplier chain by hand from the wiki formulas fed with the SAME numbers the pipeline
+// expected multiplier chain by hand from the reference formulas fed with the SAME numbers the pipeline
 // produced — verifies calcEngine.js's own downstream usage of its stat object, not just the standalone
 // formula functions in isolation. ──
-describe('Veracity: full weapon+resonance+routing pipeline output matches an independently recomputed wiki-formula chain', () => {
+describe('Veracity: full weapon+resonance+routing pipeline output matches an independently recomputed reference-formula chain', () => {
   const N = 50;
   for (let i = 0; i < N; i++) {
     const charName = pick(ALL_CHAR_NAMES);
@@ -151,13 +151,13 @@ describe('Veracity: full weapon+resonance+routing pipeline output matches an ind
       routeTypeBonuses(stats, char?.dmgFocus || []);
 
       // Independently recompute what the pipeline SHOULD produce from the same intermediate stats,
-      // using the wiki reference functions rather than calling calcEngine.js's own — a real
+      // using the reference functions rather than calling calcEngine.js's own — a real
       // cross-check, not a tautology (this would fail if calcDmgBonus/calcAvgCrit/calcDefMult were
       // subtly wrong even though the stat-accumulation upstream is right).
       const enemyStats = getEnemyStatsAtLevel(enemy, level);
-      const expectedDmgBonus = WIKI_calcDmgBonus(stats.elemDmg, stats.skillDmg, stats.amplify);
-      const expectedAvgCrit = WIKI_calcAvgCrit(stats.cr, stats.cd);
-      const expectedDefMult = WIKI_calcDefMult(ATTACKER_FACTOR, enemyStats.def, stats.defShred, stats.defIgnore);
+      const expectedDmgBonus = REF_calcDmgBonus(stats.elemDmg, stats.skillDmg, stats.amplify);
+      const expectedAvgCrit = REF_calcAvgCrit(stats.cr, stats.cd);
+      const expectedDefMult = REF_calcDefMult(ATTACKER_FACTOR, enemyStats.def, stats.defShred, stats.defIgnore);
 
       const realDmgBonus = calcDmgBonus(stats.elemDmg, stats.skillDmg, stats.amplify);
       const realAvgCrit = calcAvgCrit(stats.cr, stats.cd);
@@ -171,7 +171,7 @@ describe('Veracity: full weapon+resonance+routing pipeline output matches an ind
 });
 
 // ── §5. DOT correctness invariant: Frazzle/Erosion damage MUST be exactly linear (proportional) in
-// defMult × resMult, per the wiki's own DOT formula structure ("DOT damage ... × DEF Multiplier ×
+// defMult × resMult, per the reference DOT formula structure ("DOT damage ... × DEF Multiplier ×
 // RES Multiplier", the same multiplier layers as direct damage, applied as a simple product after the
 // stack-table lookup). This is a real correctness property of the formula shape, independently
 // checkable without needing the (unpublished) exact stack-value table to be re-derived here. ──
@@ -195,7 +195,7 @@ describe('Veracity: Frazzle/Erosion DOT damage is exactly proportional to defMul
     });
   }
 
-  it('Frazzle stack table lookups are monotonically non-decreasing (more stacks never means less DOT per tick, per the wiki stack table)', () => {
+  it('Frazzle stack table lookups are monotonically non-decreasing (more stacks never means less DOT per tick, per the reference stack table)', () => {
     for (let s = 1; s < FRAZZLE_STACK_TABLE.length; s++) {
       expect(FRAZZLE_STACK_TABLE[s]).toBeGreaterThanOrEqual(FRAZZLE_STACK_TABLE[s - 1]);
     }
@@ -207,7 +207,7 @@ describe('Veracity: Frazzle/Erosion DOT damage is exactly proportional to defMul
   });
 });
 
-// ── §6. Enemy data veracity: HP/DEF growth curves must follow the SAME per-level shape the wiki
+// ── §6. Enemy data veracity: HP/DEF growth curves must follow the SAME per-level shape the reference
 // documents for enemy DEF (792 + 8×Lv is exact and checkable; HP growth is checked for the correct
 // monotonic non-linear shape rather than a hardcoded value, since HP curves differ per-enemy). ──
 describe('Veracity: enemy DEF growth matches the documented linear formula exactly, per real tracked enemy', () => {

@@ -1,7 +1,7 @@
 # Lucy
 
-Source: a real prydwen.gg .mht browser snapshot (confirmed genuine via its own
-`Snapshot-Content-Location: https://www.prydwen.gg/wuthering-waves/characters/lucy` header), last
+Source: a real .mht browser snapshot (confirmed genuine via its own
+`Snapshot-Content-Location` header), last
 updated 20/August/2026. Cyberpunk: Edgerunners collab. 5★ Spectro Pistols Main DPS.
 
 ## Kit

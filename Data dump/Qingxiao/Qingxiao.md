@@ -1,4 +1,4 @@
-# Qingxiao — Prydwen.gg source dump (cleaned)
+# Qingxiao — build-guide source dump (cleaned)
 
 5★ Aero, Sword, Main DPS. Tune Strain / Mindlock archetype, mostly fights airborne, builds toward an enhanced "Ephemeral Transcendence" Heavy Attack state.
 

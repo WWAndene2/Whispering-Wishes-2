@@ -1,6 +1,6 @@
 # Echo Leveling — EXP & Shell Credit Costs
 
-Source: Wuthering Waves Wiki (Fandom), "Echo/Leveling" page. Extracted from user-provided .mht 2026-09-06. The page's own Refunding section is intentionally excluded per request.
+Source: reference page "Echo/Leveling" page. Extracted from user-provided .mht 2026-09-06. The page's own Refunding section is intentionally excluded per request.
 
 ## Sources of Echo EXP
 

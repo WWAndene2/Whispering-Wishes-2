@@ -1,4 +1,4 @@
-# Cartethyia — Prydwen.gg source dump (cleaned)
+# Cartethyia — build-guide source dump (cleaned)
 
 5★ Aero, Sword, Main DPS. HP-scaling hybrid Basic-Attack/Liberation dealer who transforms into a second
 form, Fleurdelys, via her Resonance Liberation, then chains into a second, harder-hitting Liberation
@@ -266,7 +266,7 @@ Skill and Intro can be skipped when leveling to save resources at minimal damage
 
 ## Gameplay and Teams
 
-**Full rotation** (real-game order, per Prydwen's own optimal-time sequence):
+**Full rotation** (real-game order, per the guide's own optimal-time sequence):
 Intro (Cartethyia) → Basic P2 → Basic P3 → Basic P4 → Resonance Skill (Sword to Bear Their Names) →
 Mid-air Attack (Cartethyia) → Resonance Liberation (A Knight's Heartfelt Prayers, transforms to
 Fleurdelys) → Skill 1 (Sword to Answer Waves' Call) → Mid-air Attack Stage 3 (Fleurdelys, hold Basic

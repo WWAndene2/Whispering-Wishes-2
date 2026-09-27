@@ -1,6 +1,6 @@
-# Aemeath — Prydwen.gg source dump (cleaned)
+# Aemeath — build-guide source dump (cleaned)
 
-Source: prydwen.gg/wuthering-waves/characters/aemeath
+Source: build-guide page (aemeath)
 Last updated (per page): 20/August/2026 · Last review update: Patch 3.1 · Last major build/calcs update: Patch 3.1
 
 5★ Fusion Sword, Main DPS. Dual-form (Aemeath/Mech) hybrid with a Tune Rupture / Fusion Burst Resonance Mode switch.
@@ -170,7 +170,7 @@ HP 11025 · ATK 425 · DEF 1149 · Max Energy 125 · Crit Rate 5% · Crit DMG 15
 
 ## Build
 
-### Best Weapons (buffs assumed: Denia + Chisa team, per Prydwen's own calc note)
+### Best Weapons (buffs assumed: Denia + Chisa team, per the guide's own calc note)
 | Weapon | Score |
 |---|---|
 | Everbright Polestar (R1, signature) | 100.00% |
@@ -237,7 +237,7 @@ Uses the extra Heavy-ATK-based Forte generation available at Sequence 1+ to fit 
 
 ## Calculations
 
-### Real Damage-Type Breakdown (Prydwen's own simulated rotation, S0, buffed team: Denia+Chisa)
+### Real Damage-Type Breakdown (the guide's own simulated rotation, S0, buffed team: Denia+Chisa)
 Confirmed via the pie chart's own color-coded legend (3 pages: Basic+Liberation, Intro+Echo, Fusion Burst):
 
 | Type | DMG | Share |

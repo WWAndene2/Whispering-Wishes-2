@@ -75,7 +75,7 @@
  *                                   gain has no sourced value, so those casts carry no
  *                                   resourceGain — a real, documented data gap, not an engine one).
  * @property {string} [note]        Human-readable sourcing/mechanic note — every non-obvious
- *                                   value must cite where it came from (kit text, wiki page,
+ *                                   value must cite where it came from (kit text, reference page,
  *                                   specific audit). Required in practice for anything not
  *                                   self-evident from the id/effects alone.
  */

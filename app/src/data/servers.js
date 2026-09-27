@@ -4,7 +4,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // Each server has its own timezone for daily/weekly resets (04:00 local)
-// Source: https://wuwatracker.com/timeline
+// Source: community event timeline
 const SERVERS = {
   'Asia': { name: 'Asia', timezone: 'Asia/Shanghai', utcOffset: 8, resetHour: 4, hasDST: false },
   'America': { name: 'America', timezone: 'America/New_York', utcOffset: -5, resetHour: 4, hasDST: true },

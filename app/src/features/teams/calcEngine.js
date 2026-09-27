@@ -61,7 +61,7 @@ export const ER_THRESHOLD_STANDARD = 140;  // Support/other roles below the 175-
 export const ER_THRESHOLD_HEALER = 140;    // ER threshold for 175-cost healers
 
 // Echo main stat values by cost tier — rarity-5, max-level (the endgame BiS assumption this
-// calculator targets) roll ceilings, sourced from the wiki/Echo/Stats §
+// calculator targets) roll ceilings, sourced from the Echo stats reference §
 // "Mainstats" (fetched 2026-08-25). DEF% is deliberately rolled higher than ATK%/HP% at every
 // tier to compensate for it being the weaker stat, and 1-cost HP% is rolled higher than its own
 // ATK%/DEF% — both real, confirmed asymmetries, not typos.
@@ -79,8 +79,8 @@ export const ECHO_MAIN_STAT_VALUES = {
 
 // Echo substat values — probability-weighted average of each stat's real roll grades, using
 // Kuro's own KR-law-mandated disclosed per-grade roll chances (source:
-// the wiki/Echo/Stats § "Detailed substat values distribution", citing
-// wutheringwaves.kurogames.com's official disclosure; fetched 2026-08-25). Crit Rate/Crit DMG
+// the Echo stats reference § "Detailed substat values distribution", citing
+// the official site's disclosure; fetched 2026-08-25). Crit Rate/Crit DMG
 // use their own front-loaded chances [23.33%, 23.33%, 23.33%, 8%, 8%, 8%, 3%, 3%]; all other
 // 8-grade substats (ATK%/HP%/DEF%/ER/DMG bonuses/flat HP) share chances [6.80%, 7.77%, 20.39%,
 // 24.27%, 17.48%, 14.56%, 5.83%, 2.91%]. Each value below is Σ(chance_i × grade_i)/100 for that
@@ -106,7 +106,7 @@ export const ECHO_FLAT_SUB_STAT_VALUES = {
 };
 
 // Every real, discrete roll grade for each substat — same source as ECHO_SUB_STAT_VALUES/
-// ECHO_FLAT_SUB_STAT_VALUES above (the wiki/Echo/Stats § "Detailed substat
+// ECHO_FLAT_SUB_STAT_VALUES above (the Echo stats reference § "Detailed substat
 // values distribution", Kuro's own KR-law-mandated disclosure), lowest grade first. ATK/DEF
 // (flat) only have 4 real grades; every other substat has 8. Lets a specific echo store which
 // grade it actually rolled instead of always using the probability-weighted average above.
@@ -1114,7 +1114,7 @@ const TEAM_SET_BUFFS = {
   'Song of Feathered Trace': [{ stat: 'heavyDmg', value: 35, elem: 'havoc' }, { stat: 'critRate', value: 20, elem: 'havoc' }],
 };
 
-// Maps CHARACTER_DATA.dmgFocus's short tags to the long-form wiki tag names COMBAT_ROLE_ICONS
+// Maps CHARACTER_DATA.dmgFocus's short tags to the long-form reference tag names COMBAT_ROLE_ICONS
 // is keyed by — same mapping CollectionTab/CharacterDetailModal use for the "All Damage" filter
 // and Combat Role badges, so this section's icons match the rest of the app instead of drifting.
 const DMG_FOCUS_ROLE_TAG = {

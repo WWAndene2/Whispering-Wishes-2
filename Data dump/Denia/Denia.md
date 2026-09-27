@@ -1,4 +1,4 @@
-# Denia — Prydwen.gg Build Guide (cleaned dump)
+# Denia — Build Guide (cleaned dump)
 
 Last updated on source: 20/August/2026. Last review update: Patch 3.3. Last major build/calcs update: Patch 3.5.
 

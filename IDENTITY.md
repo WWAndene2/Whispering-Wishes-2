@@ -109,7 +109,7 @@ Key DNA trait: **Aesthetic coherence pursued through trial and error.** The syst
 
 The monolith's ghost finally exorcised. App.jsx went from 1,820 → 1,460 LOC. AdminPanel split into 4 components (1,192 → 389). DamageCalculator into 3. Providers extracted. Hooks extracted. Shared components modularized. The app earned its `features/`, `shared/`, `hooks/`, `core/` directory structure.
 
-Then the current branch: banner particle themes (Zani's clock alone = 60+ commits), color-blind mode with Wong palette, material farming planner, chronology accuracy from wiki API data.
+Then the current branch: banner particle themes (Zani's clock alone = 60+ commits), color-blind mode with Wong palette, material farming planner, chronology accuracy from reference API data.
 
 Key DNA trait: **Structure follows feeling.** Architecture wasn't imposed — it emerged when the visual identity was settled enough to support it.
 
@@ -130,7 +130,7 @@ Key DNA trait: **Structure follows feeling.** Architecture wasn't imposed — it
 Started as one file. Grew to 93. The architecture wasn't planned — it evolved organically as complexity demanded structure. The refactoring always came *after* the features, never before. Build first, organize when it hurts.
 
 ### 5. Game-Faithful
-Chronology verified against Fandom wiki API for 17 game versions. WuWa damage formula implemented with mechanically correct 3-layer multiplication. Gacha engine with proper soft/hard pity curves. Gear rotation with tooth-ratio-derived speed and alternating direction. The app respects its source material at the mechanical level.
+Chronology verified against reference API data for 17 game versions. WuWa damage formula implemented with mechanically correct 3-layer multiplication. Gacha engine with proper soft/hard pity curves. Gear rotation with tooth-ratio-derived speed and alternating direction. The app respects its source material at the mechanical level.
 
 ### 6. Accessibility as Afterthought, Then Conviction
 Color-blind mode took 6 failed approaches before the Wong palette + forced React remount solution. Dyslexic font went through 7 different typefaces. But once solved, these features were wired deep — `useVisualSettings` hook, CSS class sync to `<html>`, OS preference detection, runtime `prefers-reduced-motion` listening. Accessibility wasn't in the DNA from birth, but it was grafted in permanently.
@@ -147,7 +147,7 @@ Color-blind mode took 6 failed approaches before the Wong palette + forced React
 | **Visual > Functional** | Banner art gradient tuned before localStorage was added. |
 | **Exhaust all options** | Echo BG: rembg → HuggingFace → CSS blend → canvas chroma-key → pixel eraser → transparent PNGs. |
 | **Deep obsession spirals** | 3D sword field: projection → silhouettes → 3D geometry → blade fractures → zigzag cuts → floating shards → lightning arcs. |
-| **Respect the source** | Wiki API verification. Correct gacha math. Mechanically accurate gear meshing. |
+| **Respect the source** | Reference API verification. Correct gacha math. Mechanically accurate gear meshing. |
 | **Generative art mentality** | Scene layouts saved by hash seed ("seed 91682"). Git as creative sketchbook. |
 | **Night owl** | Peak hours 22:00-01:00 UTC. Quietest at 13:00. The app was built in the dark. |
 | **Burst-then-silence** | 14 days of nothing (Mar 1-14), then 85 commits on the return. The muse is not steady — it storms. |

@@ -1,7 +1,7 @@
 # Rover (Electro)
 
-Source: a real prydwen.gg .mht browser snapshot (confirmed genuine via its own
-`Snapshot-Content-Location: https://www.prydwen.gg/wuthering-waves/characters/rover-electro` header),
+Source: a real .mht browser snapshot (confirmed genuine via its own
+`Snapshot-Content-Location` header),
 last updated 20/August/2026. 5★ Electro Sword Hybrid/Sub DPS.
 
 This is a recently-released character page — several sections are genuinely unpopulated in the source

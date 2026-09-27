@@ -40,7 +40,7 @@ export default function TeamSelector({
   state,
 }) {
   const { getImageFraming } = useImageFramingContext();
-  // COMBAT_ROLE_ICONS's own key order IS the wiki's fixed, game-wide Combat Role ordering (see its
+  // COMBAT_ROLE_ICONS's own key order IS the reference fixed, game-wide Combat Role ordering (see its
   // comment in elementVisuals.js) — sorting by that index instead of alphabetically is what makes
   // this list read as a coherent, curated ordering rather than a shuffled A-Z one.
   const COMBAT_ROLE_ORDER_INDEX = new Map(Object.keys(COMBAT_ROLE_ICONS).map((tag, i) => [tag, i]));

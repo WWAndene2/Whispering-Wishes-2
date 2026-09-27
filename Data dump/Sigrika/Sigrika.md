@@ -1,4 +1,4 @@
-# Sigrika — Prydwen.gg source dump (cleaned)
+# Sigrika — build-guide source dump (cleaned)
 
 5★ Aero, Gauntlets, Main DPS. Echo Skill damage archetype (like Phrolova/Galbrena) — generates and consumes Runes via Basic Attacks to fuel a big Forte nuke.
 

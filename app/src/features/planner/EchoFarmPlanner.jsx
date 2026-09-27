@@ -232,7 +232,7 @@ export default function EchoFarmPlanner() {
             ))}
           </div>
 
-          {/* Rarity — independent of cost (the wiki explicitly notes they don't correlate);
+          {/* Rarity — independent of cost (the reference explicitly notes they don't correlate);
               determines the Echo's own max level per Data Bank.md. */}
           <div className="flex gap-1.5">
             {RARITIES.map(r => (

@@ -182,7 +182,7 @@ export const PHROLOVA_BLOCKS = [
     trigger: { type: 'cast', on: 'Heavy ATK:Scarlet Coda' },
     timing: {}, target: { scope: 'self' },
     effects: [{ stat: 'skillDmg', value: 75, source: 'self-kit' }],
-    note: "Scarlet Coda's own DMG Multiplier +75% (correct skillDmg category per the audit comment — the wiki explicitly states this instance of damage 'is considered Resonance Skill DMG', not heavyDmg despite replacing Heavy Attack). Also doubles Aftersound's per-stack bonus and grants 14 Aftersound stacks on cast, not modeled. Cast-scoped (instant, no persistent duration).",
+    note: "Scarlet Coda's own DMG Multiplier +75% (correct skillDmg category per the audit comment — the reference explicitly states this instance of damage 'is considered Resonance Skill DMG', not heavyDmg despite replacing Heavy Attack). Also doubles Aftersound's per-stack bonus and grants 14 Aftersound stacks on cast, not modeled. Cast-scoped (instant, no persistent duration).",
   },
   {
     id: 'phrolova.chain.s3',

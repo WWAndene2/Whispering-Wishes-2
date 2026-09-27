@@ -1,4 +1,4 @@
-# Verina — Prydwen.gg source dump (cleaned)
+# Verina — build-guide source dump (cleaned)
 
 5★ Spectro, Rectifier, Generalist Support (healer/buffer). One of the shortest rotations in the game —
 swap in, quick Basic Attacks, Skill, Ultimate, dump Forte stacks, Outro. Buffs are near-permanent uptime

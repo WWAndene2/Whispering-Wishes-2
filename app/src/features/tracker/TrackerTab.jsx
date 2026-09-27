@@ -483,7 +483,7 @@ function TrackerTab({
 
                     // "Most Pulled" view: one row per character with tracked pull data, sorted by
                     // lifetime tracked pull count (see MOST_PULLED_STATS sourcing comment in
-                    // banners.js — a wuwatracker.com community sample, not the full playerbase).
+                    // banners.js — a community sample, not the full playerbase).
                     if (bannerHistorySort === 'mostPulled') {
                       const rows = Object.entries(MOST_PULLED_STATS)
                         .filter(([character]) => latestByCharacter.has(character))

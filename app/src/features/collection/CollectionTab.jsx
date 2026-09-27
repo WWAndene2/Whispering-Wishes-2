@@ -141,7 +141,7 @@ function CollectionTab({
 
   // Combat Role filter options — only tags actually used by at least one character (not the full
   // ~38-tag COMBAT_ROLE_ICONS set, which includes tags no current resonator has).
-  // COMBAT_ROLE_ICONS's own key order IS the wiki's fixed, game-wide Combat Role ordering (see its
+  // COMBAT_ROLE_ICONS's own key order IS the reference fixed, game-wide Combat Role ordering (see its
   // comment in elementVisuals.js) — sorting by that index instead of alphabetically is what makes
   // this list read as a coherent, curated ordering rather than a shuffled A-Z one (same fix already
   // applied to the Team Selector's own Combat Role filter).

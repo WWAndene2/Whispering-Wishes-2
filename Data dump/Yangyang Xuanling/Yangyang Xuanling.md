@@ -1,4 +1,4 @@
-# Yangyang: Xuanling — Prydwen.gg source dump (cleaned)
+# Yangyang: Xuanling — build-guide source dump (cleaned)
 
 5★ Havoc, Sword, Main DPS. Havoc Bane / Heavy Attack archetype, switches between Azure and Feather Sword Stance.
 

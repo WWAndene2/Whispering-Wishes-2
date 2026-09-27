@@ -110,7 +110,7 @@ const BANNER_HISTORY = [
   // real encoding), superseding the earlier fan-composited convene mockup.
   // endDate corrected 2026-09-10: was '2026-09-30' (a 20-day guess, the source's own generic
   // "21-day cycle" estimate above), which showed the Plan tab's calendar as "20d" remaining.
-  // Direct user report of that mismatch, verified against a live wuwatracker.com/fr/timeline
+  // Direct user report of that mismatch, verified against a live community timeline
   // snapshot (captured 2026-09-10T21:40:36Z, .mht Date header) showing this exact banner
   // (Jingran/Hiyuki/Mornye) counting down "18d" — floor(daysRemaining) from that timestamp
   // lands the real end between 2026-09-28T21:40Z and 2026-09-29T21:40Z, which matches
@@ -120,16 +120,16 @@ const BANNER_HISTORY = [
   // own comment for why these live here now (previously silently inherited phase-1's list).
   { id: 'v3.6-p2', version: '3.6', phase: 2, characters: ['Jingran', 'Hiyuki', 'Mornye'], weapons: ['Thousandfold Deliverance', 'Frostburn', 'Starfield Calibrator'], startDate: '2026-09-10', endDate: '2026-09-29', bannerArt: './banners/_shared/Banner_Jingran.webp', weaponBannerArt: './banners/history/v3-6-p2/S7m6cfPC-Thousandfold-Delivrance.jpg', characterFeatured4Stars: ['Yuanwu', 'Mortefi', 'Aalto'], weaponFeatured4Stars: ['Discord', 'Novaburst', 'Waning Redshift'], predicted: true },
   // bannerArt fixed 2026-08-18: was reusing Denia's own v3.3-p2 banner art (wrong — Denia is the
-  // rerun here, Qingxiao is this banner's new headliner). 2nd attempt used the wiki's
+  // rerun here, Qingxiao is this banner's new headliner). 2nd attempt used the reference's
   // File:Qingxiao_Splash_Art.png (transparent cutout, not a banner image); 3rd attempt was a
   // self-cropped band of File:Qingxiao_Card.jpg (a tall portrait, imprecisely centered). Replaced with
   // the real official wide banner art (user-supplied, already hosted on ibb.co).
   // weaponBannerArt added 2026-08-18: real official Featured Weapon Convene banner for Glint of Clouds
   // (Qingxiao's signature Sword), user-supplied.
-  // predicted flag removed 2026-08-20: confirmed live via the wiki's own infobox ("Wind of
+  // predicted flag removed 2026-08-20: confirmed live via the reference's own infobox ("Wind of
   // Transcendence" convene, 2026-08-20 – 2026-09-10, 3.6) — no longer the source estimate.
   { id: 'v3.6-p1', version: '3.6', phase: 1, characters: ['Qingxiao', 'Denia'], weapons: ['Glint of Clouds', 'Forged Dwarf Star'], startDate: '2026-08-20', endDate: '2026-09-10', bannerArt: './banners/_shared/8nvgqZKC-e7478-17840855867105-1920.jpg', weaponBannerArt: './banners/_shared/C3Gz8y18-Glint-Of-Cloud-Banner.jpg' },
-  // Version 3.5 — confirmed live via wuwatracker.com/fr/timeline (user-clarified 2026-08-14). p2 is
+  // Version 3.5 — confirmed live via a community timeline (user-clarified 2026-08-14). p2 is
   // the current banner (Suisui + Aemeath rerun). p1 was Yangyang: Xuanling + Luuk Herssen + Lynae
   // (rerun). A separate "Starpath/Tideforge Reverbs" special selector Convene also runs continuously
   // across both p1 and p2, on top of the phase-bound character banners — not itemized as its own
@@ -203,7 +203,7 @@ const BANNER_HISTORY = [
 
 // [SECTION:MOST_PULLED]
 // Lifetime "total tracked pulls while featured" per character, sourced 2026-08-21 from
-// wuwatracker.com/fr/tracker/stats/<id> — one real-text (non-canvas) stats page per historical
+// A community tracker's per-banner stats pages — one real-text (non-canvas) stats page per historical
 // banner phase, with sequential chronological IDs 100001 (Jiyan, v1.0-p1 launch banner) through
 // 100041 (Qingxiao & Denia, the live v3.6-p1 banner). Each page's "Invocations 5✦" list gives every
 // 5★ character's tracked pull count for that specific banner run; only the count(s) clearly above
@@ -251,12 +251,12 @@ const MOST_PULLED_STATS = {
 };
 
 // [SECTION:EVENTS]
-// All times from wuwatracker.com (Europe reference — CET UTC+1 or CEST UTC+2, converted to UTC)
+// All times from a community timeline (Europe reference — CET UTC+1 or CEST UTC+2, converted to UTC)
 // P9-FIX: UTC conversions must use the correct DST offset at the EVENT date, not a fixed UTC+1
 // Events that end at 03:59 are server-local (follow daily reset)
 // Events that end at other times are global (same UTC moment)
 // v3.5-cycle dates below (pioneerPodcast through chordCleansing) were pulled directly from
-// wuwatracker.com's embedded event JSON (fetched 2026-08-14) rather than the rendered page text,
+// the community timeline's embedded event JSON (fetched 2026-08-14) rather than the rendered page text,
 // which doesn't expose exact timestamps — all local times there are CEST (UTC+2), converted to UTC.
 const EVENTS = {
   dailyReset: {
@@ -302,7 +302,7 @@ const EVENTS = {
     resetType: 'Version update',
     color: 'yellow',
     // Corrected 2026-08-25: hour aligned to the confirmed 08:00 UTC version-boundary convention
-    // (was already the right day via wuwatracker.com/fr/timeline's pixel-geometry read, just the
+    // (was already the right day via the community timeline's pixel-geometry read, just the
     // wrong hour — see the giftsOfDriftingMist block above for the technique).
     currentEnd: '2026-09-29T07:59:59Z',
     // Direct user request 2026-09-11: drop the free Public Channel track from the badge
@@ -330,7 +330,7 @@ const EVENTS = {
     resetType: 'Permanent',
     color: 'cyan',
     // Permanent content — not a time-limited event. Showing with currentEnd for current version
-    // cycle display only. Corrected 2026-08-25: wuwatracker.com/fr/timeline's pixel geometry
+    // cycle display only. Corrected 2026-08-25: the community timeline's pixel geometry
     // (bar-div left/width vs. the day-marker grid) shows this arena's bar actually ends Sep 28,
     // one day before Pioneer Podcast/most other v3.6 events — not the same date as previously guessed.
     currentEnd: '2026-09-28T07:59:59Z',
@@ -368,7 +368,7 @@ const EVENTS = {
     resetType: '28 days',
     color: 'orange',
     // 28-day cycle, independent of version boundaries — confirmed still active on
-    // wuwatracker.com/fr/timeline's v3.6 event bar 2026-08-20. Next cycle = prior cycle
+    // the community timeline's v3.6 event bar 2026-08-20. Next cycle = prior cycle
     // (Jul 20 -> Aug 17) + 28 days.
     currentStart: '2026-08-17T02:00:00Z',
     currentEnd: '2026-09-14T01:59:00Z',
@@ -384,7 +384,7 @@ const EVENTS = {
     description: 'Combat challenge with token system',
     resetType: '28 days',
     color: 'cyan',
-    // 28-day cycle — confirmed still active (unchanged) on wuwatracker.com/fr/timeline's v3.6
+    // 28-day cycle — confirmed still active (unchanged) on the community timeline's v3.6
     // event bar 2026-08-20; today falls inside the existing Aug 3 -> Aug 31 window, so it is
     // NOT re-anchored to the version boundary like the other version-tied entries above.
     currentStart: '2026-08-03T02:00:00Z',
@@ -398,7 +398,7 @@ const EVENTS = {
   // Corrected 2026-08-25: every one-off v3.6 event below was previously anchored as a guess to the
   // v3.6-p1 banner window (2026-08-20 -> 2026-09-10) because the site's rendered bar text only
   // exposed names + relative duration labels ("15d", "1mo", etc), not per-event start/end. This
-  // pass instead pulled the raw HTML of wuwatracker.com/fr/timeline (DV web_fetch, getRawHtml,
+  // pass instead pulled the raw HTML of the community timeline (DV web_fetch, getRawHtml,
   // Chrome/Windows UA + google.com referer + 8s load wait to clear the JS challenge — same
   // anti-bot technique as the character icon sourcing) and read each event bar's own
   // `left`/`width` inline-style pixel values against the day-marker grid (verified 32px = 1 day,
@@ -424,7 +424,7 @@ const EVENTS = {
     currentEnd: '2026-09-29T07:59:59Z',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-yellow-900/30',
     accentColor: 'yellow',
-    imageUrl: './banners/_shared/HTN1ZNWj-wuwa-gifts-of-drifting-mist.png', // real event cover art, sourced 2026-08-21 from wuwatracker.com/timeline's event-cover-images API (the wiki has no article for this event yet), uploaded to imgbb 2026-08-21
+    imageUrl: './banners/_shared/HTN1ZNWj-wuwa-gifts-of-drifting-mist.png', // real event cover art, sourced 2026-08-21 from a community timeline's event-cover-images API (the reference has no article for this event yet), uploaded to imgbb 2026-08-21
   },
   bountifulCrescendo: {
     name: 'Bountiful Crescendo',
@@ -438,7 +438,7 @@ const EVENTS = {
     currentEnd: '2026-09-10T07:59:59Z',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-lime-900/30',
     accentColor: 'lime',
-    imageUrl: './banners/_shared/TqLqWVsv-bountiful-crescendo.webp', // real event art, sourced 2026-08-20 from the wiki's File:Bountiful_Crescendo.jpg (recurring material double-drop event, generic art reused across versions), uploaded to imgbb 2026-08-20
+    imageUrl: './banners/_shared/TqLqWVsv-bountiful-crescendo.webp', // real event art, sourced 2026-08-20 from the reference File:Bountiful_Crescendo.jpg (recurring material double-drop event, generic art reused across versions), uploaded to imgbb 2026-08-20
   },
   resonanceSimRealm: {
     name: 'Resonance Sim Realm',
@@ -453,7 +453,7 @@ const EVENTS = {
     rewards: '1200 Astrite', // Direct user correction 2026-09-11 — one-time, not weekly/monthly (no dailyReset/weeklyReset flag)
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-red-900/30',
     accentColor: 'red',
-    imageUrl: './banners/_shared/zHQTnWXp-wuwa-resonance-sim-realm.png', // real event cover art, sourced 2026-08-21 from wuwatracker.com/timeline's event-cover-images API (the wiki has no article for this event yet), uploaded to imgbb 2026-08-21
+    imageUrl: './banners/_shared/zHQTnWXp-wuwa-resonance-sim-realm.png', // real event cover art, sourced 2026-08-21 from a community timeline's event-cover-images API (the reference has no article for this event yet), uploaded to imgbb 2026-08-21
   },
   secondComingOfSolaris: {
     name: 'Second Coming of Solaris: Coded Deception',
@@ -466,8 +466,8 @@ const EVENTS = {
     currentEnd: '2026-09-14T07:59:59Z',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-cyan-900/30',
     accentColor: 'cyan',
-    // real art, sourced 2026-08-20 from the wiki's File:Second_Coming_of_Solaris_(Ultra).jpg — the
-    // wiki page is for an earlier "Second Coming of Solaris" iteration, not the confirmed
+    // real art, sourced 2026-08-20 from the reference File:Second_Coming_of_Solaris_(Ultra).jpg — the
+    // reference page is for an earlier "Second Coming of Solaris" iteration, not the confirmed
     // "Coded Deception" v3.6 sub-title art; kept as the best real-asset match found, not a
     // guaranteed exact match for this specific event run.
     imageUrl: './banners/_shared/7tVkVbdx-second-coming-of-solaris.webp',
@@ -484,7 +484,7 @@ const EVENTS = {
     rewards: '400 Astrite', // Direct user correction 2026-09-11 — one-time, not weekly/monthly (no dailyReset/weeklyReset flag)
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-purple-900/30',
     accentColor: 'purple',
-    imageUrl: './banners/_shared/XxJtGLpQ-wuwa-the-strings-remember.png', // real event cover art, sourced 2026-08-21 from wuwatracker.com/timeline's event-cover-images API (the wiki has no article for this event yet), uploaded to imgbb 2026-08-21
+    imageUrl: './banners/_shared/XxJtGLpQ-wuwa-the-strings-remember.png', // real event cover art, sourced 2026-08-21 from a community timeline's event-cover-images API (the reference has no article for this event yet), uploaded to imgbb 2026-08-21
   },
   ifDreamsStillReverberate: {
     name: 'If Dreams Still Reverberate',
@@ -499,7 +499,7 @@ const EVENTS = {
     rewards: '600 Astrite', // Direct user correction 2026-09-11 — one-time, not weekly/monthly (no dailyReset/weeklyReset flag)
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-orange-900/30',
     accentColor: 'orange',
-    imageUrl: './banners/_shared/WpcMcR5t-wuwa-if-dreams-still-reverberate.png', // real event cover art, sourced 2026-08-21 from wuwatracker.com/timeline's event-cover-images API (the wiki has no article for this event yet), uploaded to imgbb 2026-08-21
+    imageUrl: './banners/_shared/WpcMcR5t-wuwa-if-dreams-still-reverberate.png', // real event cover art, sourced 2026-08-21 from a community timeline's event-cover-images API (the reference has no article for this event yet), uploaded to imgbb 2026-08-21
   },
   fogveilPagoda: {
     name: 'Featured Exploration Event: Fogveil Pagoda',
@@ -513,9 +513,9 @@ const EVENTS = {
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-lime-900/30',
     accentColor: 'lime',
     // Direct user-provided asset (2026-09-10): the event's own official cover card from
-    // wuwatracker.com's timeline (event-cover-images API), converted from the supplied .avif to
+    // a community timeline (event-cover-images API), converted from the supplied .avif to
     // .webp to match this file's existing image-format convention — replaces the earlier
-    // wiki location screenshot with the actual promotional art used for this event.
+    // reference location screenshot with the actual promotional art used for this event.
     imageUrl: './banners/_shared/fogveil-pagoda-event-cover.webp',
   },
   chordCleansing: {
@@ -530,7 +530,7 @@ const EVENTS = {
     currentEnd: '2026-09-29T07:59:59Z',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-pink-900/30',
     accentColor: 'pink',
-    imageUrl: './banners/_shared/99Pk72ZX-chord-cleansing.webp', // real event art, sourced 2026-08-20 from the wiki's File:Chord_Cleansing.jpg (recurring echo double-drop event, generic art reused across versions), uploaded to imgbb 2026-08-20
+    imageUrl: './banners/_shared/99Pk72ZX-chord-cleansing.webp', // real event art, sourced 2026-08-20 from the reference File:Chord_Cleansing.jpg (recurring echo double-drop event, generic art reused across versions), uploaded to imgbb 2026-08-20
   },
 };
 
@@ -582,12 +582,12 @@ const DEFAULT_COLLECTION_IMAGES = {
   'Denia': './banners/characters/denia/B59KDGHZ-Denia-Full-Sprite.webp',
   'Hiyuki': './banners/characters/hiyuki/Q5s9CMF-Hiyuki-Full-Sprite.webp',
   'Suisui': './banners/characters/suisui/Q7z2ZLGV-Suisui-Full-Sprite.webp',
-  // Qingxiao sourced 2026-08-18 from the wiki's own File:Qingxiao_Full_Sprite.png (uploaded 2026-08-17,
-  // ahead of her 2026-08-20 release, via the MediaWiki API — bypasses the site's Cloudflare challenge).
+  // Qingxiao sourced 2026-08-18 from the reference File:Qingxiao_Full_Sprite.png (uploaded 2026-08-17,
+  // ahead of her 2026-08-20 release, via the reference API — bypasses the site's Cloudflare challenge).
   'Qingxiao': './banners/characters/qingxiao/27tS4Zw1-qingxiao-sprite.webp',
   // v3.6 — no real art asset sourced yet, using shared placeholder until real portraits are available
-  // Jingran sourced 2026-08-18 from the wiki's own File:Jingran_Full_Sprite.png (uploaded 2026-08-17,
-  // ahead of his 3.6-p2 release, via the MediaWiki API — bypasses the site's Cloudflare challenge).
+  // Jingran sourced 2026-08-18 from the reference File:Jingran_Full_Sprite.png (uploaded 2026-08-17,
+  // ahead of his 3.6-p2 release, via the reference API — bypasses the site's Cloudflare challenge).
   'Jingran': './banners/characters/jingran/yB024Z5G-jingran-sprite.webp',
   // 4★ Resonators
   'Aalto': './banners/characters/aalto/v81v3Hq-Aalto-Full-Sprite.webp',
@@ -644,8 +644,8 @@ const DEFAULT_COLLECTION_IMAGES = {
   'Frostburn': './banners/characters/frostburn/29mMcRy-Frostburn-sprite.webp',
   'Forged Dwarf Star': './banners/characters/forged-dwarf-star/FLf2rmCB-Forged-Dwarf-Start.webp',
   "Firstlight's Herald": './banners/_shared/PvkzS83F-First-s-Light-Herald-sprite.webp',
-  // v3.6 weapons — real icons sourced 2026-08-20 from the wiki's own File:Weapon_Glint_of_Clouds.png
-  // / File:Weapon_Thousandfold_Deliverance.png via the MediaWiki API (bypasses Cloudflare),
+  // v3.6 weapons — real icons sourced 2026-08-20 from the reference File:Weapon_Glint_of_Clouds.png
+  // / File:Weapon_Thousandfold_Deliverance.png via the reference API (bypasses Cloudflare),
   // uploaded to imgbb 2026-08-20.
   'Glint of Clouds': './banners/characters/glint-of-clouds/Q3CfgYv8-glint-of-clouds.webp',
   'Thousandfold Deliverance': './banners/characters/thousandfold-deliverance/ccHCPYHF-thousandfold-deliverance.webp',
@@ -899,7 +899,7 @@ const DEFAULT_COLLECTION_IMAGES = {
   'Chop Chop': './banners/characters/chop-chop/8LRFvBW4-Chop-Chop-Icon.webp',
   'Lightcrusher': './banners/characters/lightcrusher/RpYdQddL-Lightcrusher-Icon.webp',
   'Rocksteady Guardian': './banners/characters/rocksteady-guardian/8LG9k4bn-Rocksteady-Guardian-Icon.webp',
-  // Land of Xuanfang echoes (v3.5) — icons sourced from the wiki, matching echoes.js's iconUrl
+  // Land of Xuanfang echoes (v3.5) — icons sourced from the reference, matching echoes.js's iconUrl
   // Calamity Effigy has no separate iconUrl in echoes.js (never confirmed), so reuse its monsterIconUrl asset
   'Calamity Effigy': './echoes/calamity-effigy/static.nanoka.cc-assets-ww-UIResources-Common-Image-IconMonsterHead-T_IconMonsterHead_34032_UI.webp',
   'Thousand-Puppet Pavilion': './banners/characters/thousand-puppet-pavilion/23cVrFbk-Thousand-Puppet-Pavilion.webp',
@@ -913,7 +913,7 @@ const DEFAULT_COLLECTION_IMAGES = {
   "Pilgrim's Shell": './banners/_shared/4ZHwcHT6-Pilgrims-Shell.webp',
   "Devotee's Flesh": './banners/_shared/DHRkbQg2-Devotees-Flesh.webp',
   // v3.5 — added 2026-08-18 (echo audit): 13 echoes missing from the roster entirely, icons re-hosted
-  // from the wiki, matching echoes.js's iconUrl for each.
+  // from the reference, matching echoes.js's iconUrl for each.
   'Smiter': './banners/characters/smiter/JWvmx2xC-Smiter.webp',
   'Porcelain Picket': './banners/characters/porcelain-picket/jP0xbjv8-Porcelain-Picket.webp',
   'Stone Picket': './banners/characters/stone-picket/WvnyB258-Stone-Picket.webp',
@@ -1076,9 +1076,9 @@ const WEAPON_THEMES = [
 // ═══════════════════════════════════════════════════════════════════════════════
 const VERSION_SPLASH_SCREENS = [
   // All 6 Live2D-source links (v3.4, v3.4 Cyberpunk, v3.6 via Google Drive; v3.5, v2.4, v2.1 via
-  // X/Twitter) turned out to be video content, not stills — the Drive ones were outright .mp4
-  // files, and the X ones only *looked* like images because X's bot-facing og:image/twitter:card
-  // meta serves a static video-thumbnail frame even for video posts (twitter:card stayed
+  // a social network) turned out to be video content, not stills — the Drive ones were outright .mp4
+  // files, and the social-network ones only *looked* like images because their bot-facing og:image
+  // meta serves a static video-thumbnail frame even for video posts (the card type stayed
   // "summary_large_image" instead of "player", which was the false signal). None of the Live2D
   // links yielded real official splash art — only the Classic-style links below did.
   { id: 'v3.6', version: '3.6', name: 'Version 3.6 (Classic)', art: './banner-history/v3.6.jpg', pos: { header: '50% 30%', nav: '50% 30%', bg: '46% 50%' } },
@@ -1260,7 +1260,7 @@ const ANIMATED_BACKGROUNDS = [
     poster: './Background/Startorch-Academy-Background.jpg',
     pos: { header: '50% 56%', nav: '50% 50%', bg: '50% 50%' },
   },
-  // Live2D-style version-update wallpapers (fan-cleaned 4K renders — Gdrive/@KiriyumeBun on X).
+  // Live2D-style version-update wallpapers (fan-cleaned 4K renders).
   // These are the actual animated MP4s the earlier "Live2D" splash-art request turned out to be;
   // wired here as animated backgrounds instead of static VERSION_SPLASH_SCREENS entries.
   {
@@ -1404,12 +1404,12 @@ const getConveneAnimation = (name) => CONVENE_ANIMATIONS[name] || null;
 
 // ══════════════════════════════════════════════════════════════════════════════
 // EVENT HISTORY — Recurring event periods with verified dates
-// Sources: the wiki wiki (Pioneer Podcast/YYYY-MM-DD pages), the source, web research
+// Sources: the reference (Pioneer Podcast/YYYY-MM-DD pages), the source, web research
 // Dates derived from BANNER_HISTORY version boundaries + web cross-check
 // ══════════════════════════════════════════════════════════════════════════════
 
 // Pioneer Podcast runs every version. Dates = version P1 start → last phase end (from BANNER_HISTORY)
-// Cross-checked against the wiki wiki page URLs: Pioneer_Podcast/2024-05-23, /2024-06-28, etc.
+// Cross-checked against the reference page URLs: Pioneer_Podcast/2024-05-23, /2024-06-28, etc.
 const PIONEER_PODCAST_HISTORY = [
   // endDate corrected 2026-09-10 to match BANNER_HISTORY's v3.6-p2 fix (was '2026-09-30') —
   // see that entry's own comment for the sourcing.
@@ -1439,17 +1439,17 @@ const PIONEER_PODCAST_HISTORY = [
 ];
 
 // Doubled Pawns Matrix: Pilot — recurring boss rush introduced in v3.0, replaced by Endstate Matrix in v3.2
-// Source: the wiki wiki (Doubled_Pawns_Matrix:_Pilot), rewards reset each version
+// Source: the reference (Doubled_Pawns_Matrix:_Pilot), rewards reset each version
 const DOUBLED_PAWNS_MATRIX_HISTORY = [
   { version: '3.1', startDate: '2026-02-05', endDate: '2026-03-18', rewards: 400 },
   { version: '3.0', startDate: '2025-12-25', endDate: '2026-02-04', rewards: 400 },
 ];
 
 // Tactical Hologram — permanent combat challenges, new arenas added with new regions
-// Source: the wiki wiki (Change History per page: Calamity=1.0, Phantom Pain=2.0, Synchronization=3.0, Sparring=3.5)
+// Source: the reference (Change History per page: Calamity=1.0, Phantom Pain=2.0, Synchronization=3.0, Sparring=3.5)
 // One entry per version where a new Tactical Hologram arena was introduced
 const TACTICAL_HOLOGRAM_HISTORY = [
-  // Confirmed via the wiki/Tactical_Hologram:_Sparring — "Released in Version 3.5",
+  // Confirmed via the Tactical Hologram: Sparring reference page — "Released in Version 3.5",
   // bosses Denia and Myriad Snare: Rustfire Chassis (both Land of Xuanfang additions).
   { version: '3.5', name: 'Sparring — Denia / Myriad Snare: Rustfire Chassis', startDate: '2026-07-10', endDate: '2026-08-19' },
   { version: '3.2', name: 'Synchronization — Hyvatia',   startDate: '2026-03-19', endDate: '2026-04-29' },

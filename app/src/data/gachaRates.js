@@ -12,8 +12,8 @@ const ASTRITE_PER_PULL = 160;
 // Average total income (Astrite-equivalent) a "usual" game update grants an F2P/light-spender
 // player, for the Income Projections tab's 2nd-row/"By Banner End" average-update-income
 // addition. Direct user-directed research (2026-09-13): sampled 6 recent patches (2.8, 3.1, 3.2,
-// 3.4, 3.5, 3.6) from consistent-methodology community trackers (lootbar.com, topuplive.com,
-// gamemarket.gg), converting Radiant Tide/Forging Tide to Astrite-equivalent at this file's own
+// 3.4, 3.5, 3.6) from consistent-methodology community trackers (three
+// independent sources), converting Radiant Tide/Forging Tide to Astrite-equivalent at this file's own
 // ASTRITE_PER_PULL rate (1 tide = 1 pull = 160 Astrite) and averaging across F2P/subscription
 // tiers where a source reported more than one. Raw per-patch totals ranged 11,845-18,390 (avg
 // ~15,050); 12,800 was chosen as the standard figure per direct user instruction, to account for
@@ -41,7 +41,7 @@ const AVG_UPDATE_P1_DAILY_ASTRITE = 434;
 const AVG_UPDATE_P2_DAILY_ASTRITE = 211;
 // Fixes a real double-counting bug (direct user catch, 2026-09-13): every AVG_UPDATE_* figure
 // above is a GROSS whole-patch F2P total that already includes daily commissions/dailies as one
-// of its own line items — the 3.6 sourcing breakdown (gamemarket.gg) explicitly lists "Daily
+// of its own line items — the 3.6 sourcing breakdown (community tracker) explicitly lists "Daily
 // Activity Quests: 2,400" (over that patch's ~41 days ≈ 58.5/day) as part of the total this file's
 // AVG_UPDATE_ASTRITE was calibrated from. PlannerTab.jsx's "including average update income"
 // projections add these rates ON TOP of the player's own tracked `dailyAstrite` (which itself

@@ -1,4 +1,4 @@
-// Cross-check of Hiyuki against a fresh the source.gg source dump (following the same treatment
+// Cross-check of Hiyuki against a fresh source dump (following the same treatment
 // already applied to Augusta/Yuanwu/Aemeath). Her kit data (SKILL_MULTIPLIERS, RESONANCE_CHAIN_DATA,
 // dmgFocus, statScaling, tier, blocks) was already fully audited against the source in an earlier
 // pass (see the "Full audit 2026-09-01" comment above CHAR_BUFF_TABLE['Hiyuki'] in characters.js) and

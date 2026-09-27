@@ -1,4 +1,4 @@
-// Regression tests found while cross-checking Aemeath against a fresh the source.gg source dump
+// Regression tests found while cross-checking Aemeath against a fresh source dump
 // (following the same treatment already applied to Augusta and Yuanwu).
 import { describe, it, expect } from 'vitest';
 import { CHARACTER_DATA, RESONANCE_CHAIN_DATA } from '../data/characters.js';

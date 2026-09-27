@@ -347,7 +347,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                 character's own infobox. Once a character has been audited into it, it's the sole source
                 for "what does this kit do" — the old plain-text, iconless data.role badge and dmgFocus
                 badges are dropped entirely for that character (not conditionally kept whenever no exact
-                tag match is found — e.g. "Sub DPS" has no 1:1 wiki tag equivalent, but showing it next to
+                tag match is found — e.g. "Sub DPS" has no 1:1 reference tag equivalent, but showing it next to
                 Combat Role would still read as a stale leftover). Those plain fallbacks only render for
                 the handful of characters not yet audited into combatRoles (currently just Jingran, an
                 unreleased character with no published kit to source tags from). */}

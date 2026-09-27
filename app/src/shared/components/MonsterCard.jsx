@@ -70,7 +70,7 @@ function MonsterCard({
   const def = scaled ? scaled.def : enemyStats?.def;
 
   // Interruption RES / its Recovery are flat per-boss constants; Vibration Strength, its Recovery,
-  // Rage, and its Recovery genuinely scale with level (the wiki's own Module:Enemy
+  // Rage, and its Recovery genuinely scale with level (the reference Module:Enemy
   // Stats render logic — see getEnemyStaggerStatsAtLevel in echoes.js).
   const staggerScaled = (isControlled || showLevelControl) ? getEnemyStaggerStatsAtLevel(name, level) : null;
   const interruptRes = staggerScaled ? staggerScaled.interruptRes : enemyStats?.interruptRes;

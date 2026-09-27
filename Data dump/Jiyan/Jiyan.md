@@ -1,7 +1,7 @@
 # Jiyan
 
-Source: a real prydwen.gg .mht browser snapshot (confirmed genuine via its own
-`Snapshot-Content-Location: https://www.prydwen.gg/wuthering-waves/characters/jiyan` header), last
+Source: a real .mht browser snapshot (confirmed genuine via its own
+`Snapshot-Content-Location` header), last
 updated 20/August/2026. 5★ Aero Broadblade Main DPS.
 
 ## Kit
@@ -189,7 +189,7 @@ Heavy 81.7% (586,105) / Skill 8.9% (63,978) / Echo (31,336) / Outro (21,824) / I
 ## App Data Comparison (vs. `app/src/data/characters.js` + `jiyan.blocks.js`)
 
 No dump file existed before this pass — created. `SKILL_MULTIPLIERS`/`RESONANCE_CHAIN_DATA` values
-already matched this source exactly (previously carefully audited against wutheringwaves.fandom.com,
+already matched this source exactly (previously carefully audited against the reference,
 including RESONANCE_CHAIN_DATA's own detailed per-node breakdown that already confirmed every value —
 S1's zeroed fabricated value, S5's split two-effect model, S6's 2-stack-max approximation, all matching
 this fresh source word-for-word). `bestWeapon`/`bestEchoes`/`weaponAlts` also already matched exactly.

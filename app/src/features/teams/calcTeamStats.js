@@ -529,7 +529,7 @@ export function calcTeamStats(slots, teamIdx, mainDpsOverride, teamEquipment, en
           buffs.filter(b => (b.owner || b.source) !== seg.name && b.start <= seg.start + 0.05 && b.start + b.duration > seg.start + 0.05)
             .map(fmtBuff)
         )];
-        // Verified skill-by-skill sequence from the source.gg's "Standard Rotation" guides — real
+        // Verified skill-by-skill sequence from the source's "Standard Rotation" guides — real
         // combat data, not derived from CHAR_BUFF_TABLE like the rest of this block. CHARACTER_ROTATIONS
         // (type/skill/note per step, 56 of 58 characters) is the richer, actively-maintained dataset —
         // prefer it over the older CHARACTER_DATA[name].rotation plain-string array, which only exists

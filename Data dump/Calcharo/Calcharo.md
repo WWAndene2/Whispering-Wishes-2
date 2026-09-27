@@ -1,7 +1,7 @@
 # Calcharo
 
-Source: a real prydwen.gg .mht browser snapshot (confirmed genuine via its own
-`Snapshot-Content-Location: https://www.prydwen.gg/wuthering-waves/characters/calcharo` header),
+Source: a real .mht browser snapshot (confirmed genuine via its own
+`Snapshot-Content-Location` header),
 last updated 20/August/2026. 5★ Electro Broadblade Main DPS, standard banner.
 
 ## Kit
@@ -211,7 +211,7 @@ extensive and accurate).
 1 test added, full suite green (1339/1339).
 
 **Full re-audit (2026-09-08, explicitly requested — including cross-interactions, resource-threshold
-firing mechanics, and re-verifying "TODO: verify" gaps left by the prior wiki-only pass, not just
+firing mechanics, and re-verifying "TODO: verify" gaps left by the prior reference-only pass, not just
 re-checking what the last pass already touched).** Found 2 real bugs, both in weapon data.
 
 1. **bestWeapon was wrong, and the prior pass's own comment already knew it.** `bestWeapon` stored
@@ -230,7 +230,7 @@ re-checking what the last pass already touched).** Found 2 real bugs, both in we
    same pass had dropped (Helios Cleaver, Broadblade#41), matching the dump's complete 5-weapon
    4-star list.
 
-Everything else re-verified clean and, where the 2026-08-31 wiki-only pass had left "TODO: verify"
+Everything else re-verified clean and, where the 2026-08-31 reference-only pass had left "TODO: verify"
 tags (Basic ATK Stage 1-4, Heavy ATK Standard, Mid-air Plunging Attack, Dodge Counter Standard, Forte
 Mercy, Forte Death Messenger, Intro Wanted Outlaw — 7 rows total), this dump now independently confirms
 every one of them exact — TODOs closed with a citation. Also directly verified (not just trusted the

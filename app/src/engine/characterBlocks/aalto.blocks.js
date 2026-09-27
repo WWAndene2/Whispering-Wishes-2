@@ -8,7 +8,7 @@
 // conditional/cast-order mechanics found.
 //
 // Completeness pass 2026-09-05, verified directly against `Data dump/
-// Aalto/Aalto.md` (the real prydwen.gg snapshot, not a derived table): three real,
+// Aalto/Aalto.md` (the real build-guide snapshot, not a derived table): three real,
 // sourced kit moves (Heavy ATK, Mid-air Attack, Dodge Counter) and his Minor Fortes
 // passive (Aero DMG+12%, ATK%+12%) existed in the dump and in SKILL_MULTIPLIERS['
 // Aalto'] but had no block at all — his computed DPS was silently missing them.

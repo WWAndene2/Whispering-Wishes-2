@@ -1,8 +1,8 @@
-// Cross-check of Denia against a fresh the source.gg source dump (following the same treatment
+// Cross-check of Denia against a fresh source dump (following the same treatment
 // already applied to Augusta/Yuanwu/Aemeath/Hiyuki/Luuk Herssen/Qingxiao/Sigrika/Yangyang: Xuanling).
 // SKILL_MULTIPLIERS, CHARACTER_ROTATIONS, CHAR_BUFF_TABLE, RESONANCE_CHAIN_DATA, tier and the
 // engine block file (denia.blocks.js) all already matched the fresh dump exactly (both had been
-// re-audited 2026-09-01 against the wiki/the source). Real gaps found:
+// re-audited 2026-09-01 against the reference sources). Real gaps found:
 import { describe, it, expect } from 'vitest';
 import { CHARACTER_DATA } from '../data/characters.js';
 

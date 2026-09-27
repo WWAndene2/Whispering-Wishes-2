@@ -1,4 +1,4 @@
-# Rebecca — Prydwen.gg source dump (cleaned)
+# Rebecca — build-guide source dump (cleaned)
 
 5★ Electro, Pistols, Hybrid (Heavy Attack DMG buffer with strong personal Basic Attack damage). Free
 character who swaps between two self-buff states (Huntress/Guts) every Intro/Skill cast, builds toward a
@@ -102,9 +102,9 @@ enhancement). BOOM! Fireworks!: 63.62%+572.58%. Cooldown 25s; Resonance Cost 125
   Hot Hand can't regen during this window and drains 10/s instead.
 
 **Multipliers (Lv.10):** Hack Response-Meltdown: 1186.50% Tune AMP. Rat-tat-tat!: Huntress:
-10.00%+10.00%+10.00%+160.00%+10.00%. Bang-bang-bang!: Guts: 140.00%. (User-pasted Prydwen text —
-confirmed by the user directly; a nanoka.cc .mht snapshot showed roughly double these values instead,
-resolved in Prydwen's favor per standing instruction that user-pasted Prydwen text takes priority.)
+10.00%+10.00%+10.00%+160.00%+10.00%. Bang-bang-bang!: Guts: 140.00%. (User-pasted build-guide text —
+confirmed by the user directly; an earlier .mht snapshot showed roughly double these values instead,
+resolved in the guide's favor per standing instruction that user-pasted build-guide text takes priority.)
 
 ### Forte Circuit (2nd section) — Hack - Meltdown
 When the target's Off-Tune Level is full, Rebecca can cast Tune Break on it. Inflicts Hack - Shifting and

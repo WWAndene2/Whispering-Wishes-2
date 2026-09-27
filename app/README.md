@@ -9,7 +9,7 @@ A Wuthering Waves Convene (gacha) companion app.
 - **Planner**: Plan resource income and goals
 - **Stats**: View pull history charts and luck rating
 - **Collection**: Track owned Resonators and weapons
-- **Profile**: Import history from wuwatracker.com, backup/restore data
+- **Profile**: Import convene history (JSON export), backup/restore data
 
 ## Tech Stack
 - React 18

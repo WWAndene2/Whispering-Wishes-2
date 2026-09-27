@@ -1,6 +1,6 @@
 # Data Bank — Rank, Rates & Rules
 
-Source: Wuthering Waves Wiki (Fandom), "Data Bank" page. Extracted from user-provided .mht 2026-09-06. Reward items (Astrite/Tuner/Sealed Tube grants per level-up) intentionally omitted — this file covers rank progression and drop-rate mechanics only.
+Source: reference page "Data Bank" page. Extracted from user-provided .mht 2026-09-06. Reward items (Astrite/Tuner/Sealed Tube grants per level-up) intentionally omitted — this file covers rank progression and drop-rate mechanics only.
 
 ## Core rule
 

@@ -80,9 +80,9 @@ const ECHO_SETS = {
 // [SECTION:ECHO_LISTS] — All echoes grouped by cost tier (newest first)
 const ALL_4COST_ECHOES = [
   // v3.6 — added 2026-08-18 (echo audit): missing from roster entirely. Confirmed 4-cost, Aero,
-  // 'Heart of Evil's Purge' set via WebSearch (the source Qingxiao build guides, ldshop.gg Qingxiao build
+  // 'Heart of Evil's Purge' set via WebSearch (community Qingxiao build guides, a third Qingxiao build
   // guide). Active-skill dmg% and any main-slot buff stats could not be confirmed from any accessible
-  // source (the source blocked by Cloudflare/403, the wiki wiki 402, the source/theriagames/wuwacompanion
+  // source (one source blocked by Cloudflare/403, the reference 402, the other guides
   // pages didn't carry the specific numbers) — left out of ECHO_SKILL_BUFFS and desc has no fabricated %s.
   'Calamity Effigy',
   // v3.5 — Land of Xuanfang
@@ -241,9 +241,9 @@ const ECHO_DATA = {
   'Reminiscence: Threnodian - Voidborne Construct': { sets: ['Wishes of Quiet Snowfall'], buff: 'Glacio DMG', desc: "Calamity-class Echo from Land of Xuanfang. Skill summons Aleph-1's Creation for 5 hits of 21.88% Glacio DMG plus one hit of 164.16% Glacio DMG. Main slot grants +12% Glacio DMG and +12% Resonance Liberation DMG.", iconUrl: './echoes/reminiscence-threnodian-voidborne-construct/gZdFc1CG-Reminiscence-Threnodian-Voidborne-Construct.webp' , monsterIconUrl: './echoes/reminiscence-threnodian-voidborne-construct/static.nanoka.cc-assets-ww-UIResources-Common-Image-IconMonsterHead-T_IconMonsterHead_34027_UI.webp', rank: 'Calamity' },
   'Reminiscence - Nightmare: Adam Smasher': { sets: ['Shadow of Shattered Dreams'], buff: 'Physical DMG', desc: "Overlord-class Echo from the Cyberpunk: Edgerunners collab. Skill deals 16 hits of 10.26% ATK Physical DMG. When equipped by Lucy or Rebecca in the main slot, grants +15% Crit Rate and unlocks a character-specific enhanced Echo Skill (Lucy: Spectro burst; Rebecca: Electro missile barrage).", iconUrl: './echoes/reminiscence-nightmare-adam-smasher/twCtsS1D-Reminiscence-Nightmare-Adam-Smasher.webp' , monsterIconUrl: './echoes/reminiscence-nightmare-adam-smasher/static.nanoka.cc-assets-ww-UIResources-Common-Image-IconMonsterHead-T_IconMonsterHead_34029_1_UI.webp', rank: 'Overlord' },
   // added 2026-08-18 (echo audit): Calamity-class Aero echo, Qingxiao's dedicated v3.6 main echo for
-  // Heart of Evil's Purge. Set/element/cost confirmed via WebSearch (the source & ldshop.gg Qingxiao build
+  // Heart of Evil's Purge. Set/element/cost confirmed via WebSearch (community Qingxiao build
   // guides). Active-skill damage % and any main-slot passive buff numbers could not be confirmed from any
-  // accessible source (the source blocked, the wiki wiki paywalled) — no numbers fabricated here,
+  // accessible source (the source blocked, the reference paywalled) — no numbers fabricated here,
   // and no ECHO_SKILL_BUFFS entry was added pending confirmation.
   'Calamity Effigy':                 { sets: ["Heart of Evil's Purge"], buff: 'Aero DMG', desc: "A Calamity-class Echo from Land of Xuanfang, Qingxiao's dedicated main Echo. Skill transforms to deal Aero DMG; the main slot grants Aero DMG Bonus."  , monsterIconUrl: './echoes/calamity-effigy/static.nanoka.cc-assets-ww-UIResources-Common-Image-IconMonsterHead-T_IconMonsterHead_34032_UI.webp', rank: 'Overlord' },
   // ── 3-Cost Echoes ──
@@ -300,7 +300,7 @@ const ECHO_DATA = {
   'Rocksteady Guardian':             { sets: ['Celestial Light', 'Rejuvenating Glow'], buff: 'Spectro DMG', desc: "A steadfast rock guardian. Skill transforms into a Parry State; upon being attacked, deals Spectro DMG equal to 8.29% of Max HP with a follow-up attack for another 8.29%. If the attack is a Special Skill, interrupt it, gain a 30% Max HP Shield, and unleash a two-stage follow-up (5.52% Max HP each) plus three ground-breaking waves (4.59% Max HP each)." , iconUrl: './echoes/rocksteady-guardian/8LG9k4bn-Rocksteady-Guardian-Icon.webp' , monsterIconUrl: './echoes/rocksteady-guardian/static.nanoka.cc-assets-ww-UIResources-Common-Image-IconMonsterHead-T_IconMonsterHead_245_UI.webp', rank: 'Elite' },
   // ── 1-Cost Echoes ──
   // added 2026-08-18 (echo audit): entirely missing from the roster despite being live v3.5 Land of
-  // Xuanfang echoes, confirmed via the source live echo pages. Icons re-hosted from the wiki to ibb.co.
+  // Xuanfang echoes, confirmed via the source live echo pages. Icons re-hosted from the reference to ibb.co.
   'Smiter':                          { sets: ['Song of Feathered Trace'], buff: 'Spectro DMG', desc: 'An Elite-class puppet from Land of Xuanfang. Skill summons Smiter to jab enemies 7 times for 19.26% Spectro DMG each, finishing with an uppercut for 57.78% Spectro DMG.', iconUrl: './echoes/smiter/JWvmx2xC-Smiter.webp' , monsterIconUrl: './echoes/smiter/static.nanoka.cc-assets-ww-UIResources-Common-Image-IconMonsterHead-T_IconMonsterHead_31090_UI.webp', rank: 'Common' },
   'Porcelain Picket':                { sets: ['Lamp of Nether Road'], buff: 'Aero DMG', desc: 'An Elite-class puppet from Land of Xuanfang. Skill summons Porcelain Picket to slash forward, dealing 2 hits of 19.44% Aero DMG and 7 hits of 12.96% Aero DMG to enemies along its path.', iconUrl: './echoes/porcelain-picket/jP0xbjv8-Porcelain-Picket.webp' , monsterIconUrl: './echoes/porcelain-picket/static.nanoka.cc-assets-ww-UIResources-Common-Image-IconMonsterHead-T_IconMonsterHead_31091_UI.webp', rank: 'Common' },
   'Stone Picket':                    { sets: ['Lamp of Nether Road'], buff: 'Aero DMG', desc: 'An Elite-class puppet from Land of Xuanfang. Skill summons Stone Picket, dealing 129.60% Aero DMG.', iconUrl: './echoes/stone-picket/WvnyB258-Stone-Picket.webp' , monsterIconUrl: './echoes/stone-picket/static.nanoka.cc-assets-ww-UIResources-Common-Image-IconMonsterHead-T_IconMonsterHead_31092_UI.webp', rank: 'Common' },
@@ -633,15 +633,15 @@ export function getEnemyStatsAtLevel(name, level) {
 }
 
 // Per-level (1-120) stagger-system stats — Interruption RES, Vibration Strength, Rage (+ Recovery
-// variants) — sourced from the wiki's own Module:Enemy Stats/data + .../scaling
+// variants) — sourced from the reference Module:Enemy Stats/data + .../scaling
 // Lua modules (fetched via the site's api.php, which unlike the page itself isn't behind a
 // Cloudflare JS challenge). These genuinely ARE level-scaled for 4 of the 6 fields — confirmed
-// directly from the wiki's own render logic (Module:Enemy Stats: `data[name].hardness *
+// directly from the reference render logic (Module:Enemy Stats: `data[name].hardness *
 // scaling[level].hardness` etc) — only Interruption RES and its Recovery are flat per-boss
-// constants (toughness/toughness_recover in the wiki's raw field names). Vibration Strength/Rage
+// constants (toughness/toughness_recover in the reference raw field names). Vibration Strength/Rage
 // turn out to be the exact same underlying numbers as the source's hardness_max/rage_max (which
 // the source's own UI mislabels "Stun DMG"/"Toughness DMG") — cross-checked exactly at every level.
-// Lioness of Glory has no entry in the wiki's data module at all (not fabricated — left untracked,
+// Lioness of Glory has no entry in the reference data module at all (not fabricated — left untracked,
 // same null-fallback as every other genuinely-missing stat in this file).
 
 /**

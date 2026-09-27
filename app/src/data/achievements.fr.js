@@ -1,7 +1,7 @@
 // @ts-check
 // French localization overlay for achievement data — data/achievements.js.
 // Keyed by the same numeric ids as ACHIEVEMENTS / ACHIEVEMENT_SERIES.
-// No official French source exists for achievement text: wuwatracker.com's
+// No official French source exists for achievement text: a community tracker's
 // /fr/ route only localizes its own site chrome, not achievement content
 // (confirmed by fetching it directly — names/descriptions render in English
 // even under /fr/). Hand-translated here; proper nouns (place names, quest

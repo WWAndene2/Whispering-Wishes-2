@@ -42,7 +42,7 @@ const loadImage = (src, timeoutMs = 3000) => new Promise((resolve) => {
 // echo set), no team buffs from teammates. This is deliberately different from calcTeamStats.js's
 // mainDps-only "FULL tier" (which folds in every teammate's buffs and only ever exists for
 // whichever member is the current Main DPS) — a "build card" is meant to show what THIS
-// character's own equipment provides, the same way wuwaflex.com's build cards do, regardless of
+// character's own equipment provides, the same way popular community build cards do, regardless of
 // team role. Reuses the exact same stat-accumulator primitives calcTeamStats.js itself uses
 // (createStats/applyFullEchoSet/applyEchoStats/calcEnergyCycles from calcEngine.js) so the math
 // stays consistent with the rest of the app instead of being reimplemented from scratch.
@@ -440,7 +440,7 @@ export async function renderCharacterCard({ member, eq, teamIdx, collectionImage
   // Intro, each column a chain of small "filled" pip nodes around the real move icon connected
   // by a vertical line. This app doesn't track individual skill levels anywhere in its data model
   // (checked calcEngine.js/DamageCalculator.jsx — every skill is simply assumed maxed, same as
-  // the wuwaflex.com reference this card otherwise follows), so the pips are decorative (all
+  // the community build-card reference this card otherwise follows), so the pips are decorative (all
   // "filled") rather than reflecting real per-node unlock state — Sequence below is the section
   // that renders genuine locked/unlocked state. Outro Skill has no tracked data anywhere in this
   // app (no 'Outro' entry in skillTypeToCategory/SKILL_MULTIPLIERS), so per user instruction it

@@ -1,4 +1,4 @@
-# Phrolova — Prydwen.gg source dump (cleaned)
+# Phrolova — build-guide source dump (cleaned)
 
 5★ Havoc, Rectifier, Main DPS. Half on-field/half off-field DPS: builds "Volatile Notes" via Basic
 Attacks/Skill, unlocks Ultimate (Curtain Call / "Waltz of Forsaken Depths") which costs no Resonance

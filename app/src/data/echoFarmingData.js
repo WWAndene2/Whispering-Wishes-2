@@ -6,7 +6,7 @@
 // file and section it comes from, and how confident that source is.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-// Main stat roll probability per Echo cost tier — empirical, from the wiki's Echo/Stats
+// Main stat roll probability per Echo cost tier — empirical, from the Echo stats reference
 // "Detailed mainstat values distribution" (sample sizes: 1414 rolls for 1-Cost, 1758 for
 // 3-Cost, 1829 for 4-Cost). This is NOT an official Kuro disclosure like the substat table
 // below — it's a large community sample, so treat it as a strong estimate, not an exact rate.
@@ -24,7 +24,7 @@ export const ECHO_MAIN_STAT_CHANCE = {
   },
 };
 
-// The wiki describes Echoes as having a "Primary" (random) and a "Secondary" (predetermined —
+// The reference describes Echoes as having a "Primary" (random) and a "Secondary" (predetermined —
 // fixed per cost tier, not re-rolled per drop, and never the same stat as the Primary) main
 // stat. Cross-referencing Probability.md's own "Mainstats" pool per cost against its "Detailed
 // mainstat values distribution" Primary-roll sample shows exactly one flat stat missing from
@@ -148,7 +148,7 @@ export function getTacetFieldYield(dataBankLevel) {
   return TACET_FIELD_YIELD_BY_SOL3_PHASE[row.sol3Phase] || TACET_FIELD_YIELD_BY_SOL3_PHASE[8];
 }
 
-// ── Echo Leveling — Data dump/Echoes/Echo Leveling.md (wiki's "Echo Leveling Table",
+// ── Echo Leveling — Data dump/Echoes/Echo Leveling.md (reference "Echo Leveling Table",
 // Refunding section excluded per request). Cumulative EXP needed to reach each level from 0,
 // per rarity — max level differs by rarity (2★→10, 3★→15, 4★→20, 5★→25, matching Data
 // Bank.md's own rarity/max-level table). Index = level, value = cumulative EXP; undefined
@@ -160,7 +160,7 @@ export const ECHO_LEVEL_CUMULATIVE_EXP = {
   2: [0, 100, 250, 475, 750, 1100, 1525, 2025, 2625, 3325, 4125],
 };
 export const ECHO_MAX_LEVEL_BY_RARITY = { 2: 10, 3: 15, 4: 20, 5: 25 };
-// Shell Credit conversion — wiki's own disclosed rate, same source as the EXP table above.
+// Shell Credit conversion — reference disclosed rate, same source as the EXP table above.
 export const SHELL_CREDIT_PER_ECHO_EXP = 0.1;
 export const SHELL_CREDIT_PER_TUNE_ATTEMPT = 2000;
 // EXP granted per Sealed Tube tier (Echo Development Material) — same source as the leveling

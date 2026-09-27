@@ -1,4 +1,4 @@
-// Cross-check of Lynae against a fresh the source.gg source dump (following the same treatment already
+// Cross-check of Lynae against a fresh source dump (following the same treatment already
 // applied to Augusta/Yuanwu/Aemeath/Hiyuki/Luuk Herssen/Qingxiao/Sigrika/Yangyang: Xuanling/Denia/
 // Lucilla). Base stats, teams, CHAR_BUFF_TABLE's outroBuffs/libBuffs/tuneBreak (except ruptureDmgMult),
 // and RESONANCE_CHAIN_DATA's S4/S5 nodes already matched the fresh dump exactly. Real gaps found:

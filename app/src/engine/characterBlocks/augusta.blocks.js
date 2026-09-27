@@ -13,7 +13,7 @@
 // 'partner-outro-return' trigger type — see augusta.outro.battlesong and
 // augusta.outro.majesty-condition below.
 //
-// Re-audited 2026-09-02 against a fresh the source.gg source dump (see
+// Re-audited 2026-09-02 against a fresh source dump (see
 // characters.js's SKILL_MULTIPLIERS['Augusta'] for the full ratio verification):
 // every damage block below was carrying the exact same value SKILL_MULTIPLIERS
 // had — which was itself off by a consistent ~1.988x (roughly HALF the real

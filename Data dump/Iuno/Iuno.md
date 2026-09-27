@@ -1,4 +1,4 @@
-# Iuno — Prydwen.gg source dump (cleaned)
+# Iuno — build-guide source dump (cleaned)
 
 5★ Aero, Gauntlets. Flexible Main DPS/Hybrid/Support — real-game roles differ significantly (two
 separate calculation sets exist: DPS and Hybrid). Real-life last update: review Patch 2.6, calcs Patch
@@ -334,7 +334,7 @@ Outro 7,577 · Echo 22,805.
   Main-DPS-Iuno teams for general Aero buffs. Shorekeeper/Verina are the best generalist picks
   (DMG-Amp Outro, high ATK buffs, Shorekeeper also brings Crit buffs).
 
-**Example Teams** (updated 2026-09-12 from a fresh prydwen.gg snapshot — supersedes the prior
+**Example Teams** (updated 2026-09-12 from a fresh build-guide snapshot — supersedes the prior
 "Yangyang: Xuanling + Augusta + Iuno" Best Team entry below, which no longer appears on the live
 page at all; kept as history only in the git log, not restated here):
 1. **Best Team: Jingran/Augusta + Iuno + Shorekeeper/Verina** — Jingran is a new character not yet

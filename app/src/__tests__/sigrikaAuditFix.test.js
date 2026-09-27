@@ -1,4 +1,4 @@
-// Cross-check of Sigrika against a fresh the source.gg source dump (following the same treatment
+// Cross-check of Sigrika against a fresh source dump (following the same treatment
 // already applied to Augusta/Yuanwu/Aemeath/Hiyuki/Luuk Herssen/Qingxiao). Rotation, SKILL_MULTIPLIERS,
 // tier, statScaling, and the CHAR_BUFF_TABLE self/team buffs already matched the fresh dump exactly.
 // Real gaps found:

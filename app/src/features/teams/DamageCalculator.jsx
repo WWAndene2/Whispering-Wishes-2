@@ -622,7 +622,7 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                         </span>
                         {/* Audited combatRoles is the authoritative, iconed tag source (see
                             CharacterDetailModal) — falls back to plain dmgFocus tags, iconed via
-                            the same short-tag→wiki-tag mapping, only for un-audited characters. */}
+                            the same short-tag→reference-tag mapping, only for un-audited characters. */}
                         {m.d.combatRoles?.length > 0 ? (
                           m.d.combatRoles.map((tag, ti) => {
                             const icon = getCombatRoleIcon(tag);

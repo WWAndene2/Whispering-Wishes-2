@@ -33,7 +33,7 @@ describe('CHARACTER_DATA integrity', () => {
 
   it('every character has base stats', () => {
     // Jingran (v3.6) is a genuine exception: his kit passive "Nether to Light" fixes his combat DEF
-    // to 0 outright (confirmed via the source/the wiki) — 0 is his real value, not
+    // to 0 outright (confirmed via the source/the reference) — 0 is his real value, not
     // a missing-data placeholder, so he's excluded from the baseDef > 0 assertion below.
     const ZERO_DEF_BY_KIT = new Set(['Jingran']);
     chars.forEach(([name, data]) => {
@@ -422,14 +422,14 @@ describe('Cross-reference consistency', () => {
   });
 });
 
-// the wiki/Damage (official, fetched 2026-08-19): "For most enemies in the
+// the Damage reference page (official, fetched 2026-08-19): "For most enemies in the
 // game, the base resistance is equal to 0.1 (10%). Bosses with element-specific resistances have an
 // additional 0.3 (30%) resistance, for a total of 0.4 (40%)." — every tracked enemy's RES map
 // (built in echoes.js from the source's real per-boss data) should honor that exact rule: every
 // element sits at the 10% baseline except the boosted one(s), which sit at exactly 40%. If this ever
-// fails, either the enemy-stats pipeline drifted from its source or the wiki's own stated rule
+// fails, either the enemy-stats pipeline drifted from its source or the reference stated rule
 // changed for a patch — either way it's the actual game's data disagreeing with what this app models.
-describe('Enemy RES data matches the wiki\'s documented baseline rule', () => {
+describe('Enemy RES data matches the reference\'s documented baseline rule', () => {
   const enemiesWithRes = Object.entries(ECHO_DATA).filter(([, d]) => d.enemyStats?.res);
 
   it('found tracked enemies to check', () => {

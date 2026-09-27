@@ -16,10 +16,10 @@ export const IMPORT_NAME_ALIASES = {
   'Rover: Electro (Female)': 'Rover: Electro', 'Rover: Electro (Male)': 'Rover: Electro',
 
   // French client convene-history import aliases: official French weapon names -> internal English
-  // WEAPON_DATA keys. File/JSON imports (WuwaTracker exports etc.) do NOT force English like the
+  // WEAPON_DATA keys. File/JSON imports (third-party tracker exports etc.) do NOT force English like the
   // direct API fetch above does, so a French-client export carries p.name/p.resourceName as the
   // official French localized weapon name and needs to be mapped back to the internal key. Sourced
-  // from WuwaTracker's own French (fr) locale name table (wuwatracker.com/fr/weapons/*), which is
+  // from a third-party tracker's own French (fr) locale name table, which is
   // the exact translation the pull-history exports this app imports use. Weapons whose French name
   // is identical to English (untranslated in-game, e.g. most "signature"/one-word/proper-noun names)
   // are omitted since no alias is needed. 'Skull Thrasher' is also untranslated in French.

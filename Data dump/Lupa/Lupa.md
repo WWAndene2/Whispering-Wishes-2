@@ -1,4 +1,4 @@
-# Lupa — Prydwen.gg source dump (cleaned)
+# Lupa — build-guide source dump (cleaned)
 
 5★ Fusion, Broadblade, Hybrid (dedicated Fusion team buffer with solid personal damage). Extended-
 rotation buffer who leans on her Ultimate to trigger team-wide "Pack Hunt"/"Glory" buffs (35s, near-
@@ -285,7 +285,7 @@ Notes on real-game rotation mechanics:
 - S5: 838,625 DMG / 103,025 DPS (213.17%)
 - S6: 963,386 DMG / 118,352 DPS (244.89%)
 
-**Synergies** (updated 2026-09-12 from a fresh prydwen.gg snapshot — Jingran didn't exist in this
+**Synergies** (updated 2026-09-12 from a fresh build-guide snapshot — Jingran didn't exist in this
 codebase when the section above was first written; the live page has since folded him in as a 3rd
 top-baseline-damage headliner alongside Aemeath/Galbrena, and added Mortefi as his dedicated 3rd-slot
 partner):

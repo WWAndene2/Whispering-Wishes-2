@@ -1,7 +1,7 @@
 # Zhezhi
 
-Source: a real prydwen.gg .mht browser snapshot (confirmed genuine via its own
-`Snapshot-Content-Location: https://www.prydwen.gg/wuthering-waves/characters/zhezhi` header),
+Source: a real .mht browser snapshot (confirmed genuine via its own
+`Snapshot-Content-Location` header),
 last updated 20/August/2026. 5★ Glacio Rectifier Hybrid/Sub DPS.
 
 ## Kit
@@ -171,7 +171,7 @@ No dump file existed before this pass — created. `bestWeapon`, `bestEchoes`, `
 base stats, SKILL_MULTIPLIERS, CHARACTER_ROTATIONS, CHAR_BUFF_TABLE's outro values, and
 RESONANCE_CHAIN_DATA's S1/S3/S4 values (plus S2/S5/S6's already correctly-zeroed flat entries, with
 S5/S6 already precisely modeled as real proc-style damage blocks in `zhezhi.blocks.js` cross-checked
-against nanoka's raw damage data — an already well-audited piece of this file from a prior pass) all
+against the raw damage data — an already well-audited piece of this file from a prior pass) all
 already matched this source exactly.
 
 **Real bugs found and fixed (2026-09-03)**:

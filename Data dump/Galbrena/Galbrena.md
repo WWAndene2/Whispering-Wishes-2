@@ -1,6 +1,6 @@
 # Galbrena
 
-Source: Prydwen.gg — Best Build Guide, last updated 20/August/2026 (pasted text, priority source per
+Source: Best Build Guide, last updated 20/August/2026 (pasted text, priority source per
 standing rule). 5★ Fusion Pistols Main DPS.
 
 ## Kit
@@ -228,7 +228,7 @@ Absolution Liberation-slot ultimate, all being "considered Echo Skill DMG" per k
 ## App Data Comparison (vs. `app/src/data/characters.js` + `galbrena.blocks.js`)
 
 No dump file existed before this pass — created. `SKILL_MULTIPLIERS`/`RESONANCE_CHAIN_DATA`/
-`CHAR_BUFF_TABLE` values already matched this Prydwen text exactly (previously audited 2026-09-01),
+`CHAR_BUFF_TABLE` values already matched this build-guide text exactly (previously audited 2026-09-01),
 except one genuinely missing row (Hellstride, see below).
 
 **Real bugs found and fixed**:

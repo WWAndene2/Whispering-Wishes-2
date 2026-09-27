@@ -8,7 +8,7 @@ cite this doc for a number that lives in a `NEEDS SOURCE` section.
 
 ## 1. Core damage formula
 
-### 1a. The real game formula, per a wiki-style mechanics reference (user-provided, 2026-09-05)
+### 1a. The real game formula, per a mechanics reference (user-provided, 2026-09-05)
 
 ```
 DMG = Base DMG × Resistances × Bonuses

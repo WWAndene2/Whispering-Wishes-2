@@ -1,7 +1,7 @@
 # Jingran
 
-Source: a real nanoka.cc .mht browser snapshot, user-uploaded (confirmed genuine via its own
-`Snapshot-Content-Location: https://ww.nanoka.cc/character/1212` header), captured 7/September/2026,
+Source: a real .mht browser snapshot, user-uploaded (confirmed genuine via its own
+`Snapshot-Content-Location` header), captured 7/September/2026,
 page shows "Version 3.6 (live)" — his real kit, now released (not the pre-release placeholder state
 this repo previously had for him). 5★ Fusion Broadblade Main Damage Dealer, Mengzhou.
 
@@ -173,11 +173,11 @@ Fusion DMG 0%.
 
 ## Build
 
-Source for this section: a second, later snapshot from prydwen.gg
-(prydwen.gg/wuthering-waves/characters/jingran), user-provided via a .mht file (fetched 2026-09-12) —
-supersedes the nanoka.cc snapshot's own "Build (partial — not yet written)" placeholder above, whose
+Source for this section: a second, later build-guide snapshot
+(the Jingran build-guide page), user-provided via a .mht file (fetched 2026-09-12) —
+supersedes the first snapshot's own "Build (partial — not yet written)" placeholder above, whose
 guide content had no Echo-set/team-synergy/rotation section written yet for him at that earlier date
-(a newly-released character). Real-life last update on the prydwen page itself: review/calcs Patch 3.6,
+(a newly-released character). Real-life last update on the guide page itself: review/calcs Patch 3.6,
 profile 10/September/2026.
 
 ### Best Weapons (Lv.90, % = calculated performance vs. his Signature)
@@ -198,7 +198,7 @@ profile 10/September/2026.
 | Meditations on Mercy (R5, best no-gacha/F2P) | 59.9% | ATK 462, ATK 18.2% |
 
 Note: this table's Radiance Cleaver (#5, 73.7%) and Aureate Zenith (#6, 73.1%) rankings are consistent
-with the nanoka.cc snapshot's earlier, coarser #2/#3 ranking of the same 2 weapons above — corroborating
+with the first snapshot's earlier, coarser #2/#3 ranking of the same 2 weapons above — corroborating
 both sources rather than conflicting.
 
 **Signature (Thousandfold Deliverance)**: +12% All-Attribute DMG Bonus. Casting Intro or gaining a
@@ -273,7 +273,7 @@ after his 4th Heavy, before Outro (outside Quickswap).
 
 ## Calculations
 
-### Damage Profile (Prydwen's own simulated rotation, S0, solo/no buffs)
+### Damage Profile (the guide's own simulated rotation, S0, solo/no buffs)
 Basic 15,667 (0.8%) · Heavy 1,824,337 (84%) · Skill 78,044 (part of 8.4% Skill share incl. Intro/Outro)
 · Liberation 0 · Intro 27,754 · Outro 181,825 · Echo 43,624. Total ≈ 2,171,250. Rotation time 13.37s.
 Confirms his damage is overwhelmingly Heavy Attack (84%), with Skill/Intro/Outro/Echo as the remainder
@@ -340,7 +340,7 @@ data" values this repo had sourced before his live release) — the deltas found
 5. **Minor Fortes and both Inherent Skills had no block at all** — added (Crit Rate+8%/HP%+12%; Hark the
    Dust/Trace the Vestige as inert utility, no DPS component).
 
-**2026-09-12 update (second, prydwen.gg snapshot)**: filled in `CHARACTER_DATA['Jingran']`'s previously
+**2026-09-12 update (second, build-guide snapshot)**: filled in `CHARACTER_DATA['Jingran']`'s previously
 empty `bestEchoes`/`teams`/`weaponAlts` from this section's own Build/Gameplay-and-Teams content above
 (his own dump is authoritative for his own teams field), added `CHARACTER_ROTATIONS['Jingran']` (both
 the Standard S0-S1 and S2+ rotations, now published above under Gameplay and Teams), and added
@@ -356,7 +356,7 @@ closing Meta-position paragraph explicitly states Jingran is "HP-CONVERTING... n
 Cartethyia — his multipliers apply to ATK, with HP only feeding the ATK-conversion." Every
 `damage.basis` in `jingran.blocks.js` (17 blocks) was `'HP'`, and `CHARACTER_DATA['Jingran'].statScaling`
 was `'HP'` in `characters.js` — both modeled him like Cartethyia's real HP-scaling kit, which this
-source now explicitly rules out. Neither the nanoka.cc snapshot above nor his real kit text ever
+source now explicitly rules out. Neither the first snapshot above nor his real kit text ever
 actually stated an HP damage basis (his "Yang Changes, Yin Unites" passive was always described as a
 flat-ATK-from-HP *conversion*, not a raw-HP damage scale) — `engine/characterBlocks/CONTRIBUTING.md`'s
 own basis-selection rule ("Only use 'HP'/'DEF' when the character's own kit text says explicitly the
@@ -369,7 +369,7 @@ addition). Because damage.basis wasn't touched anywhere else in this file's `## 
 number in the raw kit data changed, only which stat it multiplies against in the engine), it was left
 as-is rather than rewritten.
 
-No `CHARACTER_ROTATIONS['Jingran']` entry exists in this app yet as of the FIRST (nanoka.cc) pass: that
+No `CHARACTER_ROTATIONS['Jingran']` entry exists in this app yet as of the FIRST (snapshot) pass: that
 snapshot's own guide text had no rotation/combo/team section written yet (a newly-released character) —
-not fabricated. This has since been resolved by the second (prydwen.gg) pass above, which supplies a
+not fabricated. This has since been resolved by the second (build-guide) pass above, which supplies a
 real, sourced Standard and S2+ rotation.

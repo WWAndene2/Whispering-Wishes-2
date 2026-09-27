@@ -32,11 +32,11 @@ export const DOT_BASE_FACTOR = 1.25078; // Base damage coefficient for DOT ticks
 // DOT mechanic constants (extracted from inline magic numbers)
 export const FRAZZLE_TICK_INTERVAL = 3;    // Frazzle ticks every 3s, consumes 1 stack
 export const FRAZZLE_ICD_PER_SOURCE = 2.5; // Application ICD per source (seconds)
-// the wiki "Negative Status" page: DMG ticks every 3s for both Frazzle and Erosion — the 15s figure
+// the reference "Negative Status" page: DMG ticks every 3s for both Frazzle and Erosion — the 15s figure
 // for Erosion is how often its stacks decay, not the tick rate (was wrongly used as tick interval).
 export const EROSION_TICK_INTERVAL = 3;    // Erosion ticks every 3s, does NOT consume stacks
 export const EROSION_DURATION = 15;        // Erosion debuff duration (seconds)
-// Stack multiplier tables straight from the the wiki "Negative Status" page (Base DMG = Level Mult ×
+// Stack multiplier tables straight from the reference "Negative Status" page (Base DMG = Level Mult ×
 // 1.25078 × Stack Mult). These are non-linear, not a flat per-stack multiplier — index = stack count.
 export const FRAZZLE_STACK_TABLE = [0, 0.240, 0.4355, 0.6298, 0.8251, 1.020, 1.216, 1.409, 1.605, 1.800, 1.995];
 export const EROSION_STACK_TABLE = [0, 0.360, 0.899, 1.799, 2.698, 3.597, 4.497]; // stacks >3 need Aero Rover Outro
@@ -45,12 +45,12 @@ export const EROSION_STACK_TABLE = [0, 0.360, 0.899, 1.799, 2.698, 3.597, 4.497]
 // confirms it explicitly ("Spectro Frazzle... caps at 10 stacks"; "2 Skills + 1 Ultimate caps it at 10
 // stacks"). FRAZZLE_STACK_TABLE.length-1 = 10, matching that citation exactly. EROSION_STACK_TABLE has
 // no equally explicit "caps at N" quote in hand, but its own 7 entries (0-6) are the full real range
-// the wiki source publishes — treating anything past it as guessable via extrapolation would be
+// the reference source publishes — treating anything past it as guessable via extrapolation would be
 // inventing a number no source states, not reading one.
 export const FRAZZLE_MAX_STACKS = FRAZZLE_STACK_TABLE.length - 1; // 10
 export const EROSION_MAX_STACKS = EROSION_STACK_TABLE.length - 1; // 6
 // Clamps at the table's own real, sourced max entry instead of guessing beyond it (2026-09-08 fix —
-// this used to linearly EXTRAPOLATE past the wiki's own published range using the slope of the last two
+// this used to linearly EXTRAPOLATE past the reference published range using the slope of the last two
 // entries, silently producing a bigger number than the real, stated 10-stack Frazzle cap allows for any
 // stack count that exceeded it. There is no real stack 11+ for Frazzle, or stack 7+ for Erosion, to
 // extrapolate a value for — the table's last real entry IS the real ceiling, not a fallback baseline).
@@ -97,7 +97,7 @@ export function calcErosionDmg(members, rotTime, defMult, resMult) {
   if (!appliers.length) return { dmg: 0, active: false };
   // EROSION_MAX_STACKS clamp (2026-09-08) — see calcFrazzleDmg's identical comment above. baseStacks
   // uses MAX not sum (erosion's own real "doesn't stack additively across appliers" rule), so this
-  // mainly guards a future applier whose sourced value exceeds the wiki's own published 0-6 range.
+  // mainly guards a future applier whose sourced value exceeds the reference published 0-6 range.
   const baseStacks = Math.min(appliers.reduce((s, m) => {
     const ed = CHAR_BUFF_TABLE[m.name]?.debuffs?.find(db => db.stat === 'erosion');
     return Math.max(s, ed?.value || 3);
@@ -109,7 +109,7 @@ export function calcErosionDmg(members, rotTime, defMult, resMult) {
   return { dmg: total * uptime * defMult * resMult, active: true };
 }
 
-// Fusion Burst's stack-DMG table isn't published on the wiki (only Frazzle/Erosion are); this stays
+// Fusion Burst's stack-DMG table isn't published on the reference (only Frazzle/Erosion are); this stays
 // a rough approximation rather than a verified lookup like the two above.
 //
 // excludeNames (added 2026-09-02, the engine-architecture history (git log) item 9 — Aemeath's mode-exclusivity fix):
@@ -127,8 +127,8 @@ export function calcFusionBurstDmg(members, rotTime, defMult, resMult, excludeNa
   return { dmg: dmg * explosions * defMult * resMult, active: true };
 }
 
-// Electro Flare's DMG-per-stack table also isn't published (wiki only documents its old ATK-reduction
-// values); stack halving on tick is confirmed by the wiki, the tick interval/mult stay approximations.
+// Electro Flare's DMG-per-stack table also isn't published (the reference only documents its old ATK-reduction
+// values); stack halving on tick is confirmed by the reference, the tick interval/mult stay approximations.
 export function calcElectroFlareDmg(members, rotTime, defMult, resMult) {
   const has = members.some(m => CHAR_BUFF_TABLE[m.name]?.electroFlare);
   if (!has) return { dmg: 0, active: false };

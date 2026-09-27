@@ -1,4 +1,4 @@
-# Lucilla — Prydwen.gg Build Guide (cleaned dump)
+# Lucilla — Build Guide (cleaned dump)
 
 Last updated on source: 20/August/2026. Last review update: Patch 3.4. Last major build/calcs update: Patch 3.4.
 

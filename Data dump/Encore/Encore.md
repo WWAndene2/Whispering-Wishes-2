@@ -1,7 +1,7 @@
 # Encore
 
-Source: a real prydwen.gg .mht browser snapshot (confirmed genuine via its own
-`Snapshot-Content-Location: https://www.prydwen.gg/wuthering-waves/characters/encore` header),
+Source: a real .mht browser snapshot (confirmed genuine via its own
+`Snapshot-Content-Location` header),
 last updated 20/August/2026. 5★ Fusion Rectifier Main DPS.
 
 ## Kit
@@ -251,9 +251,9 @@ correctly audited for everything except one node (below).
    (`libDmg: 40`) and the engine block (`stat: 'libDmg'`).
 
 **Pre-existing discrepancy reconfirmed, not changed**: `RESONANCE_CHAIN_DATA['Encore'].s6` is kept at
-`atkPct: 25` (5 stacks) per an existing code comment citing a "two-source majority" (fandom.com +
-wuthering.gg both say 5 stacks/25%) against Prydwen's own page, which the comment already flagged as
-saying "6 stacks." This fresh Prydwen snapshot independently reconfirms Prydwen's page still states 6
+`atkPct: 25` (5 stacks) per an existing code comment citing a "two-source majority" (two community
+references both say 5 stacks/25%) against the guide's own page, which the comment already flagged as
+saying "6 stacks." This fresh snapshot independently reconfirms the guide page still states 6
 stacks (30%) — the same outlier value already known and deliberately not adopted. Not changed here;
 flagging the reconfirmation for whoever revisits this discrepancy.
 

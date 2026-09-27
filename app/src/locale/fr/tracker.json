@@ -48,7 +48,7 @@
   "sortMostPulled": "Le plus convié",
   "lastAppearance": "Dernier : v{{version}} P{{phase}}",
   "pullsCount": "{{count}} Conviers suivis",
-  "mostPulledSourceNote": "Données d'échantillon communautaire de wuwatracker.com, pas l'ensemble des joueurs",
+  "mostPulledSourceNote": "Données d'échantillon communautaire, pas l'ensemble des joueurs",
   "conveneInfo": {
     "buttonAria": "Informations sur le système de Convier",
     "title": "Système de Convier",

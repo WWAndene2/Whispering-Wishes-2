@@ -6,7 +6,7 @@
 // (Compétence de Résonance, Libération de Résonance, Attaque Basique/Lourde,
 // Outro/Intro, DGT, ATQ, Taux Critique, Dégâts Critiques, Bouclier...).
 // "Rover" is officially "Nomade" in French (confirmed via the French
-// the wiki wiki) -- used here in all flavor text. NOTE: the character's
+// the reference) -- used here in all flavor text. NOTE: the character's
 // in-app *name* (used as the CHARACTER_DATA key, card titles, ownership
 // tracking, etc.) is NOT renamed here -- that would require restructuring
 // how the app keys/display characters and is out of scope for this pass;
@@ -2135,11 +2135,11 @@ export const GENERIC_SKILL_DESC_FR = {
     'Confirmée inutilisée dans sa vraie rotation (passe directement au combat aérien).',
   'Confirmed 2026-09-08 against the dump\'s own "Heavy Attack Damage: 41.36%×5" row (exact match). Do not confuse with the Deathblade Gear row below.':
     "Ne pas confondre avec la ligne Équipement de Lame de Mort ci-dessous.",
-  'Confirmed 2026-08-31 against the wiki Lv.10 "Heavy Attack DMG" row under Phantom Etching. While in Deathblade Gear (11s after Phantom Etching), Heavy Attack deals this boosted value instead of the normal-state row above, and is counted as Resonance Liberation DMG, not Heavy ATK DMG.':
+  'Confirmed 2026-08-31 against the reference Lv.10 "Heavy Attack DMG" row under Phantom Etching. While in Deathblade Gear (11s after Phantom Etching), Heavy Attack deals this boosted value instead of the normal-state row above, and is counted as Resonance Liberation DMG, not Heavy ATK DMG.':
     "En Équipement de Lame de Mort (11 s après Gravure Fantôme), l'Attaque Lourde inflige cette valeur renforcée au lieu de la ligne à l'état normal ci-dessus, et est comptée comme DGT de Libération de Résonance, pas DGT d'Attaque Lourde.",
   'Confirmed 2026-09-08 against the dump\'s own "Dodge Counter Damage: 66.48%×3+85.47%" row (exact match). Do not confuse with the Deathblade Gear row below.':
     "Ne pas confondre avec la ligne Équipement de Lame de Mort ci-dessous.",
-  'Confirmed 2026-08-31 against the wiki Lv.10 "Dodge Counter DMG" row under Phantom Etching. While in Deathblade Gear, Dodge Counter deals this boosted value instead of the normal-state row above, and is counted as Resonance Liberation DMG, not Dodge Counter DMG.':
+  'Confirmed 2026-08-31 against the reference Lv.10 "Dodge Counter DMG" row under Phantom Etching. While in Deathblade Gear, Dodge Counter deals this boosted value instead of the normal-state row above, and is counted as Resonance Liberation DMG, not Dodge Counter DMG.':
     "En Équipement de Lame de Mort, la Contre-attaque d'Esquive inflige cette valeur renforcée au lieu de la ligne à l'état normal ci-dessus, et est comptée comme DGT de Libération de Résonance, pas DGT de Contre-attaque d'Esquive.",
   'Consumes STA for consecutive mid-air shots.': "Consomme de l'Endurance pour des tirs aériens consécutifs.",
   'Plunging attack, consumes STA.': "Attaque plongeante, consomme de l'Endurance.",

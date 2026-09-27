@@ -1,4 +1,4 @@
-# Lynae — Prydwen.gg Build Guide (cleaned dump)
+# Lynae — Build Guide (cleaned dump)
 
 Last updated on source: 20/August/2026. Last review update: Patch 3.0. Last major build/calcs update: Patch 3.0.
 

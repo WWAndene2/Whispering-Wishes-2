@@ -1,7 +1,7 @@
 # Brant
 
-Source: a real prydwen.gg .mht browser snapshot (confirmed genuine via its own
-`Snapshot-Content-Location: https://www.prydwen.gg/wuthering-waves/characters/brant` header), last
+Source: a real .mht browser snapshot (confirmed genuine via its own
+`Snapshot-Content-Location` header), last
 updated 20/August/2026. 5★ Fusion Sword Hybrid (Main DPS/Support).
 
 ## Kit
@@ -206,7 +206,7 @@ Heavy 0 / Outro 0. Rotation time 8.2s. S0: 634,179 DMG (77,338 DPS).
 
 No dump file existed before this pass — created. SKILL_MULTIPLIERS/RESONANCE_CHAIN_DATA/CHAR_BUFF_TABLE
 values already matched this source exactly (previously carefully audited against
-wutheringwaves.fandom.com — including the already-logged S2 Outro-proc gap, matching this source
+the reference — including the already-logged S2 Outro-proc gap, matching this source
 word-for-word: 440% ATK, Basic Attack DMG type, max 1/sec, max 2 explosions).
 
 **Real bugs found and fixed**:

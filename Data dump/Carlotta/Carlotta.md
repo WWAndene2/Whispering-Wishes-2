@@ -1,6 +1,6 @@
 # Carlotta
 
-Source: Prydwen.gg — Best Build Guide, last updated 20/August/2026 (pasted text, priority source per
+Source: Best Build Guide, last updated 20/August/2026 (pasted text, priority source per
 standing rule). 5★ Glacio Pistols Main DPS, Montelli family.
 
 ## Kit
@@ -200,8 +200,8 @@ category assignment for those blocks reflects it correctly (see App Data Compari
 ## App Data Comparison (vs. `app/src/data/characters.js` + `carlotta.blocks.js`)
 
 All SKILL_MULTIPLIERS, RESONANCE_CHAIN_DATA, CHAR_BUFF_TABLE, and CHARACTER_ROTATIONS entries for
-Carlotta already matched this pasted Prydwen text exactly (previously audited 2026-08-31 against
-wutheringwaves.fandom.com and re-confirmed here — no value discrepancies found this pass).
+Carlotta already matched this pasted build-guide text exactly (previously audited 2026-08-31 against
+the reference and re-confirmed here — no value discrepancies found this pass).
 
 **Real bug found and fixed**: `carlotta.chain.s2` (Fatal Finale DMG Multiplier +126%) was a
 `kind:'buff'` block with `trigger:{type:'cast', on:'Liberation:Fatal Finale'}` and no

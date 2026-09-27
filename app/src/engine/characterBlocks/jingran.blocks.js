@@ -2,7 +2,7 @@
 // WHISPERING WISHES — engine/characterBlocks/jingran.blocks.js
 // [CHARACTER · JINGRAN] Jingran's TriggerBlock set.
 //
-// Rewritten 2026-09-07 against a real nanoka.cc .mht browser snapshot (Data dump/Jingran/
+// Rewritten 2026-09-07 against a real .mht browser snapshot (Data dump/Jingran/
 // Jingran.md, confirmed genuine via its own Snapshot-Content-Location header), captured
 // 7/September/2026, showing "Version 3.6 (live)" — his real kit is now released. This
 // replaces the prior 2026-09-06 sparse version (written ~4 days before his real release,
@@ -43,7 +43,7 @@
 // accumulation, exactly as before. This file exists so that gap closes automatically the
 // moment a real rotation is sourced, without another from-scratch rewrite.
 //
-// Basis corrected 2026-09-12 against a fresh prydwen.gg build-guide snapshot (Data dump/Jingran/
+// Basis corrected 2026-09-12 against a fresh build-guide snapshot (Data dump/Jingran/
 // Jingran.md's own closing Meta-position paragraph): every damage.basis below was 'HP' (an
 // unsourced inference modeled on Cartethyia's real HP-scaling kit) — the fresh dump explicitly
 // states Jingran is "HP-CONVERTING (like Brant is with Energy Regen), not HP-scaling like

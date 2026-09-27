@@ -1,9 +1,9 @@
-# Suisui — Prydwen.gg source dump (cleaned)
+# Suisui — build-guide source dump (cleaned)
 
-Source: prydwen.gg/wuthering-waves/characters/suisui
+Source: build-guide page (suisui)
 Last updated (per page): 20/August/2026 · Last review update: Patch 3.5 · Last major build/calcs update: Patch 3.5
 
-5★ Glacio Rectifier, Support (Negative Status buffer/healer). Note: this is a very recently released character — Prydwen's own page states base stats and upgrade material info **are not yet available**.
+5★ Glacio Rectifier, Support (Negative Status buffer/healer). Note: this is a very recently released character — the guide's own page states base stats and upgrade material info **are not yet available**.
 
 ---
 
@@ -124,7 +124,7 @@ Last updated (per page): 20/August/2026 · Last review update: Patch 3.5 · Last
 HP% +12%.
 
 ### Base Stats (Lv.90)
-Not available (Prydwen's own page: "Stats data not available for this character" — very recent release).
+Not available (the guide's own page: "Stats data not available for this character" — very recent release).
 
 ---
 

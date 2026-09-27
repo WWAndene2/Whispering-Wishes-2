@@ -1,6 +1,6 @@
-# The Shorekeeper — Prydwen.gg source dump (cleaned)
+# The Shorekeeper — build-guide source dump (cleaned)
 
-Source: prydwen.gg/wuthering-waves/characters/the-shorekeeper
+Source: build-guide page (the-shorekeeper)
 Last updated (per page): 20/August/2026 · Last review update: Patch 1.4 · Last major build/calcs update: Patch 2.6
 
 5★ Spectro Rectifier, Support (Healer, universal Crit-based buffer).
@@ -206,7 +206,7 @@ Very flexible — usable as the 3rd-slot buffer for any current team. No particu
 
 ## Calculations
 
-### Real Damage-Type Breakdown (Prydwen's own simulated rotation, S0, solo/no buffs)
+### Real Damage-Type Breakdown (the guide's own simulated rotation, S0, solo/no buffs)
 | Type | DMG | Share |
 |---|---|---|
 | Basic ATK | 2,335 | (small, part of 12.4% combined label) |

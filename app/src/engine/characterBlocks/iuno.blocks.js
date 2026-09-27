@@ -177,7 +177,7 @@ export const IUNO_BLOCKS = [
     source: SOURCE, kind: 'buff', section: 'Outro',
     trigger: { type: 'swap-out' },
     // Duration corrected 2026-09-02 from 10s to 14s — verified against two independent live sources
-    // (wuthering.gg, a web search aggregating the source/sportskeeda) while auditing Augusta's
+    // (a community database and a web search) while auditing Augusta's
     // real-world curated recommendation list ("Iuno + Augusta"): "The incoming Resonator gains 50%
     // Heavy Attack DMG Amplification for 14s." No source found for the prior 10s value.
     timing: { duration: 14 },

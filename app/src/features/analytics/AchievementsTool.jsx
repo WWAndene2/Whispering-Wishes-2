@@ -4,7 +4,7 @@
 // Completion filter, Hidden ("Caché") filter, per-achievement checkbox persisted
 // to localStorage.
 //
-// Data source: wuwatracker.com's embedded RSC payload (real per-achievement version
+// Data source: a community tracker's embedded RSC payload (real per-achievement version
 // + hidden flags). See data/achievements.js header for full sourcing notes.
 // ═══════════════════════════════════════════════════════════════════════════════
 

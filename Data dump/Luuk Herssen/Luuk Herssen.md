@@ -1,4 +1,4 @@
-# Luuk Herssen — Prydwen.gg source dump (cleaned)
+# Luuk Herssen — build-guide source dump (cleaned)
 
 5★ Spectro, Gauntlets, Main DPS. Aerial-combat character who builds toward a massive single-hit Ultimate nuke.
 

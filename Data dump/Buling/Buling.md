@@ -1,10 +1,10 @@
 # Buling
 
-Source: a real prydwen.gg .mht browser snapshot (confirmed genuine via its own
-`Snapshot-Content-Location: https://www.prydwen.gg/wuthering-waves/characters/buling` header),
+Source: a real .mht browser snapshot (confirmed genuine via its own
+`Snapshot-Content-Location` header),
 last updated 20/August/2026. 4★ Electro Rectifier Support/Healer. Note: this source's own Calculations
 section explicitly states "damage profile isn't available yet" / "calculations aren't available yet" —
-not a page-load or extraction gap, Prydwen genuinely hasn't published DPS numbers for her.
+not a page-load or extraction gap, the guide genuinely hasn't published DPS numbers for her.
 
 ## Kit
 

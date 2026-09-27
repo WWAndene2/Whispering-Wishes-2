@@ -105,7 +105,7 @@ export const BLOCKS_BY_CHARACTER = {
   'Iuno': IUNO_BLOCKS,
   'Jianxin': JIANXIN_BLOCKS,
   // 'Jingran' now keyed here 2026-09-12: CHARACTER_ROTATIONS['Jingran'] was added against a fresh
-  // prydwen.gg build-guide snapshot (Data dump/Jingran/Jingran.md), closing the gap this comment
+  // build-guide snapshot (Data dump/Jingran/Jingran.md), closing the gap this comment
   // used to document (JINGRAN_BLOCKS existed but calcTeamStats.js's allMembersConverted gate
   // requires both a blocks file AND a CHARACTER_ROTATIONS entry).
   'Jingran': JINGRAN_BLOCKS,

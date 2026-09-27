@@ -1,6 +1,6 @@
-# Chisa — Prydwen.gg source dump (cleaned)
+# Chisa — build-guide source dump (cleaned)
 
-Source: prydwen.gg/wuthering-waves/characters/chisa
+Source: build-guide page (chisa)
 Last updated (per page): 20/August/2026 · Last review update: Patch 2.8 · Last major build/calcs update: Patch 3.5
 
 5★ Havoc Broadblade, Support (Negative Status buffer).
@@ -234,7 +234,7 @@ Swap Cancel windows (beyond Eradication): any non-Sawring-Blitz Basic Attack aft
 
 ## Calculations
 
-### Real Damage-Type Breakdown (Prydwen's own simulated rotation, S0, solo/no buffs)
+### Real Damage-Type Breakdown (the guide's own simulated rotation, S0, solo/no buffs)
 | Type | DMG | Share |
 |---|---|---|
 | Basic ATK | 6,168 | (small) |

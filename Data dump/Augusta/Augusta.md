@@ -1,4 +1,4 @@
-# Augusta — Prydwen.gg source dump (cleaned)
+# Augusta — build-guide source dump (cleaned)
 
 5★ Electro, Broadblade, Main DPS. Heavy-Attack-focused DPS who builds through 3 stacked resources
 (Prowess, Ascendancy, Majesty) toward a devastating time-stopping 2nd Ultimate (Sublime is the Sun),

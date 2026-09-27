@@ -2,7 +2,7 @@
  * Real Fusion Burst stack accumulation and detonation timing (2026-09-06), replacing the old flat
  * "explosions = floor(rotTime/10)" guess with a real, sourced count. Sourcing (see
  * resolveFusionBurstStacks.js's own header for the full citation trail):
- * - Generic passive rule (verified via a direct fetch of wuthering.gg's own Fusion Burst page, not
+ * - Generic passive rule (verified via a direct fetch of a community database's Fusion Burst page, not
  *   the AI-chat text the user separately flagged as unverifiable): stacks accumulate on a target,
  *   auto-detonate and clear at the default cap (10).
  * - Aemeath's own base-kit override (her dump line 83): the same passive detonation fires early at

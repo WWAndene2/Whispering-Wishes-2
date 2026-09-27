@@ -173,7 +173,9 @@ const MAX_IMG_ENTRIES = 250;
 // longer needs to live on it. Both Solaris_3's and Mengzhou's tile pyramids
 // were resliced from the updated masters. Devices need a clean re-fetch of
 // both Solaris_3's and Mengzhou's tiles again.
-const TILE_CACHE_VERSION = 'v15';
+// v16: Lahai Roi's tiles moved to map-tiles/lahai-roi-v2/ (new map); drops
+// every device's cached copy of the previous tiles.
+const TILE_CACHE_VERSION = 'v16';
 const TILE_CACHE = `ww-tiles-${TILE_CACHE_VERSION}`;
 // Match tiles for either:
 //   * a flat sub-map overlay at /<dir>/lossless/{y}/{x}.png

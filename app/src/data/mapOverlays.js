@@ -10,17 +10,20 @@ import { DEFAULT_OVERLAY_DRAFTS } from './mapDefaults.js';
 
 export const OVERLAY_CATALOG = [
   {
-    // Lahai Roi, 2026-09-27 map update. Source: map-tiles/lahai-roi/
+    // Lahai Roi, 2026-09-27 map update. Source: map-tiles/lahai-roi-v2/
     // Lahai_Roi_New.png (11264x10240 = the previous 8192x8192 frame x 11/8,
     // cropped 512 px top and bottom), outlined like the previous version and
     // brought back to the same 8192x8192 frame, so zones, icons and this
     // overlay's placement are unchanged. Pyramid: lossless/{z}/{y}/{x}.png for
     // z in [minZoom, maxZoom], same convention as Mengzhou/Dimmr Plains.
-    // The previous version is kept, unreferenced (disabled), in
-    // map-tiles/lahai-roi(old)/, like solaris_3(old)/.
+    // New folder name (-v2) on purpose: tiles are served from jsDelivr
+    // @main and cached on devices by URL, so a map update must change the
+    // tile URLs or both caches keep serving the previous tiles. The
+    // previous version is archived, not served, in
+    // assets/map-archive/lahai-roi-2026-09-22/.
     id: 'lahai-roi',
     name: 'Lahai Roi',
-    imageUrl: 'map-tiles/lahai-roi/Lahai-roi.webp',
+    imageUrl: 'map-tiles/lahai-roi-v2/Lahai-roi.webp',
     naturalWidth: 8192,
     naturalHeight: 8192,
     pyramid: true,

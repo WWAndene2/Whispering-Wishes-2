@@ -48,15 +48,24 @@ describe('loadIconDrafts', () => {
     expect(loadIconDrafts()).toBe(DEFAULT_ICON_DRAFTS);
     expect(localStorage.getItem(ICON_SEED_VERSION_KEY)).toBe(String(ICON_SEED_VERSION));
   });
-  it('merges the version-2 boss icons into a pre-versioning save, once', () => {
-    const v2 = new Set(ICON_SEED_ADDITIONS[2]);
-    const old = DEFAULT_ICON_DRAFTS.filter(i => !v2.has(i.id)).slice(0, 10);
+  it('merges every later version\'s icons into a pre-versioning save, once', () => {
+    const added = new Set(Object.values(ICON_SEED_ADDITIONS).flat());
+    const old = DEFAULT_ICON_DRAFTS.filter(i => !added.has(i.id)).slice(0, 10);
     localStorage.setItem(ICON_DRAFTS_KEY, JSON.stringify(old));
     const got = loadIconDrafts();
-    expect(got).toHaveLength(10 + 40);
-    expect(JSON.parse(localStorage.getItem(ICON_DRAFTS_KEY))).toHaveLength(50);
+    expect(got).toHaveLength(10 + added.size);
+    expect(JSON.parse(localStorage.getItem(ICON_DRAFTS_KEY))).toHaveLength(10 + added.size);
     localStorage.setItem(ICON_DRAFTS_KEY, JSON.stringify(old)); // player deletes them again
     expect(loadIconDrafts()).toHaveLength(10);
+  });
+  it('a version-3 save receives only the version-4 collectibles', () => {
+    const v4 = new Set(ICON_SEED_ADDITIONS[4]);
+    const v3Save = DEFAULT_ICON_DRAFTS.filter(i => !v4.has(i.id));
+    localStorage.setItem(ICON_DRAFTS_KEY, JSON.stringify(v3Save));
+    localStorage.setItem(ICON_SEED_VERSION_KEY, '3');
+    const got = loadIconDrafts();
+    expect(got).toHaveLength(v3Save.length + v4.size);
+    expect(got.filter(i => v4.has(i.id)).map(i => i.id).sort()).toEqual([...v4].sort());
   });
   it('seed additions all exist in the seed', () => {
     const ids = new Set(DEFAULT_ICON_DRAFTS.map(i => i.id));

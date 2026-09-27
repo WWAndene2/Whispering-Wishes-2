@@ -100,7 +100,8 @@
       "diamond": "Treasure",
       "leaves": "Plant",
       "question": "Unknown"
-    }
+    },
+    "noLinks": "Links aren't allowed in notes."
   },
   "share": {
     "title": "Share map",
@@ -119,13 +120,24 @@
     "preview": "Pins: {{pins}} · Found icons: {{found}}",
     "unknownIgnored": "{{count}} unknown icons ignored",
     "invalidIgnored": "{{count}} invalid entries ignored",
-    "add": "Add to my map",
-    "replace": "Replace my map",
-    "imported": "Imported — pins: {{pins}}, found icons: {{found}}",
     "error": {
       "not-a-code": "This isn't a map share code.",
       "too-large": "This code is too large.",
-      "corrupt": "This code is damaged or incomplete."
-    }
+      "corrupt": "This code is damaged or incomplete.",
+      "link-blocked": "This code contains a link and was blocked."
+    },
+    "added": "Pins added to your map: {{pins}}",
+    "presetsFull": "You already have {{max}} presets — delete one first",
+    "presetDefaultName": "Preset {{n}}",
+    "presetName": "Preset name",
+    "presetNamePlaceholder": "Preset name (optional) — e.g. “Mika's chests”",
+    "saveAsPreset": "Save as preset",
+    "addPins": "Add pins to my map",
+    "presetsLabel": "Presets",
+    "presetOn": "Shown",
+    "presetOff": "Show",
+    "deletePreset": "Delete preset {{name}}",
+    "viewingPreset": "Preset:",
+    "backToMine": "My map"
   }
 }

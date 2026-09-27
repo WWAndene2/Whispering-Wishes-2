@@ -18,7 +18,7 @@ import { useToast } from './useToast.js';
 import { useOfflineTiles } from './useOfflineTiles.js';
 import { OfflineDownloadsPopover } from './OfflineDownloadsPopover.jsx';
 import { MapSharePopover, shareCodeText } from './MapSharePopover.jsx';
-import { encodeMapShare } from './mapShareCode.js';
+import { encodeMapShare, containsLink } from './mapShareCode.js';
 import { ZonesPopover } from './ZonesPopover.jsx';
 import { IconFiltersPopover } from './IconFiltersPopover.jsx';
 import { ReferenceImagePopover } from './ReferenceImagePopover.jsx';
@@ -290,7 +290,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   // Icon ids the player marked as found. Persisted in ww-map-found, which is
   // one of core/storageKeys.js's exportable keys, so it rides along with the
   // JSON export and the Google cloud backup/restore (sync across devices).
-  const [foundIds, setFoundIds] = useState(() => {
+  const [myFoundIds, setFoundIds] = useState(() => {
     try { const v = JSON.parse(localStorage.getItem('ww-map-found') || '[]'); return new Set(Array.isArray(v) ? v : []); } catch { return new Set(); }
   });
   const toggleFound = useCallback((id) => {
@@ -313,7 +313,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   // Player-placed markers with an optional note: { id, marker, x, y, floor,
   // note } in native-zoom pixel coords like icon drafts. Persisted in
   // ww-map-pins, an exportable key (cloud backup / restore / export).
-  const [pins, setPins] = useState(() => {
+  const [myPins, setPins] = useState(() => {
     try { const v = JSON.parse(localStorage.getItem('ww-map-pins') || '[]'); return Array.isArray(v) ? v : []; } catch { return []; }
   });
   const savePins = useCallback((update) => setPins(prev => {
@@ -321,11 +321,42 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     try { localStorage.setItem('ww-map-pins', JSON.stringify(next)); } catch {}
     return next;
   }), []);
+
   const [pinPlacing, setPinPlacing] = useState(false);   // next map tap drops a pin
   const [pinEditor, setPinEditor] = useState(null);      // pin being created / edited
   const [pinCardId, setPinCardId] = useState(null);      // pin whose card is open
+
+  // ── Presets (imported share codes) ─────────────────────────────────────
+  // An imported code never touches the player's own map: it is stored as a
+  // named preset ({ id, name, createdAt, pins, foundIds }) in ww-map-presets.
+  // Activating one shows its pins and found state instead of the player's
+  // own (read-only); deactivating returns to the player's own map.
+  const MAX_PRESETS = 20;
+  const [presets, setPresets] = useState(() => {
+    try { const v = JSON.parse(localStorage.getItem('ww-map-presets') || '[]'); return Array.isArray(v) ? v : []; } catch { return []; }
+  });
+  const savePresets = useCallback((update) => setPresets(prev => {
+    const next = update(prev);
+    try { localStorage.setItem('ww-map-presets', JSON.stringify(next)); } catch {}
+    return next;
+  }), []);
+  const [activePresetId, setActivePresetId] = useState(() => { try { return localStorage.getItem('ww-map-active-preset') || null; } catch { return null; } });
+  const activatePreset = useCallback((id) => {
+    setActivePresetId(id);
+    try { if (id) localStorage.setItem('ww-map-active-preset', id); else localStorage.removeItem('ww-map-active-preset'); } catch {}
+    setPinCardId(null);
+    setIconCardId(null);
+    setPinEditor(null);
+    setPinPlacing(false);
+  }, []);
+  const activePreset = useMemo(() => presets.find(p => p.id === activePresetId) || null, [presets, activePresetId]);
+  const presetFoundIds = useMemo(() => (activePreset ? new Set(activePreset.foundIds) : null), [activePreset]);
+  // What the map shows: the active preset, else the player's own data.
+  const pins = activePreset ? activePreset.pins : myPins;
+  const foundIds = presetFoundIds || myFoundIds;
+
   const commitPinEditor = useCallback(() => {
-    if (!pinEditor) return;
+    if (!pinEditor || containsLink(pinEditor.note)) return;
     const { isNew, ...rest } = pinEditor; // isNew is editor-only state
     const pin = { ...rest, note: (rest.note || '').trim() };
     savePins(prev => (prev.some(p => p.id === pin.id) ? prev.map(p => (p.id === pin.id ? pin : p)) : [...prev, pin]));
@@ -334,23 +365,29 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   }, [pinEditor, savePins]);
   // Share panel (header button) and applying an imported share code.
   const [shareOpen, setShareOpen] = useState(false);
-  const importShare = useCallback(({ pins: incoming, foundIds: incomingFound, mode }) => {
+  // mode 'preset': saved as a new preset (own map untouched) and activated.
+  // mode 'add': the pins (not the found list) are merged into the player's
+  // own pins, skipping ones already there.
+  const importShare = useCallback(({ pins: incoming, foundIds: incomingFound, mode, name }) => {
     const fresh = incoming.map(p => ({ ...p, id: `pin-${generateUniqueId()}` }));
-    savePins(prev => {
-      if (mode === 'replace') return fresh;
-      const seen = new Set(prev.map(p => `${p.marker}|${p.x}|${p.y}`));
-      return [...prev, ...fresh.filter(p => !seen.has(`${p.marker}|${p.x}|${p.y}`))];
-    });
-    if (mode === 'replace' || incomingFound.length) {
-      setFoundIds(prev => {
-        const next = mode === 'replace' ? new Set(incomingFound) : new Set([...prev, ...incomingFound]);
-        try { localStorage.setItem('ww-map-found', JSON.stringify([...next])); } catch {}
-        return next;
+    if (mode === 'add') {
+      savePins(prev => {
+        const seen = new Set(prev.map(p => `${p.marker}|${p.x}|${p.y}`));
+        return [...prev, ...fresh.filter(p => !seen.has(`${p.marker}|${p.x}|${p.y}`))];
       });
+      showToast(t('map.share.added', { pins: incoming.length }));
+    } else {
+      if (presets.length >= MAX_PRESETS) { showToast(t('map.share.presetsFull', { max: MAX_PRESETS })); return; }
+      const preset = { id: `preset-${generateUniqueId()}`, name: (name || '').trim().slice(0, 32) || t('map.share.presetDefaultName', { n: presets.length + 1 }), createdAt: Date.now(), pins: fresh, foundIds: incomingFound };
+      savePresets(prev => [...prev, preset]);
+      activatePreset(preset.id); // the preset banner confirms it
     }
     setShareOpen(false);
-    showToast(t('map.share.imported', { pins: incoming.length, found: incomingFound.length }));
-  }, [savePins]);
+  }, [savePins, savePresets, activatePreset, presets.length]);
+  const deletePreset = useCallback((id) => {
+    savePresets(prev => prev.filter(p => p.id !== id));
+    if (id === activePresetId) activatePreset(null);
+  }, [savePresets, activePresetId, activatePreset]);
   // Opening any other header popover closes the share panel.
   useEffect(() => {
     if (zonesOpen || filtersOpen || downloadsOpen || refImageOpen || searchOpen) setShareOpen(false);
@@ -3491,7 +3528,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   // personal pin there (same gesture as Google Maps); on a pin it opens the
   // pin's editor.
   useEffect(() => {
-    if (authorMode || !mapReady) return;
+    if (authorMode || !mapReady || activePresetId) return; // presets are read-only
     const map = mapRef.current;
     if (!map) return;
     const container = map.getContainer();
@@ -3533,7 +3570,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       container.removeEventListener('pointerleave', cancel);
       map.off('zoomstart movestart', cancel);
     };
-  }, [authorMode, mapReady, pinAtPoint, viewFloor]);
+  }, [authorMode, mapReady, pinAtPoint, viewFloor, activePresetId]);
   const undoDeleteIcon = useCallback(() => {
     if (!deletedIcon) return;
     setIconDrafts((prev) => {
@@ -4718,7 +4755,15 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         .map-share-actions { display: flex; gap: var(--space-sm, 8px); }
         .map-share-actions .kuro-btn { flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
         .map-share-error { color: #f87171; }
-        html.left-handed .map-share-actions { flex-direction: row-reverse; }
+        .map-preset-row { display: flex; align-items: center; gap: var(--space-sm, 8px); padding: 4px 8px; border-radius: 8px; border: 1px solid transparent; }
+        .map-preset-row.is-active { border-color: rgba(var(--color-gold), 0.45); }
+        .map-preset-meta { flex: 1 1 auto; min-width: 0; }
+        .map-preset-meta .hint { font-size: 12px; }
+        .map-share-actions.is-stacked { flex-direction: column; }
+        .map-share-name { font-family: inherit; height: 32px; }
+        .map-preset-name { font-size: 14px; color: var(--text-primary, #fff); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        html.left-handed .map-preset-row { flex-direction: row-reverse; text-align: right; }
+        html.left-handed .map-share-actions:not(.is-stacked) { flex-direction: row-reverse; }
         html.left-handed .map-icon-card { flex-direction: row-reverse; }
         html.left-handed .map-icon-card-text { text-align: right; }
         html.left-handed .map-pin-editor { flex-direction: row; }
@@ -5155,7 +5200,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                     >
                       <MapIcon size={14} />
                     </button>
-                    {!authorMode && (
+                    {!authorMode && !activePreset && (
                       <button
                         type="button"
                         className={`kuro-btn kuro-btn-sm kuro-btn-icon ${pinPlacing ? 'is-active' : ''}`}
@@ -5269,12 +5314,23 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
               <MapSharePopover
                 top={headerHeight + 8}
                 maxHeight={popoverMaxHeight}
-                pins={pins}
-                foundIds={foundIds}
+                pins={myPins}
+                foundIds={myFoundIds}
                 knownIconIds={knownIconIds}
+                presets={presets}
+                activePresetId={activePreset ? activePreset.id : null}
                 onImport={importShare}
+                onActivatePreset={activatePreset}
+                onDeletePreset={deletePreset}
                 onClose={() => setShareOpen(false)}
               />
+            )}
+
+            {activePreset && !authorMode && !shareOpen && (
+              <div className="icon-undo-bar map-preset-bar" role="status" style={{ top: `${headerHeight + 8}px` }} onClick={(e) => e.stopPropagation()}>
+                <span>{t('map.share.viewingPreset')} <b>{activePreset.name}</b></span>
+                <button type="button" className="kuro-btn kuro-btn-sm is-active" onClick={() => activatePreset(null)}>{t('map.share.backToMine')}</button>
+              </div>
             )}
 
             {toast && <div className="zone-author-toast" role="status">{toast}</div>}
@@ -5295,10 +5351,10 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                   <img className="map-pin-thumb" src={getPinImageUrl(pin.marker)} alt="" />
                   <div className="map-icon-card-text">
                     <div className="map-icon-card-name">{pin.note || t(`map.pins.marker.${pin.marker}`)}</div>
-                    <div className="map-icon-card-facts">{t('map.pins.title')}{pin.floor ? ` · ${t('map.card.floor', { floor: pin.floor })}` : ''}</div>
+                    <div className="map-icon-card-facts">{activePreset ? activePreset.name : t('map.pins.title')}{pin.floor ? ` · ${t('map.card.floor', { floor: pin.floor })}` : ''}</div>
                   </div>
                   <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => sharePin(pin)} aria-label={t('map.share.sharePin')} title={t('map.share.sharePin')}><Share2 size={14} /></button>
-                  <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => setPinEditor({ ...pin })}>{t('map.pins.edit')}</button>
+                  {!activePreset && <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => setPinEditor({ ...pin })}>{t('map.pins.edit')}</button>}
                   <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => setPinCardId(null)} aria-label={t('map.search.close')}><X size={14} /></button>
                 </div>
               );
@@ -5331,7 +5387,9 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                   placeholder={t('map.pins.notePlaceholder')}
                   aria-label={t('map.pins.note')}
                   onChange={(e) => { const v = e.target.value; setPinEditor(ed => ({ ...ed, note: v })); }}
+                  aria-invalid={containsLink(pinEditor.note)}
                 />
+                {containsLink(pinEditor.note) && <div className="hint map-share-error" role="alert">{t('map.pins.noLinks')}</div>}
                 <div className="map-pin-editor-actions">
                   {!pinEditor.isNew && (
                     <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => deletePin(pinEditor.id)}>
@@ -5340,7 +5398,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                   )}
                   <span className="map-pin-editor-spacer" />
                   <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => setPinEditor(null)}>{t('map.pins.cancel')}</button>
-                  <button type="submit" className="kuro-btn kuro-btn-sm is-active">{t('map.pins.save')}</button>
+                  <button type="submit" className="kuro-btn kuro-btn-sm is-active" disabled={containsLink(pinEditor.note)}>{t('map.pins.save')}</button>
                 </div>
               </form>
             )}
@@ -5362,7 +5420,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                     {facts.length > 0 && <div className="map-icon-card-facts">{facts.join(' · ')}</div>}
                     <div className="map-icon-card-zone">{zonePath.join(' › ') || '—'}{ic.floor ? ` · ${t('map.card.floor', { floor: ic.floor })}` : ''}</div>
                   </div>
-                  <button type="button" className={`kuro-btn kuro-btn-sm ${found ? 'is-active' : ''}`} onClick={() => toggleFound(ic.id)} aria-pressed={found}>
+                  <button type="button" className={`kuro-btn kuro-btn-sm ${found ? 'is-active' : ''}`} onClick={() => toggleFound(ic.id)} aria-pressed={found} disabled={!!activePreset}>
                     {found ? `✓ ${t('map.card.found')}` : t('map.card.markFound')}
                   </button>
                   <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => setIconCardId(null)} aria-label={t('map.search.close')}><X size={14} /></button>

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { encodeMapShare, decodeMapShare, sanitizeNote, SHARE_PREFIX } from '../features/map/mapShareCode.js';
+import { encodeMapShare, decodeMapShare, sanitizeNote, containsLink, SHARE_PREFIX } from '../features/map/mapShareCode.js';
 
 const pin = (o = {}) => ({ marker: 'star', x: 3000, y: 8000, floor: null, note: 'Chest', ...o });
 
@@ -57,5 +57,25 @@ describe('map share codes', () => {
     expect(sanitizeNote('<img src=x onerror=alert(1)>')).toBe('<img src=x onerror=alert(1)>'); // rendered as text, never HTML
     expect(sanitizeNote('x'.repeat(200))).toHaveLength(80);
     expect(sanitizeNote(null)).toBe('');
+  });
+
+  it('detects links in any common disguise', () => {
+    for (const s of ['https://x.y', 'go to scam-site.com', 'discord.gg/abc', 'bit.ly/x', 't.me/scam', 'www . evil . com',
+      'scam-site dot com', 'scam-site(.)com', 'ｗｗｗ．ｅｖｉｌ．ｃｏｍ', 'mail me a@b.fr', 'javascript:alert(1)']) {
+      expect(containsLink(s), s).toBe(true);
+    }
+  });
+
+  it('leaves ordinary notes and in-game names alone', () => {
+    for (const s of ['Mt.Firmament chest', 'Lv.90 boss', 'Echo 3.5 rate', 'Jinzhou.. then left', 'e.g. go north',
+      'Go north. It is behind', 'Wait. Me first', 'Boss. In cave', '3:30 respawn', 'Note: use grapple']) {
+      expect(containsLink(s), s).toBe(false);
+    }
+  });
+
+  it('refuses a whole code when any note holds a link, and never encodes one', async () => {
+    await expect(decodeMapShare(await codeOf({ p: [['star', 1, 2, 0, 'ok'], ['star', 3, 4, 0, 'free astrite at evil.com']] }))).rejects.toThrow('link-blocked');
+    const r = await decodeMapShare(await encodeMapShare({ pins: [pin({ note: 'see discord.gg/x' })] }));
+    expect(r.pins[0].note).toBe('');
   });
 });

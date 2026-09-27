@@ -31,11 +31,13 @@ export const AUX_EXPORTABLE_KEYS = {
   calendarNotes:    'ww-calendar-notes',
   mapFound:         'ww-map-found',       // map icons marked as found (array of icon ids)
   mapPins:          'ww-map-pins',        // personal map pins (array of { id, marker, x, y, floor, note })
+  mapPresets:       'ww-map-presets',     // imported share codes kept as presets (array of { id, name, createdAt, pins, foundIds })
 };
 
 // ── Auxiliary keys: NOT exported, but cleared on reset ──
 // These are local preferences or state that don't transfer between devices
 export const AUX_INTERNAL_KEYS = [
+  'ww-map-active-preset',
   'ww-equipment-presets',
   'ww-owned-chars',
   'ww-manual-counts',

@@ -1,14 +1,16 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 // WHISPERING WISHES — features/map/MapSharePopover.jsx
 // Header-anchored "Share map" panel. Share: builds a WWMAP1 text code from
-// the player's pins (and optionally their found icons) and hands it to the
-// system share sheet, or copies it. Import: a pasted code is decoded as
-// untrusted data (mapShareCode.js), previewed, then added to or replaces the
-// player's map. Pure UI: MapTab owns the pins / found state it applies to.
+// the player's own pins (and optionally their found icons) and hands it to
+// the system share sheet, or copies it. Import: a pasted code is decoded as
+// untrusted data (mapShareCode.js), previewed, then saved as a named preset
+// (the player's own map is never overwritten) or its pins added to the
+// player's own. Presets: switch one on to view it, off to return to your own
+// map, or delete it. Pure UI: MapTab owns the state.
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import React, { useEffect, useState } from 'react';
-import { Share2, Download, X } from 'lucide-react';
+import { Share2, Download, X, Layers, Trash2 } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { encodeMapShare, decodeMapShare } from './mapShareCode.js';
 import { t } from '../../utils/i18n.js';
@@ -26,12 +28,13 @@ export async function shareCodeText(text, title) {
   try { await navigator.clipboard.writeText(text); return 'copied'; } catch { return 'failed'; }
 }
 
-export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, knownIconIds, onImport, onClose }) {
+export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, knownIconIds, presets, activePresetId, onImport, onActivatePreset, onDeletePreset, onClose }) {
   const [withFound, setWithFound] = useState(false);
   const [code, setCode] = useState('');
   const [status, setStatus] = useState('');
   const [input, setInput] = useState('');
   const [preview, setPreview] = useState(null); // { pins, foundIds, dropped, unknown } | { error }
+  const [presetName, setPresetName] = useState('');
 
   // Decode as the player types / pastes (a code is small; no debounce needed
   // beyond ignoring stale results).
@@ -54,9 +57,10 @@ export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, know
 
   const apply = (mode) => {
     if (!preview || preview.error) return;
-    onImport({ pins: preview.pins, foundIds: preview.foundIds.filter(id => knownIconIds.has(id)), mode });
+    onImport({ pins: preview.pins, foundIds: preview.foundIds.filter(id => knownIconIds.has(id)), mode, name: presetName });
     setInput('');
     setPreview(null);
+    setPresetName('');
   };
 
   const empty = pins.length === 0 && !(withFound && foundIds.size);
@@ -114,15 +118,50 @@ export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, know
                   {preview.unknown > 0 && ` · ${t('map.share.unknownIgnored', { count: preview.unknown })}`}
                   {preview.dropped > 0 && ` · ${t('map.share.invalidIgnored', { count: preview.dropped })}`}
                 </div>
-                <div className="map-share-actions">
-                  <button type="button" className="kuro-btn kuro-btn-sm is-active" onClick={() => apply('add')}>
-                    <Download size={14} /> {t('map.share.add')}
+                <input
+                  type="text"
+                  className="map-share-code map-share-name"
+                  value={presetName}
+                  maxLength={32}
+                  placeholder={t('map.share.presetNamePlaceholder')}
+                  aria-label={t('map.share.presetName')}
+                  onChange={(e) => setPresetName(e.target.value)}
+                />
+                <div className="map-share-actions is-stacked">
+                  <button type="button" className="kuro-btn kuro-btn-sm is-active" onClick={() => apply('preset')}>
+                    <Layers size={14} /> {t('map.share.saveAsPreset')}
                   </button>
-                  <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => apply('replace')}>{t('map.share.replace')}</button>
+                  <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => apply('add')} disabled={preview.pins.length === 0}>
+                    <Download size={14} /> {t('map.share.addPins')}
+                  </button>
                 </div>
               </>
             ))}
           </div>
+          {presets.length > 0 && (
+            <div className="map-share-section">
+              <div className="map-share-label">{t('map.share.presetsLabel')}</div>
+              {presets.map(pr => {
+                const on = pr.id === activePresetId;
+                return (
+                  <div key={pr.id} className={`map-preset-row ${on ? 'is-active' : ''}`}>
+                    <div className="map-preset-meta">
+                      <div className="map-preset-name">{pr.name}</div>
+                      <div className="hint">{t('map.share.preview', { pins: pr.pins.length, found: pr.foundIds.length })}</div>
+                    </div>
+                    <button type="button" className={`kuro-btn kuro-btn-sm ${on ? 'is-active' : ''}`} aria-pressed={on}
+                      onClick={() => onActivatePreset(on ? null : pr.id)}>
+                      {on ? t('map.share.presetOn') : t('map.share.presetOff')}
+                    </button>
+                    <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => onDeletePreset(pr.id)}
+                      aria-label={t('map.share.deletePreset', { name: pr.name })} title={t('map.share.deletePreset', { name: pr.name })}>
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </CardBody>
       </Card>
     </div>

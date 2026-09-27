@@ -24,6 +24,33 @@ const ICON_ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
 // of margin on each side; anything beyond that is not a real map position.
 const inBounds = (x, y) => x >= -MAP_W && x <= 2 * MAP_W && y >= -MAP_H && y <= 2 * MAP_H;
 
+// Links are never allowed in notes (editor or share codes): a scheme
+// ("https://", "javascript:"), "www.", an e-mail address, or a bare domain
+// ending in a common TLD ("scam-site.com", "bit.ly/x", "discord.gg/abc").
+// NFKC first folds full-width / stylised look-alikes ("ｗｗｗ．ｃｏｍ") and
+// "dot" / "(.)" / "[.]" spellings count as a dot. Two passes:
+//  1. text as written — every pattern, full TLD list (a real domain has no
+//     space around its dots; "Mt.Firmament" / "Lv.90" match no TLD);
+//  2. spaces around dots removed ("evil . com") — only strong signals, with
+//     TLDs that are not also everyday words, so "Go north. It is…" or
+//     "Wait. Me first" stay allowed.
+const STRONG_TLDS = 'com|net|org|io|gg|ly|xyz|ru|cn|app|dev|info|biz|tk|ml|ga|cf|gq|link|site|online|shop|store|top|club|vip|icu|fr|de|uk|tv|cc|ws|sh|gl|jp|kr|br|eu|ca|au|nl|pl|ch|cz|su|ua|ph|vn|tw|hk|sg|lol|gift|gifts|click|pro|bet|money|cash|pw|lt|lv|ee';
+const WORD_TLDS = 'co|me|to|be|ai|it|es|in|us|at|id|th|my|se|la|st|so|nu|is|im|am|fm|win|live|fun';
+const SCHEME = '(?:[a-z][a-z0-9+.-]*:\\/\\/|\\b(?:javascript|data|vbscript|file|intent|mailto|tel|sms):)';
+const domainRe = (tlds) => `[a-z0-9-]+(?:\\.[a-z0-9-]+)*\\.(?:${tlds})\\b`;
+const LINK_RE_WRITTEN = new RegExp(`${SCHEME}|\\bwww\\.|[a-z0-9._%+-]+@[a-z0-9-]+\\.[a-z]{2,}|${domainRe(`${STRONG_TLDS}|${WORD_TLDS}`)}`, 'i');
+const LINK_RE_SPACED = new RegExp(`\\bwww\\.|${domainRe(STRONG_TLDS)}`, 'i');
+
+export function containsLink(text) {
+  if (typeof text !== 'string' || !text) return false;
+  const folded = text.normalize('NFKC').toLowerCase()
+    .replace(/\s*(?:\(\s*(?:\.|dot)\s*\)|\[\s*(?:\.|dot)\s*\]|\{\s*(?:\.|dot)\s*\})\s*/g, '.')
+    .replace(/\s+dot\s+/g, ' . ')
+    .replace(/。/g, '.');
+  if (LINK_RE_WRITTEN.test(folded)) return true;
+  return LINK_RE_SPACED.test(folded.replace(/\s*\.\s*/g, '.'));
+}
+
 /** Note text as plain, single-line text: no control or bidi-override characters. */
 export function sanitizeNote(note) {
   if (typeof note !== 'string') return '';
@@ -76,7 +103,9 @@ async function inflateCapped(bytes, cap) {
  * (optional) are placed-icon ids.
  */
 export async function encodeMapShare({ pins = [], foundIds = [] }) {
-  const payload = { p: pins.map(p => [p.marker, Math.round(p.x), Math.round(p.y), p.floor || 0, sanitizeNote(p.note)]) };
+  // A note holding a link (from before links were blocked) is left out.
+  const note = (n) => { const s = sanitizeNote(n); return containsLink(s) ? '' : s; };
+  const payload = { p: pins.map(p => [p.marker, Math.round(p.x), Math.round(p.y), p.floor || 0, note(p.note)]) };
   if (foundIds.length) payload.f = [...foundIds];
   const bytes = await deflate(new TextEncoder().encode(JSON.stringify(payload)));
   return SHARE_PREFIX + toBase64Url(bytes);
@@ -85,7 +114,7 @@ export async function encodeMapShare({ pins = [], foundIds = [] }) {
 /**
  * Parses a share code. Resolves to { pins, foundIds, dropped } or rejects
  * with an Error whose message is one of: 'not-a-code', 'too-large',
- * 'corrupt'. `dropped` counts entries discarded as invalid.
+ * 'corrupt', 'link-blocked' (any note holds a link — the whole code is refused). `dropped` counts entries discarded as invalid.
  */
 export async function decodeMapShare(text) {
   const code = String(text || '').replace(/\s+/g, '');
@@ -111,7 +140,9 @@ export async function decodeMapShare(text) {
       && Number.isFinite(x) && Number.isFinite(y) && inBounds(x, y)
       && Number.isInteger(floor) && floor >= 0 && floor <= 20;
     if (!ok) { dropped++; continue; }
-    pins.push({ marker, x: Math.round(x), y: Math.round(y), floor: floor || null, note: sanitizeNote(note) });
+    const clean = sanitizeNote(note);
+    if (containsLink(clean) || containsLink(typeof note === 'string' ? note : '')) throw new Error('link-blocked');
+    pins.push({ marker, x: Math.round(x), y: Math.round(y), floor: floor || null, note: clean });
   }
   if (Array.isArray(data.p) && data.p.length > MAX_PINS) dropped += data.p.length - MAX_PINS;
 

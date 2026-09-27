@@ -100,7 +100,8 @@
       "diamond": "Trésor",
       "leaves": "Plante",
       "question": "Inconnu"
-    }
+    },
+    "noLinks": "Les liens ne sont pas autorisés dans les notes."
   },
   "share": {
     "title": "Partager la carte",
@@ -119,13 +120,24 @@
     "preview": "Repères : {{pins}} · Icônes trouvées : {{found}}",
     "unknownIgnored": "{{count}} icônes inconnues ignorées",
     "invalidIgnored": "{{count}} entrées invalides ignorées",
-    "add": "Ajouter à ma carte",
-    "replace": "Remplacer ma carte",
-    "imported": "Importé — repères : {{pins}}, icônes trouvées : {{found}}",
     "error": {
       "not-a-code": "Ce n'est pas un code de partage de carte.",
       "too-large": "Ce code est trop volumineux.",
-      "corrupt": "Ce code est abîmé ou incomplet."
-    }
+      "corrupt": "Ce code est abîmé ou incomplet.",
+      "link-blocked": "Ce code contient un lien et a été bloqué."
+    },
+    "added": "Repères ajoutés à ta carte : {{pins}}",
+    "presetsFull": "Tu as déjà {{max}} presets — supprimes-en un d'abord",
+    "presetDefaultName": "Preset {{n}}",
+    "presetName": "Nom du preset",
+    "presetNamePlaceholder": "Nom du preset (facultatif) — ex. « Coffres de Mika »",
+    "saveAsPreset": "Enregistrer en preset",
+    "addPins": "Ajouter les repères à ma carte",
+    "presetsLabel": "Presets",
+    "presetOn": "Affiché",
+    "presetOff": "Afficher",
+    "deletePreset": "Supprimer le preset {{name}}",
+    "viewingPreset": "Preset :",
+    "backToMine": "Ma carte"
   }
 }

@@ -220,8 +220,10 @@ export const MAP_ICON_CATALOG = [
     group: 'Trinkets',
     subcategory: 'Unclaimed Rafter Kites',
     // Cut from a native in-game capture (Exploration Progress screen,
-    // assets/map-icon-sources/exploration-progress-capture-6.png): outer
-    // background removed, colours untouched; 65% of the canvas height.
+    // assets/map-icon-sources/exploration-progress-capture-6.png) by
+    // colour-to-alpha against black, like Sonance Casket: Ragunna — the
+    // outer-background method left dark caps on the thin white tips (beak,
+    // wing, tail); 65% of the canvas height and width.
     imageUrl: 'map-icons/Unclaimed-Rafter-Kites.png',
     size: 128,
   },

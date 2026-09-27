@@ -4344,8 +4344,9 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           pointer-events: none;
         }
         .map-header-tap { cursor: pointer; -webkit-tap-highlight-color: transparent; }
-        /* Map title: always pinned left, whatever buttons the header shows
-           (author mode, left-handed mode), so it never shifts and the space
+        /* Map title: always pinned to the outer edge (left; right in
+           left-handed mode, mirrored by kuro.css's html.left-handed rules),
+           whatever buttons the header shows, so it never shifts and the space
            between it and the buttons stays free for future icons. */
         .map-header-tap .kuro-header h3 { flex: 0 1 auto; min-width: 0; justify-content: flex-start; text-align: left; }
 
@@ -4748,12 +4749,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
            Thumb-reach controls move to the left edge: header buttons come
            first (title goes right), header-anchored popovers open from the
            left, and cards / the pin editor put their buttons on the left. */
-        /* The map header is NOT mirrored in left-handed mode: title stays left
-           (see above). Specific enough to beat kuro.css's global
-           html.left-handed .kuro-header:has(...) rules. */
-        html.left-handed .map-header-tap .kuro-header:has(> .kuro-header-action) { flex-direction: row; }
-        html.left-handed .map-header-tap .kuro-header:has(> .kuro-header-action) > h3 { flex-direction: row; text-align: left; }
-        html.left-handed .map-header-tap .kuro-header-action { flex-direction: row; justify-content: flex-end; }
+        html.left-handed .map-header-tap .kuro-header { flex-direction: row-reverse; }
+        html.left-handed .map-header-tap .kuro-header-action { flex-direction: row-reverse; }
         html.left-handed .map-zones-popover,
         html.left-handed .map-filters-popover,
         html.left-handed .map-downloads-popover { right: auto; left: var(--space-md, 12px); }

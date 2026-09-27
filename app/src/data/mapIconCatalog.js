@@ -56,13 +56,26 @@ export const MAP_ICON_CATALOG = [
     size: 256,
   },
   {
+    id: 'viewpoint',
+    name: 'Viewpoint',
+    category: 'Collectible',
+    subcategory: 'Viewpoint',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-2.png): outer
+    // background removed, colours untouched; 65% of the canvas height.
+    imageUrl: 'map-icons/Viewpoint.png',
+    size: 128,
+  },
+  {
     id: 'blobfly',
     name: 'Blobfly',
     category: 'Collectible',
     group: 'Trinkets',
     subcategory: 'Blobfly',
-    // Placeholder image: the empty round frame (no dedicated icon).
-    imageUrl: 'map-icons/frames/round-frame.png',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-2.png): outer
+    // background removed, colours untouched; 65% of the canvas height.
+    imageUrl: 'map-icons/Blobfly.png',
     size: 128,
   },
   {

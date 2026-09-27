@@ -50,6 +50,33 @@ const COLOR_ACTIVE = '#edaf18';  // gold dashed — in-progress polygon
 const SEARCH_FOCUS_SCALE = 1.25;
 const SEARCH_BREATH_MS = 2400;
 
+// Icon categories visible by default; every other category starts hidden the
+// first time it appears (keeps the map light to open once thousands of
+// collectible icons exist). Zone's Area layer is seeded off separately.
+// A category is defaulted only once — tracked in ICON_FILTERS_SEEN_KEY — so
+// the user's later show/hide choice sticks across reloads.
+const DEFAULT_VISIBLE_ICON_CATEGORIES = new Set(['Resonance', 'Zone']);
+const ICON_FILTERS_SEEN_KEY = 'ww-icon-filters-seen-categories';
+function seedDefaultHiddenCategories(offSet, icons) {
+  let seen;
+  try { seen = new Set(JSON.parse(localStorage.getItem(ICON_FILTERS_SEEN_KEY) || '[]')); } catch { seen = new Set(); }
+  let changed = false;
+  for (const ic of icons) {
+    const category = ic.category || getIconCatalogEntry(ic.kind)?.category || 'Uncategorised';
+    if (seen.has(category)) continue;
+    seen.add(category);
+    changed = true;
+    if (!DEFAULT_VISIBLE_ICON_CATEGORIES.has(category)) offSet.add(category);
+  }
+  if (changed) {
+    try {
+      localStorage.setItem(ICON_FILTERS_SEEN_KEY, JSON.stringify([...seen]));
+      localStorage.setItem('ww-icon-filters-off', JSON.stringify([...offSet]));
+    } catch {}
+  }
+  return changed;
+}
+
 function slugify(s) {
   return String(s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || `zone-${Date.now().toString(36)}`;
 }
@@ -223,7 +250,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     // (tracked by ZONE_AREA_SEEDED_KEY) so a later explicit "turn it on"
     // sticks across reloads instead of this default re-adding it forever.
     const ZONE_AREA_SEEDED_KEY = 'ww-icon-filters-zone-area-seeded';
-    if (typeof localStorage === 'undefined') return new Set(['Zone/Area']);
+    if (typeof localStorage === 'undefined') return new Set(['Zone/Area', ...new Set(iconDrafts.map(ic => ic.category || getIconCatalogEntry(ic.kind)?.category).filter(c => c && !DEFAULT_VISIBLE_ICON_CATEGORIES.has(c)))]);
     let set;
     try {
       const raw = localStorage.getItem('ww-icon-filters-off');
@@ -237,8 +264,16 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         localStorage.setItem('ww-icon-filters-off', JSON.stringify([...set]));
       }
     } catch {}
+    seedDefaultHiddenCategories(set, iconDrafts);
     return set;
   });
+  // Categories introduced later (an editor adds a new icon kind) get the same default.
+  useEffect(() => {
+    setIconFiltersOff((prev) => {
+      const next = new Set(prev);
+      return seedDefaultHiddenCategories(next, iconDrafts) ? next : prev;
+    });
+  }, [iconDrafts]);
   const saveIconDrafts = useCallback((next) => {
     setIconDrafts(next);
     try { localStorage.setItem('ww-icon-drafts', JSON.stringify(next)); } catch {}

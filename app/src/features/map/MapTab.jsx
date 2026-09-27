@@ -4573,7 +4573,12 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           flex: 0 1 auto;
         }
         /* Icon of the kind a leaf filter row controls, right after its name. */
-        .map-filters-icon { width: 16px; height: 16px; flex: 0 0 16px; object-fit: contain; }
+        /* 18 px = the row's 18 px line box (12 px text), so the kind icon
+           reads as tall as the name beside it (PerfectSuite 16 + 2). */
+        .map-filters-icon { width: 18px; height: 18px; flex: 0 0 18px; object-fit: contain; }
+        /* Fold arrows stay put: kuro-btn's hover lift sticks after a tap on
+           touch screens and left the just-tapped arrow 2 px off its row. */
+        .map-filters-fold:hover, .map-filters-fold:active { transform: none; }
         .map-filters-popover .kuro-badge {
           font-variant-numeric: tabular-nums;
         }

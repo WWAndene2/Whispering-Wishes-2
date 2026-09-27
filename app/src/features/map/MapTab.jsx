@@ -46,7 +46,9 @@ const AUTHOR_FLAG_KEY = 'ww-zone-author';
 const COLOR_CANON = '#edaf18';   // brand gold — canonical zones from mapZones.js
 const COLOR_DRAFT = '#38bdf8';   // cyan — session drafts
 const COLOR_ACTIVE = '#edaf18';  // gold dashed — in-progress polygon
-const SEARCH_FOCUS_COLOR = '#edaf18'; // brand gold — ring around icons matched by the map search
+// Map search focus: matched icons drawn at 1.25x with a gold glow breathing over 2.4 s.
+const SEARCH_FOCUS_SCALE = 1.25;
+const SEARCH_BREATH_MS = 2400;
 
 function slugify(s) {
   return String(s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || `zone-${Date.now().toString(36)}`;
@@ -257,6 +259,20 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     setIconFiltersOff((prev) => {
       const next = new Set(prev);
       if (next.has(cat)) next.delete(cat); else next.add(cat);
+      try { localStorage.setItem('ww-icon-filters-off', JSON.stringify([...next])); } catch {}
+      return next;
+    });
+  }, []);
+
+  // Hide all (hide=true: every top-level category key off) / Show all
+  // (hide=false: every listed category and subcategory key cleared).
+  const setAllIconFilters = useCallback((keys, hide) => {
+    setIconFiltersOff((prev) => {
+      const next = new Set(prev);
+      for (const k of keys) {
+        if (hide) { if (!k.includes('/')) next.add(k); }
+        else next.delete(k);
+      }
       try { localStorage.setItem('ww-icon-filters-off', JSON.stringify([...next])); } catch {}
       return next;
     });
@@ -2096,8 +2112,10 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       const ICON_BASE_PX = 28;
       const trigger = () => overlayRedrawRef.current();
       // Search focus (MapSearchPopover): focused icons are drawn last (on
-      // top) with a gold ring and bypass the category filters; every other
-      // icon is dimmed out.
+      // top), 1.25x size with a soft glow that slowly "breathes" (size and
+      // glow ease in and out over SEARCH_BREATH_MS), and bypass the category
+      // filters; every other icon is dimmed out.
+      const breath = (Math.sin((performance.now() / SEARCH_BREATH_MS) * Math.PI * 2) + 1) / 2; // 0..1
       const focusIds = searchFocusIds;
       const ordered = focusIds
         ? [...iconDrafts.filter(ic => !focusIds.has(ic.id)), ...iconDrafts.filter(ic => focusIds.has(ic.id))]
@@ -2116,20 +2134,16 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         const img = getIconImage(ic.kind, trigger);
         if (!img || !img.complete || img.naturalWidth === 0) return;
         const pt = map.latLngToContainerPoint(map.unproject([ic.x, ic.y], NATIVE_ZOOM));
-        const size = ICON_BASE_PX * (ic.scale ?? 1);
+        const size = ICON_BASE_PX * (ic.scale ?? 1) * (focused ? SEARCH_FOCUS_SCALE * (1 + 0.04 * breath) : 1);
         const rot = ((ic.rotation || 0) * Math.PI) / 180;
         ctx.save();
         ctx.globalAlpha = (ic.opacity ?? 1) * (focusIds && !focused ? 0.2 : 1);
         ctx.translate(pt.x, pt.y);
         if (focused) {
-          const isStep = ic.id === searchStepIconId;
-          ctx.beginPath();
-          ctx.arc(0, 0, size * (isStep ? 0.84 : 0.64), 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(8, 12, 20, 0.55)';
-          ctx.fill();
-          ctx.lineWidth = isStep ? 3 : 2;
-          ctx.strokeStyle = SEARCH_FOCUS_COLOR;
-          ctx.stroke();
+          // The icon currently reached with the ‹ › stepper glows a little stronger.
+          const strength = ic.id === searchStepIconId ? 1.6 : 1;
+          ctx.shadowColor = `rgba(237, 175, 24, ${(0.35 + 0.25 * breath) * Math.min(1, strength)})`;
+          ctx.shadowBlur = (6 + 4 * breath) * strength;
         }
         if (rot) ctx.rotate(rot);
         ctx.drawImage(img, -size / 2, -size / 2, size, size);
@@ -2141,8 +2155,20 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     map.on('move zoom viewreset zoomend resize', draw);
     draw();
 
+    // Breathing animation: redraw ~30 fps only while a search focus is active.
+    let raf = 0;
+    let last = 0;
+    if (searchFocusIds) {
+      const tick = (now) => {
+        if (now - last >= 33) { last = now; draw(); }
+        raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    }
+
     return () => {
       map.off('move zoom viewreset zoomend resize', draw);
+      if (raf) cancelAnimationFrame(raf);
     };
   }, [overlayDrafts, viewFloor, mapReady, iconDrafts, iconFiltersOff, searchFocusIds, searchStepIconId]);
 
@@ -4608,6 +4634,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                 getIconCatalogEntry={getIconCatalogEntry}
                 iconFiltersOff={iconFiltersOff}
                 toggleIconFilter={toggleIconFilter}
+                setAllIconFilters={setAllIconFilters}
                 l3ZoneCount={l3Zones.length}
                 onClose={() => setFiltersOpen(false)}
               />

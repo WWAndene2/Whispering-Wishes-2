@@ -21,7 +21,9 @@
     "noIconsPlaced": "No icons placed yet. Add icons from the editor panel.",
     "show": "Show {{name}}",
     "hide": "Hide {{name}}",
-    "parentHidden": "Parent category \"{{name}}\" is hidden"
+    "parentHidden": "Parent category \"{{name}}\" is hidden",
+    "hideAll": "Hide all",
+    "showAll": "Show all"
   },
   "referenceImage": {
     "import": "Import image",

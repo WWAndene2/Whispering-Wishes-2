@@ -21,7 +21,9 @@
     "noIconsPlaced": "Aucune icône placée pour le moment. Ajoutez des icônes depuis le panneau d'édition.",
     "show": "Afficher {{name}}",
     "hide": "Masquer {{name}}",
-    "parentHidden": "La catégorie parente « {{name}} » est masquée"
+    "parentHidden": "La catégorie parente « {{name}} » est masquée",
+    "hideAll": "Tout masquer",
+    "showAll": "Tout afficher"
   },
   "referenceImage": {
     "import": "Importer une image",

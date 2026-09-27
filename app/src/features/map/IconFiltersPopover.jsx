@@ -8,6 +8,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import React from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { t } from '../../utils/i18n.js';
 
@@ -40,6 +41,7 @@ export function IconFiltersPopover({
   getIconCatalogEntry,
   iconFiltersOff,
   toggleIconFilter,
+  setAllIconFilters,
   l3ZoneCount = 0,
   onClose,
 }) {
@@ -66,6 +68,10 @@ export function IconFiltersPopover({
     tree.set('Zone', { total: l3ZoneCount, subs: new Map([['Names', l3ZoneCount], ['Area', l3ZoneCount]]) });
   }
   const cats = [...tree.entries()].sort((a, b) => compareCategories(a[0], b[0]));
+  // Every filter key shown in this panel (categories + their subcategories),
+  // for the Hide all / Show all button.
+  const allKeys = cats.flatMap(([cat, entry]) => [cat, ...[...entry.subs.keys()].map(sub => `${cat}/${sub}`)]);
+  const allHidden = cats.length > 0 && cats.every(([cat]) => iconFiltersOff.has(cat));
 
   return (
     <div
@@ -79,12 +85,25 @@ export function IconFiltersPopover({
       <Card>
         <CardHeader
           action={
-            <button
-              type="button"
-              className="kuro-btn kuro-btn-sm kuro-btn-icon"
-              onClick={onClose}
-              aria-label={t('map.wip.close')}
-            >✕</button>
+            <>
+              {cats.length > 0 && (
+                <button
+                  type="button"
+                  className="kuro-btn kuro-btn-sm kuro-btn-icon"
+                  onClick={() => setAllIconFilters(allKeys, !allHidden)}
+                  aria-label={allHidden ? t('map.legend.showAll') : t('map.legend.hideAll')}
+                  title={allHidden ? t('map.legend.showAll') : t('map.legend.hideAll')}
+                >
+                  {allHidden ? <Eye size={14} /> : <EyeOff size={14} />}
+                </button>
+              )}
+              <button
+                type="button"
+                className="kuro-btn kuro-btn-sm kuro-btn-icon"
+                onClick={onClose}
+                aria-label={t('map.wip.close')}
+              >✕</button>
+            </>
           }
         >
           {t('map.header.iconFilters')}

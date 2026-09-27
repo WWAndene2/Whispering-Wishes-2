@@ -64,6 +64,56 @@ export const MAP_ICON_CATALOG = [
   },
 ];
 
+// ── Local specialties ──────────────────────────────────────────────────────
+// Resonator ascension materials picked up by hand on the map (the only kind
+// of item that gets a map icon: enemy drops and farm-instance rewards are
+// obtained from the enemy / instance, not found lying on the map). Filter
+// tree: Collectible › Local Specialty › <item>. Icon = the item's own image
+// (the same file materialData.js uses) on a dark disc in the round frame
+// (map-icons/frames/round-frame.png); images in map-icons/specialty/.
+const LOCAL_SPECIALTIES = [
+  ['afterlife', 'Afterlife'],
+  ['arithmetic-shell', 'Arithmetic Shell'],
+  ['bamboo-iris', 'Bamboo Iris'],
+  ['belle-poppy', 'Belle Poppy'],
+  ['bloodleaf-viburnum', 'Bloodleaf Viburnum'],
+  ['coriolus', 'Coriolus'],
+  ['edelschnee', 'Edelschnee'],
+  ['firecracker-jewelweed', 'Firecracker Jewelweed'],
+  ['gemini-spore', 'Gemini Spore'],
+  ['golden-fleece', 'Golden Fleece'],
+  ['iris', 'Iris'],
+  ['lanternberry', 'Lanternberry'],
+  ['loongs-pearl', 'Loong\'s Pearl'],
+  ['luminous-calendula', 'Luminous Calendula'],
+  ['moss-amber', 'Moss Amber'],
+  ['nova', 'Nova'],
+  ['pavo-plum', 'Pavo Plum'],
+  ['pecok-flower', 'Pecok Flower'],
+  ['rimewisp', 'Rimewisp'],
+  ['seaside-cendrelis', 'Seaside Cendrelis'],
+  ['sliverglow-bloom', 'Sliverglow Bloom'],
+  ['stone-rose', 'Stone Rose'],
+  ['summer-flower', 'Summer Flower'],
+  ['sword-acorus', 'Sword Acorus'],
+  ['terraspawn-fungus', 'Terraspawn Fungus'],
+  ['violet-coral', 'Violet Coral'],
+  ['wintry-bell', 'Wintry Bell'],
+];
+
+for (const [slug, name] of LOCAL_SPECIALTIES) {
+  MAP_ICON_CATALOG.push({
+    id: `specialty-${slug}`,
+    name,
+    category: 'Collectible',
+    group: 'Local Specialty',
+    subcategory: name,
+    imageUrl: `map-icons/specialty/${slug}.png`,
+    size: 128,
+    tags: ['local specialty', 'specialty', 'plant', 'ascension material', 'collectible'],
+  });
+}
+
 // ── Enemies ────────────────────────────────────────────────────────────────
 // Filter tree: Enemy › <class> (Calamity / Overlord / Elite / Common). Class,
 // element and Sonata sets are read from ECHO_DATA (data/echoes.js) — the same

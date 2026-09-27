@@ -81,3 +81,19 @@ describe('author icon picker search (searchIconKinds)', () => {
     expect(names('denia')[0]).toBe('Seed of Illusory Origin');
   });
 });
+
+describe('local specialties', () => {
+  const spec = MAP_ICON_CATALOG.filter(k => k.group === 'Local Specialty');
+  it('has one round-frame icon per ascension specialty, under Collectible', () => {
+    expect(spec.length).toBe(27);
+    for (const k of spec) {
+      expect(k.category).toBe('Collectible');
+      expect(k.subcategory).toBe(k.name);
+      expect(k.imageUrl).toMatch(/^map-icons\/specialty\//);
+    }
+  });
+  it('is found by name and by "specialty"', () => {
+    expect(searchIconKinds(MAP_ICON_CATALOG, 'pecok')[0].name).toBe('Pecok Flower');
+    expect(searchIconKinds(MAP_ICON_CATALOG, 'specialty').length).toBeGreaterThanOrEqual(27);
+  });
+});

@@ -185,8 +185,10 @@ export const MAP_ICON_CATALOG = [
     category: 'Collectible',
     group: 'Trinkets',
     subcategory: 'Unclaimed Rafter Kites',
-    // Placeholder image: the empty round frame (no dedicated icon).
-    imageUrl: 'map-icons/frames/round-frame.png',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-6.png): outer
+    // background removed, colours untouched; 65% of the canvas height.
+    imageUrl: 'map-icons/Unclaimed-Rafter-Kites.png',
     size: 128,
   },
   {
@@ -199,13 +201,39 @@ export const MAP_ICON_CATALOG = [
     size: 128,
   },
   {
-    id: 'tidal-heritage',
-    name: 'Tidal Heritage',
+    id: 'tidal-heritage-blue',
+    name: 'Tidal Heritage (Blue)',
     category: 'Collectible',
     group: 'Chest',
     subcategory: 'Tidal Heritage',
-    // Placeholder image: the empty round frame (no dedicated icon).
-    imageUrl: 'map-icons/frames/round-frame.png',
+    // In-game icon (assets/map-icon-sources/tidal-heritage-blue.png) with
+    // its gradient grey background removed row by row (colour-to-alpha), glow
+    // kept; the solid star is 65% of the canvas height.
+    imageUrl: 'map-icons/Tidal-Heritage-Blue.png',
+    size: 128,
+  },
+  {
+    id: 'tidal-heritage-purple',
+    name: 'Tidal Heritage (Purple)',
+    category: 'Collectible',
+    group: 'Chest',
+    subcategory: 'Tidal Heritage',
+    // In-game icon (assets/map-icon-sources/tidal-heritage-purple.png) with
+    // its gradient grey background removed row by row (colour-to-alpha), glow
+    // kept; the solid star is 65% of the canvas height.
+    imageUrl: 'map-icons/Tidal-Heritage-Purple.png',
+    size: 128,
+  },
+  {
+    id: 'tidal-heritage-gold',
+    name: 'Tidal Heritage (Gold)',
+    category: 'Collectible',
+    group: 'Chest',
+    subcategory: 'Tidal Heritage',
+    // In-game icon (assets/map-icon-sources/tidal-heritage-gold.png) with
+    // its gradient grey background removed row by row (colour-to-alpha), glow
+    // kept; the solid star is 65% of the canvas height.
+    imageUrl: 'map-icons/Tidal-Heritage-Gold.png',
     size: 128,
   },
   {
@@ -226,8 +254,10 @@ export const MAP_ICON_CATALOG = [
     category: 'Collectible',
     group: 'Chest',
     subcategory: 'Treasures of Perilous Enclave',
-    // Placeholder image: the empty round frame (no dedicated icon).
-    imageUrl: 'map-icons/frames/round-frame.png',
+    // Cut from a native in-game capture (Exploration Progress screen,
+    // assets/map-icon-sources/exploration-progress-capture-6.png): outer
+    // background removed, colours untouched; 65% of the canvas height.
+    imageUrl: 'map-icons/Treasures-Of-Perilous-Enclave.png',
     size: 128,
   },
 ];

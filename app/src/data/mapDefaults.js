@@ -95,6 +95,11 @@
 // Sonance Casket icons appended. Delivered to existing players through
 // ICON_SEED_ADDITIONS[5].
 //
+// DEFAULT_ICON_DRAFTS: 2026-09-28T18:34:39Z export — purely additive (zones,
+// overlays and the 631 existing icons unchanged, same order): 12 more
+// Sonance Casket icons appended. Delivered to existing players through
+// ICON_SEED_ADDITIONS[6].
+//
 // DEFAULT_PAINT_STROKES is empty - the 552 strokes from that export (3232
 // points across blur/200, fade/200, blur/113) were baked directly into
 // Solaris_3's master image and its tile pyramid was re-sliced from the
@@ -1284,6 +1289,18 @@ export const DEFAULT_ICON_DRAFTS = [
   { id: 'icon-mulg31l2-6qb', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3506, y: 8960, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
   { id: 'icon-mulg3qjx-686', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3464, y: 8998, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
   { id: 'icon-mulg6u6g-5rh', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3587, y: 9047, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-mull0rsu-4uv', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3605, y: 9103, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-mull1qxn-56h', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3518, y: 9165, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-mull2day-67v', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3524, y: 9237, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-mull34ye-22c', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3689, y: 9246, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-mull3r9s-1w4', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3530, y: 9450, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-mull4lpi-4f6', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3794, y: 9345, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-mull4yfs-58z', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3785, y: 9414, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-mull58vu-7o3', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3729, y: 9377, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-mull5i5x-4yq', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3677, y: 9396, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-mull5u36-62q', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3623, y: 9415, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-mull65r3-38u', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3709, y: 9494, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
+  { id: 'icon-mull6gg6-14y', kind: 'sonance-casket', category: 'Collectible', subcategory: 'Sonance Casket', label: '', x: 3786, y: 9567, zoneId: 'whining-aix-s-mire', floor: null, locked: true, inTree: true },
 ];
 
 export const DEFAULT_PAINT_STROKES = [];
@@ -1483,6 +1500,21 @@ export const ICON_SEED_ADDITIONS = {
     'icon-mulg3qjx-686',
     'icon-mulg6u6g-5rh',
   ],
+  // 2026-09-28T18:34:39Z export: 12 more Sonance Caskets.
+  6: [
+    'icon-mull0rsu-4uv',
+    'icon-mull1qxn-56h',
+    'icon-mull2day-67v',
+    'icon-mull34ye-22c',
+    'icon-mull3r9s-1w4',
+    'icon-mull4lpi-4f6',
+    'icon-mull4yfs-58z',
+    'icon-mull58vu-7o3',
+    'icon-mull5i5x-4yq',
+    'icon-mull5u36-62q',
+    'icon-mull65r3-38u',
+    'icon-mull6gg6-14y',
+  ],
 };
 // Changes to icons already seeded, per version: [id, field, from, to].
 // Applied to a player's saved icon only while it still has `from` (the player
@@ -1507,4 +1539,4 @@ export const ICON_SEED_CHANGES = {
     ['icon-muk3rrt5-4vr', 'floor', null, 0],
   ],
 };
-export const ICON_SEED_VERSION = 5;
+export const ICON_SEED_VERSION = 6;

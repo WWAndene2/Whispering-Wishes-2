@@ -58,14 +58,14 @@ describe('loadIconDrafts', () => {
     localStorage.setItem(ICON_DRAFTS_KEY, JSON.stringify(old)); // player deletes them again
     expect(loadIconDrafts()).toHaveLength(10);
   });
-  it('a version-3 save receives only the version-4 collectibles', () => {
-    const v4 = new Set(ICON_SEED_ADDITIONS[4]);
-    const v3Save = DEFAULT_ICON_DRAFTS.filter(i => !v4.has(i.id));
-    localStorage.setItem(ICON_DRAFTS_KEY, JSON.stringify(v3Save));
-    localStorage.setItem(ICON_SEED_VERSION_KEY, '3');
+  it('a save one version behind receives exactly the latest version\'s icons', () => {
+    const latest = new Set(ICON_SEED_ADDITIONS[ICON_SEED_VERSION]);
+    const prevSave = DEFAULT_ICON_DRAFTS.filter(i => !latest.has(i.id));
+    localStorage.setItem(ICON_DRAFTS_KEY, JSON.stringify(prevSave));
+    localStorage.setItem(ICON_SEED_VERSION_KEY, String(ICON_SEED_VERSION - 1));
     const got = loadIconDrafts();
-    expect(got).toHaveLength(v3Save.length + v4.size);
-    expect(got.filter(i => v4.has(i.id)).map(i => i.id).sort()).toEqual([...v4].sort());
+    expect(got).toHaveLength(prevSave.length + latest.size);
+    expect(got.filter(i => latest.has(i.id)).map(i => i.id).sort()).toEqual([...latest].sort());
   });
   it('seed additions all exist in the seed', () => {
     const ids = new Set(DEFAULT_ICON_DRAFTS.map(i => i.id));

@@ -5,8 +5,8 @@
 // Aggregation only — the translations live in the <base>.<locale>.js files.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { ROLE_FR, WEAPON_TYPE_FR, STAT_NAME_FR, PV_LABEL_FR, SKILL_TYPE_FR } from './characters.fr.js';
-import { ROLE_ES, WEAPON_TYPE_ES, STAT_NAME_ES, PV_LABEL_ES, SKILL_TYPE_ES } from './characters.es.js';
+import { ROLE_FR, WEAPON_TYPE_FR, STAT_NAME_FR, PV_LABEL_FR, SKILL_TYPE_FR, CHARACTER_TAG_FR } from './characters.fr.js';
+import { ROLE_ES, WEAPON_TYPE_ES, STAT_NAME_ES, PV_LABEL_ES, SKILL_TYPE_ES, CHARACTER_TAG_ES } from './characters.es.js';
 import { RANK_FR, ECHO_SETS_FR } from './echoes.fr.js';
 import { MATERIAL_NAME_FR } from './materialData.fr.js';
 import { CURRENT_BANNER_TITLES_FR, STANDARD_BANNER_TITLES_FR } from './banners.fr.js';
@@ -20,6 +20,7 @@ export const STAT_NAME_TABLES = { fr: STAT_NAME_FR, es: STAT_NAME_ES };
 export const PV_LABEL_TABLES = { fr: PV_LABEL_FR, es: PV_LABEL_ES };
 export const SKILL_TYPE_TABLES = { fr: SKILL_TYPE_FR, es: SKILL_TYPE_ES };
 export const ECHO_SETS_TABLES = { fr: ECHO_SETS_FR, es: ECHO_SETS_ES };
+export const CHARACTER_TAG_TABLES = { fr: CHARACTER_TAG_FR, es: CHARACTER_TAG_ES };
 export const RANK_TABLES = { fr: RANK_FR, es: RANK_ES };
 export const MATERIAL_NAME_TABLES = { fr: MATERIAL_NAME_FR, es: MATERIAL_NAME_ES };
 export const CURRENT_BANNER_TITLE_TABLES = { fr: CURRENT_BANNER_TITLES_FR, es: CURRENT_BANNER_TITLES_ES };

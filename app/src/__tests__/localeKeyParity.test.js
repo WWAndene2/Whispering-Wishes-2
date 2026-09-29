@@ -37,8 +37,10 @@ it('every locale/en module has a locale/es module file', () => {
 describe('display-label overlays (data/localeTables.js)', () => {
   it('Spanish covers every key the French overlay covers', async () => {
     const tables = await import('../data/localeTables.js');
+    // CHARACTER_TAG_TABLES is checked against the source data instead (see the character overlay tests):
+    // Spanish deliberately leaves untranslated the status-effect names French has official terms for.
     for (const [name, { fr, es }] of Object.entries(tables)) {
-      expect(Object.keys(es).sort(), name).toEqual(Object.keys(fr).sort());
+      if (name !== 'CHARACTER_TAG_TABLES') expect(Object.keys(es).sort(), name).toEqual(Object.keys(fr).sort());
       for (const [key, label] of Object.entries(es)) expect(label, `${name}.${key}`).toBeTruthy();
     }
   });
@@ -82,5 +84,28 @@ describe('weapon overlay (data/weapons.*.js)', () => {
     const es = getLocalizedWeaponData('es');
     expect(es['Kumokiri'].passive).toContain('ATQ +12 %');
     expect(es['Kumokiri'].stat).toBe(WEAPON_DATA['Kumokiri'].stat);
+  });
+});
+
+describe('character label overlays (data/characters.*.js)', () => {
+  it('Spanish titles cover every character that has a title', async () => {
+    const { CHARACTER_DATA, getLocalizedCharacterData } = await import('../data/characters.js');
+    const { CHARACTER_TITLE_ES } = await import('../data/characters.es.js');
+    const titled = Object.entries(CHARACTER_DATA).filter(([, d]) => d.title).map(([n]) => n);
+    expect(Object.keys(CHARACTER_TITLE_ES).sort()).toEqual(titled.sort());
+    expect(getLocalizedCharacterData('es')['Jiyan'].title).toBe('Jinete del viento');
+    expect(getLocalizedCharacterData('es')['Jiyan'].desc).toBe(CHARACTER_DATA['Jiyan'].desc);
+  });
+
+  it('Spanish tags cover every tag or say deliberately to keep it', async () => {
+    const { CHARACTER_DATA } = await import('../data/characters.js');
+    const { CHARACTER_TAG_ES } = await import('../data/characters.es.js');
+    const keep = new Set(['Ashinohara', 'Chongzhou', 'Mingting', 'Ragunna', 'Septimont', 'Rinascita', 'Huanglong', 'Jinzhou', 'Lahai-Roi', 'Fractsidus', 'Night City', 'Frazzle', 'Spectro Frazzle', 'Glacio Chafe', 'Havoc Bane', 'Fusion Burst', 'Electro Flare', 'Hack - Shifting', 'Hack Response', 'Off-Tune', 'Tune Break Boost', 'Tune Rupture Response', 'Tune Strain - Interfered', 'Tune Strain - Shifting', 'Tune Strain Response']);
+    const used = new Set();
+    for (const d of Object.values(CHARACTER_DATA)) {
+      for (const f of ['birthplace', 'region', 'organization']) if (d[f]) used.add(d[f]);
+      for (const f of ['dmgFocus', 'buffs', 'debuffs']) for (const x of d[f] || []) used.add(x);
+    }
+    for (const tag of used) expect(CHARACTER_TAG_ES[tag] || keep.has(tag), tag).toBeTruthy();
   });
 });

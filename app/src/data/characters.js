@@ -10715,10 +10715,11 @@ const STANDARD_5STAR_CHARACTERS = new Set(['Calcharo', 'Encore', 'Jianxin', 'Lin
 // English data above is the single source of truth; this merges in
 // translated `desc` bio text only, keyed by the same character names.
 import { CHARACTER_DESC_FR, CHARACTER_TITLE_FR, CHAR_BUFF_NOTE_FR, CHARACTER_ROTATION_NOTE_FR, CHAIN_NODE_NAMES_FR, SKILL_NAME_FR, GENERIC_SKILL_NAME_FR, getGenericSkillNameFr, SKILL_DESC_FR, GENERIC_SKILL_DESC_FR, applyGenericDescPhrases, MULT_DESC_FR } from './characters.fr.js';
+import { CHARACTER_TITLE_ES } from './characters.es.js';
 
 /** @param {string} locale */
 export function getLocalizedCharacterData(locale) {
-  const overlay = { fr: { desc: CHARACTER_DESC_FR, title: CHARACTER_TITLE_FR } }[locale];
+  const overlay = { fr: { desc: CHARACTER_DESC_FR, title: CHARACTER_TITLE_FR }, es: { desc: {}, title: CHARACTER_TITLE_ES } }[locale];
   if (!overlay) return CHARACTER_DATA;
   const out = {};
   for (const [name, base] of Object.entries(CHARACTER_DATA)) {

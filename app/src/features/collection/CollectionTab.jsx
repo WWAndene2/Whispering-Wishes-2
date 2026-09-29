@@ -8,7 +8,6 @@ import { useSessionState } from '../../hooks/useSessionState.js';
 import { toCanvasSpace, CANVAS_WIDTH } from '../../shared/scaling/canvasScale.js';
 import { ArrowRight, Calendar, Crown, RefreshCcw, Search, Sparkles, Sword, Upload, X } from 'lucide-react';
 import { CHARACTER_DATA, CHAR_BUFF_TABLE, ALL_5STAR_RESONATORS, ALL_4STAR_RESONATORS } from '../../data/characters.js';
-import { CHARACTER_TAG_FR } from '../../data/characters.fr.js';
 import { isHealerRole, isSupportRole } from '../../engine/math/index.js';
 import { WEAPON_DATA, getLocalizedWeaponData } from '../../data/weapons.js';
 import { ECHO_DATA, ECHO_SETS, ALL_4COST_ECHOES, ALL_3COST_ECHOES, ALL_1COST_ECHOES, ALL_ECHO_SONATA_SETS, ALL_ECHO_BUFF_TYPES, getLocalizedEchoData } from '../../data/echoes.js';
@@ -24,7 +23,7 @@ import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx
 import { getElementIcon, getWeaponTypeIcon, getStatIcon, getSetIcon, getRegionIcon, getCombatRoleIcon, COMBAT_ROLE_ICONS, getRarityIcon } from '../../shared/utils/elementVisuals.js';
 import { t, getLocale , pickTable } from '../../utils/i18n.js';
 import { hideOnError } from '../../shared/utils/imageHelpers.js';
-import { ECHO_SETS_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
+import { CHARACTER_TAG_TABLES, ECHO_SETS_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
 
 // ECHO_SETS is declared oldest-first (each block of sets is commented with its game version, e.g.
 // "v3.5 — Land of Xuanfang") — reversed so the newest sonata sets sort first, matching the same
@@ -578,7 +577,7 @@ function CollectionTab({
                         const icon = getCombatRoleIcon(tag);
                         return {
                           value: tag,
-                          label: <span className="inline-flex items-center gap-1.5"><img src={icon} alt="" width={14} height={14} className="shrink-0" /> {(pickTable({ fr: CHARACTER_TAG_FR })[tag]) || tag}</span>,
+                          label: <span className="inline-flex items-center gap-1.5"><img src={icon} alt="" width={14} height={14} className="shrink-0" /> {(pickTable(CHARACTER_TAG_TABLES)[tag]) || tag}</span>,
                         };
                       }),
                     ]}

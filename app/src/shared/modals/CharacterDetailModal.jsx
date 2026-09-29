@@ -6,7 +6,6 @@
 import React, { useState } from 'react';
 import { Sparkles, Swords, User, Users, TrendingUp, Target, Zap, X, LayoutGrid, RotateCw, Play } from 'lucide-react';
 import { CHARACTER_DATA, CHAR_BUFF_TABLE, SKILL_MULTIPLIERS, CHARACTER_ROTATIONS, RESONANCE_CHAIN_DATA, getSkillIcon, CHAIN_NODE_ICONS, getLocalizedCharacterData, getLocalizedCharBuffTable, getLocalizedCharacterRotations, getLocalizedChainNodeNames, findSkillMultiplierRow, localizeSkillName, localizeSkillDesc, localizeSkillMult } from '../../data/characters.js';
-import { CHARACTER_TAG_FR } from '../../data/characters.fr.js';
 import { WEAPON_DATA, getLocalizedWeaponData } from '../../data/weapons.js';
 import { getSonataLoadouts } from '../../data/echoes.js';
 import { DEFAULT_COLLECTION_IMAGES, getConveneAnimation, getCharacterBannerArt } from '../../data/banners.js';
@@ -23,7 +22,7 @@ import { FullSpineViewerButton } from '../components/FullSpineViewerButton.jsx';
 import { ConveneVideo } from '../components/ConveneVideoLayer.jsx';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
 import { t, formatNumber, getLocale , pickTable } from '../../utils/i18n.js';
-import { ROLE_TABLES, SKILL_TYPE_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
+import { CHARACTER_TAG_TABLES, ROLE_TABLES, SKILL_TYPE_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
 
 // Shared element color maps. `hex` (same source as elementVisuals.js's ELEMENT_COLORS)
 // drives the header's corner fade: lighter top-left, subtly darker/cooler
@@ -272,7 +271,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                     <span className="text-gray-500">{t('modals.characterDetail.birthplace')}</span>
                     <span className="text-gray-300 inline-flex items-center gap-1">
                       {getRegionIcon(data.birthplace) && <img src={getRegionIcon(data.birthplace)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                      {(pickTable({ fr: CHARACTER_TAG_FR })[data.birthplace]) || data.birthplace}
+                      {(pickTable(CHARACTER_TAG_TABLES)[data.birthplace]) || data.birthplace}
                     </span>
                   </>
                 )}
@@ -281,7 +280,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                     <span className="text-gray-500">{t('modals.characterDetail.region')}</span>
                     <span className="text-gray-300 inline-flex items-center gap-1">
                       {getRegionIcon(data.region) && <img src={getRegionIcon(data.region)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                      {(pickTable({ fr: CHARACTER_TAG_FR })[data.region]) || data.region}
+                      {(pickTable(CHARACTER_TAG_TABLES)[data.region]) || data.region}
                     </span>
                   </>
                 )}
@@ -290,7 +289,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                     <span className="text-gray-500">{t('modals.characterDetail.organization')}</span>
                     <span className="text-gray-300 inline-flex items-center gap-1">
                       {getFactionIcon(data.organization) && <img src={getFactionIcon(data.organization)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                      {(pickTable({ fr: CHARACTER_TAG_FR })[data.organization]) || data.organization}
+                      {(pickTable(CHARACTER_TAG_TABLES)[data.organization]) || data.organization}
                     </span>
                   </>
                 )}
@@ -374,7 +373,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                     <div>
                       <div className="text-sm text-gray-400 mb-1">{t('modals.characterDetail.damageFocus')}</div>
                       <div className="flex flex-wrap gap-1">
-                        {data.dmgFocus.map((df, i) => <span key={i} className="kuro-badge kuro-badge-amber">{(pickTable({ fr: CHARACTER_TAG_FR })[df]) || df}</span>)}
+                        {data.dmgFocus.map((df, i) => <span key={i} className="kuro-badge kuro-badge-amber">{(pickTable(CHARACTER_TAG_TABLES)[df]) || df}</span>)}
                       </div>
                     </div>
                   )}
@@ -387,7 +386,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                           return (
                             <span key={tag} className="kuro-badge kuro-badge-neutral inline-flex items-center gap-1">
                               {icon ? <img src={icon} alt="" className="w-3.5 h-3.5" onError={hideOnError} /> : <Sparkles size={12} className="text-gray-400" />}
-                              {(pickTable({ fr: CHARACTER_TAG_FR })[tag]) || tag}
+                              {(pickTable(CHARACTER_TAG_TABLES)[tag]) || tag}
                             </span>
                           );
                         })}
@@ -548,7 +547,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                 <div>
                   <div className="text-sm text-gray-400 mb-1">{t('modals.characterDetail.buffs')}</div>
                   <div className="flex flex-wrap gap-1">
-                    {data.buffs.map((b, i) => <span key={i} className="kuro-badge kuro-badge-emerald">{(pickTable({ fr: CHARACTER_TAG_FR })[b]) || b}</span>)}
+                    {data.buffs.map((b, i) => <span key={i} className="kuro-badge kuro-badge-emerald">{(pickTable(CHARACTER_TAG_TABLES)[b]) || b}</span>)}
                   </div>
                 </div>
               )}
@@ -556,7 +555,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                 <div>
                   <div className="text-sm text-gray-400 mb-1">{t('modals.characterDetail.debuffs')}</div>
                   <div className="flex flex-wrap gap-1">
-                    {data.debuffs.map((db, i) => <span key={i} className="kuro-badge kuro-badge-red">{(pickTable({ fr: CHARACTER_TAG_FR })[db]) || db}</span>)}
+                    {data.debuffs.map((db, i) => <span key={i} className="kuro-badge kuro-badge-red">{(pickTable(CHARACTER_TAG_TABLES)[db]) || db}</span>)}
                   </div>
                 </div>
               )}

@@ -121,3 +121,22 @@ describe('Spanish skill text fallbacks', () => {
     expect(localizeSkillDesc('es', 'X', 's', 'Hits for Heavy Attack DMG')).toBe('Hits for daño de ataque pesado');
   });
 });
+
+describe('Spanish skill and chain-node names', () => {
+  it('has all six chain node titles for every character that has them', async () => {
+    const { CHAIN_NODE_NAMES } = await import('../data/characters.js');
+    const { CHAIN_NODE_NAMES_ES } = await import('../data/characters.es.js');
+    expect(Object.keys(CHAIN_NODE_NAMES_ES).sort()).toEqual(Object.keys(CHAIN_NODE_NAMES).sort());
+    for (const [name, nodes] of Object.entries(CHAIN_NODE_NAMES_ES)) expect(Object.keys(nodes), name).toEqual(['s1', 's2', 's3', 's4', 's5', 's6']);
+  });
+
+  it('only names skills that exist in SKILL_MULTIPLIERS', async () => {
+    const { SKILL_MULTIPLIERS, localizeSkillName } = await import('../data/characters.js');
+    const { SKILL_NAME_ES } = await import('../data/characters.es.js');
+    for (const [char, names] of Object.entries(SKILL_NAME_ES)) {
+      const real = new Set((SKILL_MULTIPLIERS[char] || []).map(r => r[1]));
+      for (const n of Object.keys(names)) expect(real.has(n), `${char}: ${n}`).toBe(true);
+    }
+    expect(localizeSkillName('es', 'Jiyan', 'Lone Lance Stage 1-5')).toBe('Lanza solitaria Fase 1-5');
+  });
+});

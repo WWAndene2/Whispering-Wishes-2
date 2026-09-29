@@ -10715,7 +10715,7 @@ const STANDARD_5STAR_CHARACTERS = new Set(['Calcharo', 'Encore', 'Jianxin', 'Lin
 // English data above is the single source of truth; this merges in
 // translated `desc` bio text only, keyed by the same character names.
 import { CHARACTER_DESC_FR, CHARACTER_TITLE_FR, CHAR_BUFF_NOTE_FR, CHARACTER_ROTATION_NOTE_FR, CHAIN_NODE_NAMES_FR, SKILL_NAME_FR, GENERIC_SKILL_NAME_FR, getGenericSkillNameFr, SKILL_DESC_FR, GENERIC_SKILL_DESC_FR, applyGenericDescPhrases, MULT_DESC_FR } from './characters.fr.js';
-import { CHARACTER_TITLE_ES, GENERIC_SKILL_NAME_ES, getGenericSkillNameEs, applyGenericDescPhrasesEs } from './characters.es.js';
+import { CHARACTER_TITLE_ES, SKILL_NAME_ES, CHAIN_NODE_NAMES_ES, GENERIC_SKILL_NAME_ES, getGenericSkillNameEs, applyGenericDescPhrasesEs } from './characters.es.js';
 
 /** @param {string} locale */
 export function getLocalizedCharacterData(locale) {
@@ -10749,7 +10749,7 @@ export function getLocalizedCharBuffTable(locale) {
 // CHAIN_NODE_NAMES: per-character S1-S6 Resonance Chain sequence-node titles,
 // display-only (rendered in CharacterDetailModal.jsx's Resonance Chain grid).
 export function getLocalizedChainNodeNames(locale) {
-  const names = { fr: CHAIN_NODE_NAMES_FR }[locale];
+  const names = { fr: CHAIN_NODE_NAMES_FR, es: CHAIN_NODE_NAMES_ES }[locale];
   if (!names) return CHAIN_NODE_NAMES;
   const out = {};
   for (const [name, base] of Object.entries(CHAIN_NODE_NAMES)) {
@@ -10830,7 +10830,7 @@ const SKILL_TEXT_RESOLVERS = {
     mult: (char, skill, mult) => MULT_DESC_FR[char]?.[skill] || applyGenericDescPhrases(mult),
   },
   es: {
-    name: (char, skill) => GENERIC_SKILL_NAME_ES[skill] || getGenericSkillNameEs(skill),
+    name: (char, skill) => SKILL_NAME_ES[char]?.[skill] || GENERIC_SKILL_NAME_ES[skill] || getGenericSkillNameEs(skill),
     desc: (char, skill, desc) => applyGenericDescPhrasesEs(desc),
     mult: (char, skill, mult) => applyGenericDescPhrasesEs(mult),
   },

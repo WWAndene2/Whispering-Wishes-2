@@ -58,3 +58,17 @@ describe('event overlays (data/banners.*.js)', () => {
     expect(Object.keys(MATERIAL_NAME_ES).sort()).toEqual(Object.keys(MATERIAL_NAME_FR).sort());
   });
 });
+
+describe('echo overlays (data/echoes.*.js)', () => {
+  it('Spanish covers every Sonata set and echo skill description of the source data', async () => {
+    const { ECHO_SETS, ECHO_DATA } = await import('../data/echoes.js');
+    const { ECHO_SETS_ES, ECHO_DATA_ES } = await import('../data/echoes.es.js');
+    expect(Object.keys(ECHO_SETS_ES).sort()).toEqual(Object.keys(ECHO_SETS).sort());
+    for (const [name, s] of Object.entries(ECHO_SETS)) {
+      for (const piece of ['p2', 'p3', 'p5']) expect(Boolean(ECHO_SETS_ES[name][piece]), `${name}.${piece}`).toBe(Boolean(s[piece]));
+      expect(ECHO_SETS_ES[name].name, name).toBeTruthy();
+    }
+    const withDesc = Object.entries(ECHO_DATA).filter(([, v]) => v.desc).map(([k]) => k);
+    expect(Object.keys(ECHO_DATA_ES).sort()).toEqual(withDesc.sort());
+  });
+});

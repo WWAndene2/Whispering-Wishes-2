@@ -12,7 +12,7 @@ import { CHARACTER_TAG_FR } from '../../data/characters.fr.js';
 import { isHealerRole, isSupportRole } from '../../engine/math/index.js';
 import { WEAPON_DATA, getLocalizedWeaponData } from '../../data/weapons.js';
 import { ECHO_DATA, ECHO_SETS, ALL_4COST_ECHOES, ALL_3COST_ECHOES, ALL_1COST_ECHOES, ALL_ECHO_SONATA_SETS, ALL_ECHO_BUFF_TYPES, getLocalizedEchoData } from '../../data/echoes.js';
-import { ECHO_SETS_FR } from '../../data/echoes.fr.js';
+
 import { WEAPON_RELEASE_ORDER, ALL_5STAR_WEAPONS, ALL_4STAR_WEAPONS, ALL_3STAR_WEAPONS, ALL_2STAR_WEAPONS, ALL_1STAR_WEAPONS } from '../../data/constants.js';
 import { generateVerticalMaskGradient } from '../../shared/utils/maskGradient.js';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
@@ -24,7 +24,7 @@ import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx
 import { getElementIcon, getWeaponTypeIcon, getStatIcon, getSetIcon, getRegionIcon, getCombatRoleIcon, COMBAT_ROLE_ICONS, getRarityIcon } from '../../shared/utils/elementVisuals.js';
 import { t, getLocale , pickTable } from '../../utils/i18n.js';
 import { hideOnError } from '../../shared/utils/imageHelpers.js';
-import { STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
+import { ECHO_SETS_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
 
 // ECHO_SETS is declared oldest-first (each block of sets is commented with its game version, e.g.
 // "v3.5 — Land of Xuanfang") — reversed so the newest sonata sets sort first, matching the same
@@ -663,7 +663,7 @@ function CollectionTab({
                       { value: 'all', label: t('collection.filters.allSets') },
                       ...SORTED_ECHO_SONATA_SETS.map(s => ({
                         value: s,
-                        label: <span className="inline-flex items-center gap-1.5"><img src={getSetIcon(s)} alt="" width={14} height={14} className="shrink-0" /> {(pickTable({ fr: ECHO_SETS_FR })[s]?.name) || s}</span>,
+                        label: <span className="inline-flex items-center gap-1.5"><img src={getSetIcon(s)} alt="" width={14} height={14} className="shrink-0" /> {(pickTable(ECHO_SETS_TABLES)[s]?.name) || s}</span>,
                       })),
                     ]}
                     ariaLabel={t('collection.filters.bySonataSet')}

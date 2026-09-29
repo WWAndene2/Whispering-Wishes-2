@@ -552,7 +552,7 @@ export function getSonataLoadouts(bestEchoes, statScaling, element, locale) {
       const m = /^(.*?)\s+(\d+)\s*pc$/i.exec(p);
       return m ? { name: m[1].trim(), count: parseInt(m[2], 10) } : { name: p.replace(/\s+\d+\s*pc$/i, '').trim(), count: 5 };
     });
-    const localizeSet = (n) => (pickTable({ fr: ECHO_SETS_FR }, locale)[n]?.name) || n;
+    const localizeSet = (n) => (pickTable({ fr: ECHO_SETS_FR, es: ECHO_SETS_ES }, locale)[n]?.name) || n;
     const sonataName = parsedSets.map(s => localizeSet(s.name)).join(' + ') || (main ? localizeSet(ECHO_DATA[main.text]?.sets?.[0] || '') : '');
     const label = setSlot?.label || main?.label || null;
     // The sonata's own "element" per ECHO_SETS — not always a DMG element (can be 'Heal'/'Support'/
@@ -894,10 +894,11 @@ const ALL_ECHO_BUFF_TYPES = [...new Set(Object.values(ECHO_DATA).flatMap(e => Ar
 // English data above is the single source of truth for numbers/mechanics;
 // these merge in translated *text* fields only, keyed by the same names.
 import { ECHO_SETS_FR, ECHO_DATA_FR, translateBuffFr } from './echoes.fr.js';
+import { ECHO_SETS_ES, ECHO_DATA_ES, translateBuffEs } from './echoes.es.js';
 
 /** @param {string} locale */
 export function getLocalizedEchoSets(locale) {
-  const overlay = { fr: ECHO_SETS_FR }[locale];
+  const overlay = { fr: ECHO_SETS_FR, es: ECHO_SETS_ES }[locale];
   if (!overlay) return ECHO_SETS;
   const out = {};
   for (const [name, base] of Object.entries(ECHO_SETS)) {
@@ -908,7 +909,7 @@ export function getLocalizedEchoSets(locale) {
 
 /** @param {string} locale */
 export function getLocalizedEchoData(locale) {
-  const overlay = { fr: { data: ECHO_DATA_FR, translateBuff: translateBuffFr } }[locale];
+  const overlay = { fr: { data: ECHO_DATA_FR, translateBuff: translateBuffFr }, es: { data: ECHO_DATA_ES, translateBuff: translateBuffEs } }[locale];
   if (!overlay) return ECHO_DATA;
   const out = {};
   for (const [name, base] of Object.entries(ECHO_DATA)) {

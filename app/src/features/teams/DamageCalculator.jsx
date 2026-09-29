@@ -21,8 +21,8 @@ import { calcTeamStats as calcTeamStatsImpl } from './calcTeamStats.js';
 import { renderCharacterCard } from './characterCardRenderer.js';
 import { t, formatNumber, pickTable } from '../../utils/i18n.js';
 
-import { ECHO_SETS_FR } from '../../data/echoes.fr.js';
-import { ROLE_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
+
+import { ECHO_SETS_TABLES, ROLE_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
 
 const DamageCalculator = forwardRef(function DamageCalculator({
   teamEquipment,
@@ -492,7 +492,7 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                                           } : undefined}>
                                           {isForced && <span className="text-emerald-400 mr-0.5">●</span>}
                                           {getSetIcon(setName) && <img src={getSetIcon(setName)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                                          {(pickTable({ fr: ECHO_SETS_FR })[setName]?.name) || setName} <span className="text-emerald-400/70">×{count}</span>
+                                          {(pickTable(ECHO_SETS_TABLES)[setName]?.name) || setName} <span className="text-emerald-400/70">×{count}</span>
                                         </div>
                                       );
                                     }) : allDetectedSets.length > 0 ? (

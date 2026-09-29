@@ -34,8 +34,8 @@ import {
   DATA_BANK_LEVELS, MAX_DATA_BANK_LEVEL, getSealedTubeBreakdown,
 } from '../../data/echoFarmingData.js';
 import { t, getPluralForm, pickTable } from '../../utils/i18n.js';
-import { ECHO_SETS_FR } from '../../data/echoes.fr.js';
-import { RANK_TABLES } from '../../data/localeTables.js';
+
+import { ECHO_SETS_TABLES, RANK_TABLES } from '../../data/localeTables.js';
 
 // ECHO_LISTS (echoes.js) are declared newest-first per cost tier already — reused as-is here
 // so the Target Echo picker sorts the same way every other "All Sets"/echo-list filter in the
@@ -281,7 +281,7 @@ export default function EchoFarmPlanner() {
                 <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
                   {echoSets.map(setName => (
                     <span key={setName} className="inline-flex items-center gap-1 text-2xs text-gray-400">
-                      {getSetIcon(setName) && <img src={getSetIcon(setName)} alt="" width={12} height={12} className="shrink-0" onError={hideOnError} />} {(pickTable({ fr: ECHO_SETS_FR })[setName]?.name) || setName}
+                      {getSetIcon(setName) && <img src={getSetIcon(setName)} alt="" width={12} height={12} className="shrink-0" onError={hideOnError} />} {(pickTable(ECHO_SETS_TABLES)[setName]?.name) || setName}
                     </span>
                   ))}
                 </div>
@@ -429,7 +429,7 @@ export default function EchoFarmPlanner() {
                         <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
                           {(ed.sets || []).map(setName => (
                             <span key={setName} className="inline-flex items-center gap-1 text-2xs text-gray-400">
-                              {getSetIcon(setName) && <img src={getSetIcon(setName)} alt="" width={12} height={12} className="shrink-0" onError={hideOnError} />} {(pickTable({ fr: ECHO_SETS_FR })[setName]?.name) || setName}
+                              {getSetIcon(setName) && <img src={getSetIcon(setName)} alt="" width={12} height={12} className="shrink-0" onError={hideOnError} />} {(pickTable(ECHO_SETS_TABLES)[setName]?.name) || setName}
                             </span>
                           ))}
                         </div>

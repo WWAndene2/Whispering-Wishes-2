@@ -161,3 +161,20 @@ describe('Spanish character biographies', () => {
     expect(Object.keys(CHARACTER_DESC_ES).sort()).toEqual(withDesc.sort());
   });
 });
+
+describe('Spanish rotation notes', () => {
+  it('has a note in the same step positions as the English guide', async () => {
+    const { CHARACTER_ROTATIONS, getLocalizedCharacterRotations } = await import('../data/characters.js');
+    const { CHARACTER_ROTATION_NOTE_ES } = await import('../data/characters.es.js');
+    const withNotes = Object.entries(CHARACTER_ROTATIONS).filter(([, steps]) => steps.some(s => s.note)).map(([n]) => n);
+    expect(Object.keys(CHARACTER_ROTATION_NOTE_ES).sort()).toEqual(withNotes.sort());
+    for (const [name, notes] of Object.entries(CHARACTER_ROTATION_NOTE_ES)) {
+      const steps = CHARACTER_ROTATIONS[name];
+      expect(notes.length, name).toBe(steps.length);
+      notes.forEach((n, i) => expect(Boolean(n), `${name}[${i}]`).toBe(Boolean(steps[i].note)));
+    }
+    const es = getLocalizedCharacterRotations('es');
+    expect(es['Jinhsi'][0].note).toBe(CHARACTER_ROTATION_NOTE_ES['Jinhsi'][0]);
+    expect(es['Jinhsi'][0].skill).toBe(CHARACTER_ROTATIONS['Jinhsi'][0].skill);
+  });
+});

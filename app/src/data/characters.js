@@ -10715,7 +10715,7 @@ const STANDARD_5STAR_CHARACTERS = new Set(['Calcharo', 'Encore', 'Jianxin', 'Lin
 // English data above is the single source of truth; this merges in
 // translated `desc` bio text only, keyed by the same character names.
 import { CHARACTER_DESC_FR, CHARACTER_TITLE_FR, CHAR_BUFF_NOTE_FR, CHARACTER_ROTATION_NOTE_FR, CHAIN_NODE_NAMES_FR, SKILL_NAME_FR, GENERIC_SKILL_NAME_FR, getGenericSkillNameFr, SKILL_DESC_FR, GENERIC_SKILL_DESC_FR, applyGenericDescPhrases, MULT_DESC_FR } from './characters.fr.js';
-import { CHARACTER_TITLE_ES, CHARACTER_DESC_ES, CHAR_BUFF_NOTE_ES, SKILL_NAME_ES, CHAIN_NODE_NAMES_ES, GENERIC_SKILL_NAME_ES, getGenericSkillNameEs, applyGenericDescPhrasesEs } from './characters.es.js';
+import { CHARACTER_TITLE_ES, CHARACTER_DESC_ES, CHARACTER_ROTATION_NOTE_ES, CHAR_BUFF_NOTE_ES, SKILL_NAME_ES, CHAIN_NODE_NAMES_ES, GENERIC_SKILL_NAME_ES, getGenericSkillNameEs, applyGenericDescPhrasesEs } from './characters.es.js';
 
 /** @param {string} locale */
 export function getLocalizedCharacterData(locale) {
@@ -10795,7 +10795,7 @@ export function findSkillMultiplierRow(charName, step) {
 // RotationGuideCard.jsx). `type`/`skill` are NOT touched: they're matched
 // against SKILL_MULTIPLIERS via substring lookup at render time.
 export function getLocalizedCharacterRotations(locale) {
-  const allNotes = { fr: CHARACTER_ROTATION_NOTE_FR }[locale];
+  const allNotes = { fr: CHARACTER_ROTATION_NOTE_FR, es: CHARACTER_ROTATION_NOTE_ES }[locale];
   if (!allNotes) return CHARACTER_ROTATIONS;
   const out = {};
   for (const [name, steps] of Object.entries(CHARACTER_ROTATIONS)) {

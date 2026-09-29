@@ -11,12 +11,14 @@ describe('getCurrentBannerAuto', () => {
     expect(p1.characters.map(c => c.name)).toEqual(['Hsin', 'Chisa', 'Iuno']);
     expect(p1.characters.map(c => c.title)).toEqual(['As Full as Tonight, Forever', 'Horizon of Danbreak', "Across Time's Waxes and Wanes"]);
     expect(p1.endDate).toBe('2026-10-22T09:00:00Z');
-    expect(p1.characters[0].featured4Stars).toEqual([]);
+    expect(p1.characters[0].featured4Stars).toEqual(['Buling', 'Taoqi', 'Youhu']);
+    expect(p1.weapons[0].featured4Stars).toEqual([]);
   });
 
   it('switches to v3.7 phase 2 with Lynae paired to Spectrum Blaster', () => {
     const p2 = getCurrentBannerAuto(at('2026-10-22T09:00:00Z'));
     expect([p2.version, p2.phase]).toEqual(['3.7', 2]);
+    expect(p2.characters[0].featured4Stars).toEqual(['Lumi', 'Danjin', 'Chixia']);
     expect(p2.weapons.map(w => [w.name, w.forCharacter])).toEqual([
       ['Unspoken Rue', 'Suoming'], ['Freeze Frame', 'Lucilla'], ['Spectrum Blaster', 'Lynae'],
     ]);

@@ -1,5 +1,5 @@
 {
-  "importPromptPre": "Importa tu historial de Convocaciones en la pestaña",
+  "importPromptPre": "Importa tu historial de Invocaciones en la pestaña",
   "importPromptTab": "Perfil",
   "importPromptPost": "para llevar el control de lo que tienes.",
   "dismiss": "Descartar",
@@ -14,7 +14,7 @@
     "weapon1": "Arma 1★"
   },
   "search": {
-    "placeholder": "Buscar por nombre, DPS, Electro, Espada ancha…",
+    "placeholder": "Buscar por nombre, DPS, Electro, Hoja ancha…",
     "ariaLabel": "Buscar en la colección por palabra clave",
     "clear": "Borrar búsqueda"
   },

@@ -1,11 +1,11 @@
 {
   "pityHistogram": {
     "title": "Distribución de garantía de 5★",
-    "needMore": "Se necesitan 2 o más Convocaciones de 5★ para mostrar la distribución",
-    "convenesCount": "{{n}} Convocaciones",
+    "needMore": "Se necesitan 2 o más Invocaciones de 5★ para mostrar la distribución",
+    "convenesCount": "{{n}} Invocaciones",
     "srSummary": "Distribución de garantía: {{buckets}}. Garantía media: {{avg}}, rango: {{min}} a {{max}}.",
-    "srBucket": "{{label}} Convocaciones: {{count}}",
-    "barTitle": "Convocaciones con garantía {{label}}: {{count}}",
+    "srBucket": "{{label}} Invocaciones: {{count}}",
+    "barTitle": "Invocaciones con garantía {{label}}: {{count}}",
     "lowest": "Mínima",
     "average": "Media",
     "highest": "Máxima"
@@ -45,7 +45,7 @@
     "backToSeries": "Volver a las series"
   },
   "history": {
-    "title": "Historial de Convocaciones",
+    "title": "Historial de Invocaciones",
     "banners": {
       "all": "Todos",
       "featured": "Destacado",
@@ -61,9 +61,9 @@
     },
     "noDataFilter": "No hay datos para este filtro. Prueba con otro tipo de banner o rango de tiempo.",
     "noDataCombination": "No hay datos para esta combinación. Prueba con otro filtro o rango de tiempo.",
-    "srSummary": "Gráfico del historial de Convocaciones con la actividad a lo largo del tiempo. Puntos de datos: {{points}}.",
-    "srDataPoint": "{{label}}: {{count}} Convocaciones",
-    "tooltipConvenes": "{{label}}: {{count}} Convocaciones",
+    "srSummary": "Gráfico del historial de Invocaciones con la actividad a lo largo del tiempo. Puntos de datos: {{points}}.",
+    "srDataPoint": "{{label}}: {{count}} Invocaciones",
+    "tooltipConvenes": "{{label}}: {{count}} Invocaciones",
     "pageRange": "{{start}}-{{end}} de {{total}}"
   },
   "achievementsCard": {
@@ -71,7 +71,7 @@
   },
   "empty": {
     "awaitingSignal": "Esperando datos de señal",
-    "importPrompt": "Importa tu historial de Convocaciones para iniciar el análisis de suerte, el seguimiento de garantía y las estadísticas de Convocaciones.",
+    "importPrompt": "Importa tu historial de Invocaciones para iniciar el análisis de suerte, el seguimiento de garantía y las estadísticas de Invocaciones.",
     "openProfile": "Abrir Perfil para importar"
   },
   "luck": {
@@ -89,7 +89,7 @@
     "title": "Clasificación - Aviso de uso compartido de datos",
     "intro": "Al enviar tu puntuación, los siguientes datos se enviarán a una base de datos compartida y se mostrarán públicamente:",
     "playerIdPrefix": "Tu ID de jugador",
-    "stats": "Garantía media, Convocaciones totales, estadísticas de 50/50 ganados/perdidos",
+    "stats": "Garantía media, Invocaciones totales, estadísticas de 50/50 ganados/perdidos",
     "owned": "Tus personajes y armas de 5★ obtenidos",
     "pseudonymous": "Estos datos son seudónimos (vinculados a un UID de juego cifrado o a un ID aleatorio, no a tu identidad real).",
     "decline": "Rechazar",
@@ -108,7 +108,7 @@
     "closeAria": "Cerrar la clasificación",
     "tablistAria": "Vista de la clasificación",
     "rankings": "Clasificaciones",
-    "mostConvened": "Más Convocaciones",
+    "mostConvened": "Más Invocaciones",
     "loadingAria": "Cargando la clasificación",
     "loadFailed": "No se pudo cargar la clasificación",
     "noSignals": "No se han recibido señales",
@@ -128,7 +128,7 @@
     "globalAvgPity": "Garantía media global",
     "winRate5050": "Tasa de victorias en 50/50",
     "total5Star": "Total de 5★",
-    "totalConvenesTracked": "{{n}} Convocaciones registradas en total",
+    "totalConvenesTracked": "{{n}} Invocaciones registradas en total",
     "winLoss": "{{won}}G / {{lost}}P",
     "luckiest": "Más afortunado: {{pity}}",
     "unluckiest": "Menos afortunado: {{pity}}",
@@ -138,13 +138,13 @@
     "submitting": "Enviando…",
     "waitSeconds": "Espera {{seconds}} s…",
     "submitScore": "Enviar mi puntuación",
-    "shareNotice": "Seudónimo • Tu ID, garantía media y estadísticas de Convocaciones se comparten públicamente en la clasificación",
-    "importToParticipate": "Importa tu historial de Convocaciones para participar"
+    "shareNotice": "Seudónimo • Tu ID, garantía media y estadísticas de Invocaciones se comparten públicamente en la clasificación",
+    "importToParticipate": "Importa tu historial de Invocaciones para participar"
   },
   "pullLog": {
-    "title": "Registro de Convocaciones de 5★",
+    "title": "Registro de Invocaciones de 5★",
     "awaitingSignal": "Esperando resonancia de señal de 5★",
-    "importPrompt": "Importa tu historial de Convocaciones en Perfil para ver tu registro de 5★",
+    "importPrompt": "Importa tu historial de Invocaciones en Perfil para ver tu registro de 5★",
     "wonAria": "50/50 ganado",
     "lostAria": "50/50 perdido",
     "guaranteedAria": "Garantizado",
@@ -154,7 +154,7 @@
   "trophies": {
     "title": "Trofeos",
     "earned": "{{n}} obtenidos",
-    "emptyImportPrompt": "Importa más historial de Convocaciones en la pestaña Perfil para desbloquear logros",
+    "emptyImportPrompt": "Importa más historial de Invocaciones en la pestaña Perfil para desbloquear logros",
     "trophyAria": "Trofeo: {{name}}",
     "closeAria": "Cerrar trofeo",
     "closeHint": "toca fuera o ✕ para cerrar",
@@ -164,7 +164,7 @@
   },
   "overall": {
     "title": "Estadísticas generales",
-    "totalConvenes": "Convocaciones totales",
+    "totalConvenes": "Invocaciones totales",
     "astriteSpent": "Astrita gastada (en el juego)",
     "won5050": "50/50 ganados",
     "lost5050": "50/50 perdidos",
@@ -180,7 +180,7 @@
   },
   "perBanner": {
     "title": "Desglose por banner",
-    "convenes": "{{n}} Convocaciones",
+    "convenes": "{{n}} Invocaciones",
     "pity": "Garantía: {{pity}}/{{hardPity}}",
     "bannerNames": {
       "featuredResonator": "Resonador destacado",

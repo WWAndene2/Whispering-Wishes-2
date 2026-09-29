@@ -200,7 +200,11 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
             {isChar && getRoleIcon(CHARACTER_DATA[item.name]?.role || item.role) && (() => {
               // item.role covers a debut seeded before its CHARACTER_DATA entry exists.
               const role = CHARACTER_DATA[item.name]?.role || item.role;
-              const roleLabel = role.includes('DPS') ? 'DPS' : (getLocale() === 'fr' && ROLE_FR[role]) || role;
+              // Support/Healer is shortened here only: at full length its tag runs under the
+              // banner's countdown (Chisa, v3.7-p1).
+              const roleLabel = role.includes('DPS') ? 'DPS'
+                : role === 'Support/Healer' ? (getLocale() === 'fr' ? 'Sout./Soign.' : 'Sup./Heal.')
+                : (getLocale() === 'fr' && ROLE_FR[role]) || role;
               return (
                 <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={{ borderColor: style.borderColor, backgroundColor: style.bgColor }}>
                   <img src={getRoleIcon(role)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />

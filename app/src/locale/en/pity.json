@@ -1,3 +1,12 @@
 {
-  "tooltip": "Soft pity starts at pull {{start}} (increasing rate). Hard pity at pull 80 (guaranteed 5★). 50/50 means a 50% chance for the featured character; losing gives a guarantee next time."
+  "tooltip": "Soft pity starts at pull {{start}} (increasing rate). Hard pity at pull 80 (guaranteed 5★). 50/50 means a 50% chance for the featured character; losing gives a guarantee next time.",
+  "target5": "5★ Target:",
+  "target4": "4★ Target:",
+  "pityAria": "{{prefix}} pity",
+  "copies5Aria": "{{prefix}} 5-star copies",
+  "copies4Aria": "{{prefix}} 4-star copies",
+  "prefixFeaturedResonator": "Featured Resonator",
+  "prefixWeapon": "Weapon",
+  "prefixStandardResonator": "Standard Resonator",
+  "prefixStandardWeapon": "Standard Weapon"
 }

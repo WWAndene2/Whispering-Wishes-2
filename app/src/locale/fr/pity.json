@@ -1,3 +1,12 @@
 {
-  "tooltip": "La pitié douce commence au tirage {{start}} (taux croissant). La pitié dure est au tirage 80 (5★ garanti). Le 50/50 signifie 50 % de chances d'obtenir le personnage en vedette ; en cas de défaite, le prochain 5★ est garanti."
+  "tooltip": "La pitié douce commence au tirage {{start}} (taux croissant). La pitié dure est au tirage 80 (5★ garanti). Le 50/50 signifie 50 % de chances d'obtenir le personnage en vedette ; en cas de défaite, le prochain 5★ est garanti.",
+  "target5": "Objectif 5★ :",
+  "target4": "Objectif 4★ :",
+  "pityAria": "Garantie : {{prefix}}",
+  "copies5Aria": "Exemplaires 5★ : {{prefix}}",
+  "copies4Aria": "Exemplaires 4★ : {{prefix}}",
+  "prefixFeaturedResonator": "Résonateur vedette",
+  "prefixWeapon": "Arme",
+  "prefixStandardResonator": "Résonateur standard",
+  "prefixStandardWeapon": "Arme standard"
 }

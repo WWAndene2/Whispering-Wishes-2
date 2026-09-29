@@ -22,7 +22,7 @@ import { FullSpineViewerButton } from '../components/FullSpineViewerButton.jsx';
 import { ConveneVideo } from '../components/ConveneVideoLayer.jsx';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
 import { t, formatNumber, getLocale , pickTable } from '../../utils/i18n.js';
-import { CHARACTER_TAG_TABLES, ROLE_TABLES, SKILL_TYPE_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
+import { CHARACTER_TAG_TABLES, ROLE_TABLES, SKILL_TYPE_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
 
 // Shared element color maps. `hex` (same source as elementVisuals.js's ELEMENT_COLORS)
 // drives the header's corner fade: lighter top-left, subtly darker/cooler
@@ -402,7 +402,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                 <div className="flex flex-wrap gap-1">
                   <span className="kuro-badge kuro-badge-violet inline-flex items-center gap-1">
                     {getStatIcon(data.statScaling) && <img src={getStatIcon(data.statScaling)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                    {t('modals.characterDetail.scalingBadge', { stat: data.statScaling })}
+                    {t('modals.characterDetail.scalingBadge', { stat: pickTable(STAT_NAME_TABLES)[data.statScaling] || data.statScaling })}
                   </span>
                 </div>
               </div>
@@ -457,7 +457,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
           <div>
             <h3 className="text-white font-semibold text-xl mb-2 flex items-center gap-2">
               <Zap size={14} className={colors.text} /> {t('modals.characterDetail.skills')}
-              <span className="text-sm text-gray-500 font-normal ml-auto">{t('modals.characterDetail.skillsScaling', { stat: data.statScaling || 'ATK' })}</span>
+              <span className="text-sm text-gray-500 font-normal ml-auto">{t('modals.characterDetail.skillsScaling', { stat: pickTable(STAT_NAME_TABLES)[data.statScaling || 'ATK'] || data.statScaling || 'ATK' })}</span>
             </h3>
             {SKILL_MULTIPLIERS[name] ? (
               <div className="space-y-0.5">
@@ -616,7 +616,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                         <div className="flex flex-wrap items-baseline gap-x-1.5">
                           <span className={`text-2xs font-bold px-1.5 py-0.5 rounded border shrink-0 ${sty.cls}`}>{sty.label}</span>
                           <span className="text-sm text-white font-semibold break-words">{localizeSkillName(getLocale(), name, step.skill)}</span>
-                          {dmg && <span className={`text-sm font-semibold break-words ${colors.text}`}>{dmg}</span>}
+                          {dmg && <span className={`text-sm font-semibold break-words ${colors.text}`}>{localizeSkillMult(getLocale(), name, row[1], dmg)}</span>}
                           {step.duration != null && (
                             <span className="kuro-badge kuro-badge-neutral text-2xs shrink-0">{step.duration}s</span>
                           )}

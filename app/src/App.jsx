@@ -89,6 +89,10 @@ import { initGlassTouch } from './utils/glassTouch.js';
 import { getSigilCard } from './data/sigilCards.js';
 import { getResonatorPortrait, RESONATOR_PORTRAITS } from './data/resonatorPortraits.js';
 
+
+// Screen-reader announcement label of each tab id: the same locale keys the tab buttons use.
+const TAB_NAV_KEYS = { tracker: 'app.navTracker', events: 'app.navEvents', map: 'app.navMap', planner: 'app.navPlan', calculator: 'app.navCalc', analytics: 'app.navStats', teams: 'app.navTeams', gathering: 'app.navCollection', profile: 'app.profile' };
+
 // ── Module-level constants (hoisted from render body) ──────────────────────
 const DEBOUNCE_MS = 300;
 const CALC_DEFER_MS = 150;
@@ -1217,7 +1221,7 @@ function WhisperingWishesInner() {
       <main id="main-content" key={`main-${visualSettings.colorBlindMode ? 'cb' : 'std'}-${appLocale}`} className="max-w-lg md:max-w-2xl lg:max-w-3xl mx-auto px-3 space-y-3 w-full" style={{ paddingTop: headerPadding, paddingBottom: navPadding }} role="main">
         {/* Screen reader announcement for tab changes */}
         <div className="sr-only" aria-live="polite" aria-atomic="true" role="status">
-          {t('app.tabActive', { tab: activeTab.charAt(0).toUpperCase() + activeTab.slice(1) })}
+          {t('app.tabActive', { tab: t(TAB_NAV_KEYS[activeTab] || 'app.navTracker') })}
         </div>
         
         {/* [SECTION:TAB-TRACKER] */}

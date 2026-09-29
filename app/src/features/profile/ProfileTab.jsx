@@ -10,7 +10,7 @@ import ImportFlow from './ImportFlow.jsx';
 import { SERVERS, getServerOffset } from '../../data/constants.js';
 import { CHARACTER_DATA } from '../../data/characters.js';
 import { CHARACTER_THEMES, VERSION_SPLASH_SCREENS, OTHER_BACKGROUNDS, ANIMATED_BACKGROUNDS } from '../../data/banners.js';
-import { SIGIL_CARDS } from '../../data/sigilCards.js';
+import { SIGIL_CARDS, getLocalizedSigilCardName } from '../../data/sigilCards.js';
 import { RESONATOR_PORTRAITS } from '../../data/resonatorPortraits.js';
 import { haptic } from '../../utils/haptics.js';
 import { AMBIENT_OST_TRACKS, AMBIENT_OST_CATEGORIES } from '../../hooks/useAmbientMusic.js';
@@ -1188,9 +1188,9 @@ function ProfileTab({
                           className={`relative rounded-lg overflow-hidden border transition-all ${visualSettings.sigilCardId === card.id ? 'ring-1 border-yellow-500 kuro-shadow-selected-gold' : 'border-[var(--border-medium)] hover:border-gray-500'}`}
                           style={{ aspectRatio: '404 / 581' }}
                         >
-                          <img src={`./sigil-cards/${encodeURIComponent(card.file)}`} alt={card.name} className="absolute inset-0 w-full h-full object-cover" loading="lazy" onError={hideOnError} />
+                          <img src={`./sigil-cards/${encodeURIComponent(card.file)}`} alt={getLocalizedSigilCardName(card.name, appLocale)} className="absolute inset-0 w-full h-full object-cover" loading="lazy" onError={hideOnError} />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                          <span className="absolute bottom-0.5 left-1 right-1 text-white text-xs font-medium drop-shadow-lg truncate">{card.name}</span>
+                          <span className="absolute bottom-0.5 left-1 right-1 text-white text-xs font-medium drop-shadow-lg truncate">{getLocalizedSigilCardName(card.name, appLocale)}</span>
                           {visualSettings.sigilCardId === card.id && <div className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-yellow-500 flex items-center justify-center"><Check size={12} className="text-black" /></div>}
                         </button>
                       ))}

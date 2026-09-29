@@ -16,7 +16,12 @@ import EchoSelector from './EchoSelector.jsx';
 import DamageCalculator from './DamageCalculator.jsx';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
 import { useSessionState } from '../../hooks/useSessionState.js';
-import { t, formatNumber } from '../../utils/i18n.js';
+import { t, formatNumber, pickTable } from '../../utils/i18n.js';
+import { ROLE_TABLES } from '../../data/localeTables.js';
+
+
+// Maps the English scoreTeam() tags to their teams.tab.suggestionTags locale keys; the English tag stays the id.
+const SUGGESTION_TAG_KEYS = {"Meta": "meta", "Strong": "strong", "Balanced": "balanced", "ATK Amp": "atkAmp", "Amplify": "amplify", "BiS Weapon": "bisWeapon", "Dual DPS": "dualDps", "Echo Amp": "echoAmp", "Echo Set Potential": "echoSetPotential", "Erosion": "erosion", "Frazzle": "frazzle", "Good Weapon": "goodWeapon", "Heavy Amp": "heavyAmp", "Off-Field DPS": "offFieldDps", "Off-Role Carry": "offRoleCarry", "Redundant DPS": "redundantDps", "Shred": "shred", "Sub DPS Damage": "subDpsDamage"};
 
 function TeamsTab({
   state,
@@ -822,7 +827,7 @@ function TeamsTab({
                                 isActive ? 'active-gold' : ''
                               }`}
                             >
-                              <span className="truncate">{team.name}</span>
+                              <span className="truncate">{/^Team \d+$/.test(team.name) ? t('teams.tab.defaultTeamName', { index: team.name.slice(5) }) : team.name}</span>
                               {hasChars && <span className="w-1.5 h-1.5 rounded-full bg-yellow-400/60 flex-shrink-0" aria-hidden="true" />}
                             </button>
                           );
@@ -1064,10 +1069,10 @@ function TeamsTab({
                                   {s.members.slice(0, 3).map((m, j) => {
                                     const role = CHARACTER_DATA[m]?.role;
                                     const rc = role === 'Main DPS' ? 'text-red-400' : role === 'Sub DPS' ? 'text-orange-400' : isHealerRole(role) ? 'text-emerald-400' : 'text-blue-400';
-                                    return <span key={j} className={`text-2xs ${rc}`}>{role || '?'}</span>;
+                                    return <span key={j} className={`text-2xs ${rc}`}>{(role && pickTable(ROLE_TABLES)[role]) || role || '?'}</span>;
                                   })}
                                   {s.tags?.map((tag, j) => (
-                                    <span key={`t${j}`} className={`text-2xs px-1 rounded ${tag === 'Meta' ? 'text-yellow-400 bg-yellow-500/10' : tag === 'Strong' ? 'text-orange-400 bg-orange-500/10' : tag === 'Balanced' ? 'text-emerald-400 bg-emerald-500/10' : 'text-cyan-400 bg-cyan-500/10'}`}>{tag}</span>
+                                    <span key={`t${j}`} className={`text-2xs px-1 rounded ${tag === 'Meta' ? 'text-yellow-400 bg-yellow-500/10' : tag === 'Strong' ? 'text-orange-400 bg-orange-500/10' : tag === 'Balanced' ? 'text-emerald-400 bg-emerald-500/10' : 'text-cyan-400 bg-cyan-500/10'}`}>{SUGGESTION_TAG_KEYS[tag] ? t(`teams.tab.suggestionTags.${SUGGESTION_TAG_KEYS[tag]}`) : tag}</span>
                                   ))}
                                 </div>
                               </div>

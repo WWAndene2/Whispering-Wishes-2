@@ -14,7 +14,6 @@
   "timerSec": "S",
   "timerRemaining": "restant",
   "endedLabel": "Terminé",
-
   "astriteCalendar": "Calendrier d'Astrite",
   "dailyIncomeTitle": "Revenu quotidien",
   "dailyAstriteLabel": "Astrite quotidien",
@@ -146,7 +145,6 @@
   "ownedLabel": "Possédé :",
   "ownedAria": "Quantité de {{name}} déjà possédée",
   "remainingHint": "Les quantités ci-dessous sont ce qu'il reste à obtenir après déduction de ce que vous possédez déjà",
-
   "echoFarm": {
     "title": "Calculateur de Farm d'Échos",
     "disclaimer": "Les probabilités de stat principale/secondaire proviennent des taux de sous-stats divulgués par Kuro et d'un large échantillon communautaire pour les stats principales. Les estimations de Points d'Onde/Crédits Coquille supposent que tout Écho obtenu pourrait être votre cible, car aucune source ne publie le taux de drop par Set Sonata ou palier de coût — à considérer comme un ordre de grandeur, pas une valeur exacte.",
@@ -189,13 +187,20 @@
     "tubeMedium": "Tube Scellé Moyen",
     "tubeBasic": "Tube Scellé Basique"
   },
-
   "calendar": {
     "previousMonth": "Mois précédent",
     "nextMonth": "Mois suivant",
     "jumpToCurrentMonth": "Revenir au mois actuel",
     "today": "Aujourd'hui",
-    "weekdays": ["LUN", "MAR", "MER", "JEU", "VEN", "SAM", "DIM"],
+    "weekdays": [
+      "LUN",
+      "MAR",
+      "MER",
+      "JEU",
+      "VEN",
+      "SAM",
+      "DIM"
+    ],
     "tapHint": "Appuyez sur un jour pour voir les événements et ajouter des notes",
     "calendarAriaLabel": "Jours du calendrier",
     "todaySuffix": " (aujourd'hui)",
@@ -252,5 +257,6 @@
     "eventDescriptionCycle": "{{name}} — {{desc}}. Cycle de {{resetType}}. Récompenses : {{rewards}}",
     "doubledPawnsMatrixLabel": "Doubled Pawns Matrix v{{version}}",
     "tacticalHologramLabel": "Tactical Hologram : {{name}}"
-  }
+  },
+  "perDayShort": "{{n}}/jour"
 }

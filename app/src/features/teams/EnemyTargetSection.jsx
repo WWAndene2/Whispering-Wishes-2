@@ -46,7 +46,7 @@ export function EnemyTargetCard({ enemyEcho, setEnemyEcho, enemyLevel, setEnemyL
         </div>
         <div className="relative">
           <MonsterCard
-            name={enemyEcho || 'No Target Selected (Default)'}
+            name={enemyEcho || t('teams.enemyTarget.noTarget')}
             rank={enemyTargetEd?.rank}
             iconUrl={enemyTargetIcon}
             enemyStats={enemyTargetStats}

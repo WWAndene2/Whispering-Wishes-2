@@ -16,7 +16,7 @@ const PityCounterInput = memo(({ label, pity, onPityChange, copies, maxCopies, o
       <PityRing value={pity} max={80} size={56} strokeWidth={4} color={pity >= SOFT_PITY_START ? softColor : color} glowColor={pity >= SOFT_PITY_START ? softGlow : `${color}66`} />
       <div className="flex-1">
         <div className="text-md font-medium mb-1" style={{ color }}>{label} <span className="text-gray-500  cursor-help" title={t('pity.tooltip', { start: SOFT_PITY_START })}>ⓘ</span></div>
-        <input type="range" min="0" max="79" value={pity} onChange={e => onPityChange(+e.target.value)} className={`kuro-slider ${sliderClass}`} aria-label={`${ariaPrefix} pity`} />
+        <input type="range" min="0" max="79" value={pity} onChange={e => onPityChange(+e.target.value)} className={`kuro-slider ${sliderClass}`} aria-label={t('pity.pityAria', { prefix: ariaPrefix })} />
         {pity >= SOFT_PITY_START && <p className={`text-sm ${softPityClass}`} style={{ color: softColor }}><SoftPityIcon size={12} className="inline mr-1" style={{ color: softColor, filter: `drop-shadow(0 0 4px ${softColor})` }} />Soft Pity Zone!</p>}
       </div>
       <div className="text-right">
@@ -26,12 +26,12 @@ const PityCounterInput = memo(({ label, pity, onPityChange, copies, maxCopies, o
     </div>
     <div className="grid grid-cols-2 gap-2 text-base">
       <div className="flex items-center justify-between">
-        <span style={{ color }}>5★ Target:</span>
-        <TargetInput value={copies} min={1} max={maxCopies} onChange={onCopiesChange} className="kuro-input kuro-input-sm" ariaLabel={`${ariaPrefix} 5-star copies`} />
+        <span style={{ color }}>{t('pity.target5')}</span>
+        <TargetInput value={copies} min={1} max={maxCopies} onChange={onCopiesChange} className="kuro-input kuro-input-sm" ariaLabel={t('pity.copies5Aria', { prefix: ariaPrefix })} />
       </div>
       <div className="flex items-center justify-between">
-        <span className="text-purple-400">4★ Target:</span>
-        <TargetInput value={fourStarCopies} min={0} max={maxFourStar} onChange={onFourStarChange} className="kuro-input kuro-input-sm" ariaLabel={`${ariaPrefix} 4-star copies`} />
+        <span className="text-purple-400">{t('pity.target4')}</span>
+        <TargetInput value={fourStarCopies} min={0} max={maxFourStar} onChange={onFourStarChange} className="kuro-input kuro-input-sm" ariaLabel={t('pity.copies4Aria', { prefix: ariaPrefix })} />
       </div>
     </div>
   </div>

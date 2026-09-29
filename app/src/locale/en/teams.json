@@ -1,6 +1,17 @@
 {
   "monsterCard": {
-    "noResData": "No elemental RES data"
+    "noResData": "No elemental RES data",
+    "hp": "HP",
+    "atk": "ATK",
+    "def": "DEF",
+    "interruptRes": "Interruption RES",
+    "interruptResRecovery": "Interruption RES Recovery",
+    "vibrationStrength": "Vibration Strength",
+    "vibrationStrengthRecovery": "Vibration Strength Recovery",
+    "rage": "Rage",
+    "rageRecovery": "Rage Recovery",
+    "physical": "Physical",
+    "level": "Lv. {{level}}"
   },
   "echoSelector": {
     "title": "Select Echo",
@@ -27,7 +38,8 @@
   },
   "enemyTarget": {
     "target": "Target",
-    "level": "Lv."
+    "level": "Lv.",
+    "noTarget": "No Target Selected (Default)"
   },
   "selector": {
     "title": "Select Resonator",
@@ -119,7 +131,28 @@
     "sourceDot": "DOT / Reactions",
     "damageDistribution": "Damage Distribution",
     "footerNote": "Team DPS: full rotation including skills, echoes, DOTs, reactions. Raw Stat Damage: base + gear + sequence, unconditional buffs only, no rotation. Main DPS Buff Uplift: how much more the Main DPS deals with the full rotation/team buffs vs. raw stats alone.",
-    "resonanceChainNote": "Resonance Chain bonuses are included in the DPS number above but apply directly to stats — they don't have an on-field window, so they aren't drawn as bars on the timeline."
+    "resonanceChainNote": "Resonance Chain bonuses are included in the DPS number above but apply directly to stats — they don't have an on-field window, so they aren't drawn as bars on the timeline.",
+    "costLabel": "{{cost}}-cost",
+    "pieceSuffix": "pc",
+    "elemDmgBadge": "{{element}} DMG",
+    "effStatBadge": "Eff.{{stat}} {{value}}",
+    "critRateBadge": "CR {{v}}%",
+    "critDmgBadge": "CD {{v}}%",
+    "skillBadge": "Skill +{{v}}%",
+    "atkPctBadge": "ATK% +{{v}}%",
+    "amplifyBadge": "Amplify +{{v}}%",
+    "defShredBadge": "DEF Shred {{v}}%",
+    "resShredBadge": "RES Shred {{v}}%",
+    "defIgnoreBadge": "DEF Ignore {{v}}%",
+    "aggAtk": "+{{v}}% ATK",
+    "aggElem": "+{{v}}% Elem DMG",
+    "aggSkill": "+{{v}}% Skill DMG",
+    "aggAmplify": "+{{v}}% Amplify",
+    "aggCritRate": "{{v}}% Crit Rate",
+    "aggCritDmg": "{{v}}% Crit DMG",
+    "aggDefShred": "-{{v}}% DEF Shred",
+    "aggResShred": "-{{v}}% RES Shred",
+    "aggDefIgnore": "{{v}}% DEF Ignore"
   },
   "dpsCompare": {
     "clearTitle": "Clear comparison",
@@ -251,6 +284,35 @@
     "shuffleAria": "Shuffle: show a different random sample of curated teams",
     "shuffle": "Shuffle",
     "teamSuggestions": "Team Suggestions",
-    "ready": "Ready"
+    "ready": "Ready",
+    "suggestionTags": {
+      "meta": "Meta",
+      "strong": "Strong",
+      "balanced": "Balanced",
+      "atkAmp": "ATK Amp",
+      "amplify": "Amplify",
+      "bisWeapon": "BiS Weapon",
+      "dualDps": "Dual DPS",
+      "echoAmp": "Echo Amp",
+      "echoSetPotential": "Echo Set Potential",
+      "erosion": "Erosion",
+      "frazzle": "Frazzle",
+      "goodWeapon": "Good Weapon",
+      "heavyAmp": "Heavy Amp",
+      "offFieldDps": "Off-Field DPS",
+      "offRoleCarry": "Off-Role Carry",
+      "redundantDps": "Redundant DPS",
+      "shred": "Shred",
+      "subDpsDamage": "Sub DPS Damage"
+    }
+  },
+  "warnings": {
+    "incompleteTeam": "Incomplete team",
+    "noHealer": "No healer in team",
+    "noElementResonance": "No element resonance",
+    "dualDps": "Dual DPS: rotation time shared — use 👑 to pick which one{{suffix}}",
+    "noMainDps": "No Main DPS: using highest damage dealer — use 👑 to pick a different headline DPS{{suffix}}",
+    "enemyResists": "{{enemy}} resists {{element}} ({{res}}% RES) — {{name}}'s main-hit DMG is reduced against this target",
+    "lowEr": "{{name}}: low ER ({{er}}%) — Liberation uptime {{uptime}}%"
   }
 }

@@ -2001,6 +2001,8 @@ export const WEAPON_TYPE_FR = {
 // to the player leaves those comparisons untouched.
 /** @type {Record<string, string>} */
 export const STAT_NAME_FR = {
+  'ATK': 'ATQ',
+  'DEF': 'DÉF',
   'Crit Rate': 'Taux Critique',
   'Crit DMG': 'Dégâts Critiques',
   'Energy Regen': "Régén. d'Énergie",

@@ -13,5 +13,16 @@
   "noEvents": "Aucun événement suivi actuellement",
   "noEventsHint": "Les événements apparaîtront automatiquement à chaque mise à jour de version",
   "expired": "Expiré",
-  "resetTimesFooter": "Heures de réinitialisation basées sur le serveur {{server}} (UTC{{offset}})"
+  "resetTimesFooter": "Heures de réinitialisation basées sur le serveur {{server}} (UTC{{offset}})",
+  "card": {
+    "resetsIn": "Réinitialisation dans",
+    "weeklyReset": "Réinitialisation hebdomadaire",
+    "endsIn": "Se termine dans",
+    "done": "Fait",
+    "skip": "Passer",
+    "undoDone": "Annuler « Fait »",
+    "undoSkip": "Annuler « Passé »",
+    "skipAria": "Passer {{name}}",
+    "undoStatusAria": "Annuler le statut de {{name}}"
+  }
 }

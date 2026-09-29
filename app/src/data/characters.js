@@ -10794,14 +10794,17 @@ export function findSkillMultiplierRow(charName, step) {
 // CHARACTER_ROTATIONS' `note` field is display-only prose (rendered in
 // RotationGuideCard.jsx). `type`/`skill` are NOT touched: they're matched
 // against SKILL_MULTIPLIERS via substring lookup at render time.
+const LOCALIZED_ROTATIONS_CACHE = {};
 export function getLocalizedCharacterRotations(locale) {
   const allNotes = { fr: CHARACTER_ROTATION_NOTE_FR, es: CHARACTER_ROTATION_NOTE_ES }[locale];
   if (!allNotes) return CHARACTER_ROTATIONS;
+  if (LOCALIZED_ROTATIONS_CACHE[locale]) return LOCALIZED_ROTATIONS_CACHE[locale];
   const out = {};
   for (const [name, steps] of Object.entries(CHARACTER_ROTATIONS)) {
     const notes = allNotes[name];
     out[name] = notes ? steps.map((step, i) => (notes[i] ? { ...step, note: notes[i] } : step)) : steps;
   }
+  LOCALIZED_ROTATIONS_CACHE[locale] = out;
   return out;
 }
 

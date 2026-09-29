@@ -45,3 +45,12 @@ export const EVENTS_ES = {
   giftsOfSingingDrizzle: { name: 'Regalos de la Llovizna Cantora', subtitle: 'Evento de inicio de sesión por tiempo limitado', description: 'Durante el evento, inicia sesión para reclamar las recompensas de inicio de sesión del día desde la página del evento.' },
   beyondTheWavesXuanfang: { name: 'Más allá de las olas: Tierra de Xuanfang', subtitle: 'Evento de exploración destacado', description: 'Evento de exploración por tiempo limitado de la v3.7.' },
 };
+
+// Event reward wording (EventCard's reward badge), keyed by the English reward text fragment.
+/** @type {Record<string, string>} */
+export const EVENT_REWARD_TERMS_ES = {
+  'Radiant Tide': 'Marea radiante',
+  'Astrite': 'Astrita',
+  'Boss Materials': 'Materiales de jefe',
+  'Insider Channel': 'Canal interno',
+};

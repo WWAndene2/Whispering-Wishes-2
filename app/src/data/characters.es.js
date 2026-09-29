@@ -36,6 +36,8 @@ export const WEAPON_TYPE_ES = {
 
 /** @type {Record<string, string>} */
 export const STAT_NAME_ES = {
+  'ATK': 'ATQ',
+  'DEF': 'DEF',
   'Crit Rate': 'Tasa crít.',
   'Crit DMG': 'Daño crít.',
   'Energy Regen': 'Regen. de energía',
@@ -133,6 +135,19 @@ export const CHARACTER_TITLE_ES = {
 
 /** @type {Record<string, string>} */
 export const CHARACTER_TAG_ES = {
+  "Spectro Frazzle": "Espectro estridente",
+  "Frazzle": "Espectro estridente",
+  "Electro Flare": "Llamarada eléctrica",
+  "Havoc Bane": "Ruina de destrucción",
+  "Tune Rupture Response": "Respuesta de Fractura de Tonalidad",
+  "Tune Strain Response": "Respuesta de Interferencia de Tonalidad",
+  "Tune Break Boost": "Bonificación de Ruptura de Tonalidad",
+  "Fusion Burst": "Estallido de fusión",
+  "Hack Response": "Respuesta de hackeo",
+  "Hack - Shifting": "Hackeo - Cambiante",
+  "Glacio Chafe": "Rozadura gélida",
+  "Tune Strain - Shifting": "Interferencia de Tonalidad - Cambiante",
+  "Tune Strain - Interfered": "Interferencia de Tonalidad - Interferido",
   "New Federation": "Nueva Federación",
   "Spacetrek Collective": "Colectivo Spacetrek",
   "Black Shores": "Costas Negras",
@@ -245,6 +260,8 @@ export const GENERIC_SKILL_NAME_ES = {
   'Mid-air Attack': 'Ataque aéreo',
   'Standard': 'Estándar',
   'Use Echo': 'Usar Eco',
+  'Swap Cancel': 'Cancelar con cambio',
+  'Use + Swap Cancel': 'Usar + cancelar con cambio',
 };
 
 // Action-type half of 'Action - Form/Stance Name' skill names; the bespoke suffix stays in English.
@@ -374,6 +391,7 @@ export const SKILL_NAME_ES = {
     "Burial of Thousand Souls": "Funeral de malicia",
     "Question the Tombs": "Inquisición espectral",
     "Rising Fortune and Ebbing Evil": "Atraer suerte, repeler malicia",
+    "Drink Soul": "Beber alma",
   },
   "Yangyang: Xuanling": {
     "Azure/Feather Stance Stage 1-4": "Postura Azur/Pluma Fase 1-4",
@@ -386,6 +404,8 @@ export const SKILL_NAME_ES = {
     "Shadow of Xuanling": "Sombra de Xuanling",
     "Skybound Feather": "Pluma celestial",
     "As the Wind Wills": "Según la voluntad del viento",
+    "Heavy Attack: Azure Sword Stance": "Ataque pesado: Postura de espada azur",
+    "Heavy Attack: Feather Sword Stance": "Ataque pesado: Postura de espada de plumas",
   },
   "Hiyuki": {
     "Present Self Stage 1-3": "Yo presente Fase 1-3",
@@ -441,6 +461,9 @@ export const SKILL_NAME_ES = {
     "Hack Response - Meltdown": "Respuesta de hackeo - Fusión total",
     "Yo, It's Big Boomin' Time!": "¡Eh, es hora de la gran explosión!",
     "Hey, Leadhead, Come 'n' Get Me!": "¡Eh, cabeza de plomo, ven a por mí!",
+    "It's Big Boomin' Time!": "¡Es hora de la gran explosión!",
+    "Rat-tat-tat!: Huntress": "¡Ra-ta-ta-ta!: Cazadora",
+    "Preem Choom": "Buena chum",
   },
   "Denia": {
     "Stagecraft Form Stage 1-4": "Forma Escenografía Fase 1-4",
@@ -475,6 +498,7 @@ export const SKILL_NAME_ES = {
     "Clip It": "¡Recórtalo!",
     "Clip It: Hard Cut": "Recórtalo: Corte brusco",
     "Montage": "Montaje",
+    "Spotlight": "Foco",
   },
   "Augusta": {
     "Hunter's Path": "Camino de la cazadora",
@@ -493,6 +517,15 @@ export const SKILL_NAME_ES = {
     "Dodge Counter - Undying Sunlight: Strike": "Contraataque de esquiva - Luz solar imperecedera: Golpe",
     "Stride of Goldenflare": "Paso del brillo dorado",
     "Battlesong of the Unyielding": "Canción de batalla",
+    "Sublime is the Sun": "Sublime es el sol",
+    "Sublime is the Sun: Everbright Protector": "Sublime es el sol: Protector perenne",
+    "Sublime is the Sun: Sunborne ×9": "Sublime es el sol: Nacido del sol ×9",
+    "Thunderoar: Backstep": "Rugido del trueno: Paso atrás",
+    "Thunderoar: Backstep → Spinslash": "Rugido del trueno: Paso atrás → Tajo giratorio",
+    "Thunderoar: Spinslash": "Rugido del trueno: Tajo giratorio",
+    "Undying Sunlight: Leap": "Luz solar imperecedera: Salto",
+    "Undying Sunlight: Plunge": "Luz solar imperecedera: Caída",
+    "Undying Sunlight: Strike": "Luz solar imperecedera: Golpe",
   },
   "Aemeath": {
     "Aemeath Form Stage 1-4": "Forma Aemeath Fase 1-4",
@@ -509,6 +542,11 @@ export const SKILL_NAME_ES = {
     "Songs Across the Universe": "Cantos a través del universo",
     "Debut of Meteoric Radiance": "Debut del resplandor meteórico",
     "Silent Protection": "Protección silenciosa",
+    "Form Switch": "Cambio de forma",
+    "Heavenfall Edict: Finale": "Edicto de la caída celestial: Final",
+    "Heavenfall Edict: Overdrive": "Edicto de la caída celestial: Sobrecarga",
+    "Seraphic Duet: Encore": "Dúo seráfico: Bis",
+    "Seraphic Duet: Overture": "Dúo seráfico: Obertura",
   },
   "Brant": {
     "Stage 1-4": "Fase 1-4",
@@ -535,6 +573,8 @@ export const SKILL_NAME_ES = {
     "Wanted Outlaw": "Forajido buscado",
     "\"Necessary Means\"": "«Medios necesarios»",
     "Shadowy Raid": "Incursión sombría.",
+    "Hounds Roar": "Rugido de los sabuesos",
+    "Phantom Etching": "Grabado fantasma",
   },
   "Camellya": {
     "Thorns 1-5": "Espinas 1-5",
@@ -550,6 +590,9 @@ export const SKILL_NAME_ES = {
     "Fervor Efflorescent": "Corola en cenizas",
     "Everblooming": "Flor perpetua",
     "Twining": "Enredadera",
+    "Ephemeral": "Efímero",
+    "Vining Waltz 1": "Vals trepador 1",
+    "Vining Waltz 1-4 / Blazing Waltz": "Vals trepador 1-4 / Vals ardiente",
   },
   "Cantarella": {
     "Stage 1-3": "Fase 1-3",
@@ -567,6 +610,9 @@ export const SKILL_NAME_ES = {
     "Ripple": "Onda",
     "Tidal Surge": "Oleada de marea",
     "Gentle Tentacles": "Tentáculos suaves",
+    "Beneath the Sea": "Debajo del mar",
+    "Cruise": "Crucero",
+    "Dance with Shadows": "Bailar con las sombras",
   },
   "Carlotta": {
     "Stage 1-2": "Fase 1-2",
@@ -584,6 +630,8 @@ export const SKILL_NAME_ES = {
     "Fatal Finale": "Final fatal",
     "Wintertime Aria": "Aria invernal",
     "Closing Remark": "Observación final",
+    "Art of Violence → Chromatic Splendor": "Arte de la violencia → Esplendor cromático",
+    "Death Knell ×4": "Toque de difuntos ×4",
   },
   "Cartethyia": {
     "Base Form 1-4": "Forma base 1-4",
@@ -600,6 +648,7 @@ export const SKILL_NAME_ES = {
     "Sword to Mark Tide's Trace": "Espada del pasado de la marea",
     "Sword to Call for Freedom": "Espada para clamar libertad",
     "Wind's Divine Blessing": "Bendición divina del viento",
+    "Cartethyia Plunging Attack": "Ataque en picado de Cartethyia",
   },
   "Changli": {
     "Blazing Enlightenment Stage 1-4": "Iluminación ardiente Fase 1-4",
@@ -611,6 +660,7 @@ export const SKILL_NAME_ES = {
     "Radiance of Fealty": "Resplandor de lealtad",
     "Obedience of Rules": "Obediencia de reglas",
     "Strategy of Duality": "Estrategia de dualidad",
+    "True Sight: Capture": "Visión verdadera: Captura",
   },
   "Chisa": {
     "Stage 1-2": "Fase 1-2",
@@ -623,6 +673,8 @@ export const SKILL_NAME_ES = {
     "Moment of Nihility": "Instante de nihilidad",
     "Reverberance - Return": "Retorno de reverberación",
     "Unraveling - Law Zero": "Deshilar: Principio cero",
+    "Sawring - Blitz 2-3": "Aro de sierra - Ofensiva 2-3",
+    "Stage 2, Rending Lunge, Death Snip": "Fase 2, Embestida desgarradora, Tijeretazo mortal",
   },
   "Ciaccona": {
     "Stage 1": "Fase 1",
@@ -717,6 +769,7 @@ export const SKILL_NAME_ES = {
     "Emerald Storm: Prelude": "Tormenta esmeralda: Preludio",
     "Tactical Strike": "Golpe táctico",
     "Discipline": "Autocontrol",
+    "Lance of Qingloong": "Lanza de Qingloong",
   },
   "Jinhsi": {
     "Slash of Breaking Dawn Stage 1-4": "Tajo del alba naciente Fase 1-4",
@@ -731,6 +784,7 @@ export const SKILL_NAME_ES = {
     "Purge of Light": "Purga de luz",
     "Loong's Halo": "Halo de Loong",
     "Temporal Bender": "Dominador temporal",
+    "Overflowing Radiance": "Resplandor desbordante",
   },
   "Jianxin": {
     "Fengyiquan Stage 1-4": "Fengyiquan Fase 1-4",
@@ -741,6 +795,8 @@ export const SKILL_NAME_ES = {
     "Purification Force Field": "Campo de purificación",
     "Essence of Tao": "Esencia de Tao",
     "Transcendence": "Trascendencia",
+    "Calming Air": "Aire calmante",
+    "Primordial Chi Spiral": "Espiral de Chi primordial",
   },
   "Lingyang": {
     "Majestic Fists Stage 1-5": "Puños majestuosos Fase 1-5",
@@ -755,6 +811,10 @@ export const SKILL_NAME_ES = {
     "Strive: Lion's Vigor": "Esforzarse: Vigor del león",
     "Lion Awakens": "León despertado",
     "Frosty Marks": "Marcas heladas",
+    "Majestic Fists P1": "Puños majestuosos P1",
+    "Majestic Fists P2": "Puños majestuosos P2",
+    "Ancient Arts": "Artes antiguas",
+    "Unification of Spirits": "Unificación de espíritus",
   },
   "Lupa": {
     "Stage 1": "Fase 1",
@@ -790,6 +850,12 @@ export const SKILL_NAME_ES = {
     "Rewritten in Winter's Margins": "Reescrito en los márgenes del invierno",
     "Before Injection of Dawn": "Antes de la inyección del alba",
     "Bow to the Last Light": "Un gesto al momento final",
+    "Aureole of Execution: Breach": "Aureola de ejecución: Brecha",
+    "Aureole of Execution: Glare": "Aureola de ejecución: Destello",
+    "Aureole of Execution: Ring": "Aureola de ejecución: Anillo",
+    "Basic 1 → Jump: Resection 2-3": "Básico 1 → Salto: Resección 2-3",
+    "Golden Impale": "Empalamiento dorado",
+    "Mid-air Attack: Gavel of Earthshaker": "Ataque aéreo: Mazo del Sacudetierras",
   },
   "Lynae": {
     "Stage 1-3": "Fase 1-3",
@@ -803,6 +869,8 @@ export const SKILL_NAME_ES = {
     "Prismatic Overblast": "Sobreexplosión prismática",
     "Time to Show Some Colors!": "¡Es hora de mostrar colores!",
     "Let's Hit the Road!": "¡Vamos a la carretera!",
+    "Mid-air Attack: Visual Impact": "Ataque aéreo: Impacto visual",
+    "Spark Collision (full charge)": "Colisión de chispas (carga completa)",
   },
   "Mornye": {
     "Stage 1-4": "Fase 1-4",
@@ -817,6 +885,7 @@ export const SKILL_NAME_ES = {
     "Critical Protocol": "Protocolo de criticidad",
     "Convergence": "Convergencia",
     "Recursion": "Recursión",
+    "Heavy Attack: Inversion": "Ataque pesado: Inversión",
   },
   "Phoebe": {
     "Stage 1-3": "Fase 1-3",
@@ -841,6 +910,9 @@ export const SKILL_NAME_ES = {
     "Maestro State: Hecate": "Estado maestro: Hécate",
     "Curtain Call": "Saludo final",
     "Unfinished Piece": "Pieza inacabada",
+    "Movement of Fate and Finality / Murmurs in a Haunting Dream": "Movimiento del destino y la finalidad / Murmullos en un sueño inquietante",
+    "Waltz of Forsaken Depths": "Vals del abismo pasado",
+    "Whispers in a Fleeting Dream": "Susurros en un sueño fugaz",
   },
   "Qiuyuan": {
     "Stage 1-3": "Fase 1-3",
@@ -865,6 +937,7 @@ export const SKILL_NAME_ES = {
     "Commedia Improvviso!": "¡Comedia improvisada!",
     "Pero, Help!": "¡Venga, Perri!",
     "Applause, Please!": "¡Un aplauso por favor!",
+    "Pero, Help": "¡Venga, Perri!",
   },
   "Rover: Spectro": {
     "Vibration Manifestation Stage 1-4": "Manifestación de vibración Fase 1-4",
@@ -894,6 +967,7 @@ export const SKILL_NAME_ES = {
     "Deadening Abyss": "Abismo amortiguante",
     "Instant of Annihilation": "Instante de Aniquilación",
     "Soundweaver": "Tejedor de sonido",
+    "Dreamless": "Insomne",
   },
   "Rover: Aero": {
     "Wind Cutter Stage 1-4": "Cortavientos Fase 1-4",
@@ -906,6 +980,8 @@ export const SKILL_NAME_ES = {
     "Omega Storm": "Tormenta omega",
     "Relentless Squall": "Borrasca implacable",
     "Storm's Echo": "Eco de la tormenta",
+    "Awakening Gale": "Vendaval del despertar",
+    "Skyfall Severance": "Corte de la caída del cielo",
   },
   "Rover: Electro": {
     "Deterrence Stage 1-4": "Disuasión Fase 1-4",
@@ -919,6 +995,8 @@ export const SKILL_NAME_ES = {
     "Ultimate Tactics": "Tácticas definitivas",
     "Thunderous Fury": "Furia atronadora",
     "Rumbling Thunders": "Truenos retumbantes",
+    "Deterrence 1-4": "Disuasión 1-4",
+    "Impermanence Heron": "Garza Impermanencia",
   },
   "Shorekeeper": {
     "Origin Calculus Stage 1-4": "Cálculo del origen Fase 1-4",
@@ -930,6 +1008,8 @@ export const SKILL_NAME_ES = {
     "End Loop": "Ciclo final",
     "Proof of Existence: Enlightenment / Discernment": "Prueba de existencia: Iluminación / Discernimiento",
     "Binary Butterfly": "Mariposa binaria",
+    "Discernment": "Discernimiento",
+    "Illation": "Inferencia",
   },
   "Sigrika": {
     "Stage 1-4": "Fase 1-4",
@@ -945,6 +1025,8 @@ export const SKILL_NAME_ES = {
     "Where Trust Leads Me!": "¡A dónde me lleva la confianza!",
     "Solsworn Etymology": "Etimología Solística",
     "In This Very Moment": "En este mismo momento",
+    "Heavy ATK: Schemata of Runes (Chain Whip)": "Ataque pesado: Esquema de runas (Látigo de cadena)",
+    "Heavy ATK: Schemata of Runes (Runic Outburst)": "Ataque pesado: Esquema de runas (Estallido rúnico)",
   },
   "Verina": {
     "Cultivation Stage 1-5": "Cultivo Fase 1-5",
@@ -955,6 +1037,7 @@ export const SKILL_NAME_ES = {
     "Arboreal Flourish": "Florecimiento arbóreo",
     "Verdant Growth": "Crecimiento verde",
     "Blossom": "Florecer",
+    "Mid-air Attack: Starflower Blooms": "Ataque aéreo: Florecen las flores estelares",
   },
   "Xiangli Yao": {
     "Probe Stage 1-5": "Sondeo Fase 1-5",
@@ -969,6 +1052,7 @@ export const SKILL_NAME_ES = {
     "Intuition: Unfathomed": "Intuición: Insondable",
     "Principle": "Principio",
     "Chain Rule": "Regla de la cadena",
+    "Deduction": "Deducción",
   },
   "Yinlin": {
     "Zapstring's Dance Stage 1-4": "Danza de Zapstring Fase 1-4",
@@ -981,6 +1065,8 @@ export const SKILL_NAME_ES = {
     "Thundering Wrath": "Ira atronadora",
     "Raging Storm": "Tormenta furiosa",
     "Strategist": "Estratega",
+    "Lightning Execution": "Ejecución relámpago",
+    "Magnetic Roar": "Rugido magnético",
   },
   "Zani": {
     "Stage 1-4": "Fase 1-4",
@@ -1009,6 +1095,8 @@ export const SKILL_NAME_ES = {
     "Living Canvas": "Lienzo viviente",
     "Radiant Ruin": "Ruina radiante",
     "Carve and Draw": "Talcar y dibujar",
+    "Creation's Zenith": "Cénit de la creación",
+    "Stroke of Genius": "Golpe de genio",
   },
   "Aalto": {
     "Half Truths Stage 1-5": "Medias verdades Fase 1-5",
@@ -1132,6 +1220,7 @@ export const SKILL_NAME_ES = {
     "Power Shift: Timed Counters Stage 1-3": "Cambio de poder: Contras cronometradas Fase 1-3",
     "Defense Formation": "Formación defensiva",
     "Iron Will": "Mil de peso",
+    "Power Shift: Timed Counters": "Cambio de poder: Contraataques cronometrados",
   },
   "Yangyang": {
     "Feather as Blade Stage 1-4": "Pluma como hoja Fase 1-4",
@@ -1160,6 +1249,7 @@ export const SKILL_NAME_ES = {
     "Poetic Essence": "Esencia poética",
     "Scroll of Wonders": "Rollo de maravillas",
     "Timeless Classics": "Clásicos eternos",
+    "Frosty Punches": "Golpe gélido",
   },
   "Yuanwu": {
     "Leihuangquan Stage 1-5": "Leihuangquan Fase 1-5",

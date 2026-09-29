@@ -1,3 +1,12 @@
 {
-  "tooltip": "La garantía suave empieza en la tirada {{start}} (la probabilidad aumenta). La garantía dura llega en la tirada 80 (5★ asegurado). 50/50 significa un 50 % de probabilidad de obtener al personaje destacado; si lo pierdes, la siguiente vez está garantizado."
+  "tooltip": "La garantía suave empieza en la tirada {{start}} (la probabilidad aumenta). La garantía dura llega en la tirada 80 (5★ asegurado). 50/50 significa un 50 % de probabilidad de obtener al personaje destacado; si lo pierdes, la siguiente vez está garantizado.",
+  "target5": "Objetivo 5★:",
+  "target4": "Objetivo 4★:",
+  "pityAria": "Garantía: {{prefix}}",
+  "copies5Aria": "Copias 5★: {{prefix}}",
+  "copies4Aria": "Copias 4★: {{prefix}}",
+  "prefixFeaturedResonator": "Resonador destacado",
+  "prefixWeapon": "Arma",
+  "prefixStandardResonator": "Resonador estándar",
+  "prefixStandardWeapon": "Arma estándar"
 }

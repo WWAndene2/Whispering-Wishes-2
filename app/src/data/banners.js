@@ -1731,7 +1731,7 @@ export function getCurrentBannerAuto(now = Date.now()) {
 }
 
 import { CURRENT_BANNER_TITLES_FR, EVENTS_FR } from './banners.fr.js';
-import { CURRENT_BANNER_TITLES_ES, EVENTS_ES } from './banners.es.js';
+import { CURRENT_BANNER_TITLES_ES, EVENTS_ES, EVENT_REWARD_TERMS_ES } from './banners.es.js';
 
 // Locale-aware CURRENT_BANNERS: only the display-only `title` fields on
 // characters/weapons are swapped; every other field (names, dates, art URLs,
@@ -1760,6 +1760,13 @@ export function resolveEventWindow(ev, now = Date.now()) {
   const runs = [{ currentStart: base.currentStart, currentEnd: base.currentEnd }, ...schedule];
   const run = runs.find(r => new Date(r.currentEnd).getTime() > now) || runs[runs.length - 1];
   return { ...base, ...run };
+}
+
+/** Localizes the English currency/material words inside an event's reward text. @param {string} text @param {string} locale */
+export function localizeEventRewardText(text, locale) {
+  const terms = { es: EVENT_REWARD_TERMS_ES }[locale];
+  if (!terms || !text) return text;
+  return Object.entries(terms).reduce((acc, [en, tr]) => acc.split(en).join(tr), text);
 }
 
 // Locale-aware EVENTS: only name/subtitle/description are swapped.

@@ -10,12 +10,12 @@
 // verbatim relocation, not a rewrite — a further split is a follow-up pass.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { CHARACTER_DATA, CHAR_BUFF_TABLE, CHARACTER_ROTATIONS } from '../../data/characters.js';
+import { CHARACTER_DATA, CHAR_BUFF_TABLE, CHARACTER_ROTATIONS, getLocalizedCharacterRotations } from '../../data/characters.js';
 import { WEAPON_DATA } from '../../data/weapons.js';
-import { ECHO_SETS, ECHO_DATA, ECHO_SKILL_BUFFS, getEnemyStatsAtLevel } from '../../data/echoes.js';
+import { ECHO_SETS, ECHO_DATA, ECHO_SKILL_BUFFS, getEnemyStatsAtLevel, getLocalizedEchoName } from '../../data/echoes.js';
 import { WEAPON_REFINE_SCALE } from '../../data/constants.js';
 import { STAT_LABELS_FULL, STAT_LABELS_FULL_FR } from './RotationTimeline.jsx';
-import { getLocale , pickTable } from '../../utils/i18n.js';
+import { t, getLocale , pickTable } from '../../utils/i18n.js';
 import {
   ATTACKER_FACTOR, BASE_CRIT_RATE, BASE_CRIT_DMG,
   createStats, parsePassive, getWeaponPv,
@@ -544,7 +544,8 @@ export function calcTeamStats(slots, teamIdx, mainDpsOverride, teamEquipment, en
         // prefer it over the older CHARACTER_DATA[name].rotation plain-string array, which only exists
         // for ~10 legacy entries and lacks per-step notes/type tagging. Both are normalized to the same
         // {type, skill, note} shape so the rendering below doesn't need to know which source it got.
-        const richSequence = CHARACTER_ROTATIONS[seg.name];
+        // Display-only sequence: same steps with the per-step notes in the active locale.
+        const richSequence = getLocalizedCharacterRotations(getLocale())[seg.name];
         const legacySequence = CHARACTER_DATA[seg.name]?.rotation;
         const skillSequence = richSequence || (legacySequence ? legacySequence.map(s => ({ type: 'Step', skill: s })) : null);
         return { order: i + 1, name: seg.name, role: seg.role, element: seg.element, duration: seg.duration, isDps, reason, selfActive, handsOff, inherits, skillSequence };
@@ -1062,20 +1063,20 @@ export function calcTeamStats(slots, teamIdx, mainDpsOverride, teamEquipment, en
     syn = Math.min(syn, 100);
     const warnings = [];
     if (mems.length < 3) {
-      warnings.push('Incomplete team');
+      warnings.push(t('teams.warnings.incompleteTeam'));
     } else {
-      if (!mems.some(m => isHealerRole(m.d.role))) warnings.push('No healer in team');
+      if (!mems.some(m => isHealerRole(m.d.role))) warnings.push(t('teams.warnings.noHealer'));
       const els = new Set(mems.map(m => m.d.element));
-      if (els.size === mems.length) warnings.push('No element resonance');
+      if (els.size === mems.length) warnings.push(t('teams.warnings.noElementResonance'));
       const dpsCount = mems.filter(m => m.d.role === 'Main DPS').length;
-      if (dpsCount >= 2) warnings.push(`Dual DPS: rotation time shared — use 👑 to pick which one${mainDpsOverride ? ` (${mainDps.name})` : ''}`);
-      if (dpsCount === 0) warnings.push(`No Main DPS: using highest damage dealer — use 👑 to pick a different headline DPS${mainDpsOverride ? ` (${mainDps.name})` : ''}`);
+      if (dpsCount >= 2) warnings.push(t('teams.warnings.dualDps', { suffix: mainDpsOverride ? ` (${mainDps.name})` : '' }));
+      if (dpsCount === 0) warnings.push(t('teams.warnings.noMainDps', { suffix: mainDpsOverride ? ` (${mainDps.name})` : '' }));
       // Real, calculated consequence of the selected enemy (not just a DEF/RES number difference) —
       // flag when the main DPS's own element is one the target specifically resists, since that's the
       // one matchup the player can actually act on (swap main DPS or bring an off-element sub-DPS).
       if (enemyEcho) {
         const mainRes = getEnemyRes(mainDps.d.element);
-        if (mainRes > 10) warnings.push(`${enemyEcho} resists ${mainDps.d.element} (${mainRes}% RES) — ${mainDps.name}'s main-hit DMG is reduced against this target`);
+        if (mainRes > 10) warnings.push(t('teams.warnings.enemyResists', { enemy: getLocalizedEchoName(enemyEcho, getLocale()), element: mainDps.d.element, res: mainRes, name: mainDps.name }));
       }
     }
     const dotDps = Math.round(dotDmgPerRotation / rotTime);
@@ -1085,7 +1086,7 @@ export function calcTeamStats(slots, teamIdx, mainDpsOverride, teamEquipment, en
     mems.forEach(m => {
       const ecf = energyCycleFactors[m.name];
       if (ecf && ecf.libUptime < 0.9) {
-        warnings.push(`${m.name}: low ER (${Math.round(ecf.totalER)}%) — Liberation uptime ${Math.round(ecf.libUptime * 100)}%`);
+        warnings.push(t('teams.warnings.lowEr', { name: m.name, er: Math.round(ecf.totalER), uptime: Math.round(ecf.libUptime * 100) }));
       }
     });
 

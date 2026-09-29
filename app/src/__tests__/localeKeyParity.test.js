@@ -130,11 +130,11 @@ describe('Spanish skill and chain-node names', () => {
     for (const [name, nodes] of Object.entries(CHAIN_NODE_NAMES_ES)) expect(Object.keys(nodes), name).toEqual(['s1', 's2', 's3', 's4', 's5', 's6']);
   });
 
-  it('only names skills that exist in SKILL_MULTIPLIERS', async () => {
-    const { SKILL_MULTIPLIERS, localizeSkillName } = await import('../data/characters.js');
+  it('only names skills that exist in SKILL_MULTIPLIERS or CHARACTER_ROTATIONS', async () => {
+    const { SKILL_MULTIPLIERS, CHARACTER_ROTATIONS, localizeSkillName } = await import('../data/characters.js');
     const { SKILL_NAME_ES } = await import('../data/characters.es.js');
     for (const [char, names] of Object.entries(SKILL_NAME_ES)) {
-      const real = new Set((SKILL_MULTIPLIERS[char] || []).map(r => r[1]));
+      const real = new Set([...(SKILL_MULTIPLIERS[char] || []).map(r => r[1]), ...(CHARACTER_ROTATIONS[char] || []).map(r => r.skill)]);
       for (const n of Object.keys(names)) expect(real.has(n), `${char}: ${n}`).toBe(true);
     }
     expect(localizeSkillName('es', 'Jiyan', 'Lone Lance Stage 1-5')).toBe('Lanza solitaria Fase 1-5');

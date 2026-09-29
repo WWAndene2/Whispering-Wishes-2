@@ -11,8 +11,8 @@ import { hideOnError } from '../../shared/utils/imageHelpers.js';
 import { getCurrencyIcon } from '../../shared/utils/elementVisuals.js';
 import { CountdownTimer } from '../../shared/components/CountdownTimer.jsx';
 import { EVENT_ACCENT_COLORS, TEXT_SHADOW_STYLE, generateMaskGradient } from '../../shared/components/BannerCard.jsx';
-import { PLACEHOLDER_IMAGE } from '../../data/banners.js';
-import { t } from '../../utils/i18n.js';
+import { PLACEHOLDER_IMAGE, localizeEventRewardText } from '../../data/banners.js';
+import { t, getLocale } from '../../utils/i18n.js';
 
 // Direct user request 2026-09-11: show the Astrite/Radiant Tide currency icons inline
 // wherever those currency names appear in an event's rewards badge text.
@@ -26,11 +26,11 @@ function renderRewardsWithIcons(rewardsText) {
   const parts = rewardsText.split(REWARD_ICON_PATTERN);
   return parts.map((part, i) => {
     const iconSrc = REWARD_ICON_CURRENCIES.includes(part) ? getCurrencyIcon(part) : null;
-    if (!iconSrc) return i > 0 && REWARD_ICON_CURRENCIES.includes(parts[i - 1]) ? part.trimStart() : part;
+    if (!iconSrc) return localizeEventRewardText(i > 0 && REWARD_ICON_CURRENCIES.includes(parts[i - 1]) ? part.trimStart() : part, getLocale());
     const followedByText = parts.slice(i + 1).join('').trim() !== '';
     return (
       <React.Fragment key={i}>
-        {part}
+        {localizeEventRewardText(part, getLocale())}
         <img src={iconSrc} alt="" className={`inline w-4 h-4 -mt-0.5 ml-2 ${followedByText ? 'mr-2' : ''}`} onError={hideOnError} />
       </React.Fragment>
     );
@@ -154,7 +154,7 @@ const EventCard = memo(({ event, server, bannerImage, visualSettings, status, on
               <span className="kuro-badge kuro-badge-red font-medium">{t('events.expired')}</span>
             ) : (
               <>
-                <div className="text-sm mb-1 text-[color:var(--text-heading)]">{isDaily ? 'Resets in' : isWeekly ? 'Weekly reset' : 'Ends in'}</div>
+                <div className="text-sm mb-1 text-[color:var(--text-heading)]">{isDaily ? t('events.card.resetsIn') : isWeekly ? t('events.card.weeklyReset') : t('events.card.endsIn')}</div>
                 <CountdownTimer endDate={endDate} color={event.color} alwaysShow={isDaily || isWeekly || isRecurring} onExpire={handleExpire} recalcFn={recalcFn} />
               </>
             )}
@@ -172,21 +172,21 @@ const EventCard = memo(({ event, server, bannerImage, visualSettings, status, on
             <div className="flex gap-1">
               {!isDone && (
                 <button onClick={isDaily ? toggleDailyToday : () => onStatusChange('done')} className="kuro-btn kuro-btn-sm active-emerald min-w-[48px] backdrop-blur-sm" style={{ paddingLeft: 8, paddingRight: 8 }} aria-label={`Mark ${event.name} as done`}>
-                  <Check size={12} className="inline -mt-0.5" /> Done
+                  <Check size={12} className="inline -mt-0.5" /> {t('events.card.done')}
                 </button>
               )}
               {!isDaily && !isSkipped && (
-                <button onClick={() => onStatusChange('skipped')} className="kuro-btn kuro-btn-sm min-w-[48px] backdrop-blur-sm" style={{ paddingLeft: 8, paddingRight: 8 }} aria-label={`Skip ${event.name}`}>
-                  <SkipForward size={12} className="inline -mt-0.5" /> Skip
+                <button onClick={() => onStatusChange('skipped')} className="kuro-btn kuro-btn-sm min-w-[48px] backdrop-blur-sm" style={{ paddingLeft: 8, paddingRight: 8 }} aria-label={t('events.card.skipAria', { name: event.name })}>
+                  <SkipForward size={12} className="inline -mt-0.5" /> {t('events.card.skip')}
                 </button>
               )}
               {isDaily ? (isDailyDoneToday && (
-                <button onClick={toggleDailyToday} className="kuro-btn kuro-btn-sm backdrop-blur-sm" style={{ paddingLeft: 8, paddingRight: 8 }} aria-label={`Undo ${event.name} status`}>
-                  Undo Done
+                <button onClick={toggleDailyToday} className="kuro-btn kuro-btn-sm backdrop-blur-sm" style={{ paddingLeft: 8, paddingRight: 8 }} aria-label={t('events.card.undoStatusAria', { name: event.name })}>
+                  {t('events.card.undoDone')}
                 </button>
               )) : (status && (
-                <button onClick={() => onStatusChange(null)} className="kuro-btn kuro-btn-sm backdrop-blur-sm" style={{ paddingLeft: 8, paddingRight: 8 }} aria-label={`Undo ${event.name} status`}>
-                  {isDone ? 'Undo Done' : 'Undo Skip'}
+                <button onClick={() => onStatusChange(null)} className="kuro-btn kuro-btn-sm backdrop-blur-sm" style={{ paddingLeft: 8, paddingRight: 8 }} aria-label={t('events.card.undoStatusAria', { name: event.name })}>
+                  {isDone ? t('events.card.undoDone') : t('events.card.undoSkip')}
                 </button>
               ))}
             </div>

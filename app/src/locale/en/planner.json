@@ -14,7 +14,6 @@
   "timerSec": "S",
   "timerRemaining": "remaining",
   "endedLabel": "Ended",
-
   "astriteCalendar": "Astrite Calendar",
   "dailyIncomeTitle": "Daily Income",
   "dailyAstriteLabel": "Daily Astrite",
@@ -146,7 +145,6 @@
   "ownedLabel": "Owned:",
   "ownedAria": "Quantity of {{name}} already owned",
   "remainingHint": "Amounts below are what's still needed after subtracting what you already own",
-
   "echoFarm": {
     "title": "Echo Farming Calculator",
     "disclaimer": "Main-stat/substat probabilities are sourced from Kuro's own disclosed substat rates and a large community sample for main stats. Waveplate/Shell Credit estimates assume any dropped Echo could be your target, since no source publishes drop rate by Sonata Set or cost tier — treat these as order-of-magnitude, not exact.",
@@ -189,13 +187,20 @@
     "tubeMedium": "Medium Sealed Tube",
     "tubeBasic": "Basic Sealed Tube"
   },
-
   "calendar": {
     "previousMonth": "Previous month",
     "nextMonth": "Next month",
     "jumpToCurrentMonth": "Jump to current month",
     "today": "Today",
-    "weekdays": ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
+    "weekdays": [
+      "MON",
+      "TUE",
+      "WED",
+      "THU",
+      "FRI",
+      "SAT",
+      "SUN"
+    ],
     "tapHint": "Tap a day to view events & add notes",
     "calendarAriaLabel": "Calendar days",
     "todaySuffix": " (today)",
@@ -252,5 +257,6 @@
     "eventDescriptionCycle": "{{name}} — {{desc}}. {{resetType}} cycle. Rewards: {{rewards}}",
     "doubledPawnsMatrixLabel": "Doubled Pawns Matrix v{{version}}",
     "tacticalHologramLabel": "Tactical Hologram: {{name}}"
-  }
+  },
+  "perDayShort": "{{n}}/day"
 }

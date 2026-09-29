@@ -13,5 +13,16 @@
   "noEvents": "No events currently tracked",
   "noEventsHint": "Events will appear automatically each version update",
   "expired": "Expired",
-  "resetTimesFooter": "Reset times based on {{server}} server (UTC{{offset}})"
+  "resetTimesFooter": "Reset times based on {{server}} server (UTC{{offset}})",
+  "card": {
+    "resetsIn": "Resets in",
+    "weeklyReset": "Weekly reset",
+    "endsIn": "Ends in",
+    "done": "Done",
+    "skip": "Skip",
+    "undoDone": "Undo Done",
+    "undoSkip": "Undo Skip",
+    "skipAria": "Skip {{name}}",
+    "undoStatusAria": "Undo {{name}} status"
+  }
 }

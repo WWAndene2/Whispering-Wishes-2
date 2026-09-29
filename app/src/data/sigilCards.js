@@ -3,6 +3,8 @@
 // user-supplied Sigil_Cards.zip); id is a stable key stored in visualSettings,
 // name is the UI label, file is the filename under that folder.
 
+import { SIGIL_CARD_NAME_ES } from './sigilCards.es.js';
+
 export const SIGIL_CARDS = [
   { id: 'battle-skills-i', name: 'Battle Skills I', file: 'Sigil_Card_Battle_Skills_I.png' },
   { id: 'battle-skills-ii', name: 'Battle Skills II', file: 'Sigil_Card_Battle_Skills_II.png' },
@@ -31,4 +33,10 @@ export const SIGIL_CARDS = [
 
 export function getSigilCard(id) {
   return SIGIL_CARDS.find((c) => c.id === id) || null;
+}
+
+/** Display name of a sigil card in `locale`; the English name is the fallback. */
+/** @param {string} name @param {string} locale */
+export function getLocalizedSigilCardName(name, locale) {
+  return ({ es: SIGIL_CARD_NAME_ES }[locale] || {})[name] || name;
 }

@@ -1,6 +1,17 @@
 {
   "monsterCard": {
-    "noResData": "Sin datos de RES elemental"
+    "noResData": "Sin datos de RES elemental",
+    "hp": "PV",
+    "atk": "ATQ",
+    "def": "DEF",
+    "interruptRes": "RES de interrupción",
+    "interruptResRecovery": "Recuperación de RES de interrupción",
+    "vibrationStrength": "Fuerza de vibración",
+    "vibrationStrengthRecovery": "Recuperación de fuerza de vibración",
+    "rage": "Furia",
+    "rageRecovery": "Recuperación de furia",
+    "physical": "Físico",
+    "level": "Nv. {{level}}"
   },
   "echoSelector": {
     "title": "Seleccionar Eco",
@@ -27,7 +38,8 @@
   },
   "enemyTarget": {
     "target": "Objetivo",
-    "level": "Nv."
+    "level": "Nv.",
+    "noTarget": "Ningún objetivo seleccionado (predeterminado)"
   },
   "selector": {
     "title": "Seleccionar Resonador",
@@ -119,7 +131,28 @@
     "sourceDot": "Daño continuo / Reacciones",
     "damageDistribution": "Distribución del daño",
     "footerNote": "DPS del equipo: rotación completa con habilidades, ecos, daño continuo y reacciones. Daño por atributos brutos: base + equipo + secuencia, solo potenciadores incondicionales, sin rotación. Mejora del DPS principal por potenciadores: cuánto más daño hace el DPS principal con la rotación completa y los potenciadores del equipo frente a los atributos brutos solos.",
-    "resonanceChainNote": "Las bonificaciones de la Cadena de Resonancia están incluidas en el DPS de arriba, pero se aplican directamente a los atributos: no tienen ventana en campo, así que no se dibujan como barras en la línea de tiempo."
+    "resonanceChainNote": "Las bonificaciones de la Cadena de Resonancia están incluidas en el DPS de arriba, pero se aplican directamente a los atributos: no tienen ventana en campo, así que no se dibujan como barras en la línea de tiempo.",
+    "costLabel": "Coste {{cost}}",
+    "pieceSuffix": "pzs",
+    "elemDmgBadge": "Daño de {{element}}",
+    "effStatBadge": "{{stat}} ef. {{value}}",
+    "critRateBadge": "Tasa crít. {{v}} %",
+    "critDmgBadge": "Daño crít. {{v}} %",
+    "skillBadge": "Habilidad +{{v}} %",
+    "atkPctBadge": "ATQ % +{{v}} %",
+    "amplifyBadge": "Amplificación +{{v}} %",
+    "defShredBadge": "Reducc. DEF {{v}} %",
+    "resShredBadge": "Reducc. RES {{v}} %",
+    "defIgnoreBadge": "Ignorar DEF {{v}} %",
+    "aggAtk": "+{{v}} % ATQ",
+    "aggElem": "+{{v}} % Daño elem.",
+    "aggSkill": "+{{v}} % Daño de habilidad",
+    "aggAmplify": "+{{v}} % Amplificación",
+    "aggCritRate": "{{v}} % Tasa crít.",
+    "aggCritDmg": "{{v}} % Daño crít.",
+    "aggDefShred": "-{{v}} % Reducc. DEF",
+    "aggResShred": "-{{v}} % Reducc. RES",
+    "aggDefIgnore": "{{v}} % Ignorar DEF"
   },
   "dpsCompare": {
     "clearTitle": "Borrar comparación",
@@ -251,6 +284,35 @@
     "shuffleAria": "Mezclar: mostrar otra muestra aleatoria de equipos seleccionados",
     "shuffle": "Mezclar",
     "teamSuggestions": "Sugerencias de equipos",
-    "ready": "Listo"
+    "ready": "Listo",
+    "suggestionTags": {
+      "meta": "Meta",
+      "strong": "Fuerte",
+      "balanced": "Equilibrado",
+      "atkAmp": "Amp. de ATQ",
+      "amplify": "Amplificación",
+      "bisWeapon": "Arma BiS",
+      "dualDps": "Doble DPS",
+      "echoAmp": "Amp. de Eco",
+      "echoSetPotential": "Potencial del conjunto de ecos",
+      "erosion": "Erosión eólica",
+      "frazzle": "Espectro estridente",
+      "goodWeapon": "Arma buena",
+      "heavyAmp": "Amp. de ataque pesado",
+      "offFieldDps": "DPS fuera de campo",
+      "offRoleCarry": "Carry fuera de rol",
+      "redundantDps": "DPS redundante",
+      "shred": "Reducción de RES",
+      "subDpsDamage": "Daño de Sub DPS"
+    }
+  },
+  "warnings": {
+    "incompleteTeam": "Equipo incompleto",
+    "noHealer": "Sin sanador en el equipo",
+    "noElementResonance": "Sin resonancia elemental",
+    "dualDps": "Doble DPS: el tiempo de rotación se comparte — usa 👑 para elegir cuál{{suffix}}",
+    "noMainDps": "Sin DPS principal: se usa al que más daño hace — usa 👑 para elegir otro DPS principal{{suffix}}",
+    "enemyResists": "{{enemy}} resiste {{element}} ({{res}} % RES) — el daño del golpe principal de {{name}} se reduce contra este objetivo",
+    "lowEr": "{{name}}: RE baja ({{er}} %) — disponibilidad de la Liberación {{uptime}} %"
   }
 }

@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useMemo, useImperativeHandle, forwardRef } from 'react';
 import { AlertTriangle, ChevronDown, Diamond, Download, Sparkles, Sword, Users, X, Zap } from 'lucide-react';
 
-import { WEAPON_DATA } from '../../data/weapons.js';
-import { ECHO_DATA, getEnemyStatsAtLevel } from '../../data/echoes.js';
+import { WEAPON_DATA, getLocalizedWeaponName } from '../../data/weapons.js';
+import { ECHO_DATA, getEnemyStatsAtLevel, getLocalizedEchoName } from '../../data/echoes.js';
 import { isHealerRole, DMG_FOCUS_ROLE_TAG } from './calcEngine.js';
 import { haptic } from '../../utils/haptics.js';
 import { getElementColor, getElementBg, getElementBorder, getElementShape, getElementIcon, getSetIcon, getWeaponTypeIcon, getStatIcon, getCombatRoleIcon, getRarityIcon, getRoleIcon } from '../../shared/utils/elementVisuals.js';
@@ -19,10 +19,20 @@ import { RotationGuideCard } from './RotationGuideCard.jsx';
 import { EnemyTargetCard, EnemyTargetModal } from './EnemyTargetSection.jsx';
 import { calcTeamStats as calcTeamStatsImpl } from './calcTeamStats.js';
 import { renderCharacterCard } from './characterCardRenderer.js';
-import { t, formatNumber, pickTable } from '../../utils/i18n.js';
+import { t, formatNumber, pickTable, getLocale } from '../../utils/i18n.js';
 
 
-import { ECHO_SETS_TABLES, ROLE_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
+import { CHARACTER_TAG_TABLES, ECHO_SETS_TABLES, ROLE_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
+
+// Display-only localizers: the English names/tags stay the ids everywhere.
+const tagLabel = (x) => pickTable(CHARACTER_TAG_TABLES)[x] || x;
+const statLabel = (x) => pickTable(STAT_NAME_TABLES)[x] || x;
+// "Sigillum + Trailblazing Star 5pc" style entries: an echo name, or a set name with an "Npc" suffix.
+const localizeEchoRec = (entry) => {
+  const m = /^(.*?) (\d+)pc$/.exec(entry);
+  if (m) return `${pickTable(ECHO_SETS_TABLES)[m[1]]?.name || m[1]} ${m[2]}${t('teams.damageCalc.pieceSuffix')}`;
+  return getLocalizedEchoName(entry, getLocale());
+};
 
 const DamageCalculator = forwardRef(function DamageCalculator({
   teamEquipment,
@@ -343,9 +353,9 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                   <div>
                     <div className="kuro-label">{t('teams.damageCalc.baseStats')}</div>
                     <div className="flex flex-wrap gap-1">
-                      <span className="kuro-badge kuro-badge-neutral">HP {formatNumber(m.d.baseHp || 0)}</span>
-                      <span className="kuro-badge kuro-badge-neutral">ATK {m.charAtk}</span>
-                      <span className="kuro-badge kuro-badge-neutral">DEF {formatNumber(m.d.baseDef || 0)}</span>
+                      <span className="kuro-badge kuro-badge-neutral">{statLabel('HP')} {formatNumber(m.d.baseHp || 0)}</span>
+                      <span className="kuro-badge kuro-badge-neutral">{statLabel('ATK')} {m.charAtk}</span>
+                      <span className="kuro-badge kuro-badge-neutral">{statLabel('DEF')} {formatNumber(m.d.baseDef || 0)}</span>
                       <span className="kuro-badge kuro-badge-amber">{t('teams.damageCalc.weaponPrefix', { value: m.weapAtk })}</span>
                     </div>
                   </div>
@@ -400,16 +410,16 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                                 const echoEntry = eq.echoes?.[ei];
                                 const echoName = typeof echoEntry === 'object' && echoEntry ? echoEntry.name : (typeof echoEntry === 'string' ? echoEntry : null);
                                 const echoData = echoName ? ECHO_DATA[echoName] : null;
-                                const costLabel = ei === 0 ? '4-cost' : ei < 3 ? '3-cost' : '1-cost';
                                 const costNum = ei === 0 ? 4 : ei < 3 ? 3 : 1;
+                                const costLabel = t('teams.damageCalc.costLabel', { cost: costNum });
                                 const costColor = costNum === 4 ? 'yellow' : costNum === 3 ? 'purple' : 'cyan';
                                 return (
                                   <div key={ei}
                                     className={`${slotStyle} ${echoName ? `border-${costColor}-500/40 bg-${costColor}-500/8` : 'border-dashed border-white/15 hover:border-' + costColor + '-500/40'}`}
                                     role="button"
                                     tabIndex={0}
-                                    title={echoName || t('teams.damageCalc.selectEcho', { cost: costLabel })}
-                                    aria-label={echoName || t('teams.damageCalc.selectEcho', { cost: costLabel })}
+                                    title={echoName ? getLocalizedEchoName(echoName, getLocale()) : t('teams.damageCalc.selectEcho', { cost: costLabel })}
+                                    aria-label={echoName ? getLocalizedEchoName(echoName, getLocale()) : t('teams.damageCalc.selectEcho', { cost: costLabel })}
                                     onClick={() => {
                                       if (echoName) {
                                         onOpenEchoStatPanel(state.activeTeamIndex, m.name, ei, echoName);
@@ -450,13 +460,13 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                             <div className="flex-1 min-w-0 pt-0.5">
                               {equippedWeap ? (
                                 <div className="text-sm space-y-0.5">
-                                  <div className="text-yellow-400/80 font-medium truncate">{eq.weapon}</div>
+                                  <div className="text-yellow-400/80 font-medium truncate">{getLocalizedWeaponName(eq.weapon, getLocale())}</div>
                                   <div className="text-gray-500">{(pickTable(STAT_NAME_TABLES)[equippedWeap.stat]) || equippedWeap.stat} {equippedWeap.subStatValue}</div>
                                 </div>
                               ) : m.d.bestWeapon ? (
                                 <div className="text-sm space-y-0.5">
-                                  <div><span className="text-gray-500">{t('teams.damageCalc.recommended')}</span><span className="text-yellow-400/50">{m.d.bestWeapon}</span></div>
-                                  {m.d.bestEchoes?.length > 0 && <div className="text-cyan-400/50">{m.d.bestEchoes.join(' + ')}</div>}
+                                  <div><span className="text-gray-500">{t('teams.damageCalc.recommended')}</span><span className="text-yellow-400/50">{getLocalizedWeaponName(m.d.bestWeapon, getLocale())}</span></div>
+                                  {m.d.bestEchoes?.length > 0 && <div className="text-cyan-400/50">{m.d.bestEchoes.map(localizeEchoRec).join(' + ')}</div>}
                                 </div>
                               ) : null}
                               {/* Echo summary */}
@@ -619,7 +629,7 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                         <span className="kuro-badge font-medium"
                           style={{ color: getElementColor(m.d.element), background: getElementBg(m.d.element), border: `1px solid ${getElementBorder(m.d.element)}` }}>
                           {getElementIcon(m.d.element) && <img src={getElementIcon(m.d.element)} alt="" className="w-3.5 h-3.5 inline-block align-middle mr-0.5" onError={hideOnError} />}
-                          {getElementShape(m.d.element)}{getElementShape(m.d.element) ? ' ' : ''}{m.d.element} DMG
+                          {getElementShape(m.d.element)}{getElementShape(m.d.element) ? ' ' : ''}{t('teams.damageCalc.elemDmgBadge', { element: m.d.element })}
                         </span>
                         {/* Audited combatRoles is the authoritative, iconed tag source (see
                             CharacterDetailModal) — falls back to plain dmgFocus tags, iconed via
@@ -630,7 +640,7 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                             return (
                               <span key={ti} className="kuro-badge kuro-badge-amber inline-flex items-center gap-1">
                                 {icon && <img src={icon} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                                {tag}
+                                {tagLabel(tag)}
                               </span>
                             );
                           })
@@ -639,14 +649,14 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                           return (
                             <span key={di} className="kuro-badge kuro-badge-amber inline-flex items-center gap-1">
                               {icon && <img src={icon} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                              {df}
+                              {tagLabel(df)}
                             </span>
                           );
                         })}
                         {m.d.statScaling && (
                           <span className="kuro-badge kuro-badge-violet inline-flex items-center gap-1">
                             {getStatIcon(m.d.statScaling) && <img src={getStatIcon(m.d.statScaling)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                            {t('teams.damageCalc.scaling', { stat: m.d.statScaling })}
+                            {t('teams.damageCalc.scaling', { stat: statLabel(m.d.statScaling) })}
                           </span>
                         )}
                       </div>
@@ -657,7 +667,7 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                         <div className="kuro-label">{t('teams.damageCalc.buffs')}</div>
                         <div className="flex flex-wrap gap-1">
                           {m.d.buffs.map((b, bi) => (
-                            <span key={bi} className="kuro-badge kuro-badge-emerald">{b}</span>
+                            <span key={bi} className="kuro-badge kuro-badge-emerald">{tagLabel(b)}</span>
                           ))}
                         </div>
                       </div>
@@ -668,7 +678,7 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                         <div className="kuro-label">{t('teams.damageCalc.debuffs')}</div>
                         <div className="flex flex-wrap gap-1">
                           {m.d.debuffs.map((db, di) => (
-                            <span key={di} className="kuro-badge kuro-badge-red">{db}</span>
+                            <span key={di} className="kuro-badge kuro-badge-red">{tagLabel(db)}</span>
                           ))}
                         </div>
                       </div>
@@ -680,20 +690,20 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                     <div>
                       <div className="kuro-label" title={t('teams.damageCalc.damageStatsTooltip')}>{t('teams.damageCalc.damageStats')}</div>
                       <div className="flex flex-wrap gap-1">
-                        <span className="kuro-badge kuro-badge-yellow">Eff.{mainDps.scaling !== 'ATK' ? mainDps.scaling : 'ATK'} {formatNumber(effAtk)}</span>
-                        <span className="kuro-badge kuro-badge-cyan">CR {cr.toFixed(1)}%</span>
-                        <span className="kuro-badge kuro-badge-cyan">CD {cd.toFixed(1)}%</span>
+                        <span className="kuro-badge kuro-badge-yellow">{t('teams.damageCalc.effStatBadge', { stat: statLabel(mainDps.scaling !== 'ATK' ? mainDps.scaling : 'ATK'), value: formatNumber(effAtk) })}</span>
+                        <span className="kuro-badge kuro-badge-cyan">{t('teams.damageCalc.critRateBadge', { v: cr.toFixed(1) })}</span>
+                        <span className="kuro-badge kuro-badge-cyan">{t('teams.damageCalc.critDmgBadge', { v: cd.toFixed(1) })}</span>
                         <span className="kuro-badge font-medium"
                           style={{ color: getElementColor(m.d.element), background: getElementBg(m.d.element), border: `1px solid ${getElementBorder(m.d.element)}` }}>
                           {getElementIcon(m.d.element) && <img src={getElementIcon(m.d.element)} alt="" className="w-3.5 h-3.5 inline-block align-middle mr-0.5" onError={hideOnError} />}
                           {getElementShape(m.d.element)}{getElementShape(m.d.element) ? ' ' : ''}{m.d.element} +{elemDmg.toFixed(0)}%
                         </span>
-                        {skillDmg > 0 && <span className="kuro-badge kuro-badge-amber">Skill +{skillDmg.toFixed(0)}%</span>}
-                        {atkPct > 0 && <span className="kuro-badge kuro-badge-emerald">ATK% +{atkPct.toFixed(0)}%</span>}
-                        {amplify > 0 && <span className="kuro-badge kuro-badge-purple">Amplify +{amplify.toFixed(0)}%</span>}
-                        {defShred > 0 && <span className="kuro-badge kuro-badge-red">DEF Shred {Math.round(defShred)}%</span>}
-                        {resShred > 0 && <span className="kuro-badge kuro-badge-red">RES Shred {Math.round(resShred)}%</span>}
-                        {defIgnore > 0 && <span className="kuro-badge kuro-badge-red">DEF Ignore {defIgnore}%</span>}
+                        {skillDmg > 0 && <span className="kuro-badge kuro-badge-amber">{t('teams.damageCalc.skillBadge', { v: skillDmg.toFixed(0) })}</span>}
+                        {atkPct > 0 && <span className="kuro-badge kuro-badge-emerald">{t('teams.damageCalc.atkPctBadge', { v: atkPct.toFixed(0) })}</span>}
+                        {amplify > 0 && <span className="kuro-badge kuro-badge-purple">{t('teams.damageCalc.amplifyBadge', { v: amplify.toFixed(0) })}</span>}
+                        {defShred > 0 && <span className="kuro-badge kuro-badge-red">{t('teams.damageCalc.defShredBadge', { v: Math.round(defShred) })}</span>}
+                        {resShred > 0 && <span className="kuro-badge kuro-badge-red">{t('teams.damageCalc.resShredBadge', { v: Math.round(resShred) })}</span>}
+                        {defIgnore > 0 && <span className="kuro-badge kuro-badge-red">{t('teams.damageCalc.defIgnoreBadge', { v: defIgnore })}</span>}
                       </div>
                     </div>
                   )}
@@ -709,15 +719,15 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                 <div className="flex flex-wrap gap-1">
                   {allBuffs.map((b, i) => (
                     <span key={i} className="kuro-badge kuro-badge-emerald">
-                      {b.buff} <span className="text-gray-500">({b.source})</span>
+                      {tagLabel(b.buff)} <span className="text-gray-500">({b.source})</span>
                     </span>
                   ))}
-                  {atkPct > 0 && <span className="kuro-badge kuro-badge-emerald">+{atkPct.toFixed(1)}% ATK</span>}
-                  {elemDmg > 0 && <span className="kuro-badge kuro-badge-yellow">+{elemDmg.toFixed(1)}% Elem DMG</span>}
-                  {skillDmg > 0 && <span className="kuro-badge kuro-badge-amber">+{skillDmg.toFixed(1)}% Skill DMG</span>}
-                  {amplify > 0 && <span className="kuro-badge kuro-badge-pink">+{amplify.toFixed(1)}% Amplify</span>}
-                  {cr > 5 && <span className="kuro-badge kuro-badge-cyan">{cr.toFixed(1)}% Crit Rate</span>}
-                  {cd > 150 && <span className="kuro-badge kuro-badge-cyan">{cd.toFixed(1)}% Crit DMG</span>}
+                  {atkPct > 0 && <span className="kuro-badge kuro-badge-emerald">{t('teams.damageCalc.aggAtk', { v: atkPct.toFixed(1) })}</span>}
+                  {elemDmg > 0 && <span className="kuro-badge kuro-badge-yellow">{t('teams.damageCalc.aggElem', { v: elemDmg.toFixed(1) })}</span>}
+                  {skillDmg > 0 && <span className="kuro-badge kuro-badge-amber">{t('teams.damageCalc.aggSkill', { v: skillDmg.toFixed(1) })}</span>}
+                  {amplify > 0 && <span className="kuro-badge kuro-badge-pink">{t('teams.damageCalc.aggAmplify', { v: amplify.toFixed(1) })}</span>}
+                  {cr > 5 && <span className="kuro-badge kuro-badge-cyan">{t('teams.damageCalc.aggCritRate', { v: cr.toFixed(1) })}</span>}
+                  {cd > 150 && <span className="kuro-badge kuro-badge-cyan">{t('teams.damageCalc.aggCritDmg', { v: cd.toFixed(1) })}</span>}
                 </div>
               </div>
             )}
@@ -727,12 +737,12 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                 <div className="flex flex-wrap gap-1">
                   {allDebuffs.map((b, i) => (
                     <span key={i} className="kuro-badge kuro-badge-red">
-                      {b.debuff} <span className="text-gray-500">({b.source})</span>
+                      {tagLabel(b.debuff)} <span className="text-gray-500">({b.source})</span>
                     </span>
                   ))}
-                  {defShred > 0 && <span className="kuro-badge kuro-badge-red">-{defShred.toFixed(1)}% DEF Shred</span>}
-                  {resShred > 0 && <span className="kuro-badge kuro-badge-red">-{resShred.toFixed(1)}% RES Shred</span>}
-                  {defIgnore > 0 && <span className="kuro-badge kuro-badge-red">{defIgnore.toFixed(1)}% DEF Ignore</span>}
+                  {defShred > 0 && <span className="kuro-badge kuro-badge-red">{t('teams.damageCalc.aggDefShred', { v: defShred.toFixed(1) })}</span>}
+                  {resShred > 0 && <span className="kuro-badge kuro-badge-red">{t('teams.damageCalc.aggResShred', { v: resShred.toFixed(1) })}</span>}
+                  {defIgnore > 0 && <span className="kuro-badge kuro-badge-red">{t('teams.damageCalc.aggDefIgnore', { v: defIgnore.toFixed(1) })}</span>}
                 </div>
               </div>
             )}

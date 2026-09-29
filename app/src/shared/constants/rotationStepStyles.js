@@ -45,10 +45,28 @@ export const STEP_TYPE_LABEL_FR = {
   Outro: "Compétence d'Outro",
   Step: 'Action',
 };
+// Spanish labels for the same step types, display-only like STEP_TYPE_LABEL_FR.
+export const STEP_TYPE_LABEL_ES = {
+  Intro: 'Habilidad Intro',
+  Skill: 'Habilidad de resonancia',
+  Liberation: 'Liberación de resonancia',
+  Ultimate: 'Liberación de resonancia (Definitiva)',
+  'Heavy ATK': 'Ataque pesado',
+  'Heavy Attack': 'Ataque pesado',
+  'Basic ATK': 'Ataque básico',
+  Forte: 'Circuito de Forte',
+  'Mid-air': 'Ataque aéreo',
+  'Mid-air ATK': 'Ataque aéreo',
+  'Mid-air Attack': 'Ataque aéreo',
+  'Dodge Counter': 'Contraataque de esquiva',
+  Echo: 'Habilidad de Eco',
+  Outro: 'Habilidad Outro',
+  Step: 'Acción',
+};
 /** @param {string} type @param {string} [locale] */
 export const stepStyle = (type, locale) => {
   const base = STEP_TYPE_STYLE[type] || { label: type || 'Action', cls: 'text-gray-400 bg-gray-500/10 border-gray-500/30' };
-  const label = pickTable({ fr: STEP_TYPE_LABEL_FR }, locale)[type];
+  const label = pickTable({ fr: STEP_TYPE_LABEL_FR, es: STEP_TYPE_LABEL_ES }, locale)[type];
   if (label) return { ...base, label };
   return base;
 };

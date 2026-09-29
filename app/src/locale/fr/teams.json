@@ -1,6 +1,17 @@
 {
   "monsterCard": {
-    "noResData": "Aucune donnée de RES élémentaire"
+    "noResData": "Aucune donnée de RES élémentaire",
+    "hp": "PV",
+    "atk": "ATQ",
+    "def": "DÉF",
+    "interruptRes": "RES d'interruption",
+    "interruptResRecovery": "Récupération de RES d'interruption",
+    "vibrationStrength": "Force de vibration",
+    "vibrationStrengthRecovery": "Récupération de force de vibration",
+    "rage": "Rage",
+    "rageRecovery": "Récupération de rage",
+    "physical": "Physique",
+    "level": "Niv. {{level}}"
   },
   "echoSelector": {
     "title": "Sélectionner un écho",
@@ -27,7 +38,8 @@
   },
   "enemyTarget": {
     "target": "Cible",
-    "level": "Nv."
+    "level": "Nv.",
+    "noTarget": "Aucune cible sélectionnée (par défaut)"
   },
   "selector": {
     "title": "Sélectionner un Résonateur",
@@ -119,7 +131,28 @@
     "sourceDot": "DOT / Réactions",
     "damageDistribution": "Répartition des dégâts",
     "footerNote": "DPS d'équipe : rotation complète incluant compétences, échos, DOT, réactions. Dégâts Bruts (Stats) : base + équipement + séquence, bonus inconditionnels uniquement, sans rotation. Gain de buffs (DPS principal) : combien de plus le DPS principal produit avec la rotation/les buffs d'équipe complets vs. les stats brutes seules.",
-    "resonanceChainNote": "Les bonus de chaîne de résonance sont inclus dans le DPS ci-dessus, mais s'appliquent directement aux statistiques — ils n'ont pas de fenêtre sur le terrain, donc ils ne sont pas affichés comme des barres sur la chronologie."
+    "resonanceChainNote": "Les bonus de chaîne de résonance sont inclus dans le DPS ci-dessus, mais s'appliquent directement aux statistiques — ils n'ont pas de fenêtre sur le terrain, donc ils ne sont pas affichés comme des barres sur la chronologie.",
+    "costLabel": "Coût {{cost}}",
+    "pieceSuffix": "p.",
+    "elemDmgBadge": "DGT {{element}}",
+    "effStatBadge": "{{stat}} eff. {{value}}",
+    "critRateBadge": "TC {{v}} %",
+    "critDmgBadge": "DC {{v}} %",
+    "skillBadge": "Compétence +{{v}} %",
+    "atkPctBadge": "ATQ % +{{v}} %",
+    "amplifyBadge": "Amplification +{{v}} %",
+    "defShredBadge": "Réduc. DÉF {{v}} %",
+    "resShredBadge": "Réduc. RÉS {{v}} %",
+    "defIgnoreBadge": "Ignore DÉF {{v}} %",
+    "aggAtk": "+{{v}} % ATQ",
+    "aggElem": "+{{v}} % DGT élém.",
+    "aggSkill": "+{{v}} % DGT de compétence",
+    "aggAmplify": "+{{v}} % Amplification",
+    "aggCritRate": "{{v}} % Taux critique",
+    "aggCritDmg": "{{v}} % DGT critiques",
+    "aggDefShred": "-{{v}} % Réduc. DÉF",
+    "aggResShred": "-{{v}} % Réduc. RÉS",
+    "aggDefIgnore": "{{v}} % Ignore DÉF"
   },
   "dpsCompare": {
     "clearTitle": "Effacer la comparaison",
@@ -251,6 +284,35 @@
     "shuffleAria": "Mélanger : afficher un autre échantillon aléatoire d'équipes recommandées",
     "shuffle": "Mélanger",
     "teamSuggestions": "Suggestions d'équipes",
-    "ready": "Prête"
+    "ready": "Prête",
+    "suggestionTags": {
+      "meta": "Meta",
+      "strong": "Fort",
+      "balanced": "Équilibrée",
+      "atkAmp": "Amp. ATQ",
+      "amplify": "Amplification",
+      "bisWeapon": "Arme BiS",
+      "dualDps": "Double DPS",
+      "echoAmp": "Amp. d'Écho",
+      "echoSetPotential": "Potentiel du set d'Échos",
+      "erosion": "Érosion Aéronautique",
+      "frazzle": "Lumière Spectro",
+      "goodWeapon": "Bonne arme",
+      "heavyAmp": "Amp. attaque lourde",
+      "offFieldDps": "DPS hors-champ",
+      "offRoleCarry": "Carry hors-rôle",
+      "redundantDps": "DPS redondant",
+      "shred": "Réduction RES",
+      "subDpsDamage": "DGT Sub DPS"
+    }
+  },
+  "warnings": {
+    "incompleteTeam": "Équipe incomplète",
+    "noHealer": "Aucun soigneur dans l'équipe",
+    "noElementResonance": "Aucune résonance élémentaire",
+    "dualDps": "Double DPS : temps de rotation partagé — utilisez 👑 pour choisir lequel{{suffix}}",
+    "noMainDps": "Aucun DPS principal : le plus fort infligeur de dégâts est utilisé — utilisez 👑 pour choisir un autre DPS principal{{suffix}}",
+    "enemyResists": "{{enemy}} résiste à {{element}} ({{res}} % RES) — les DGT du coup principal de {{name}} sont réduits contre cette cible",
+    "lowEr": "{{name}} : faible RE ({{er}} %) — disponibilité de la Libération {{uptime}} %"
   }
 }

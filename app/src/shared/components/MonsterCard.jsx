@@ -121,16 +121,16 @@ function MonsterCard({
               <span className="text-2xs text-gray-500">/ 120</span>
             </div>
           ) : (
-            <div className="text-2xs text-gray-500">Lv. {level}</div>
+            <div className="text-2xs text-gray-500">{t('teams.monsterCard.level', { level })}</div>
           )}
         </div>
       </div>
 
       {enemyStats && (hp || atk || def) && (
         <div className="mt-2 pt-2 border-t border-[var(--border-subtle)]">
-          <StatRow icon={getStatIcon('HP')} label="HP" value={hp} />
-          <StatRow icon={getStatIcon('ATK')} label="ATK" value={atk} />
-          <StatRow icon={getStatIcon('DEF')} label="DEF" value={def} />
+          <StatRow icon={getStatIcon('HP')} label={t('teams.monsterCard.hp')} value={hp} />
+          <StatRow icon={getStatIcon('ATK')} label={t('teams.monsterCard.atk')} value={atk} />
+          <StatRow icon={getStatIcon('DEF')} label={t('teams.monsterCard.def')} value={def} />
         </div>
       )}
 
@@ -138,12 +138,12 @@ function MonsterCard({
           Rage/Recovery scale with level just like HP/ATK/DEF above (see staggerScaled). */}
       {enemyStats && (interruptRes != null || vibration != null || rage != null) && (
         <div className="mt-2 pt-2 border-t border-[var(--border-subtle)]">
-          <StatRow label="Interruption RES" value={interruptRes} />
-          <StatRow label="Interruption RES Recovery" value={interruptResRecover} />
-          <StatRow label="Vibration Strength" value={vibration} />
-          <StatRow label="Vibration Strength Recovery" value={vibrationRecover} />
-          <StatRow label="Rage" value={rage} />
-          <StatRow label="Rage Recovery" value={rageRecover} />
+          <StatRow label={t('teams.monsterCard.interruptRes')} value={interruptRes} />
+          <StatRow label={t('teams.monsterCard.interruptResRecovery')} value={interruptResRecover} />
+          <StatRow label={t('teams.monsterCard.vibrationStrength')} value={vibration} />
+          <StatRow label={t('teams.monsterCard.vibrationStrengthRecovery')} value={vibrationRecover} />
+          <StatRow label={t('teams.monsterCard.rage')} value={rage} />
+          <StatRow label={t('teams.monsterCard.rageRecovery')} value={rageRecover} />
         </div>
       )}
 
@@ -154,7 +154,7 @@ function MonsterCard({
           return (
             <span key={el} className={`kuro-badge ${resBadgeClass(val)} inline-flex items-center gap-1`}>
               {icon && <img src={icon} alt="" className="w-3 h-3" onError={hideOnError} />}
-              {ELEMENT_LABEL[el]} {val}%
+              {el === 'physical' ? t('teams.monsterCard.physical') : ELEMENT_LABEL[el]} {val}%
             </span>
           );
         }) : (

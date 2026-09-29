@@ -217,7 +217,7 @@
     "legendWhimperingWastes": "Yermos Gimientes",
     "legendMatrix": "Matriz",
     "legendTacticalHologram": "Holograma Táctico",
-    "legendPioneerPodcast": "Pioneer Podcast",
+    "legendPioneerPodcast": "Pódcast pionero",
     "dailiesLegend": "Diarias",
     "noteLegend": "Nota",
     "dailiesDone": "Diarias",
@@ -247,7 +247,7 @@
     "reminderSet": "Recordatorio establecido para {{name}} ({{hours}} h antes de que termine)",
     "reminderCancelled": "Recordatorio cancelado para {{name}}",
     "reminderFailed": "No se pudo establecer el recordatorio: revisa el permiso de notificaciones",
-    "pioneerPodcastVersion": "Pioneer Podcast v{{version}}",
+    "pioneerPodcastVersion": "Pódcast pionero v{{version}}",
     "currentBannerPhase": "Fase de banner actual — {{version}} Fase {{phase}}",
     "bannerPhaseDescription": "v{{version}} Fase {{phase}}: {{characters}}",
     "doubledPawnsDescription": "Matriz de Peones Dobles: Piloto — jefe recurrente de la v{{version}} (sustituido por la Matriz de Estado Final en la v3.2). Recompensas: {{rewards}} de Astrita",
@@ -257,5 +257,6 @@
     "eventDescriptionCycle": "{{name}} — {{desc}}. Ciclo de {{resetType}}. Recompensas: {{rewards}}",
     "doubledPawnsMatrixLabel": "Matriz de Peones Dobles v{{version}}",
     "tacticalHologramLabel": "Holograma Táctico: {{name}}"
-  }
+  },
+  "perDayShort": "{{n}}/día"
 }

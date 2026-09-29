@@ -177,7 +177,7 @@ function CalculatorTab({ state, dispatch }) {
                       label={t('calculator.featuredResonatorLabel')} pity={state.calc.charPity} onPityChange={v => setCalc('charPity', v)}
                       copies={state.calc.charCopies} maxCopies={7} onCopiesChange={v => setCalc('charCopies', v)}
                       fourStarCopies={state.calc.char4StarCopies} maxFourStar={21} onFourStarChange={v => setCalc('char4StarCopies', v)}
-                      color="#edaf18" softColor="#fb923c" softGlow="rgba(251,146,60,0.5)" sliderClass="" softPityClass="kuro-soft-pity" SoftPityIcon={Sparkles} ariaPrefix="Featured Resonator"
+                      color="#edaf18" softColor="#fb923c" softGlow="rgba(251,146,60,0.5)" sliderClass="" softPityClass="kuro-soft-pity" SoftPityIcon={Sparkles} ariaPrefix={t('pity.prefixFeaturedResonator')}
                     />
                   )}
 
@@ -187,7 +187,7 @@ function CalculatorTab({ state, dispatch }) {
                       label={t('calculator.featuredWeaponLabel')} pity={state.calc.weapPity} onPityChange={v => setCalc('weapPity', v)}
                       copies={state.calc.weapCopies} maxCopies={5} onCopiesChange={v => setCalc('weapCopies', v)}
                       fourStarCopies={state.calc.weap4StarCopies} maxFourStar={15} onFourStarChange={v => setCalc('weap4StarCopies', v)}
-                      color="#f9a8d4" softColor="#ec4899" softGlow="rgba(236,72,153,0.5)" sliderClass="pink" softPityClass="kuro-soft-pity-pink" SoftPityIcon={Swords} ariaPrefix="Weapon"
+                      color="#f9a8d4" softColor="#ec4899" softGlow="rgba(236,72,153,0.5)" sliderClass="pink" softPityClass="kuro-soft-pity-pink" SoftPityIcon={Swords} ariaPrefix={t('pity.prefixWeapon')}
                     />
                   )}
 
@@ -197,7 +197,7 @@ function CalculatorTab({ state, dispatch }) {
                       label={t('calculator.standardResonatorLabel')} pity={state.calc.stdCharPity} onPityChange={v => setCalc('stdCharPity', v)}
                       copies={state.calc.stdCharCopies} maxCopies={7} onCopiesChange={v => setCalc('stdCharCopies', v)}
                       fourStarCopies={state.calc.stdChar4StarCopies} maxFourStar={21} onFourStarChange={v => setCalc('stdChar4StarCopies', v)}
-                      color="#22d3ee" softColor="#67e8f9" softGlow="rgba(103,232,249,0.5)" sliderClass="cyan" softPityClass="kuro-soft-pity-cyan" SoftPityIcon={Star} ariaPrefix="Standard Resonator"
+                      color="#22d3ee" softColor="#67e8f9" softGlow="rgba(103,232,249,0.5)" sliderClass="cyan" softPityClass="kuro-soft-pity-cyan" SoftPityIcon={Star} ariaPrefix={t('pity.prefixStandardResonator')}
                     />
                   )}
 
@@ -207,7 +207,7 @@ function CalculatorTab({ state, dispatch }) {
                       label={t('calculator.standardWeaponLabel')} pity={state.calc.stdWeapPity} onPityChange={v => setCalc('stdWeapPity', v)}
                       copies={state.calc.stdWeapCopies} maxCopies={5} onCopiesChange={v => setCalc('stdWeapCopies', v)}
                       fourStarCopies={state.calc.stdWeap4StarCopies} maxFourStar={15} onFourStarChange={v => setCalc('stdWeap4StarCopies', v)}
-                      color="#22d3ee" softColor="#67e8f9" softGlow="rgba(103,232,249,0.5)" sliderClass="cyan" softPityClass="kuro-soft-pity-cyan" SoftPityIcon={Sword} ariaPrefix="Standard Weapon"
+                      color="#22d3ee" softColor="#67e8f9" softGlow="rgba(103,232,249,0.5)" sliderClass="cyan" softPityClass="kuro-soft-pity-cyan" SoftPityIcon={Sword} ariaPrefix={t('pity.prefixStandardWeapon')}
                     />
                   )}
               </CardBody>

@@ -549,7 +549,7 @@ function PlannerTab({
       <Card>
         <div className="cursor-pointer" role="button" tabIndex={0} onClick={() => toggleSection('daily')} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSection('daily'); } }} aria-expanded={!collapsed.daily}>
           <CardHeader action={<>
-            <span className="text-yellow-400 kuro-number text-base font-bold">{dailyIncome}/day</span>
+            <span className="text-yellow-400 kuro-number text-base font-bold">{t('planner.perDayShort', { n: dailyIncome })}</span>
             <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 ${collapsed.daily ? '' : 'rotate-180'}`} />
           </>}><Calendar size={14} className="inline mr-1.5 -mt-0.5 text-yellow-400" />{t('planner.dailyIncomeTitle')}</CardHeader>
         </div>

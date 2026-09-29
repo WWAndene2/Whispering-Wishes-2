@@ -85,7 +85,7 @@ const generateMaskGradient = (fadePos, fadeIntensity) => {
 };
 
 // Featured 4★ name tags: the 4★ rarity purple (--rarity-4star, #c084fc) at the same 32.5% fill /
-// 50% border as the role/weapon/element tags.
+// 50% border as the role/weapon/element tags. The portrait frame above each tag uses the same border.
 const FEATURED_4STAR_TAG_STYLE = { color: 'var(--rarity-4star)', backgroundColor: 'rgba(192,132,252,0.325)', borderColor: 'rgba(192,132,252,0.5)' };
 
 // Weapon-type labels as shown next to a Support/Healer role tag (see the tag row below).
@@ -295,7 +295,8 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
                 <div key={n} className="inline-flex flex-col items-center gap-0.5">
                   {previewImg && (
                     <div
-                      className={`w-12 h-12 rounded-md overflow-hidden border bg-black/25 cursor-pointer ${isEditingThis ? 'border-emerald-400 ring-2 ring-emerald-500/50' : 'border-cyan-400/40'}`}
+                      className={`w-12 h-12 rounded-md overflow-hidden border bg-black/25 cursor-pointer ${isEditingThis ? 'border-emerald-400 ring-2 ring-emerald-500/50' : ''}`}
+                      style={isEditingThis ? undefined : { borderColor: FEATURED_4STAR_TAG_STYLE.borderColor }}
                       onClick={framingMode ? () => setEditingImage(framingKey) : () => setDetailModal?.({ show: true, type: isChar ? 'character' : 'weapon', name: n, imageUrl: previewImg, framing })}
                     >
                       <img

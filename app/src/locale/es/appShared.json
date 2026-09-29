@@ -41,7 +41,7 @@
   "mainNavigation": "Navegación principal",
   "navigationFallback": "Navegación",
   "tabActive": "Pestaña {{tab}} activa",
-  "navTracker": "Seguimiento",
+  "navTracker": "Rastreo",
   "navEvents": "Eventos",
   "navMap": "Mapa",
   "navPlan": "Plan",

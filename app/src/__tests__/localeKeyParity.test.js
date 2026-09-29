@@ -178,3 +178,15 @@ describe('Spanish rotation notes', () => {
     expect(es['Jinhsi'][0].skill).toBe(CHARACTER_ROTATIONS['Jinhsi'][0].skill);
   });
 });
+
+describe('Spanish weapon-recommendation reasons', () => {
+  it('cover the same characters and fields as the source data', async () => {
+    const { CHARACTER_DATA } = await import('../data/characters.js');
+    const { WEAPON_VERDICT_REASON_ES, WEAPON_ALT_REASON_ES } = await import('../data/characters.es.js');
+    const withV = Object.entries(CHARACTER_DATA).filter(([, d]) => d.weaponVerdictReason).map(([n]) => n);
+    const withA = Object.entries(CHARACTER_DATA).filter(([, d]) => d.weaponAltReason).map(([n]) => n);
+    expect(Object.keys(WEAPON_VERDICT_REASON_ES).sort()).toEqual(withV.sort());
+    expect(Object.keys(WEAPON_ALT_REASON_ES).sort()).toEqual(withA.sort());
+    for (const n of withV) expect(Object.keys(WEAPON_VERDICT_REASON_ES[n]).sort()).toEqual(Object.keys(CHARACTER_DATA[n].weaponVerdictReason).sort());
+  });
+});

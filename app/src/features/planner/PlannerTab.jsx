@@ -32,13 +32,12 @@ import { TargetInput } from '../../shared/components/TargetInput.jsx';
 import { AstriteCalendar } from './AstriteCalendar.jsx';
 import EchoFarmPlanner from './EchoFarmPlanner.jsx';
 import { t, formatNumber, formatDate, getLocale , pickTable } from '../../utils/i18n.js';
-import { WEAPON_VERDICT_REASON_FR, WEAPON_ALT_REASON_FR } from '../../data/characters.fr.js';
 import { calcStats } from '../../core/calcStats.js';
 import { computePullAllocation } from '../../core/pullAllocation.js';
 import { TIER_SCORES } from '../../data/tierScores.js';
 import { isHealerRole, isSupportRole } from '../../engine/math/roleMatch.js';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
-import { ROLE_TABLES } from '../../data/localeTables.js';
+import { ROLE_TABLES, WEAPON_ALT_REASON_TABLES, WEAPON_VERDICT_REASON_TABLES } from '../../data/localeTables.js';
 
 
 // Computes the full material/shell/EXP-potion requirement for one Ascension Planner target.
@@ -990,8 +989,8 @@ function PlannerTab({
                     </div>
                     {top.d.weaponVerdictReason ? (
                       <div className="space-y-1">
-                        <p className="text-gray-300 text-xs font-medium leading-snug">{(pickTable({ fr: WEAPON_VERDICT_REASON_FR })[top.name]?.need) || top.d.weaponVerdictReason.need}</p>
-                        <p className="text-gray-500 text-xs leading-snug">{(pickTable({ fr: WEAPON_VERDICT_REASON_FR })[top.name]?.signatureNote) || top.d.weaponVerdictReason.signatureNote}</p>
+                        <p className="text-gray-300 text-xs font-medium leading-snug">{(pickTable(WEAPON_VERDICT_REASON_TABLES)[top.name]?.need) || top.d.weaponVerdictReason.need}</p>
+                        <p className="text-gray-500 text-xs leading-snug">{(pickTable(WEAPON_VERDICT_REASON_TABLES)[top.name]?.signatureNote) || top.d.weaponVerdictReason.signatureNote}</p>
                       </div>
                     ) : (
                       <p className="text-gray-500 text-xs leading-snug">
@@ -1012,8 +1011,8 @@ function PlannerTab({
                         <div className="min-w-0 space-y-0.5">
                           {top.d.weaponAltReason ? (
                             <>
-                              <p className="text-gray-300 text-xs font-medium leading-snug">{(pickTable({ fr: WEAPON_ALT_REASON_FR })[top.name]?.headline) || top.d.weaponAltReason.headline}</p>
-                              <p className="text-gray-500 text-2xs leading-snug">{(pickTable({ fr: WEAPON_ALT_REASON_FR })[top.name]?.detail) || top.d.weaponAltReason.detail}</p>
+                              <p className="text-gray-300 text-xs font-medium leading-snug">{(pickTable(WEAPON_ALT_REASON_TABLES)[top.name]?.headline) || top.d.weaponAltReason.headline}</p>
+                              <p className="text-gray-500 text-2xs leading-snug">{(pickTable(WEAPON_ALT_REASON_TABLES)[top.name]?.detail) || top.d.weaponAltReason.detail}</p>
                             </>
                           ) : (
                             <p className="text-gray-300 text-xs font-medium">

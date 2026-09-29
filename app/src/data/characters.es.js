@@ -2000,3 +2000,23 @@ export const CHARACTER_ROTATION_NOTE_ES = {
     "Cambia de personaje para activarlo automáticamente: inflige daño Fusión igual al 795 % de su ATQ, sin componente de mejora de equipo (daño puro, seguro para el cambio rápido).",
   ],
 };
+
+// Weapon recommendation reasons shown in the planner's recommendation card
+// (CHARACTER_DATA[name].weaponVerdictReason / weaponAltReason).
+export const WEAPON_VERDICT_REASON_ES = {
+  'Mornye': {
+    need: 'El kit de Mornye escala sobre todo con la DEF, y su necesidad real es un 260 % de regeneración de energía para llevar al máximo las automejoras de su liberación y las mejoras de todo el equipo: se alcanza fácilmente incluso con armas de 4★ gratuitas.',
+    signatureNote: 'Starfield Calibrator solo añade una mejora permanente del 20 % de daño crítico para el equipo y energía de Concerto extra: según sus propias notas de montaje, la ganancia de daño personal es despreciable y el retorno de la mejora es bajo, que es justo por lo que se puede omitir.',
+  },
+  'Jingran': {
+    need: 'El kit de Jingran escala con los PV máx., con una automejora que llega a su tope con 50 000 PV en su montaje ideal.',
+    signatureNote: 'Thousandfold Deliverance es la única arma que le da ~72 % de PV %, el atributo secundario que de verdad lo lleva a ese tope mientras sigue acumulando daño crítico e ignorar DEF: cualquier otra opción deja una brecha grande y permanente, no solo una menor.',
+  },
+};
+
+export const WEAPON_ALT_REASON_ES = {
+  'Mornye': {
+    headline: 'Discord restaura 16 de energía de Concerto por lanzamiento de habilidad',
+    detail: 'el doble del efecto de su arma exclusiva, y sigue cumpliendo con holgura su necesidad de regeneración de energía: un cambio limpio y gratuito para esa ranura.',
+  },
+};

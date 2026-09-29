@@ -214,3 +214,20 @@ describe('Spanish achievements', () => {
     for (const [id, tr] of Object.entries(ACHIEVEMENTS_ES)) expect(es[id].name).toBe(tr.name);
   });
 });
+
+describe('Spanish weapon and echo display names', () => {
+  it('only names weapons and echoes that exist, and exposes them as displayName', async () => {
+    const { WEAPON_NAME_ES } = await import('../data/weapons.es.js');
+    const { ECHO_NAME_ES } = await import('../data/echoes.es.js');
+    const { WEAPON_DATA, getLocalizedWeaponData, getLocalizedWeaponName } = await import('../data/weapons.js');
+    const { ECHO_DATA, getLocalizedEchoData, getLocalizedEchoName } = await import('../data/echoes.js');
+    for (const k of Object.keys(WEAPON_NAME_ES)) expect(WEAPON_DATA[k], k).toBeDefined();
+    for (const k of Object.keys(ECHO_NAME_ES)) expect(ECHO_DATA[k], k).toBeDefined();
+    expect(getLocalizedWeaponName('Static Mist', 'es')).toBe('Niebla estática');
+    expect(getLocalizedWeaponName('Static Mist', 'fr')).toBe('Static Mist');
+    expect(getLocalizedEchoName('Inferno Rider', 'es')).toBe('Jinete Infernal');
+    expect(getLocalizedWeaponData('es')['Static Mist'].displayName).toBe('Niebla estática');
+    expect(getLocalizedEchoData('es')['Inferno Rider'].displayName).toBe('Jinete Infernal');
+    expect(getLocalizedEchoData('en')['Inferno Rider'].displayName).toBeUndefined();
+  });
+});

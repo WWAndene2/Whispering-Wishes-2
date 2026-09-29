@@ -20,6 +20,7 @@ import { ConveneVideo } from './ConveneVideoLayer.jsx';
 import { ConvenePullPills } from './ConvenePullPills.jsx';
 import { ConvenePullSimModal } from './ConvenePullSimModal.jsx';
 import { t, getLocale , pickTable } from '../../utils/i18n.js';
+import { getLocalizedWeaponName } from '../../data/weapons.js';
 
 // Support/Healer runs under the banner countdown at full length, so it is abbreviated per locale.
 const SUPPORT_HEALER_SHORT = { fr: 'Sout./Soign.', es: 'Ap./San.' };
@@ -117,6 +118,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
     : generateMaskGradient();
   const pictureOpacity = visualSettings ? visualSettings.pictureOpacity / 100 : 0.9;
   const isFull = visualSettings?.animationsEnabled === 'full';
+  const shownName = isChar ? item.name : getLocalizedWeaponName(item.name, getLocale());
   const spineId = isChar ? getSpineId(item.name) : null;
   // No longer isChar-gated — weapon convene clips exist now too (getConveneAnimation
   // already returns null for anything with no clip, character or weapon).
@@ -140,7 +142,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
         >
           <img
             src={imgUrl}
-            alt={item.name}
+            alt={shownName}
             className={`w-full h-full object-cover ${useSpine ? '' : 'breath-zoom'}`}
             style={{
               opacity: useSpine ? 1 : pictureOpacity,
@@ -270,7 +272,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
               onClick={() => setDetailModal?.({ show: true, type: isChar ? 'character' : 'weapon', name: item.name, imageUrl: (collectionImages || DEFAULT_COLLECTION_IMAGES)[item.name], framing: getImageFraming(`collection-${item.name}`) })}
             >
             {item.isNew ? (() => {
-              const [firstWord, ...restWords] = item.name.split(' ');
+              const [firstWord, ...restWords] = shownName.split(' ');
               const rest = restWords.join(' ');
               return (
                 <>
@@ -281,7 +283,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
                   {rest && <span className="block">{rest}</span>}
                 </>
               );
-            })() : item.name}
+            })() : shownName}
             </button>
           </h2>
           {item.title && <p className="text-gray-200 text-sm line-clamp-1">{(pickTable(CURRENT_BANNER_TITLE_TABLES)[item.title]) || item.title}</p>}

@@ -8,10 +8,10 @@
 import React, { useState, memo } from 'react';
 import { Skull } from 'lucide-react';
 import { getElementIcon, getStatIcon } from '../utils/elementVisuals.js';
-import { t, pickTable } from '../../utils/i18n.js';
+import { t, pickTable, getLocale } from '../../utils/i18n.js';
 import { hideOnError } from '../utils/imageHelpers.js';
 import { TargetInput } from './TargetInput.jsx';
-import { getEnemyStatsAtLevel, getEnemyStaggerStatsAtLevel } from '../../data/echoes.js';
+import { getEnemyStatsAtLevel, getEnemyStaggerStatsAtLevel, getLocalizedEchoName } from '../../data/echoes.js';
 import { RANK_TABLES } from '../../data/localeTables.js';
 
 
@@ -105,7 +105,7 @@ function MonsterCard({
         )}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5">
-            <div className="text-white font-semibold truncate">{name}</div>
+            <div className="text-white font-semibold truncate">{getLocalizedEchoName(name, getLocale())}</div>
             {rank && <span className={`kuro-badge ${RANK_BADGE_CLASS[rank] || ''} shrink-0 text-2xs`}>{(pickTable(RANK_TABLES)[rank]) || rank}</span>}
           </div>
           {showLevelControl && enemyStats ? (

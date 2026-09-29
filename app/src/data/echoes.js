@@ -894,7 +894,15 @@ const ALL_ECHO_BUFF_TYPES = [...new Set(Object.values(ECHO_DATA).flatMap(e => Ar
 // English data above is the single source of truth for numbers/mechanics;
 // these merge in translated *text* fields only, keyed by the same names.
 import { ECHO_SETS_FR, ECHO_DATA_FR, translateBuffFr } from './echoes.fr.js';
-import { ECHO_SETS_ES, ECHO_DATA_ES, translateBuffEs } from './echoes.es.js';
+import { ECHO_SETS_ES, ECHO_DATA_ES, ECHO_NAME_ES, translateBuffEs } from './echoes.es.js';
+
+const ECHO_NAME_TABLES = { es: ECHO_NAME_ES };
+
+/** Display name of an echo in `locale`; the English name doubles as the id, so it is the fallback. */
+/** @param {string} name @param {string} locale */
+export function getLocalizedEchoName(name, locale) {
+  return ECHO_NAME_TABLES[locale]?.[name] || name;
+}
 
 /** @param {string} locale */
 export function getLocalizedEchoSets(locale) {
@@ -914,7 +922,7 @@ export function getLocalizedEchoData(locale) {
   const out = {};
   for (const [name, base] of Object.entries(ECHO_DATA)) {
     const tr = overlay.data[name];
-    out[name] = { ...base, buff: overlay.translateBuff(base.buff), ...(tr?.name ? { displayName: tr.name } : {}), ...(tr?.desc ? { desc: tr.desc } : {}) };
+    out[name] = { ...base, buff: overlay.translateBuff(base.buff), ...(getLocalizedEchoName(name, locale) !== name ? { displayName: getLocalizedEchoName(name, locale) } : tr?.name ? { displayName: tr.name } : {}), ...(tr?.desc ? { desc: tr.desc } : {}) };
   }
   return out;
 }

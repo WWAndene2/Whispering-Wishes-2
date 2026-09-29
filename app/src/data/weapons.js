@@ -650,7 +650,15 @@ const WEAPON_DATA = {
 // a fallback whenever a weapon has no `pv`, so feeding it translated text
 // would silently corrupt DPS calculations.
 import { WEAPON_DATA_FR } from './weapons.fr.js';
-import { WEAPON_DATA_ES } from './weapons.es.js';
+import { WEAPON_DATA_ES, WEAPON_NAME_ES } from './weapons.es.js';
+
+const WEAPON_NAME_TABLES = { es: WEAPON_NAME_ES };
+
+/** Display name of a weapon in `locale`; the English name doubles as the id, so it is the fallback. */
+/** @param {string} name @param {string} locale */
+export function getLocalizedWeaponName(name, locale) {
+  return WEAPON_NAME_TABLES[locale]?.[name] || name;
+}
 
 /** @param {string} locale */
 export function getLocalizedWeaponData(locale) {
@@ -659,7 +667,7 @@ export function getLocalizedWeaponData(locale) {
   const out = {};
   for (const [name, base] of Object.entries(WEAPON_DATA)) {
     const tr = overlay[name];
-    out[name] = { ...base, ...(tr?.name ? { displayName: tr.name } : {}), ...(tr?.desc ? { desc: tr.desc } : {}), ...(tr?.passive ? { passive: tr.passive } : {}) };
+    out[name] = { ...base, ...(getLocalizedWeaponName(name, locale) !== name ? { displayName: getLocalizedWeaponName(name, locale) } : tr?.name ? { displayName: tr.name } : {}), ...(tr?.desc ? { desc: tr.desc } : {}), ...(tr?.passive ? { passive: tr.passive } : {}) };
   }
   return out;
 }

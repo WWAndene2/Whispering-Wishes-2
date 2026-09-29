@@ -22,7 +22,7 @@ import { usePersistedState } from '../../hooks/usePersistedState.js';
 import { generateUniqueId } from '../../utils/generateId.js';
 import { getElementColor, getElementShape, getRoleIcon } from '../../shared/utils/elementVisuals.js';
 import { CHARACTER_DATA, ALL_5STAR_RESONATORS, ALL_4STAR_RESONATORS } from '../../data/characters.js';
-import { WEAPON_DATA, getLocalizedWeaponData } from '../../data/weapons.js';
+import { WEAPON_DATA, getLocalizedWeaponData, getLocalizedWeaponName } from '../../data/weapons.js';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { TabBackground } from '../../shared/backgrounds/TabBackground.jsx';
 import { TabErrorBoundary } from '../../shared/errors/ErrorBoundaries.jsx';
@@ -981,7 +981,7 @@ function PlannerTab({
                         </div>
                       )}
                       <div className="flex-1 min-w-0 flex items-center justify-between gap-2">
-                        <span className="text-gray-100 text-sm font-medium truncate">{topWeapon.name}</span>
+                        <span className="text-gray-100 text-sm font-medium truncate">{getLocalizedWeaponName(topWeapon.name, getLocale())}</span>
                         <span className={`kuro-badge text-2xs flex-shrink-0 ${topWeapon.mustHave ? 'kuro-badge-red' : 'kuro-badge-cyan'}`}>
                           {t(topWeapon.mustHave ? 'planner.recommendationWeaponMustHave' : 'planner.recommendationWeaponNotEssential')}
                         </span>

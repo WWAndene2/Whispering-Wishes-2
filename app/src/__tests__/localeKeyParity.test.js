@@ -190,3 +190,15 @@ describe('Spanish weapon-recommendation reasons', () => {
     for (const n of withV) expect(Object.keys(WEAPON_VERDICT_REASON_ES[n]).sort()).toEqual(Object.keys(CHARACTER_DATA[n].weaponVerdictReason).sort());
   });
 });
+
+describe('Spanish skill descriptions and multiplier text', () => {
+  it('translates every SKILL_MULTIPLIERS description and every prose multiplier cell', async () => {
+    const { SKILL_MULTIPLIERS, localizeSkillDesc, localizeSkillMult } = await import('../data/characters.js');
+    for (const [char, rows] of Object.entries(SKILL_MULTIPLIERS)) {
+      for (const r of rows) {
+        if (r[3]) expect(localizeSkillDesc('es', char, r[1], r[3]) !== r[3] || /^[\d%.\s]/.test(r[3]), `${char}: ${r[1]}`).toBe(true);
+        if (typeof r[2] === 'string' && /[A-Za-z]{4,}/.test(r[2])) expect(localizeSkillMult('es', char, r[1], r[2]), `${char}: ${r[1]}`).not.toBe(r[2]);
+      }
+    }
+  });
+});

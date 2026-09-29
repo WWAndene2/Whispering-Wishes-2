@@ -11,7 +11,8 @@ const flat = (o, prefix = '') => Object.fromEntries(Object.entries(o).flatMap(([
   v && typeof v === 'object' ? Object.entries(flat(v, `${prefix}${k}.`)) : [[`${prefix}${k}`, v]]));
 
 // Modules whose Spanish translation is complete; extend as each sub-step lands.
-const TRANSLATED_ES = ['tabs', 'app', 'app2', 'appShared', 'common', 'pity', 'events', 'errors', 'pwa', 'tracker', 'collection', 'calculator', 'analytics', 'planner', 'teams', 'modals', 'profile'];
+// Every locale/en module now has a complete Spanish counterpart.
+const TRANSLATED_ES = readdirSync(join(LOCALE_DIR, 'en')).map(f => f.replace(/\.json$/, ''));
 
 describe.each(TRANSLATED_ES)('locale/es/%s.json', (mod) => {
   const load = (loc) => JSON.parse(readFileSync(join(LOCALE_DIR, loc, `${mod}.json`), 'utf8'));

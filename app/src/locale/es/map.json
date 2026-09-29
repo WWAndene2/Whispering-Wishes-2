@@ -1,1 +1,144 @@
-{}
+{
+  "zonesPopover": {
+    "noZones": "Sin zonas"
+  },
+  "wip": {
+    "title": "Mapa — En desarrollo",
+    "close": "Cerrar",
+    "body1": "Esta pestaña sigue en pleno desarrollo. Algunas zonas, iconos o superposiciones pueden estar incompletos, mal colocados o faltar por completo.",
+    "body2": "Pido disculpas por las molestias y agradezco tu paciencia mientras sigo mejorándola.",
+    "gotIt": "Entendido"
+  },
+  "header": {
+    "title": "Mapa interactivo",
+    "regions": "Regiones",
+    "iconFilters": "Filtros de iconos",
+    "offlineDownloads": "Descargas sin conexión",
+    "referenceImage": "Imagen de referencia",
+    "search": "Buscar"
+  },
+  "legend": {
+    "noIconsPlaced": "Aún no hay iconos colocados. Añade iconos desde el panel del editor.",
+    "show": "Mostrar {{name}}",
+    "hide": "Ocultar {{name}}",
+    "parentHidden": "La categoría superior «{{name}}» está oculta",
+    "hideAll": "Ocultar todo",
+    "showAll": "Mostrar todo",
+    "expand": "Expandir {{name}}",
+    "collapse": "Contraer {{name}}",
+    "hideFound": "Ocultar encontrados",
+    "showFound": "Mostrar encontrados"
+  },
+  "referenceImage": {
+    "import": "Importar imagen",
+    "change": "Cambiar imagen",
+    "remove": "Quitar imagen",
+    "hint": "Importa una captura de pantalla para superponerla al mapa como guía de posición.",
+    "adjustOn": "Ajustar: activado",
+    "adjustOff": "Ajustar: desactivado",
+    "adjustOnHint": "Arrastra o desplaza la imagen para alinearla. Desactívalo para hacer clic a través de ella y colocar puntos.",
+    "adjustOffHint": "Los clics pasan al mapa. Actívalo para mover o ampliar la imagen.",
+    "opacity": "Opacidad",
+    "zoom": "Zoom",
+    "rotation": "Rotación"
+  },
+  "search": {
+    "title": "Buscar en el mapa",
+    "placeholder": "Busca iconos, regiones… p. ej. «cofre jinzhou»",
+    "close": "Cerrar la búsqueda",
+    "savedTags": "Búsquedas guardadas",
+    "removeTag": "Quitar {{name}}",
+    "clearTags": "Borrar todo",
+    "shownCount": "{{count}} en el mapa",
+    "otherFloors": "{{count}} en otras plantas",
+    "prev": "Resultado anterior",
+    "next": "Resultado siguiente",
+    "frameAll": "Mostrar todos los resultados",
+    "saveTag": "Guardar como etiqueta",
+    "saved": "Ya guardada",
+    "clearSelection": "Borrar selección",
+    "noResults": "Sin coincidencias para «{{query}}»",
+    "noResultsHint": "Prueba con un objeto (cofre, nexo, baliza) y/o el nombre de una región.",
+    "partial": "Sin coincidencia exacta: resultados más cercanos (ignorando «{{words}}»)",
+    "results": "Resultados de la búsqueda",
+    "recent": "Recientes",
+    "clearRecent": "Borrar",
+    "suggestions": "Búsqueda rápida",
+    "tip": "Combina palabras: un objeto y una región, en cualquier orden. Los errores tipográficos y el francés también funcionan.",
+    "type": {
+      "kind": "Todo en el mapa",
+      "category": "Categoría",
+      "kindZone": "En la región",
+      "catZone": "Categoría en la región",
+      "zone": "Región",
+      "icon": "Marcador",
+      "subcategory": "Clase"
+    },
+    "header": "Buscar"
+  },
+  "card": {
+    "markFound": "Marcar como encontrado",
+    "found": "Encontrado",
+    "floor": "planta {{floor}}"
+  },
+  "pins": {
+    "title": "Mi chincheta",
+    "add": "Añadir una chincheta",
+    "new": "Nueva chincheta",
+    "placeHint": "Toca el mapa para colocar tu chincheta (o mantén pulsado en cualquier punto durante 1 s)",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "note": "Nota",
+    "notePlaceholder": "Nota (opcional): p. ej. «Puzle de lámparas, volver más tarde»",
+    "marker": {
+      "label": "Marcador",
+      "star": "Estrella",
+      "monster": "Enemigo",
+      "pickaxe": "Mineral",
+      "diamond": "Tesoro",
+      "leaves": "Planta",
+      "question": "Desconocido"
+    },
+    "noLinks": "No se permiten enlaces en las notas."
+  },
+  "share": {
+    "title": "Compartir mapa",
+    "sendLabel": "Compartir",
+    "receiveLabel": "Importar un código",
+    "includeFound": "Incluir mis iconos encontrados ({{count}})",
+    "shareButton": "Compartir mis chinchetas ({{count}})",
+    "sharePin": "Compartir esta chincheta",
+    "shared": "Código compartido",
+    "copied": "Código copiado: pégalo a un amigo",
+    "copyFailed": "No se pudo copiar el código",
+    "copyManually": "No se pudo compartir automáticamente: copia el código de abajo",
+    "codeLabel": "Código para compartir",
+    "pasteLabel": "Pega un código para compartir",
+    "pastePlaceholder": "Pega un código que empiece por WWMAP1:",
+    "preview": "Chinchetas: {{pins}} · Iconos encontrados: {{found}}",
+    "unknownIgnored": "{{count}} iconos desconocidos ignorados",
+    "invalidIgnored": "{{count}} entradas no válidas ignoradas",
+    "error": {
+      "not-a-code": "Esto no es un código para compartir un mapa.",
+      "too-large": "Este código es demasiado grande.",
+      "corrupt": "Este código está dañado o incompleto.",
+      "link-blocked": "Este código contiene un enlace y se ha bloqueado."
+    },
+    "added": "Chinchetas añadidas a tu mapa: {{pins}}",
+    "presetsFull": "Ya tienes {{max}} preajustes: elimina uno primero",
+    "presetDefaultName": "Preajuste {{n}}",
+    "presetName": "Nombre del preajuste",
+    "presetNamePlaceholder": "Nombre del preajuste (opcional): p. ej. «Cofres de Mika»",
+    "saveAsPreset": "Guardar como preajuste",
+    "addPins": "Añadir chinchetas a mi mapa",
+    "presetsLabel": "Preajustes",
+    "presetOn": "Mostrado",
+    "presetOff": "Mostrar",
+    "deletePreset": "Eliminar el preajuste {{name}}",
+    "viewingPreset": "Preajuste:",
+    "backToMine": "Mi mapa",
+    "renamePreset": "Renombrar el preajuste {{name}}"
+  }
+}

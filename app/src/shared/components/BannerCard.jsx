@@ -19,8 +19,11 @@ import { FullSpineViewerButton } from './FullSpineViewerButton.jsx';
 import { ConveneVideo } from './ConveneVideoLayer.jsx';
 import { ConvenePullPills } from './ConvenePullPills.jsx';
 import { ConvenePullSimModal } from './ConvenePullSimModal.jsx';
-import { t, getLocale } from '../../utils/i18n.js';
+import { t, getLocale , pickTable } from '../../utils/i18n.js';
 import { WEAPON_TYPE_FR, ROLE_FR } from '../../data/characters.fr.js';
+
+// Support/Healer runs under the banner countdown at full length, so it is abbreviated per locale.
+const SUPPORT_HEALER_SHORT = { fr: 'Sout./Soign.' };
 import { CURRENT_BANNER_TITLES_FR } from '../../data/banners.fr.js';
 
 const BANNER_GRADIENT_MAP = {
@@ -215,8 +218,8 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
               // Support/Healer is shortened here only: at full length its tag runs under the
               // banner's countdown (Chisa, v3.7-p1).
               const roleLabel = role.includes('DPS') ? 'DPS'
-                : role === 'Support/Healer' ? (getLocale() === 'fr' ? 'Sout./Soign.' : 'Sup./Heal.')
-                : (getLocale() === 'fr' && ROLE_FR[role]) || role;
+                : role === 'Support/Healer' ? (SUPPORT_HEALER_SHORT[getLocale()] || 'Sup./Heal.')
+                : (pickTable({ fr: ROLE_FR })[role]) || role;
               return (
                 <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={tagStyle}>
                   <img src={getRoleIcon(role)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />
@@ -238,7 +241,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
                 {/* Only next to the Support/Healer tag (the one long role label) is the weapon type
                     shortened too, so that row clears the countdown (Chisa, Suisui). */}
                 {(() => {
-                  const label = (getLocale() === 'fr' && WEAPON_TYPE_FR[item.weaponType]) || item.weaponType;
+                  const label = (pickTable({ fr: WEAPON_TYPE_FR })[item.weaponType]) || item.weaponType;
                   const role = CHARACTER_DATA[item.name]?.role || item.role;
                   return role === 'Support/Healer' ? (SUPPORT_HEALER_WEAPON_SHORT[label] || label) : label;
                 })()}
@@ -249,7 +252,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
             {(isChar ? item.element : item.type) && <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={tagStyle}>
               {isChar && getElementIcon(item.element) && <img src={getElementIcon(item.element)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
               {!isChar && getWeaponTypeIcon(item.type) && <img src={getWeaponTypeIcon(item.type)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-              {isChar ? item.element : ((getLocale() === 'fr' && WEAPON_TYPE_FR[item.type]) || item.type)}
+              {isChar ? item.element : ((pickTable({ fr: WEAPON_TYPE_FR })[item.type]) || item.type)}
             </span>}
           </div>
           {/* Direct user request: for a NEW item, deterministically split the
@@ -282,7 +285,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
             })() : item.name}
             </button>
           </h2>
-          {item.title && <p className="text-gray-200 text-sm line-clamp-1">{(getLocale() === 'fr' && CURRENT_BANNER_TITLES_FR[item.title]) || item.title}</p>}
+          {item.title && <p className="text-gray-200 text-sm line-clamp-1">{(pickTable({ fr: CURRENT_BANNER_TITLES_FR })[item.title]) || item.title}</p>}
         </div>
         
         {item.featured4Stars?.length > 0 && <div className="banner-featured">

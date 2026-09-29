@@ -15,7 +15,7 @@ import { WEAPON_DATA } from '../../data/weapons.js';
 import { ECHO_SETS, ECHO_DATA, ECHO_SKILL_BUFFS, getEnemyStatsAtLevel } from '../../data/echoes.js';
 import { WEAPON_REFINE_SCALE } from '../../data/constants.js';
 import { STAT_LABELS_FULL, STAT_LABELS_FULL_FR } from './RotationTimeline.jsx';
-import { getLocale } from '../../utils/i18n.js';
+import { getLocale , pickTable } from '../../utils/i18n.js';
 import {
   ATTACKER_FACTOR, BASE_CRIT_RATE, BASE_CRIT_DMG,
   createStats, parsePassive, getWeaponPv,
@@ -496,22 +496,31 @@ export function calcTeamStats(slots, teamIdx, mainDpsOverride, teamEquipment, en
       // than one flat, undifferentiated buff dump. One block per on-field window, in the order
       // actually computed above. ──
       const locale = getLocale();
-      const fmtBuff = (b) => `+${b.value}% ${(locale === 'fr' && STAT_LABELS_FULL_FR[b.stat]) || STAT_LABELS_FULL[b.stat] || b.stat}${b.duration ? ` (${b.duration}s)` : ''}`;
-      const REASON_FR = {
-        mainDps: 'DPS principal — entre en dernier sur le terrain pour recevoir tous les buffs accumulés avant lui',
-        teamOutro: "Buff pour toute l'équipe qui persiste après les changements — placé en premier pour couvrir toute la rotation",
-        nextOutro: 'Le buff ne profite qu\'au personnage suivant — placé juste avant la fenêtre du DPS',
-        subDps: 'Fenêtre de DPS secondaire / utilitaire',
+      const fmtBuff = (b) => `+${b.value}% ${(pickTable({ fr: STAT_LABELS_FULL_FR }, locale)[b.stat]) || STAT_LABELS_FULL[b.stat] || b.stat}${b.duration ? ` (${b.duration}s)` : ''}`;
+      const STEP_REASON = {
+        en: {
+          mainDps: 'Main DPS — comes on-field last to receive every buff stacked up before it',
+          teamOutro: 'Team-wide buff persists through swaps — goes first so it covers the whole rotation',
+          nextOutro: 'Buff only reaches whoever swaps in next — placed right before the DPS window',
+          subDps: 'Sub-DPS / utility window',
+        },
+        fr: {
+          mainDps: 'DPS principal — entre en dernier sur le terrain pour recevoir tous les buffs accumulés avant lui',
+          teamOutro: "Buff pour toute l'équipe qui persiste après les changements — placé en premier pour couvrir toute la rotation",
+          nextOutro: 'Le buff ne profite qu\'au personnage suivant — placé juste avant la fenêtre du DPS',
+          subDps: 'Fenêtre de DPS secondaire / utilitaire',
+        },
       };
+      const reasons = STEP_REASON[locale] || STEP_REASON.en;
       const steps = timeline.map((seg, i) => {
         const isDps = seg.name === mainDps.name;
         const reason = isDps
-          ? (locale === 'fr' ? REASON_FR.mainDps : 'Main DPS — comes on-field last to receive every buff stacked up before it')
+          ? reasons.mainDps
           : hasTeamOutro(mems.find(m => m.name === seg.name))
-            ? (locale === 'fr' ? REASON_FR.teamOutro : 'Team-wide buff persists through swaps — goes first so it covers the whole rotation')
+            ? reasons.teamOutro
             : nextOutroValue(mems.find(m => m.name === seg.name)) > 0
-              ? (locale === 'fr' ? REASON_FR.nextOutro : 'Buff only reaches whoever swaps in next — placed right before the DPS window')
-              : (locale === 'fr' ? REASON_FR.subDps : 'Sub-DPS / utility window');
+              ? reasons.nextOutro
+              : reasons.subDps;
         const own = buffs.filter(b => (b.owner || b.source) === seg.name);
         // Self: fires and is fully spent during this character's own on-field window (Liberation,
         // selfBuffs, weapon/echo passives while they're the one attacking).

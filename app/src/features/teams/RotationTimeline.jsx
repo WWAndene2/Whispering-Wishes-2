@@ -6,8 +6,8 @@ import React from 'react';
 import { ChevronDown, ZoomIn, ZoomOut } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { useSessionState } from '../../hooks/useSessionState.js';
-import { t, getLocale } from '../../utils/i18n.js';
-import { SKILL_NAME_FR, GENERIC_SKILL_NAME_FR, getGenericSkillNameFr } from '../../data/characters.fr.js';
+import { t, getLocale , pickTable } from '../../utils/i18n.js';
+import { localizeSkillName } from '../../data/characters.js';
 import { stepStyle } from '../../shared/constants/rotationStepStyles.js';
 
 // PerfectSuite values ([32] primary, [512] primary) — px/second scale and floor width for the
@@ -110,7 +110,7 @@ export default function RotationTimeline({ rotationTimeline }) {
   // one session likely wants to keep whatever zoom they picked.
   const [zoom, setZoom] = useSessionState('ww-rotation-timeline-zoom', 1);
   const locale = getLocale();
-  const statLabel = (key) => (locale === 'fr' && STAT_LABELS_FR[key]) || STAT_LABELS[key] || key;
+  const statLabel = (key) => (pickTable({ fr: STAT_LABELS_FR }, locale)[key]) || STAT_LABELS[key] || key;
   const ZOOM_MIN = 0.5, ZOOM_MAX = 3, ZOOM_STEP = 0.25;
   const zoomIn = () => setZoom(z => Math.min(ZOOM_MAX, Math.round((z + ZOOM_STEP) * 100) / 100));
   const zoomOut = () => setZoom(z => Math.max(ZOOM_MIN, Math.round((z - ZOOM_STEP) * 100) / 100));
@@ -297,10 +297,10 @@ export default function RotationTimeline({ rotationTimeline }) {
                         const actionLeftPct = leftPct + ai * actionWidthPct;
                         return (
                           <div key={ai}
-                            title={`${sty.label}: ${(locale === 'fr' && (SKILL_NAME_FR[row.label]?.[a.skill] || GENERIC_SKILL_NAME_FR[a.skill] || getGenericSkillNameFr(a.skill))) || a.skill}${a.note ? ' — ' + a.note : ''}`}
+                            title={`${sty.label}: ${localizeSkillName(locale, row.label, a.skill)}${a.note ? ' — ' + a.note : ''}`}
                             className={`absolute rounded-sm border flex items-center justify-center overflow-hidden ${sty.cls}`}
                             style={{ left: `${actionLeftPct}%`, width: `${Math.max(actionWidthPct, 1)}%`, top: 0, bottom: 0 }}>
-                            <span className="truncate px-0.5 text-2xs font-bold">{((locale === 'fr' && SHORT_STEP_LABEL_FR[a.type]) || SHORT_STEP_LABEL[a.type]) || a.type}</span>
+                            <span className="truncate px-0.5 text-2xs font-bold">{((pickTable({ fr: SHORT_STEP_LABEL_FR }, locale)[a.type]) || SHORT_STEP_LABEL[a.type]) || a.type}</span>
                           </div>
                         );
                       })}

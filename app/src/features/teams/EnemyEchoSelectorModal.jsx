@@ -12,7 +12,7 @@ import { FocusTrapModal } from '../../shared/components/FocusTrapModal.jsx';
 import { KuroSelect } from '../../shared/components/KuroSelect.jsx';
 import MonsterCard from '../../shared/components/MonsterCard.jsx';
 import { TargetInput } from '../../shared/components/TargetInput.jsx';
-import { t, getLocale } from '../../utils/i18n.js';
+import { t, pickTable } from '../../utils/i18n.js';
 
 // Every echo-dropping enemy the app tracks (1-cost commons through 4-cost bosses) is a legitimate
 // fight target — HP/ATK/DEF/RES/stagger data covers all 181 of them (see echoes.js), not just the
@@ -109,7 +109,7 @@ export default function EnemyEchoSelectorModal({
             <KuroSelect value={rankFilter ?? 'all'} onChange={v => setRankFilter?.(v)} small
               options={[
                 { value: 'all', label: t('teams.enemyEcho.allRanks') },
-                ...RANKS.map(r => ({ value: r, label: (getLocale() === 'fr' && RANK_FR[r]) || r })),
+                ...RANKS.map(r => ({ value: r, label: (pickTable({ fr: RANK_FR })[r]) || r })),
               ]}
               className="flex-1 text-sm" />
           </div>
@@ -119,7 +119,7 @@ export default function EnemyEchoSelectorModal({
                 { value: 'all', label: t('teams.enemyEcho.allSets') },
                 ...SORTED_ECHO_SONATA_SETS.map(s => ({
                   value: s,
-                  label: <span className="inline-flex items-center gap-1.5"><img src={getSetIcon(s)} alt="" width={14} height={14} className="shrink-0" /> {(getLocale() === 'fr' && ECHO_SETS_FR[s]?.name) || s}</span>,
+                  label: <span className="inline-flex items-center gap-1.5"><img src={getSetIcon(s)} alt="" width={14} height={14} className="shrink-0" /> {(pickTable({ fr: ECHO_SETS_FR })[s]?.name) || s}</span>,
                 })),
               ]}
               className="flex-1 text-sm" />

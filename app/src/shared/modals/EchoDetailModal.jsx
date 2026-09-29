@@ -148,7 +148,7 @@ const EchoDetailModal = ({ name, onClose, imageUrl, cost, infoFraming, collectio
               return (
                 <span key={setName} className="kuro-badge font-medium inline-flex items-center gap-1" style={{ background: `${sc}15`, color: sc, border: `1px solid ${sc}30` }}>
                   {setIcon && <img src={setIcon} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                  {(getLocale() === 'fr' && getLocalizedEchoSets(getLocale())[setName]?.name) || setName}
+                  {getLocalizedEchoSets(getLocale())[setName]?.name || setName}
                 </span>
               );
             })}

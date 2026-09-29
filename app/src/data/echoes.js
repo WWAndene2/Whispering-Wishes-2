@@ -2,6 +2,7 @@
 // Echo data — extracted from appcore-data.js for maintainability
 // Edit this file to add/update echoes, sets, and echo damage data
 
+import { pickTable } from '../utils/i18n.js';
 import ENEMY_LEVEL_STATS from './enemyLevelStats.json';
 import ENEMY_STAGGER_STATS from './enemyStaggerStats.json';
 
@@ -551,7 +552,7 @@ export function getSonataLoadouts(bestEchoes, statScaling, element, locale) {
       const m = /^(.*?)\s+(\d+)\s*pc$/i.exec(p);
       return m ? { name: m[1].trim(), count: parseInt(m[2], 10) } : { name: p.replace(/\s+\d+\s*pc$/i, '').trim(), count: 5 };
     });
-    const localizeSet = (n) => (locale === 'fr' && ECHO_SETS_FR[n]?.name) || n;
+    const localizeSet = (n) => (pickTable({ fr: ECHO_SETS_FR }, locale)[n]?.name) || n;
     const sonataName = parsedSets.map(s => localizeSet(s.name)).join(' + ') || (main ? localizeSet(ECHO_DATA[main.text]?.sets?.[0] || '') : '');
     const label = setSlot?.label || main?.label || null;
     // The sonata's own "element" per ECHO_SETS — not always a DMG element (can be 'Heal'/'Support'/

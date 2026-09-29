@@ -16,7 +16,7 @@ import { hideOnError } from '../../shared/utils/imageHelpers.js';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
 import { FocusTrapModal } from '../../shared/components/FocusTrapModal.jsx';
 import { KuroSelect } from '../../shared/components/KuroSelect.jsx';
-import { t, formatDate, getLocale } from '../../utils/i18n.js';
+import { t, formatDate, getLocale , pickTable } from '../../utils/i18n.js';
 import { getLocalizedWeaponData } from '../../data/weapons.js';
 
 const FOCUS_DELAY_MS = 0;
@@ -237,7 +237,7 @@ function TrackerTab({
                 {/* Standard Resonator Banner */}
                 <StandardBannerSection
                   bannerImage={activeBanners.standardCharBannerImage}
-                  altText="Tidal Chorus" title={(getLocale() === 'fr' && STANDARD_BANNER_TITLES_FR['Tidal Chorus']) || 'Tidal Chorus'} subtitle={t('tracker.standardResonatorLabel')}
+                  altText="Tidal Chorus" title={(pickTable({ fr: STANDARD_BANNER_TITLES_FR })['Tidal Chorus']) || 'Tidal Chorus'} subtitle={t('tracker.standardResonatorLabel')}
                   items={activeBanners.standardCharacters} itemKey="name"
                   profileData={state.profile.standardChar} visualSettings={visualSettings}
                   kind="standardChar"
@@ -248,7 +248,7 @@ function TrackerTab({
                 {/* Standard Weapon Banner */}
                 <StandardBannerSection
                   bannerImage={activeBanners.standardWeapBannerImage}
-                  altText="Winter Brume" title={(getLocale() === 'fr' && STANDARD_BANNER_TITLES_FR['Winter Brume']) || 'Winter Brume'} subtitle={t('tracker.standardWeaponLabel')}
+                  altText="Winter Brume" title={(pickTable({ fr: STANDARD_BANNER_TITLES_FR })['Winter Brume']) || 'Winter Brume'} subtitle={t('tracker.standardWeaponLabel')}
                   items={activeBanners.standardWeapons} itemKey="name"
                   profileData={state.profile.standardWeap} visualSettings={visualSettings}
                   imagePosition="65% top"

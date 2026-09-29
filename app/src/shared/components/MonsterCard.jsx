@@ -8,7 +8,7 @@
 import React, { useState, memo } from 'react';
 import { Skull } from 'lucide-react';
 import { getElementIcon, getStatIcon } from '../utils/elementVisuals.js';
-import { t, getLocale } from '../../utils/i18n.js';
+import { t, pickTable } from '../../utils/i18n.js';
 import { hideOnError } from '../utils/imageHelpers.js';
 import { TargetInput } from './TargetInput.jsx';
 import { getEnemyStatsAtLevel, getEnemyStaggerStatsAtLevel } from '../../data/echoes.js';
@@ -105,7 +105,7 @@ function MonsterCard({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5">
             <div className="text-white font-semibold truncate">{name}</div>
-            {rank && <span className={`kuro-badge ${RANK_BADGE_CLASS[rank] || ''} shrink-0 text-2xs`}>{(getLocale() === 'fr' && RANK_FR[rank]) || rank}</span>}
+            {rank && <span className={`kuro-badge ${RANK_BADGE_CLASS[rank] || ''} shrink-0 text-2xs`}>{(pickTable({ fr: RANK_FR })[rank]) || rank}</span>}
           </div>
           {showLevelControl && enemyStats ? (
             <div className="flex items-center gap-1 mt-0.5" onClick={e => e.stopPropagation()}>

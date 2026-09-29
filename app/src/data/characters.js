@@ -10714,7 +10714,7 @@ const STANDARD_5STAR_CHARACTERS = new Set(['Calcharo', 'Encore', 'Jianxin', 'Lin
 // [SECTION:LOCALIZATION] — locale-aware overlay for characters.fr.js.
 // English data above is the single source of truth; this merges in
 // translated `desc` bio text only, keyed by the same character names.
-import { CHARACTER_DESC_FR, CHARACTER_TITLE_FR, CHAR_BUFF_NOTE_FR, CHARACTER_ROTATION_NOTE_FR, CHAIN_NODE_NAMES_FR } from './characters.fr.js';
+import { CHARACTER_DESC_FR, CHARACTER_TITLE_FR, CHAR_BUFF_NOTE_FR, CHARACTER_ROTATION_NOTE_FR, CHAIN_NODE_NAMES_FR, SKILL_NAME_FR, GENERIC_SKILL_NAME_FR, getGenericSkillNameFr, SKILL_DESC_FR, GENERIC_SKILL_DESC_FR, applyGenericDescPhrases, MULT_DESC_FR } from './characters.fr.js';
 
 /** @param {string} locale */
 export function getLocalizedCharacterData(locale) {
@@ -10817,3 +10817,21 @@ export {
   ALL_5STAR_RESONATORS,
   ALL_4STAR_RESONATORS,
 };
+
+// Per-locale skill text. A locale with no entry here returns the English source text.
+const SKILL_TEXT_RESOLVERS = {
+  fr: {
+    name: (char, skill) => SKILL_NAME_FR[char]?.[skill] || GENERIC_SKILL_NAME_FR[skill] || getGenericSkillNameFr(skill),
+    desc: (char, skill, desc) => SKILL_DESC_FR[char]?.[skill] || GENERIC_SKILL_DESC_FR[desc] || applyGenericDescPhrases(desc),
+    mult: (char, skill, mult) => MULT_DESC_FR[char]?.[skill] || applyGenericDescPhrases(mult),
+  },
+};
+
+/** @param {string} locale @param {string} char @param {string} skill */
+export const localizeSkillName = (locale, char, skill) => SKILL_TEXT_RESOLVERS[locale]?.name(char, skill) || skill;
+
+/** @param {string} locale @param {string} char @param {string} skill @param {string} desc */
+export const localizeSkillDesc = (locale, char, skill, desc) => SKILL_TEXT_RESOLVERS[locale]?.desc(char, skill, desc) || desc;
+
+/** @param {string} locale @param {string} char @param {string} skill @param {string} mult */
+export const localizeSkillMult = (locale, char, skill, mult) => SKILL_TEXT_RESOLVERS[locale]?.mult(char, skill, mult) || mult;

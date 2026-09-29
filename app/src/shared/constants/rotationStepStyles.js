@@ -10,6 +10,7 @@
 // `note` field in CHARACTER_ROTATIONS (character- and step-specific — a generic "what a Forte Circuit
 // is" blurb here can't tell you HOW to charge THIS character's Forte, only the real per-character combat
 // text can), so this table intentionally carries no generic description text anymore.
+import { pickTable } from '../../utils/i18n.js';
 export const STEP_TYPE_STYLE = {
   Intro: { label: 'Intro Skill', cls: 'text-blue-400 bg-blue-500/10 border-blue-500/30' },
   Skill: { label: 'Resonance Skill', cls: 'text-purple-400 bg-purple-500/10 border-purple-500/30' },
@@ -47,6 +48,7 @@ export const STEP_TYPE_LABEL_FR = {
 /** @param {string} type @param {string} [locale] */
 export const stepStyle = (type, locale) => {
   const base = STEP_TYPE_STYLE[type] || { label: type || 'Action', cls: 'text-gray-400 bg-gray-500/10 border-gray-500/30' };
-  if (locale === 'fr' && STEP_TYPE_LABEL_FR[type]) return { ...base, label: STEP_TYPE_LABEL_FR[type] };
+  const label = pickTable({ fr: STEP_TYPE_LABEL_FR }, locale)[type];
+  if (label) return { ...base, label };
   return base;
 };

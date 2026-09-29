@@ -6,7 +6,7 @@ import { FocusTrapModal } from '../../shared/components/FocusTrapModal.jsx';
 import { KuroSelect } from '../../shared/components/KuroSelect.jsx';
 import { hideOnError } from '../../shared/utils/imageHelpers.js';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
-import { t, getLocale } from '../../utils/i18n.js';
+import { t, pickTable } from '../../utils/i18n.js';
 import { ROLE_FR } from '../../data/characters.fr.js';
 
 export default function TeamSelector({
@@ -320,7 +320,7 @@ export default function TeamSelector({
                                     <div className="absolute bottom-4 inset-x-0 flex justify-center">
                                       <span className="text-2xs px-1 py-0.5 rounded bg-black/60 text-gray-300 border border-[var(--border-medium)] inline-flex items-center gap-1">
                                         {getRoleIcon(cd.role) && <img src={getRoleIcon(cd.role)} alt="" className="w-2.5 h-2.5" onError={hideOnError} />}
-                                        {(getLocale() === 'fr' && ROLE_FR[cd.role]) || cd.role}
+                                        {(pickTable({ fr: ROLE_FR })[cd.role]) || cd.role}
                                       </span>
                                     </div>
                                   )}

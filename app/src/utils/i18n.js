@@ -180,6 +180,19 @@ export const setAppLocale = (locale) => {
 // Legacy alias for code already calling setLocale
 export const setLocale = setAppLocale;
 
+const NO_OVERLAY = Object.freeze({});
+
+/**
+ * Pick the display-text overlay for a locale out of { fr: TABLE_FR, es: TABLE_ES, ... }.
+ * English (and any locale with no overlay) gets an empty table, so callers write
+ * `pickTable({ fr: ROLE_FR })[role] || role` and fall through to the source text.
+ * @template T
+ * @param {Record<string, T>} tables
+ * @param {string} [locale] defaults to the active locale
+ * @returns {T | {}}
+ */
+export const pickTable = (tables, locale = currentLocale) => tables[locale] || NO_OVERLAY;
+
 /**
  * Translate a key. Supports dot-notation paths and {{var}} interpolation.
  * Falls back to English, then to the raw key if not found.

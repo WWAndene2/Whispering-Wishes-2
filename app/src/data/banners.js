@@ -1766,7 +1766,7 @@ export function resolveEventWindow(ev, now = Date.now()) {
 export function getLocalizedEvents(locale, now = Date.now()) {
   const out = {};
   for (const [key, base] of Object.entries(EVENTS)) {
-    const fr = locale === 'fr' ? EVENTS_FR[key] : null;
+    const fr = ({ fr: EVENTS_FR })[locale]?.[key];
     out[key] = resolveEventWindow({ ...base, ...(fr ? { name: fr.name, subtitle: fr.subtitle, description: fr.description } : {}) }, now);
   }
   return out;

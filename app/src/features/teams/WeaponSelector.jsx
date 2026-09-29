@@ -7,7 +7,7 @@ import { haptic } from '../../utils/haptics.js';
 import { getStatIcon, getWeaponTypeIcon, getRarityIcon } from '../../shared/utils/elementVisuals.js';
 import { FocusTrapModal } from '../../shared/components/FocusTrapModal.jsx';
 import { hideOnError } from '../../shared/utils/imageHelpers.js';
-import { getLocale, t } from '../../utils/i18n.js';
+import { getLocale, t , pickTable } from '../../utils/i18n.js';
 import { STAT_NAME_FR, WEAPON_TYPE_FR } from '../../data/characters.fr.js';
 
 const LOCALIZED_WEAPON_DATA = getLocalizedWeaponData(getLocale());
@@ -42,7 +42,7 @@ export default function WeaponSelector({
                               {(() => {
                                 const wt = CHARACTER_DATA[weaponSelectorTarget.charName]?.weapon;
                                 if (!wt) return t('teams.weaponSelector.any');
-                                return (getLocale() === 'fr' && WEAPON_TYPE_FR[wt]) || wt;
+                                return (pickTable({ fr: WEAPON_TYPE_FR })[wt]) || wt;
                               })()}
                             </p>
                           </div>
@@ -127,7 +127,7 @@ export default function WeaponSelector({
                                             <span className="text-sm text-gray-400">ATK {w.baseAtk}</span>
                                             <span className="text-sm text-cyan-400/80 inline-flex items-center gap-1">
                                               {getStatIcon(w.stat) && <img src={getStatIcon(w.stat)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                                              {(getLocale() === 'fr' && STAT_NAME_FR[w.stat]) || w.stat} {w.subStatValue}
+                                              {(pickTable({ fr: STAT_NAME_FR })[w.stat]) || w.stat} {w.subStatValue}
                                             </span>
                                           </div>
                                         </div>

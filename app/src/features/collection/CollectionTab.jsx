@@ -22,7 +22,7 @@ import { KuroSelect } from '../../shared/components/KuroSelect.jsx';
 import { CollectionGridSection } from './CollectionGrid.jsx';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
 import { getElementIcon, getWeaponTypeIcon, getStatIcon, getSetIcon, getRegionIcon, getCombatRoleIcon, COMBAT_ROLE_ICONS, getRarityIcon } from '../../shared/utils/elementVisuals.js';
-import { t, getLocale } from '../../utils/i18n.js';
+import { t, getLocale , pickTable } from '../../utils/i18n.js';
 import { hideOnError } from '../../shared/utils/imageHelpers.js';
 
 // ECHO_SETS is declared oldest-first (each block of sets is commented with its game version, e.g.
@@ -496,7 +496,7 @@ function CollectionTab({
                       { value: 'all', label: t('collection.filters.allTypes') },
                       ...['Broadblade', 'Sword', 'Pistols', 'Gauntlets', 'Rectifier'].map(wt => ({
                         value: wt,
-                        label: <span className="inline-flex items-center gap-1.5"><img src={getWeaponTypeIcon(wt)} alt="" width={14} height={14} className="shrink-0" /> {(getLocale() === 'fr' && WEAPON_TYPE_FR[wt]) || wt}</span>,
+                        label: <span className="inline-flex items-center gap-1.5"><img src={getWeaponTypeIcon(wt)} alt="" width={14} height={14} className="shrink-0" /> {(pickTable({ fr: WEAPON_TYPE_FR })[wt]) || wt}</span>,
                       })),
                     ]}
                     ariaLabel={t('collection.filters.byWeaponType')}
@@ -523,7 +523,7 @@ function CollectionTab({
                         ['Crit Rate', 'Crit Rate'], ['Crit DMG', 'Crit DMG'], ['Energy Regen', 'Energy Regen'],
                       ].map(([val, text]) => ({
                         value: val,
-                        label: <span className="inline-flex items-center gap-1.5"><img src={getStatIcon(val)} alt="" width={14} height={14} className="shrink-0" /> {(getLocale() === 'fr' && STAT_NAME_FR[text]) || text}</span>,
+                        label: <span className="inline-flex items-center gap-1.5"><img src={getStatIcon(val)} alt="" width={14} height={14} className="shrink-0" /> {(pickTable({ fr: STAT_NAME_FR })[text]) || text}</span>,
                       })),
                     ]}
                     ariaLabel={t('collection.filters.byStatScaling')}
@@ -577,7 +577,7 @@ function CollectionTab({
                         const icon = getCombatRoleIcon(tag);
                         return {
                           value: tag,
-                          label: <span className="inline-flex items-center gap-1.5"><img src={icon} alt="" width={14} height={14} className="shrink-0" /> {(getLocale() === 'fr' && CHARACTER_TAG_FR[tag]) || tag}</span>,
+                          label: <span className="inline-flex items-center gap-1.5"><img src={icon} alt="" width={14} height={14} className="shrink-0" /> {(pickTable({ fr: CHARACTER_TAG_FR })[tag]) || tag}</span>,
                         };
                       }),
                     ]}
@@ -634,7 +634,7 @@ function CollectionTab({
                       { value: 'all', label: t('collection.filters.allTypes') },
                       ...['Broadblade', 'Sword', 'Pistols', 'Gauntlets', 'Rectifier'].map(wt => ({
                         value: wt,
-                        label: <span className="inline-flex items-center gap-1.5"><img src={getWeaponTypeIcon(wt)} alt="" width={14} height={14} className="shrink-0" /> {(getLocale() === 'fr' && WEAPON_TYPE_FR[wt]) || wt}</span>,
+                        label: <span className="inline-flex items-center gap-1.5"><img src={getWeaponTypeIcon(wt)} alt="" width={14} height={14} className="shrink-0" /> {(pickTable({ fr: WEAPON_TYPE_FR })[wt]) || wt}</span>,
                       })),
                     ]}
                     ariaLabel={t('collection.filters.byWeaponType')}
@@ -646,7 +646,7 @@ function CollectionTab({
                       { value: 'all', label: t('collection.filters.allSubstats') },
                       ...['ATK%', 'HP%', 'DEF%', 'Crit Rate', 'Crit DMG', 'Energy Regen'].map(s => ({
                         value: s,
-                        label: <span className="inline-flex items-center gap-1.5"><img src={getStatIcon(s)} alt="" width={14} height={14} className="shrink-0" /> {(getLocale() === 'fr' && STAT_NAME_FR[s]) || s}</span>,
+                        label: <span className="inline-flex items-center gap-1.5"><img src={getStatIcon(s)} alt="" width={14} height={14} className="shrink-0" /> {(pickTable({ fr: STAT_NAME_FR })[s]) || s}</span>,
                       })),
                     ]}
                     ariaLabel={t('collection.filters.bySubstat')}
@@ -662,7 +662,7 @@ function CollectionTab({
                       { value: 'all', label: t('collection.filters.allSets') },
                       ...SORTED_ECHO_SONATA_SETS.map(s => ({
                         value: s,
-                        label: <span className="inline-flex items-center gap-1.5"><img src={getSetIcon(s)} alt="" width={14} height={14} className="shrink-0" /> {(getLocale() === 'fr' && ECHO_SETS_FR[s]?.name) || s}</span>,
+                        label: <span className="inline-flex items-center gap-1.5"><img src={getSetIcon(s)} alt="" width={14} height={14} className="shrink-0" /> {(pickTable({ fr: ECHO_SETS_FR })[s]?.name) || s}</span>,
                       })),
                     ]}
                     ariaLabel={t('collection.filters.bySonataSet')}

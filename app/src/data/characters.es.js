@@ -233,3 +233,98 @@ export const CHARACTER_TAG_ES = {
   "Off-Tune Buildup Efficiency": "Eficiencia de acumulación de Off-Tune",
   "Tune Break DMG Buff": "Potenciador de daño de Tune Break",
 };
+
+// Character-agnostic skill names that recur verbatim across many characters' SKILL_MULTIPLIERS rows
+// and CHARACTER_ROTATIONS steps. Bespoke per-character skill names (e.g. "Lone Lance") have no
+// confirmed Spanish term and stay in English; only the generic words around them are translated.
+/** @type {Record<string, string>} */
+export const GENERIC_SKILL_NAME_ES = {
+  'Attack': 'Ataque',
+  'Plunging Attack': 'Ataque en picado',
+  'Dodge Counter': 'Contraataque de esquiva',
+  'Mid-air Attack': 'Ataque aéreo',
+  'Standard': 'Estándar',
+  'Use Echo': 'Usar Eco',
+};
+
+// Action-type half of 'Action - Form/Stance Name' skill names; the bespoke suffix stays in English.
+const ACTION_PREFIX_ES = {
+  'Basic Attack': 'Ataque básico',
+  'Heavy Attack': 'Ataque pesado',
+  'Mid-air Attack': 'Ataque aéreo',
+  'Mid-air Plunging Attack': 'Ataque aéreo en picado',
+  'Dodge Counter': 'Contraataque de esquiva',
+  'Resonance Skill': 'Habilidad de resonancia',
+  'Attack': 'Ataque',
+  'Standard': 'Estándar',
+};
+
+/**
+ * Second-tier fallback for a skill name: bare 'Stage N', 'Action - Form Name' and
+ * '<Form Name> Stage N'. Returns null when no pattern matches, so callers keep the English name.
+ * @param {string} skillName @returns {string|null}
+ */
+export function getGenericSkillNameEs(skillName) {
+  const stageMatch = /^Stage (\d+)(-\d+)?$/.exec(skillName);
+  if (stageMatch) return `Fase ${stageMatch[1]}${stageMatch[2] || ''}`;
+  const dash = skillName.indexOf(' - ');
+  if (dash > 0) {
+    const prefix = skillName.slice(0, dash);
+    if (ACTION_PREFIX_ES[prefix]) return `${ACTION_PREFIX_ES[prefix]} - ${skillName.slice(dash + 3)}`;
+  }
+  const trailingStage = /^(.+) Stage (\d+)(-\d+)?$/.exec(skillName);
+  if (trailingStage) {
+    const prefix = ACTION_PREFIX_ES[trailingStage[1]] || GENERIC_SKILL_NAME_ES[trailingStage[1]] || trailingStage[1];
+    return `${prefix} Fase ${trailingStage[2]}${trailingStage[3] || ''}`;
+  }
+  return null;
+}
+
+/** @type {Record<string, string>} */
+export const GENERIC_SKILL_DESC_ES = {
+  'Swap-in opener strike.': 'Golpe inicial al entrar en campo.',
+  'Considered Heavy Attack DMG.': 'Se considera daño de ataque pesado.',
+  'Considered Heavy Attack DMG per its own kit text.': 'Se considera daño de ataque pesado.',
+  'Considered Echo Skill DMG.': 'Se considera daño de habilidad de Eco.',
+  'Considered Resonance Liberation DMG.': 'Se considera daño de liberación de resonancia.',
+  'Confirmed unused in her real rotation.': 'Confirmada como no usada en su rotación real.',
+  'Confirmed unused in his real rotation.': 'Confirmada como no usada en su rotación real.',
+  'Buffs the incoming Resonator.': 'Potencia al Resonador entrante.',
+  'Basic ATK after a successful Dodge.': 'Ataque básico tras una esquiva exitosa.',
+  'Charged aimed shot.': 'Disparo apuntado cargado.',
+  'Consumes STA for consecutive mid-air shots.': 'Consume resistencia en disparos aéreos consecutivos.',
+  'Plunging attack, consumes STA.': 'Ataque en picado, consume resistencia.',
+  'Consumes STA; Mid-air Plunging Attack.': 'Consume resistencia; ataque aéreo en picado.',
+};
+
+// Bare English damage-category terms that recur inside bespoke descriptions. Longer phrases first so
+// they match before their substrings. Status-effect names (Frazzle, Chafe, Bane…) stay in English.
+const PHRASE_ES = [
+  ['Resonance Liberation DMG', 'daño de liberación de resonancia'],
+  ['Resonance Skill DMG', 'daño de habilidad de resonancia'],
+  ['Echo Skill DMG', 'daño de habilidad de Eco'],
+  ['All DMG Amp', 'amplificación de todo el daño'],
+  ['All-Attribute DMG Amp', 'amplificación de todo el daño'],
+  ['Heavy Attack DMG', 'daño de ataque pesado'],
+  ['Basic ATK DMG', 'daño de ataque básico'],
+  ['Basic Attack DMG', 'daño de ataque básico'],
+  ['Mid-air Attack', 'ataque aéreo'],
+  ['Heavy Attack', 'ataque pesado'],
+  ['Basic Attack', 'ataque básico'],
+  ['Basic ATK', 'ataque básico'],
+  ['Dodge Counter', 'contraataque de esquiva'],
+  ['confirmed unused in her real rotation', 'confirmada como no usada en su rotación real'],
+  ['confirmed unused in his real rotation', 'confirmada como no usada en su rotación real'],
+];
+
+/**
+ * Partial translation of a skill description: exact generic sentences first, then the bare
+ * damage-category terms of PHRASE_ES; the rest of the English prose is left as-is.
+ * @param {string} desc @returns {string}
+ */
+export function applyGenericDescPhrasesEs(desc) {
+  if (GENERIC_SKILL_DESC_ES[desc]) return GENERIC_SKILL_DESC_ES[desc];
+  let out = desc;
+  for (const [en, es] of PHRASE_ES) out = out.replace(new RegExp(`\\b${en.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'g'), es);
+  return out;
+}

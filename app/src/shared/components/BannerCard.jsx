@@ -90,9 +90,9 @@ const SUPPORT_HEALER_WEAPON_SHORT = { Broadblade: 'Broad.', Rectifier: 'Rect.', 
 const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, timerColor, collectionImages, setDetailModal, pity, calc }) => {
   const isChar = type === 'character';
   const style = BANNER_GRADIENT_MAP[item.element] || BANNER_GRADIENT_MAP.Fusion;
-  // Role/weapon/element tags: element colour at 50% for both fill and border (the card's own
+  // Role/weapon/element tags: element colour at 32.5% fill, 50% border (the card's own
   // border keeps style.borderColor).
-  const tagStyle = { borderColor: `rgba(${style.glow},0.5)`, backgroundColor: `rgba(${style.glow},0.5)` };
+  const tagStyle = { borderColor: `rgba(${style.glow},0.5)`, backgroundColor: `rgba(${style.glow},0.325)` };
   const imgUrl = item.imageUrl || bannerImage;
   const [spineFailed, setSpineFailed] = useState(false);
   const [conveneVideoPlaying, setConveneVideoPlaying] = useState(false);

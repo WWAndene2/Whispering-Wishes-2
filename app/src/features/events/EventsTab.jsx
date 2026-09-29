@@ -19,6 +19,14 @@ import { hideOnError } from '../../shared/utils/imageHelpers.js';
 
 const LOCALIZED_EVENT_ENTRIES = Object.entries(getLocalizedEvents(getLocale()));
 
+// Events are seeded ahead of their start (next version's runs), so one whose currentStart
+// hasn't come yet is left out of the tab and its counts until it begins.
+const hasEventStarted = (ev, server) => {
+  if (!ev.currentStart) return true;
+  const startMs = new Date(getServerAdjustedEnd(ev.currentStart, server)).getTime();
+  return isNaN(startMs) || startMs <= Date.now();
+};
+
 function EventsTab({
   state,
   dispatch,
@@ -53,6 +61,7 @@ function EventsTab({
     const checkedDailyDays = (dailyStatus && dailyStatus.weekStart === weekStartKey && Array.isArray(dailyStatus.days))
       ? Math.min(7, dailyStatus.days.length) : 0;
 
+    const startedEntries = LOCALIZED_EVENT_ENTRIES.filter(([, ev]) => hasEventStarted(ev, state.server));
     // Weekly rewards: daily recurring (×7, the max across a full week) + weekly recurring sources
     const totalAstrite = LOCALIZED_EVENT_ENTRIES.reduce((sum, [, ev]) => {
       const val = parseInt(ev.rewards, 10) || 0;
@@ -61,8 +70,8 @@ function EventsTab({
       if (ev.weeklyReset) return sum + val;
       return sum;
     }, 0);
-    const doneKeys = LOCALIZED_EVENT_ENTRIES.filter(([key]) => key !== 'dailyReset' && state.eventStatus[key] === 'done');
-    const skippedKeys = LOCALIZED_EVENT_ENTRIES.filter(([key]) => key !== 'dailyReset' && state.eventStatus[key] === 'skipped');
+    const doneKeys = startedEntries.filter(([key]) => key !== 'dailyReset' && state.eventStatus[key] === 'done');
+    const skippedKeys = startedEntries.filter(([key]) => key !== 'dailyReset' && state.eventStatus[key] === 'skipped');
     // BUG FIX 2026-09-11: this reduce was missing totalAstrite's own `ev.weeklyReset` guard,
     // so marking ANY event done — including one-off/limited-time events with no dailyReset/
     // weeklyReset flag at all (Tower of Adversity, Whimpering Wastes, Pioneer Podcast, Endstate
@@ -87,8 +96,8 @@ function EventsTab({
     const dailyFullyChecked = checkedDailyDays >= 7;
     const hasProgress = doneKeys.length > 0 || skippedKeys.length > 0 || checkedDailyDays > 0;
     const doneCount = doneKeys.length + (dailyFullyChecked ? 1 : 0);
-    const pendingCount = LOCALIZED_EVENT_ENTRIES.length - doneCount - skippedKeys.length;
-    return { totalAstrite, earnedAstrite, skippedAstrite, hasProgress, doneCount, skippedCount: skippedKeys.length, pendingCount, totalCount: LOCALIZED_EVENT_ENTRIES.length };
+    const pendingCount = startedEntries.length - doneCount - skippedKeys.length;
+    return { totalAstrite, earnedAstrite, skippedAstrite, hasProgress, doneCount, skippedCount: skippedKeys.length, pendingCount, totalCount: startedEntries.length };
   }, [state.eventStatus, state.server]);
 
   // L1-FIX: Memoize active/expired event split
@@ -114,9 +123,10 @@ function EventsTab({
       const endMs = new Date(end).getTime();
       return !isNaN(endMs) && endMs <= Date.now();
     };
+    const started = LOCALIZED_EVENT_ENTRIES.filter(([, ev]) => hasEventStarted(ev, state.server));
     return {
-      active: LOCALIZED_EVENT_ENTRIES.filter(([, ev]) => !isEventExpired(ev)),
-      expired: LOCALIZED_EVENT_ENTRIES.filter(([, ev]) => isEventExpired(ev)),
+      active: started.filter(([, ev]) => !isEventExpired(ev)),
+      expired: started.filter(([, ev]) => isEventExpired(ev)),
       eventImageMap: imgMap,
     };
   }, [activeBanners, state.server]);

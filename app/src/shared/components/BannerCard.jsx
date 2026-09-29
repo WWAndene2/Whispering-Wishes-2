@@ -221,11 +221,13 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
                 {(getLocale() === 'fr' && WEAPON_TYPE_FR[item.weaponType]) || item.weaponType}
               </span>
             )}
-            <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={{ borderColor: style.borderColor, backgroundColor: style.bgColor }}>
+            {/* A character or weapon seeded before its data exists (an upcoming debut) has no
+                element/type yet — no empty tag for it. */}
+            {(isChar ? item.element : item.type) && <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={{ borderColor: style.borderColor, backgroundColor: style.bgColor }}>
               {isChar && getElementIcon(item.element) && <img src={getElementIcon(item.element)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
               {!isChar && getWeaponTypeIcon(item.type) && <img src={getWeaponTypeIcon(item.type)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
               {isChar ? item.element : ((getLocale() === 'fr' && WEAPON_TYPE_FR[item.type]) || item.type)}
-            </span>
+            </span>}
           </div>
           {/* Direct user request: for a NEW item, deterministically split the
               name after its first word - "Thousandfold" + the badge on line 1,
@@ -260,7 +262,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
           {item.title && <p className="text-gray-200 text-sm line-clamp-1">{(getLocale() === 'fr' && CURRENT_BANNER_TITLES_FR[item.title]) || item.title}</p>}
         </div>
         
-        <div className="banner-featured">
+        {item.featured4Stars?.length > 0 && <div className="banner-featured">
           <div className="text-gray-300 text-sm mb-0.5 uppercase tracking-wider">{t('tracker.featured')} 4★</div>
           <div className="flex gap-2 flex-wrap">
             {(item.featured4Stars || []).map(n => {
@@ -294,7 +296,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
               );
             })}
           </div>
-        </div>
+        </div>}
       </div>
       
       {/* Pull simulator pills (display-only — see core/conveneSimulator.js) sit

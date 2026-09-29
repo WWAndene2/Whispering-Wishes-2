@@ -98,6 +98,18 @@ const getWeaponBannerArt = (name) => {
 // [SECTION:HISTORY]
 
 const BANNER_HISTORY = [
+  // Version 3.7, from the community timeline snapshot of 2026-09-29T03:58:02Z (Calendrier.mht):
+  // each bar's inline left/width px against its day grid (32px = 1 day, x=18 = Mon 2026-06-29
+  // 00:00 Europe/Paris, time axis in real elapsed ms — the 28-day Tower/Whimpering Wastes cycles
+  // only line up across the Oct 25 DST change that way). Snapshot times rounded to the hour.
+  // startAt/endAt carry the exact switch times for getCurrentBannerAuto; startDate/endDate stay
+  // date-only like every other entry (TrackerTab appends 'T12:00:00' to them).
+  // v3.7-p2's third weapon: the snapshot repeats "Freeze Frame - Lucilla Weapon Banner" on
+  // Lynae's row; Lynae's signature weapon is Spectrum Blaster (her v3.0-p1/v3.2-p2/v3.5-p1 reruns).
+  // titles are each banner's own subtitle from the snapshot. Featured 4★s aren't on the
+  // timeline, so both lists stay empty rather than inheriting another phase's.
+  { id: 'v3.7-p2', version: '3.7', phase: 2, characters: ['Suoming', 'Lucilla', 'Lynae'], weapons: ['Unspoken Rue', 'Freeze Frame', 'Spectrum Blaster'], startDate: '2026-10-22', endDate: '2026-11-11', startAt: '2026-10-22T09:00:00Z', endAt: '2026-11-11T11:00:00Z', bannerArt: './characters/suoming/Suoming_Banner.webp', titles: { Suoming: 'Nine Deaths, One Unbent Heart', Lucilla: 'Tomorrow in the Frame', Lynae: 'Undefined Spectrum' }, characterFeatured4Stars: [], weaponFeatured4Stars: [], predicted: true },
+  { id: 'v3.7-p1', version: '3.7', phase: 1, characters: ['Hsin', 'Chisa', 'Iuno'], weapons: ['Blooming Jadehaven', 'Kumokiri', "Moongazer's Sigil"], startDate: '2026-09-30', endDate: '2026-10-22', startAt: '2026-09-30T02:00:00Z', endAt: '2026-10-22T09:00:00Z', bannerArt: './characters/hsin/Hsin_Banner.jpg', titles: { Hsin: 'As Full as Tonight, Forever', Chisa: 'Horizon of Danbreak', Iuno: "Across Time's Waxes and Wanes" }, characterFeatured4Stars: [], weaponFeatured4Stars: [], predicted: true },
   // Version 3.6 (upcoming — dates are the source's own estimate: "based on the Version Update's confirmed
   // release date, and the usual 21-day cycle for Version halves." Characters/weapons confirmed via
   // the source archive 453303 (Aug 10 2026 update), kit data not final until release.)
@@ -305,6 +317,8 @@ const EVENTS = {
     // (was already the right day via the community timeline's pixel-geometry read, just the
     // wrong hour — see the giftsOfDriftingMist block above for the technique).
     currentEnd: '2026-09-29T07:59:59Z',
+    // v3.7 run, from the 2026-09-29 community timeline snapshot (see BANNER_HISTORY's v3.7 comment).
+    schedule: [{ currentStart: '2026-09-30T02:00:00Z', currentEnd: '2026-11-12T02:59:59Z' }],
     // Direct user request 2026-09-11: drop the free Public Channel track from the badge
     // entirely — only the Insider Channel reward is shown. `options` keeps the itemized
     // breakdown (not read by EventsTab's own astrite-total math — pioneerPodcast has no
@@ -436,6 +450,7 @@ const EVENTS = {
     // version ends (Sep 3 -> Sep 10), not Aug 20 -> Sep 10 as previously modeled.
     currentStart: '2026-09-03T08:00:00Z',
     currentEnd: '2026-09-10T07:59:59Z',
+    schedule: [{ currentStart: '2026-10-15T03:00:00Z', currentEnd: '2026-10-22T02:59:59Z' }], // v3.7, 2026-09-29 timeline snapshot
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-lime-900/30',
     accentColor: 'lime',
     imageUrl: './banners/_shared/TqLqWVsv-bountiful-crescendo.webp', // real event art, sourced 2026-08-20 from the reference File:Bountiful_Crescendo.jpg (recurring material double-drop event, generic art reused across versions), uploaded to imgbb 2026-08-20
@@ -528,9 +543,112 @@ const EVENTS = {
     // the version ends (Sep 22 -> Sep 29), not Aug 20 -> Sep 10 as previously modeled.
     currentStart: '2026-09-22T08:00:00Z',
     currentEnd: '2026-09-29T07:59:59Z',
+    schedule: [{ currentStart: '2026-11-04T03:00:00Z', currentEnd: '2026-11-11T02:59:59Z' }], // v3.7, 2026-09-29 timeline snapshot
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-pink-900/30',
     accentColor: 'pink',
     imageUrl: './banners/_shared/99Pk72ZX-chord-cleansing.webp', // real event art, sourced 2026-08-20 from the reference File:Chord_Cleansing.jpg (recurring echo double-drop event, generic art reused across versions), uploaded to imgbb 2026-08-20
+  },
+  // v3.7 events, from the 2026-09-29 community timeline snapshot (see BANNER_HISTORY's v3.7
+  // comment for how its bar geometry maps to UTC). EventsTab keeps each one hidden until its
+  // currentStart. No cover art: the snapshot saved the page HTML only.
+  giftsOfWakingMoon: {
+    name: 'Gifts of Waking Moon',
+    subtitle: '7 Day Login Event',
+    description: "During the event, log in to claim the day's login rewards from the event page.",
+    resetType: 'Limited-time',
+    color: 'yellow',
+    currentStart: '2026-09-30T02:00:00Z',
+    currentEnd: '2026-11-11T02:59:59Z',
+    gradient: 'from-neutral-900/30 via-neutral-900/20 to-yellow-900/30',
+    accentColor: 'yellow',
+  },
+  backToSolaris: {
+    name: 'Back to Solaris',
+    subtitle: 'Web Event',
+    description: 'v3.7 limited-time web event.',
+    resetType: 'Limited-time',
+    color: 'cyan',
+    currentStart: '2026-09-30T02:00:00Z',
+    currentEnd: '2026-11-11T22:59:59Z',
+    gradient: 'from-neutral-900/30 via-neutral-900/20 to-cyan-900/30',
+    accentColor: 'cyan',
+  },
+  dreamsInTheCapsuleArea: {
+    name: 'Dreams in the Capsule Area',
+    subtitle: 'Exploration Event',
+    description: 'v3.7 limited-time exploration event.',
+    resetType: 'Limited-time',
+    color: 'lime',
+    currentStart: '2026-09-30T02:00:00Z',
+    currentEnd: '2026-11-11T02:59:59Z',
+    gradient: 'from-neutral-900/30 via-neutral-900/20 to-lime-900/30',
+    accentColor: 'lime',
+  },
+  cubieWars: {
+    name: 'Cubie Wars',
+    subtitle: 'Leisure Event',
+    description: 'v3.7 limited-time leisure event.',
+    resetType: 'Limited-time',
+    color: 'purple',
+    currentStart: '2026-09-30T02:00:00Z',
+    currentEnd: '2026-11-12T02:59:59Z',
+    gradient: 'from-neutral-900/30 via-neutral-900/20 to-purple-900/30',
+    accentColor: 'purple',
+  },
+  artisansSearch: {
+    name: "Artisan's Search",
+    subtitle: 'Featured Combat Event',
+    description: 'v3.7 limited-time combat event.',
+    resetType: 'Limited-time',
+    color: 'red',
+    currentStart: '2026-10-08T03:00:00Z',
+    currentEnd: '2026-11-26T02:59:59Z',
+    gradient: 'from-neutral-900/30 via-neutral-900/20 to-red-900/30',
+    accentColor: 'red',
+  },
+  wakingMoonFishing: {
+    name: 'Waking Moon Fishing',
+    subtitle: 'Web Event',
+    description: 'v3.7 limited-time web event.',
+    resetType: 'Limited-time',
+    color: 'cyan',
+    currentStart: '2026-10-15T09:00:00Z',
+    currentEnd: '2026-11-01T08:59:59Z',
+    gradient: 'from-neutral-900/30 via-neutral-900/20 to-cyan-900/30',
+    accentColor: 'cyan',
+  },
+  echoErase: {
+    name: 'Echo Erase',
+    subtitle: 'Leisure Event',
+    description: 'v3.7 limited-time leisure event.',
+    resetType: 'Limited-time',
+    color: 'purple',
+    currentStart: '2026-10-22T09:00:00Z',
+    currentEnd: '2026-11-09T02:59:59Z',
+    gradient: 'from-neutral-900/30 via-neutral-900/20 to-purple-900/30',
+    accentColor: 'purple',
+  },
+  giftsOfSingingDrizzle: {
+    name: 'Gifts of Singing Drizzle',
+    subtitle: 'Limited-Time Login Event',
+    description: "During the event, log in to claim the day's login rewards from the event page.",
+    resetType: 'Limited-time',
+    color: 'yellow',
+    currentStart: '2026-10-22T09:00:00Z',
+    currentEnd: '2026-11-11T02:59:59Z',
+    gradient: 'from-neutral-900/30 via-neutral-900/20 to-yellow-900/30',
+    accentColor: 'yellow',
+  },
+  beyondTheWavesXuanfang: {
+    name: 'Beyond the Waves: Land of Xuanfang',
+    subtitle: 'Featured Exploration Event',
+    description: 'v3.7 limited-time exploration event.',
+    resetType: 'Limited-time',
+    color: 'lime',
+    currentStart: '2026-10-29T03:00:00Z',
+    currentEnd: '2026-11-11T02:59:59Z',
+    gradient: 'from-neutral-900/30 via-neutral-900/20 to-lime-900/30',
+    accentColor: 'lime',
   },
 };
 
@@ -1380,6 +1498,8 @@ const CONVENE_ANIMATIONS = {
   Yuanwu: './convene-animations/yuanwu-convene.mp4',
   Zani: './convene-animations/zani-convene.mp4',
   Zhezhi: './convene-animations/zhezhi-convene.mp4',
+  Hsin: './convene-animations/hsin-convene.mp4',
+  Suoming: './convene-animations/suoming-convene.mp4',
   // One generic Rover clip (not element-specific) shared across all four
   // playable elements — CHARACTER_DATA has no plain "Rover" key, only the
   // four "Rover: X" element variants.
@@ -1411,6 +1531,7 @@ const getConveneAnimation = (name) => CONVENE_ANIMATIONS[name] || null;
 // Pioneer Podcast runs every version. Dates = version P1 start → last phase end (from BANNER_HISTORY)
 // Cross-checked against the reference page URLs: Pioneer_Podcast/2024-05-23, /2024-06-28, etc.
 const PIONEER_PODCAST_HISTORY = [
+  { version: '3.7', startDate: '2026-09-30', endDate: '2026-11-12', rewards: 680 },
   // endDate corrected 2026-09-10 to match BANNER_HISTORY's v3.6-p2 fix (was '2026-09-30') —
   // see that entry's own comment for the sourcing.
   // Direct user correction 2026-09-11: Insider Channel reward is 680 Astrite (see
@@ -1461,6 +1582,8 @@ const TACTICAL_HOLOGRAM_HISTORY = [
 
 // Version start dates (P1 start from BANNER_HISTORY) — used to derive event boundaries
 const VERSION_DATES = [
+  // From the 2026-09-29 community timeline snapshot — see BANNER_HISTORY's v3.7 comment.
+  { version: '3.7', start: '2026-09-30', end: '2026-11-11' },
   // end corrected 2026-09-10 (was '2026-09-30', a 21-day-cycle estimate) — see
   // BANNER_HISTORY's v3.6-p2 comment for the live-tracker sourcing.
   { version: '3.6', start: '2026-08-20', end: '2026-09-29' },
@@ -1526,8 +1649,8 @@ function slugify(name) {
 
 export function getCurrentBannerAuto(now = Date.now()) {
   const active = BANNER_HISTORY.find(h => {
-    const start = new Date(h.startDate).getTime();
-    const end = new Date(h.endDate).getTime();
+    const start = new Date(h.startAt || h.startDate).getTime();
+    const end = new Date(h.endAt || h.endDate).getTime();
     return now >= start && now < end;
   });
   if (!active) return CURRENT_BANNERS;
@@ -1558,7 +1681,7 @@ export function getCurrentBannerAuto(now = Date.now()) {
     return {
       id: slugify(name),
       name,
-      title: cd.title || '',
+      title: active.titles?.[name] || cd.title || '',
       element: cd.element || '',
       weaponType: cd.weapon || '',
       isNew: isFirstAppearance(name),
@@ -1587,8 +1710,8 @@ export function getCurrentBannerAuto(now = Date.now()) {
     ...CURRENT_BANNERS,
     version: active.version,
     phase: active.phase,
-    startDate: active.startDate,
-    endDate: active.endDate,
+    startDate: active.startAt || active.startDate,
+    endDate: active.endAt || active.endDate,
     characterBannerImage: active.bannerArt || CURRENT_BANNERS.characterBannerImage,
     weaponBannerImage: active.weaponBannerArt || CURRENT_BANNERS.weaponBannerImage,
     characters,
@@ -1617,15 +1740,25 @@ export function getLocalizedCurrentBanners(locale) {
   };
 }
 
+// An event's `schedule` lists its later runs ({ currentStart, currentEnd }) after the one in
+// currentStart/currentEnd. The run shown is the first one not yet over, or the last one once
+// all are over, so a recurring event moves to its next run on its own.
+export function resolveEventWindow(ev, now = Date.now()) {
+  if (!ev.schedule) return ev;
+  const { schedule, ...base } = ev;
+  const runs = [{ currentStart: base.currentStart, currentEnd: base.currentEnd }, ...schedule];
+  const run = runs.find(r => new Date(r.currentEnd).getTime() > now) || runs[runs.length - 1];
+  return { ...base, ...run };
+}
+
 // Locale-aware EVENTS: only name/subtitle/description are swapped.
 // resetType/rewards/color/gradient/accentColor are intentionally left as-is
 // (see banners.fr.js header for why).
-export function getLocalizedEvents(locale) {
-  if (locale !== 'fr') return EVENTS;
+export function getLocalizedEvents(locale, now = Date.now()) {
   const out = {};
   for (const [key, base] of Object.entries(EVENTS)) {
-    const fr = EVENTS_FR[key];
-    out[key] = { ...base, ...(fr ? { name: fr.name, subtitle: fr.subtitle, description: fr.description } : {}) };
+    const fr = locale === 'fr' ? EVENTS_FR[key] : null;
+    out[key] = resolveEventWindow({ ...base, ...(fr ? { name: fr.name, subtitle: fr.subtitle, description: fr.description } : {}) }, now);
   }
   return out;
 }

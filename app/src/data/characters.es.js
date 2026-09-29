@@ -1464,7 +1464,7 @@ export const CHARACTER_ROTATION_NOTE_ES = {
     "Entra en campo en frío sin Intro (su habilidad Intro se considera inutilizable en la práctica) y luego toca el ataque básico: entrar así inicia el combo directamente en la Fase 3, hacia la Fase 4-5. La Fase 5 al impactar otorga 1 de Energía de fotosíntesis.",
     "Pulsa la habilidad y cancélala de inmediato con la liberación de abajo para ahorrar tiempo: esto omite el golpe y su ganancia de energía de resonancia, pero la energía de Concierto se sigue obteniendo. También otorga 1 de Energía de fotosíntesis al lanzarla.",
     "Pulsa la liberación justo después de Experimento botánico para cancelarlo: 175 de energía, 25 s de reutilización. Cura al equipo (950 + 23,80 % de ATQ a nivel 10) y aplica una Marca de fotosíntesis de 12 s para la curación por ataque coordinado.",
-    "Salta y toca el ataque básico hasta 3 veces para gastar las 4 acumulaciones de Energía de fotosíntesis (1 por lanzamiento, tope 4) en Florecen las flores estelares: cada lanzamiento cura al equipo (1188 + 29,75 % de ATQ a nivel 10) y rellena 12 de energía de Concierto. Un arma que genere Concierto (Variation/Stellar Symphony) permite omitir el último lanzamiento.",
+    "Salta y toca el ataque básico hasta 3 veces para gastar las 4 acumulaciones de Energía de fotosíntesis (1 por lanzamiento, tope 4) en Florecen las flores estelares: cada lanzamiento cura al equipo (1188 + 29,75 % de ATQ a nivel 10) y rellena 12 de energía de Concierto. Un arma que genere Concierto (Variación/Sinfonía estelar) permite omitir el último lanzamiento.",
     "Cambia de personaje para activarlo automáticamente: cura al Resonador entrante un 19 % de ATQ/s durante 6 s y otorga a todo el equipo cercano +15 % de amplificación de daño de todos los tipos durante 30 s.",
   ],
   "Jinhsi": [
@@ -1495,7 +1495,7 @@ export const CHARACTER_ROTATION_NOTE_ES = {
     "Cambia de personaje para activarlo automáticamente: otorga al Resonador entrante +20 % de amplificación de daño Glacio y +25 % de amplificación de daño de habilidad de resonancia durante 14 s, más 15 de energía de resonancia mediante la habilidad inherente Florecer.",
   ],
   "Encore": [
-    "Usa la habilidad de tu Eco equipado antes de hacerla entrar en campo (Inferno Rider es el mejor en su ranura, pero requiere una cancelación de cambio para usarlo con fluidez).",
+    "Usa la habilidad de tu Eco equipado antes de hacerla entrar en campo (Jinete Infernal es el mejor en su ranura, pero requiere una cancelación de cambio para usarlo con fluidez).",
     "Entra en campo: se activa automáticamente, inflige un golpe Fusión y restaura algo de Caos.",
     "Pulsa la liberación (125 de energía): sin golpe directo al lanzarla; envía a Encore a un frenesí centrado en el cuerpo a cuerpo durante 10 s fijos (16 s de reutilización): su ataque básico, ataque pesado, habilidad y contraataque de esquiva se sustituyen por versiones «Cosmos» mejoradas mientras dure.",
     "Pulsa la habilidad (su habilidad se sustituye automáticamente durante Fiesta cósmica): un golpe Fusión que además restaura una buena cantidad de Caos (barra de Forte, tope 100). 4 s de reutilización interna.",
@@ -1526,7 +1526,7 @@ export const CHARACTER_ROTATION_NOTE_ES = {
     "Pulsa la liberación en el instante en que Yinlin aterriza del ataque pesado: hace caer el trueno sobre un área amplia y vuelve a aplicar la Marca del pecador.",
     "Toca el ataque básico UNA vez: restaura Puntos de juicio hacia el tope de 100.",
     "Cuando los Puntos de juicio llegan a 100/100, su ataque pesado se sustituye automáticamente por este: pulsa el ataque pesado para consumir los 100 en un gran golpe que mejora cualquier Marca del pecador del objetivo a Marca de castigo durante 18 s (activa un Golpe de juicio automático sobre ese objetivo una vez por segundo mientras recibe daño).",
-    "Usa la habilidad de tu Eco equipado (se recomienda Impermanence Heron) justo después de Cifrado camaleón y cambia de inmediato de personaje para cancelar su animación sin perder el efecto.",
+    "Usa la habilidad de tu Eco equipado (se recomienda Garza Impermanencia) justo después de Cifrado camaleón y cambia de inmediato de personaje para cancelar su animación sin perder el efecto.",
     "Se activa automáticamente al cambiar de personaje. Otorga al Resonador entrante +20 % de amplificación de daño Electro y +25 % de amplificación de daño de liberación de resonancia durante 14 s.",
   ],
   "Jiyan": [
@@ -1609,7 +1609,7 @@ export const CHARACTER_ROTATION_NOTE_ES = {
     "Toca el ataque básico una vez más en Descifrar para cobrar la ganancia de Runas.",
     "MANTÉN el ataque básico de nuevo: esta vez consumiendo 2 Runas de tipos distintos para Estallido rúnico (daño adicional puro, sin efecto extra). Cancela su final al impactar manteniendo la habilidad.",
     "Cuando Parada total llega a 100/100, MANTÉN la habilidad (consumiendo toda la Parada total) justo después de que aterrice el ataque pesado: su gran remate de Forte, que se considera daño de habilidad de Eco.",
-    "Usa tu Eco equipado (Nameless Explorer) en cualquier punto de la rotación.",
+    "Usa tu Eco equipado (Explorador Sin Nombre) en cualquier punto de la rotación.",
     "Cambia de personaje para activarlo automáticamente: un gran golpe del 795 % de ATQ, y otorga a Sigrika (si vuelve a entrar) 2 acumulaciones de Encapsulado durante 30 s, estancando a los objetivos cada vez que un compañero cercano lanza su propia habilidad de Eco.",
   ],
   "Luuk Herssen": [
@@ -1644,7 +1644,7 @@ export const CHARACTER_ROTATION_NOTE_ES = {
     "Pulsa la liberación justo después de la Fase 3 de Destrucción en flor: consume toda la Melodía para un golpe (se considera daño de ataque pesado) y restaura 1 Pluma azur.",
     "Pulsa la habilidad de nuevo: vuelve a la Postura de espada Azur.",
     "Con la Pluma azur de nuevo al tope, MANTÉN el ataque básico: un gran golpe de ciclón que aplica 2 acumulaciones más de Ruina de destrucción, y obtiene daño crítico adicional de Aliento contenido si es su primer ataque pesado lanzado en los últimos 25 s.",
-    "Usa tu Eco equipado (Thousand-Puppet Pavilion) lo antes posible en la rotación: inflige daño periódico mientras se sigue aplicando Ruina de destrucción.",
+    "Usa tu Eco equipado (Pabellón de los Mil Títeres) lo antes posible en la rotación: inflige daño periódico mientras se sigue aplicando Ruina de destrucción.",
     "Cambia de personaje para activarlo automáticamente: un golpe fijo del 300 % de ATQ, y otorga a todos los demás compañeros Cambio tonal durante 20 s: la próxima vez que apliquen Ruina de destrucción, su propio daño Destrucción se amplifica +20 %.",
   ],
   "Aemeath": [
@@ -1677,7 +1677,7 @@ export const CHARACTER_ROTATION_NOTE_ES = {
     "Pulsa la habilidad justo después de que aterrice la Fase 3: cura al equipo e invoca Cañones flotantes para más daño Fusión, acumulando lo que falta de Momento relativo.",
     "Cuando el Momento relativo llega a 100/100, MANTÉN el ataque básico (ataque pesado sustituido): lo consume todo para un golpe (se considera daño de ataque pesado) que inflige Marcador de observación sobre el objetivo durante 30 s. Cancela su tiempo de recuperación al impactar pulsando de inmediato la liberación.",
     "Pulsa la liberación justo después de que aterrice Inversión: golpea el área y sustituye el Campo de sintonía por un Campo de alta sintonía más potente durante 25 s (añade +20 % de DEF del equipo y +40 % de multiplicador de curación a los efectos del campo base).",
-    "Usa tu Eco equipado (Reactor Husk) justo después de la liberación y cancélalo con el cambio, o antes de la liberación si usas Fallacy of No Return.",
+    "Usa tu Eco equipado (Coraza del Reactor) justo después de la liberación y cancélalo con el cambio, o antes de la liberación si usas Falacia sin Regresión.",
     "Cambia de personaje para activarlo automáticamente. Otorga a todo el equipo +25 % de amplificación de todo el daño durante 30 s. (Cada vez que un compañero inflige daño de Ruptura de Tonalidad a un objetivo que Mornye marcó con Marcador de observación, este se mejora a Marcador de interferencia, aumentando el daño de los compañeros cercanos sobre ese objetivo: hasta +40 % según la regeneración de energía de Mornye por encima del 100 %.)",
   ],
   "Chisa": [
@@ -1768,7 +1768,7 @@ export const CHARACTER_ROTATION_NOTE_ES = {
     "Ya debería estar fuera de reutilización: pulsa la habilidad para otro ataque de salto, 2 de Capacidad de rendimiento.",
     "Pulsa el ataque básico en el aire: 3 más de Capacidad de rendimiento (5/5).",
     "Pulsa la habilidad para el 3.er y último Hipercubo: consumirlo termina la Intuición de inmediato, sea cual sea la duración restante.",
-    "Usa tu Eco equipado (Mech Abomination o una invocación Nightmare) en cualquier punto de la larga ventana de Intuición: cancela con el cambio justo después de la última Ley de los reinados si hace falta.",
+    "Usa tu Eco equipado (Abominación Mecánica o una invocación Nightmare) en cualquier punto de la larga ventana de Intuición: cancela con el cambio justo después de la última Ley de los reinados si hace falta.",
     "Cambia de personaje para activarlo automáticamente. Durante 8 s, el primer objetivo que golpee el ataque básico del Resonador entrante recibe un láser (hasta 3 activaciones, una cada 2 s).",
   ],
   "Shorekeeper": [
@@ -1776,7 +1776,7 @@ export const CHARACTER_ROTATION_NOTE_ES = {
     "Toca el ataque básico 4 veces: cada golpe otorga 1 Núcleo colapsado (que se convierte en una Mariposa de estrella fulgurante de ataque automático tras 6 s) y Datos empíricos (la Fase 3 otorga 2 de Datos empíricos en lugar de 1, con lo que la barra llega a 5/5 tras este combo).",
     "Cuando los Datos empíricos llegan a 5/5, MANTÉN el ataque básico (ataque pesado sustituido): los consume todos para un golpe que convierte al instante cada Núcleo colapsado pendiente en una Mariposa de estrella fulgurante y atrae suavemente a los enemigos que no son de élite (alcance ampliado +30 % en S5).",
     "Pulsa la habilidad: cura al equipo cercano e invoca 5 Mariposas de estrella tenue que rastrean automáticamente a un objetivo, generando una gran ráfaga de energía de Concierto al aterrizar.",
-    "Usa tu Eco equipado (se recomienda Fallacy of No Return) justo después de la habilidad.",
+    "Usa tu Eco equipado (se recomienda Falacia sin Regresión) justo después de la habilidad.",
     "Pulsa la liberación (necesita 175 de energía): invoca el Stellarealm durante 30 s: curación continua del equipo cada 3 s. Se mejora automáticamente la primera vez que un compañero lanza su Intro en su interior (a Interior: hasta +12,5 % de tasa crítica del equipo escalada con su regeneración de energía) y de nuevo con una 2.ª Intro (a Supremo: hasta +25 % de daño crítico del equipo).",
     "Cambia de personaje para activarlo automáticamente: invoca mariposas de escolta alrededor del Resonador entrante hasta 30 s (hasta 5 recuperaciones gratuitas de golpes/lanzamientos) y otorga al equipo cercano +15 % de amplificación de todo el daño, que persiste tras los cambios. Cambiar aquí a un compañero es también lo que activa la primera mejora del Stellarealm.",
   ],
@@ -1793,7 +1793,7 @@ export const CHARACTER_ROTATION_NOTE_ES = {
     "Con 2 acumulaciones de Majestad, MANTÉN la liberación: no cuesta energía de resonancia, genera el Reino del Gobernante (protege a los compañeros que lancen su Intro dentro de él) y entra en Lealtad jurada durante 7 s: el tiempo se detiene por completo, sin cambios de personaje, inmune en todo momento.",
     "Toca o mantén el ataque básico repetidamente: 9 golpes rápidos de tipo ataque pesado seguidos durante la ventana de tiempo detenido.",
     "Se lanza automáticamente tras el 9.º golpe de Nacido del sol (o pulsa el ataque básico/la liberación para activarlo antes): un gran golpe final que termina Lealtad jurada y consume todas las acumulaciones de Corona de voluntades.",
-    "Usa tu Eco equipado (The False Sovereign) justo después de Protector perenne y cancélalo de inmediato con el cambio.",
+    "Usa tu Eco equipado (Falso Soberano) justo después de Protector perenne y cancélalo de inmediato con el cambio.",
     "Cambia de personaje para activarlo automáticamente. Otorga al Resonador entrante +15 % de amplificación de todo el daño durante 14 s (se pierde al salir); lanzarlo también otorga a Augusta 1 acumulación de Majestad para la próxima vez. Evita retirar del campo al compañero potenciado, o la regeneración de Majestad se detiene.",
   ],
   "Phrolova": [
@@ -1805,7 +1805,7 @@ export const CHARACTER_ROTATION_NOTE_ES = {
     "Toca el ataque básico 3 veces: la Fase 3 otorga otra Nota volátil: Cuerdas, preparando de nuevo la Reencarnación.",
     "Lanza un 3.er ataque mejorado de Forte: para entonces debería tener las 6 Notas volátiles necesarias para Coda escarlata.",
     "Con 6 Notas volátiles, en el estado Componer (se activa automáticamente cada 25 s con un temporizador fijo independiente de sus acciones) y sin estar ya en Acorde de resolución, MANTÉN el ataque básico (ataque pesado sustituido): un golpe de tipo habilidad que escala con el Posonido acumulado (tope 24 acumulaciones) y activa el estado Acorde de resolución, desbloqueando su liberación.",
-    "Usa tu Eco equipado (Nightmare: Hecate) justo después de Coda escarlata.",
+    "Usa tu Eco equipado (Pesadilla: Hécate) justo después de Coda escarlata.",
     "Pulsa la liberación (no cuesta energía de resonancia: su máximo es 0, y solo se puede lanzar en el estado Acorde de resolución): termina Acorde de resolución y entra en Maestro durante 24 s: +120 % de ATQ propio, y Hécate lucha ahora a su lado, compartiendo sus estadísticas y controlable con ataque básico/esquiva/salto mientras ella permanezca en campo.",
     "Cambia de personaje para activarlo automáticamente. Otorga al Resonador entrante +20 % de amplificación de daño Destrucción y +25 % de amplificación de daño de ataque pesado durante 14 s: termina de inmediato si ESE Resonador sale del campo. Solo si Phrolova sigue en estado Maestro en el momento de lanzar este Outro, Hécate dispara además 2 Ataques mejorados extra fuera de campo antes de que termine esa misma ventana de Maestro (24 s en total); por lo demás, Hécate fuera de campo sigue atacando automáticamente y obtiene un Ataque mejorado normal cada vez que cualquier compañero lanza su propia habilidad de Eco, con tope de 10 activaciones por ventana de Maestro (1 por cada Eco único del mismo nombre).",
   ],
@@ -1879,7 +1879,7 @@ export const CHARACTER_ROTATION_NOTE_ES = {
     "Apertura de daño Destrucción; el ataque básico posterior lanza directamente Contras cronometradas (Cambio de poder)",
     "El ataque básico tras la Parada estratégica del ataque pesado/Intro consume «Calibre resolutivo» para golpes extra y un escudo, y se considera daño de ataque básico",
     "Golpe de Destrucción escalado con DEF: se beneficia de su DEF base naturalmente alta",
-    "Combo completo de 4 golpes de ataque básico antes de la habilidad/Outro: los golpes básicos anteriores que acumulan Concierto se pueden omitir con un arma que genere Concierto como Discord y no se modelan por separado",
+    "Combo completo de 4 golpes de ataque básico antes de la habilidad/Outro: los golpes básicos anteriores que acumulan Concierto se pueden omitir con un arma que genere Concierto como Disonancia y no se modelan por separado",
     "Daño Destrucción a los objetivos circundantes, genera 3 acumulaciones de Escudo firme y se cura a sí misma",
     "Otorga al Resonador entrante un 38 % de amplificación de daño de habilidad de resonancia durante 14 s: sincronízalo para que caiga sobre la ventana de habilidad del DPS previsto",
   ],
@@ -1898,7 +1898,7 @@ export const CHARACTER_ROTATION_NOTE_ES = {
     "Combo de ataque básico (Partes 1-4) dentro de la ventana de Fastidio posterior a la habilidad para rellenar rápido Fuga de furia",
     "Lánzalo de nuevo cuando el Fastidio se rellene",
     "Lánzalo justo antes de cambiar de personaje: aplica Rapsodia ardiente (golpes de ataque coordinado Marcato fuera de campo) a todo el equipo",
-    "Cambia al atacante principal de ataque pesado: le otorga un 38 % de amplificación de daño de ataque pesado durante 14 s; la cancelación con cambio de Impermanence Heron añade una mejora adicional en el mismo cambio",
+    "Cambia al atacante principal de ataque pesado: le otorga un 38 % de amplificación de daño de ataque pesado durante 14 s; la cancelación con cambio de Garza Impermanencia añade una mejora adicional en el mismo cambio",
   ],
   "Youhu": [
     "Apertura de daño Glacio, otorga Sorteo de la suerte (Antigüedad aleatoria)",
@@ -2006,17 +2006,17 @@ export const CHARACTER_ROTATION_NOTE_ES = {
 export const WEAPON_VERDICT_REASON_ES = {
   'Mornye': {
     need: 'El kit de Mornye escala sobre todo con la DEF, y su necesidad real es un 260 % de regeneración de energía para llevar al máximo las automejoras de su liberación y las mejoras de todo el equipo: se alcanza fácilmente incluso con armas de 4★ gratuitas.',
-    signatureNote: 'Starfield Calibrator solo añade una mejora permanente del 20 % de daño crítico para el equipo y energía de Concierto extra: según sus propias notas de montaje, la ganancia de daño personal es despreciable y el retorno de la mejora es bajo, que es justo por lo que se puede omitir.',
+    signatureNote: 'Calibrador estelar solo añade una mejora permanente del 20 % de daño crítico para el equipo y energía de Concierto extra: según sus propias notas de montaje, la ganancia de daño personal es despreciable y el retorno de la mejora es bajo, que es justo por lo que se puede omitir.',
   },
   'Jingran': {
     need: 'El kit de Jingran escala con los PV máx., con una automejora que llega a su tope con 50 000 PV en su montaje ideal.',
-    signatureNote: 'Thousandfold Deliverance es la única arma que le da ~72 % de PV %, el atributo secundario que de verdad lo lleva a ese tope mientras sigue acumulando daño crítico e ignorar DEF: cualquier otra opción deja una brecha grande y permanente, no solo una menor.',
+    signatureNote: 'Milésima liberación es la única arma que le da ~72 % de PV %, el atributo secundario que de verdad lo lleva a ese tope mientras sigue acumulando daño crítico e ignorar DEF: cualquier otra opción deja una brecha grande y permanente, no solo una menor.',
   },
 };
 
 export const WEAPON_ALT_REASON_ES = {
   'Mornye': {
-    headline: 'Discord restaura 16 de energía de Concierto por lanzamiento de habilidad',
+    headline: 'Disonancia restaura 16 de energía de Concierto por lanzamiento de habilidad',
     detail: 'el doble del efecto de su arma exclusiva, y sigue cumpliendo con holgura su necesidad de regeneración de energía: un cambio limpio y gratuito para esa ranura.',
   },
 };

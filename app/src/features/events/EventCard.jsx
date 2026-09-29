@@ -18,10 +18,6 @@ import { t } from '../../utils/i18n.js';
 // wherever those currency names appear in an event's rewards badge text.
 const REWARD_ICON_CURRENCIES = ['Radiant Tide', 'Astrite'];
 const REWARD_ICON_PATTERN = new RegExp(`(${REWARD_ICON_CURRENCIES.join('|')})`, 'g');
-// Currency-Astrite.webp's star fills only ~60% of its square (about 3px of transparent margin per
-// side at 16px), which reads as a wide gap beside it; its box is narrowed to 12px, cropping only
-// that empty margin (object-cover keeps the star's 16px height). Radiant Tide fills its square.
-const REWARD_ICON_WIDTH = { Astrite: 'w-3 object-cover', 'Radiant Tide': 'w-4' };
 // Each icon sits 8px from its neighbours, the same as the reward name from the badge's left edge
 // (kuro-badge's 8px padding; the badge has no border and no flex gap, see rewardBadgeStyle). The
 // text right after an icon drops its leading space so that gap stays 8px.
@@ -35,7 +31,7 @@ function renderRewardsWithIcons(rewardsText) {
     return (
       <React.Fragment key={i}>
         {part}
-        <img src={iconSrc} alt="" className={`inline ${REWARD_ICON_WIDTH[part]} h-4 -mt-0.5 ml-2 ${followedByText ? 'mr-2' : ''}`} onError={hideOnError} />
+        <img src={iconSrc} alt="" className={`inline w-4 h-4 -mt-0.5 ml-2 ${followedByText ? 'mr-2' : ''}`} onError={hideOnError} />
       </React.Fragment>
     );
   });

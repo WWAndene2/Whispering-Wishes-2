@@ -72,3 +72,15 @@ describe('echo overlays (data/echoes.*.js)', () => {
     expect(Object.keys(ECHO_DATA_ES).sort()).toEqual(withDesc.sort());
   });
 });
+
+describe('weapon overlay (data/weapons.*.js)', () => {
+  it('Spanish covers every weapon with a description and passive', async () => {
+    const { WEAPON_DATA, getLocalizedWeaponData } = await import('../data/weapons.js');
+    const { WEAPON_DATA_ES } = await import('../data/weapons.es.js');
+    expect(Object.keys(WEAPON_DATA_ES).sort()).toEqual(Object.keys(WEAPON_DATA).sort());
+    for (const [name, w] of Object.entries(WEAPON_DATA_ES)) { expect(w.desc, name).toBeTruthy(); expect(w.passive, name).toBeTruthy(); }
+    const es = getLocalizedWeaponData('es');
+    expect(es['Kumokiri'].passive).toContain('ATQ +12 %');
+    expect(es['Kumokiri'].stat).toBe(WEAPON_DATA['Kumokiri'].stat);
+  });
+});

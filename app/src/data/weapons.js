@@ -650,10 +650,11 @@ const WEAPON_DATA = {
 // a fallback whenever a weapon has no `pv`, so feeding it translated text
 // would silently corrupt DPS calculations.
 import { WEAPON_DATA_FR } from './weapons.fr.js';
+import { WEAPON_DATA_ES } from './weapons.es.js';
 
 /** @param {string} locale */
 export function getLocalizedWeaponData(locale) {
-  const overlay = { fr: WEAPON_DATA_FR }[locale];
+  const overlay = { fr: WEAPON_DATA_FR, es: WEAPON_DATA_ES }[locale];
   if (!overlay) return WEAPON_DATA;
   const out = {};
   for (const [name, base] of Object.entries(WEAPON_DATA)) {

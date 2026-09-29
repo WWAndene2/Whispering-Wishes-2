@@ -11,7 +11,7 @@ const flat = (o, prefix = '') => Object.fromEntries(Object.entries(o).flatMap(([
   v && typeof v === 'object' ? Object.entries(flat(v, `${prefix}${k}.`)) : [[`${prefix}${k}`, v]]));
 
 // Modules whose Spanish translation is complete; extend as each sub-step lands.
-const TRANSLATED_ES = ['tabs', 'app', 'app2', 'appShared', 'common', 'pity', 'events', 'errors', 'pwa', 'tracker', 'collection', 'calculator', 'analytics', 'planner', 'teams', 'modals'];
+const TRANSLATED_ES = ['tabs', 'app', 'app2', 'appShared', 'common', 'pity', 'events', 'errors', 'pwa', 'tracker', 'collection', 'calculator', 'analytics', 'planner', 'teams', 'modals', 'profile'];
 
 describe.each(TRANSLATED_ES)('locale/es/%s.json', (mod) => {
   const load = (loc) => JSON.parse(readFileSync(join(LOCALE_DIR, loc, `${mod}.json`), 'utf8'));

@@ -85,8 +85,9 @@ const generateMaskGradient = (fadePos, fadeIntensity) => {
 };
 
 // Featured 4★ name tags: the 4★ rarity purple (--rarity-4star, #c084fc) at the same 32.5% fill as
-// the role/weapon/element tags, borderless (the portrait frames above them show no border either).
+// the role/weapon/element tags, borderless. FEATURED_4STAR_FRAME_BORDER is the portrait frame's.
 const FEATURED_4STAR_TAG_STYLE = { color: 'var(--rarity-4star)', backgroundColor: 'rgba(192,132,252,0.325)' };
+const FEATURED_4STAR_FRAME_BORDER = 'rgba(192,132,252,0.5)';
 
 // Weapon-type labels as shown next to a Support/Healer role tag (see the tag row below).
 const SUPPORT_HEALER_WEAPON_SHORT = { Broadblade: 'Broad.', Rectifier: 'Rect.', Amplificateur: 'Amplif.' };
@@ -94,9 +95,9 @@ const SUPPORT_HEALER_WEAPON_SHORT = { Broadblade: 'Broad.', Rectifier: 'Rect.', 
 const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, timerColor, collectionImages, setDetailModal, pity, calc }) => {
   const isChar = type === 'character';
   const style = BANNER_GRADIENT_MAP[item.element] || BANNER_GRADIENT_MAP.Fusion;
-  // Role/weapon/element tags: element colour at 32.5% fill, 50% border (the card's own
-  // border keeps style.borderColor).
-  const tagStyle = { borderColor: `rgba(${style.glow},0.5)`, backgroundColor: `rgba(${style.glow},0.325)` };
+  // Role/weapon/element tags: element colour at 32.5% fill, no visible border (transparent, so the
+  // tags keep their size).
+  const tagStyle = { borderColor: 'transparent', backgroundColor: `rgba(${style.glow},0.325)` };
   const imgUrl = item.imageUrl || bannerImage;
   const [spineFailed, setSpineFailed] = useState(false);
   const [conveneVideoPlaying, setConveneVideoPlaying] = useState(false);
@@ -295,7 +296,8 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
                 <div key={n} className="inline-flex flex-col items-center gap-0.5">
                   {previewImg && (
                     <div
-                      className={`w-12 h-12 rounded-md overflow-hidden border bg-black/25 cursor-pointer ${isEditingThis ? 'border-emerald-400 ring-2 ring-emerald-500/50' : 'border-transparent'}`}
+                      className={`w-12 h-12 rounded-md overflow-hidden border bg-black/25 cursor-pointer ${isEditingThis ? 'border-emerald-400 ring-2 ring-emerald-500/50' : ''}`}
+                      style={isEditingThis ? undefined : { borderColor: FEATURED_4STAR_FRAME_BORDER }}
                       onClick={framingMode ? () => setEditingImage(framingKey) : () => setDetailModal?.({ show: true, type: isChar ? 'character' : 'weapon', name: n, imageUrl: previewImg, framing })}
                     >
                       <img

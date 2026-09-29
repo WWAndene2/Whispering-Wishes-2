@@ -2,9 +2,8 @@
 // French localization overlay for weapon data — data/weapons.js.
 // Keyed by the exact same names as WEAPON_DATA so it can be shallow-merged
 // in at render time based on the active locale. Same policy as echoes.fr.js:
-// element names kept untranslated (official precedent), bespoke unconfirmed
-// mechanic proper nouns (Frazzle, Bane, Chafe, Flare, Burst, Tune Break/
-// Rupture/Strain, Off-Tune Rate) kept in English, everything else translated.
+// element names kept untranslated (official precedent); mechanic terms follow the French
+// game guide (Lumière Spectro, Ravage Havoc, Interruption de Tonalité…), the rest translated.
 // "Sword" -> "Épée" and "Broadblade" -> "Sabre" are CONFIRMED official terms
 // (Kuro's own French Play Store listing: "Qingxiao (Aero, Sabre)",
 // "Jingran (Fusion, Épée)"). Pistols/Gauntlets/Rectifier -> Pistolets/
@@ -22,33 +21,33 @@
 export const WEAPON_DATA_FR = {
   'Skull Thrasher': {
     name: 'Trancheur de Crânes',
-    desc: "Arme signature de Rebecca (« Solitaire Éveillée »). Lancer la Compétence d'Intro confère un Bonus DGT d'Attaque Basique ; infliger Hack - Shifting confère un Bonus DGT d'Attaque Basique plus un buff d'ATQ pour toute l'équipe.",
-    passive: "ATQ +12 %. Compétence d'Intro : DGT d'Attaque Basique personnels +24 % (14 s). Hack - Shifting : DGT d'Attaque Basique personnels +12 % (14 s), ATQ d'équipe +24 % (30 s). Les effets de même nom ne se cumulent pas.",
+    desc: "Arme signature de Rebecca (« Solitaire Éveillée »). Lancer la Compétence d'Intro confère un Bonus DGT d'Attaque Basique ; infliger Piratage - Changeant confère un Bonus DGT d'Attaque Basique plus un buff d'ATQ pour toute l'équipe.",
+    passive: "ATQ +12 %. Compétence d'Intro : DGT d'Attaque Basique personnels +24 % (14 s). Piratage - Changeant : DGT d'Attaque Basique personnels +12 % (14 s), ATQ d'équipe +24 % (30 s). Les effets de même nom ne se cumulent pas.",
   },
   'Freeze Frame': {
     name: 'Image Figée',
-    desc: "Arme signature de Lucilla (« Offrande de Lumière »). Infliger Glacio Chafe confère un Bonus DGT Glacio personnel et un buff d'ATQ pour toute l'équipe.",
-    passive: "ATQ +12 %. Après avoir infligé Glacio Chafe : DGT Glacio personnels +30 % (12 s), ATQ d'équipe +24 % (30 s). Les effets de même nom ne peuvent pas se cumuler.",
+    desc: "Arme signature de Lucilla (« Offrande de Lumière »). Infliger Givre Glaçant confère un Bonus DGT Glacio personnel et un buff d'ATQ pour toute l'équipe.",
+    passive: "ATQ +12 %. Après avoir infligé Givre Glaçant : DGT Glacio personnels +30 % (12 s), ATQ d'équipe +24 % (30 s). Les effets de même nom ne peuvent pas se cumuler.",
   },
   'Spectral Trigger': {
     name: 'Gâchette Spectrale',
-    desc: "Arme signature de Lucy (« Rêve Englouti »). La Compétence de Résonance confère un Bonus DGT Spectro personnel cumulable ; Hack - Shifting confère une Amplification DGT d'Attaque Lourde personnelle et Ignore DÉF.",
-    passive: "ATQ +12 %. Compétence de Résonance : DGT Spectro personnels +20 % (14 s, jusqu'à 2 cumuls). Hack - Shifting : DGT d'Attaque Lourde personnels +30 %, Ignore DÉF +10 % (14 s).",
+    desc: "Arme signature de Lucy (« Rêve Englouti »). La Compétence de Résonance confère un Bonus DGT Spectro personnel cumulable ; Piratage - Changeant confère une Amplification DGT d'Attaque Lourde personnelle et Ignore DÉF.",
+    passive: "ATQ +12 %. Compétence de Résonance : DGT Spectro personnels +20 % (14 s, jusqu'à 2 cumuls). Piratage - Changeant : DGT d'Attaque Lourde personnels +30 %, Ignore DÉF +10 % (14 s).",
   },
   'Azure Oath': {
     name: 'Serment Azur',
-    desc: "Arme signature de Yangyang : Xuanling (« Inflexible »). Infliger Havoc Bane confère une Amplification DGT d'Attaque Lourde personnelle et Ignore DÉF.",
-    passive: "DGT tous éléments +12 %. Après avoir infligé Havoc Bane : DGT d'Attaque Lourde personnels +36 %, Ignore DÉF +12 % (8 s).",
+    desc: "Arme signature de Yangyang : Xuanling (« Inflexible »). Infliger Ravage Havoc confère une Amplification DGT d'Attaque Lourde personnelle et Ignore DÉF.",
+    passive: "DGT tous éléments +12 %. Après avoir infligé Ravage Havoc : DGT d'Attaque Lourde personnels +36 %, Ignore DÉF +12 % (8 s).",
   },
   'Frostburn': {
     name: 'Brûlure de Givre',
-    desc: "Arme signature de Hiyuki (« Plus Moi-même »). Appliquer Glacio Chafe amplifie les DGT Glacio personnels et l'Ignore DÉF de Libération, plus une amplification de zone des DGT de Glacio Chafe sur le terrain.",
-    passive: "ATQ +12 %. Après avoir appliqué Glacio Chafe : DGT Glacio personnels +28 %, Ignore DÉF de Libération de Résonance +10 %. Sur le terrain : DGT de Glacio Chafe à proximité +20 % (6 s, jusqu'à 1x/0,1 s). L'effet de même nom le plus fort s'applique.",
+    desc: "Arme signature de Hiyuki (« Plus Moi-même »). Appliquer Givre Glaçant amplifie les DGT Glacio personnels et l'Ignore DÉF de Libération, plus une amplification de zone des DGT de Givre Glaçant sur le terrain.",
+    passive: "ATQ +12 %. Après avoir appliqué Givre Glaçant : DGT Glacio personnels +28 %, Ignore DÉF de Libération de Résonance +10 %. Sur le terrain : DGT de Givre Glaçant à proximité +20 % (6 s, jusqu'à 1x/0,1 s). L'effet de même nom le plus fort s'applique.",
   },
   'Forged Dwarf Star': {
     name: 'Naine Forgée',
-    desc: "Arme signature de Denia (« Dissolution »). Infliger Fusion Burst/Tune Strain confère un Bonus DGT de Libération personnel, s'étendant à un buff d'ATQ d'équipe pour de nouveaux déclenchements de Fusion Burst/Tune Strain.",
-    passive: "ATQ +12 %. Après avoir infligé Fusion Burst/Tune Strain : DGT de Libération de Résonance personnels +36 % (5 s) ; pendant cette fenêtre, les membres de l'équipe infligeant Fusion Burst/Tune Strain gagnent ATQ +24 % (15 s). Les effets de même nom ne peuvent pas se cumuler.",
+    desc: "Arme signature de Denia (« Dissolution »). Infliger Explosion Fusion/Tension de Tonalité confère un Bonus DGT de Libération personnel, s'étendant à un buff d'ATQ d'équipe pour de nouveaux déclenchements de Explosion Fusion/Tension de Tonalité.",
+    passive: "ATQ +12 %. Après avoir infligé Explosion Fusion/Tension de Tonalité : DGT de Libération de Résonance personnels +36 % (5 s) ; pendant cette fenêtre, les membres de l'équipe infligeant Explosion Fusion/Tension de Tonalité gagnent ATQ +24 % (15 s). Les effets de même nom ne peuvent pas se cumuler.",
   },
   'Thousandfold Deliverance': {
     name: 'Délivrance Millénaire',
@@ -57,13 +56,13 @@ export const WEAPON_DATA_FR = {
   },
   'Glint of Clouds': {
     name: 'Lueur des Nuages',
-    desc: "Arme signature de Qingxiao. Lame de jade enveloppée de brume et de nuages. Bonus DGT Aero cumulable en infligeant Tune Strain - Shifting, ignorant la DÉF au maximum de cumuls.",
-    passive: "ATQ +12 %. Infliger Tune Strain - Shifting confère un Bonus DGT Aero de 11,2 % (2 s, cumuls ×5, TRI 0,5 s) ; au maximum de cumuls, la durée s'étend à 30 s et les DGT Aero ignorent 10 % de DÉF.",
+    desc: "Arme signature de Qingxiao. Lame de jade enveloppée de brume et de nuages. Bonus DGT Aero cumulable en infligeant Tension de Tonalité - Changeant, ignorant la DÉF au maximum de cumuls.",
+    passive: "ATQ +12 %. Infliger Tension de Tonalité - Changeant confère un Bonus DGT Aero de 11,2 % (2 s, cumuls ×5, TRI 0,5 s) ; au maximum de cumuls, la durée s'étend à 30 s et les DGT Aero ignorent 10 % de DÉF.",
   },
   "Firstlight's Herald": {
     name: 'Héraut de la Première Lumière',
     desc: "Arme signature de Suisui. Rectificateur forgé à l'aube, gravé de la légende de l'oiseau divin. Confère des PV Max et une régénération d'énergie de Libération, culminant en un buff d'ATQ d'équipe.",
-    passive: "PV Max +12 %. La Libération restaure 8 Énergie de Concerto (TRI 20 s). Infliger Glacio Chafe + appliquer un soin sur le terrain confère les deux effets au prochain Outro (6 s) ; avec les deux actifs, ATQ d'équipe +20 %.",
+    passive: "PV Max +12 %. La Libération restaure 8 Énergie de Concerto (TRI 20 s). Infliger Givre Glaçant + appliquer un soin sur le terrain confère les deux effets au prochain Outro (6 s) ; avec les deux actifs, ATQ d'équipe +20 %.",
   },
   'Verdant Summit': {
     name: "Sommet verdoyant",    desc: "Arme signature de Jiyan. Lame verdoyante qui commande le vent. La Compétence d'Intro/Libération cumule les DGT d'Attaque Lourde.",
@@ -128,8 +127,8 @@ export const WEAPON_DATA_FR = {
     passive: "Vocalise du Fou : ATQ +12 %. Attaque Basique/Compétence d'Intro → DGT d'Attaque Lourde personnels +48 % (3 s).",
   },
   'Luminous Hymn': {
-    name: "Hymne Lumineux",    desc: "Arme signature de Phoebe. Rectificateur couronné de lumière sacrée. ATQ avec DGT d'Attaque Basique/Lourde cumulables sur les DGT de Frazzle.",
-    passive: "Hymne du Bâtisseur : ATQ +12 %. DGT sur des cibles en Spectro Frazzle → DGT d'Attaque Basique et Lourde personnels +14 % (cumuls x3, 6 s). Compétence d'Outro → Amplification DGT de Spectro Frazzle +30 % (30 s) autour du Résonateur actif.",
+    name: "Hymne Lumineux",    desc: "Arme signature de Phoebe. Rectificateur couronné de lumière sacrée. ATQ avec DGT d'Attaque Basique/Lourde cumulables sur les DGT de Lumière Spectro.",
+    passive: "Hymne du Bâtisseur : ATQ +12 %. DGT sur des cibles en Lumière Spectro → DGT d'Attaque Basique et Lourde personnels +14 % (cumuls x3, 6 s). Compétence d'Outro → Amplification DGT de Lumière Spectro +30 % (30 s) autour du Résonateur actif.",
   },
   'Unflickering Valor': {
     name: "Courage Impérissable",    desc: "Arme signature de Brant. Épée de bravoure inébranlable et de détermination ardente. Taux Critique avec DGT d'Attaque Basique cumulables.",
@@ -141,18 +140,18 @@ export const WEAPON_DATA_FR = {
   },
   'Blazing Justice': {
     name: 'Justice Flamboyante',
-    desc: "Arme signature de Zani. Gantelets embrasés d'une justice inflexible. Renforce l'ATQ avec Ignore DÉF et Amplification Frazzle.",
-    passive: "Briseuse d'Obscurité : ATQ +12 %. Attaque Basique → Ignore DÉF +8 %, Amplification DGT de Spectro Frazzle +50 % (6 s, un nouveau déclenchement réinitialise la durée).",
+    desc: "Arme signature de Zani. Gantelets embrasés d'une justice inflexible. Renforce l'ATQ avec Ignore DÉF et Amplification Lumière Spectro.",
+    passive: "Briseuse d'Obscurité : ATQ +12 %. Attaque Basique → Ignore DÉF +8 %, Amplification DGT de Lumière Spectro +50 % (6 s, un nouveau déclenchement réinitialise la durée).",
   },
   'Woodland Aria': {
     name: 'Aria Sylvestre',
     desc: "Arme signature de Ciaccona. Pistolets chantant un air forestier de vent et de feuilles. Renforce les DGT Aero avec réduction de RÉS.",
-    passive: "Air Estival Persistant : ATQ +12 %. Infliger Érosion Aero → DGT Aero personnels +24 % (10 s). Toucher des cibles en Érosion Aero → RÉS Aero -10 % (20 s).",
+    passive: "Air Estival Persistant : ATQ +12 %. Infliger Érosion Aéronautique → DGT Aero personnels +24 % (10 s). Toucher des cibles en Érosion Aéronautique → RÉS Aero -10 % (20 s).",
   },
   "Defier's Thorn": {
     name: 'Épine du Défiant',
-    desc: "Arme signature de Cartethyia. Épée épineuse d'un cœur rebelle. Scaling PV avec Ignore DÉF et Amplification DGT d'Érosion Aero.",
-    passive: "Tarentelle du Chevalier Libre : PV +12 %. Dans les 15 s suivant la Compétence d'Intro/Attaque Basique : Ignore DÉF +8 %. Les cibles avec ≥1 cumul d'Érosion Aero subissent +20 % DGT.",
+    desc: "Arme signature de Cartethyia. Épée épineuse d'un cœur rebelle. Scaling PV avec Ignore DÉF et Amplification DGT d'Érosion Aéronautique.",
+    passive: "Tarentelle du Chevalier Libre : PV +12 %. Dans les 15 s suivant la Compétence d'Intro/Attaque Basique : Ignore DÉF +8 %. Les cibles avec ≥1 cumul d'Érosion Aéronautique subissent +20 % DGT.",
   },
   'Wildfire Mark': {
     name: 'Marque du Feu Sauvage',
@@ -191,8 +190,8 @@ export const WEAPON_DATA_FR = {
   },
   'Spectrum Blaster': {
     name: 'Blaster Spectral',
-    desc: "Arme signature de Lynae. Pistolets qui tirent une lumière prismatique à travers le spectre. Renforce les DGT d'Attaque Basique et cumule les DGT totaux d'équipe sur Tune Break.",
-    passive: "ATQ +12 %, DGT d'Attaque Basique personnels +36 % (4 s) au coup d'Intro/Attaque Basique, DGT totaux d'équipe +8 %/cumul ×3 (max 24 %, 30 s) sur Tune Rupture/Strain - Shifting pendant l'Attaque Basique.",
+    desc: "Arme signature de Lynae. Pistolets qui tirent une lumière prismatique à travers le spectre. Renforce les DGT d'Attaque Basique et cumule les DGT totaux d'équipe sur Interruption de Tonalité.",
+    passive: "ATQ +12 %, DGT d'Attaque Basique personnels +36 % (4 s) au coup d'Intro/Attaque Basique, DGT totaux d'équipe +8 %/cumul ×3 (max 24 %, 30 s) sur Rupture de Tonalité/Strain - Changeant pendant l'Attaque Basique.",
   },
   'Starfield Calibrator': {
     name: 'Calibreur Stellaire',
@@ -211,28 +210,28 @@ export const WEAPON_DATA_FR = {
   },
   'Radiance Cleaver': {
     name: 'Fendoir de Radiance',
-    desc: "5★ Standard. Sabre synthétique de force concentrée. ATQ avec DGT de Libération sur les coups portés à une cible en Tune Strain - Interfered.",
-    passive: "Briseur de Lame : ATQ +12 %. DGT sur des cibles en Tune Strain - Interfered → DGT de Libération de Résonance personnels +24 % (3 s, un nouveau déclenchement réinitialise la durée).",
+    desc: "5★ Standard. Sabre synthétique de force concentrée. ATQ avec DGT de Libération sur les coups portés à une cible en Tension de Tonalité - Brouillé.",
+    passive: "Briseur de Lame : ATQ +12 %. DGT sur des cibles en Tension de Tonalité - Brouillé → DGT de Libération de Résonance personnels +24 % (3 s, un nouveau déclenchement réinitialise la durée).",
   },
   'Laser Shearer': {
     name: 'Cisaille Laser',
-    desc: "5★ Standard. Épée synthétique qui tranche l'incertitude. ATQ avec DGT de Compétence sur les coups portés à une cible en Tune Strain - Interfered.",
-    passive: "Capteur de Signal : ATQ +12 %. DGT sur des cibles en Tune Strain - Interfered → DGT de Compétence de Résonance personnels +24 % (3 s, un nouveau déclenchement réinitialise la durée).",
+    desc: "5★ Standard. Épée synthétique qui tranche l'incertitude. ATQ avec DGT de Compétence sur les coups portés à une cible en Tension de Tonalité - Brouillé.",
+    passive: "Capteur de Signal : ATQ +12 %. DGT sur des cibles en Tension de Tonalité - Brouillé → DGT de Compétence de Résonance personnels +24 % (3 s, un nouveau déclenchement réinitialise la durée).",
   },
   'Phasic Homogenizer': {
     name: 'Homogénéisateur Phasique',
-    desc: "5★ Standard. Pistolets synthétiques d'une concentration perçante. ATQ avec Bonus DGT tous éléments quand un coéquipier lance une compétence de Tune Break.",
-    passive: "Porteur d'Intuition : ATQ +12 %. Un membre de l'équipe lance une compétence de Tune Break → Bonus DGT tous éléments personnel +20 % (14 s).",
+    desc: "5★ Standard. Pistolets synthétiques d'une concentration perçante. ATQ avec Bonus DGT tous éléments quand un coéquipier lance une compétence de Interruption de Tonalité.",
+    passive: "Porteur d'Intuition : ATQ +12 %. Un membre de l'équipe lance une compétence de Interruption de Tonalité → Bonus DGT tous éléments personnel +20 % (14 s).",
   },
   'Pulsation Bracer': {
     name: 'Brassard de Pulsation',
-    desc: "5★ Standard. Gantelets synthétiques pulsant d'une poussée décisive. ATQ avec DGT d'Attaque Basique cumulables sur les coups portés à une cible en Tune Strain - Interfered.",
-    passive: "Briseur de Barrière : ATQ +12 %. DGT sur des cibles en Tune Strain - Interfered → DGT d'Attaque Basique personnels +6 % (cumuls x3, 4 s, TRI 0,5 s, un nouveau déclenchement réinitialise la durée).",
+    desc: "5★ Standard. Gantelets synthétiques pulsant d'une poussée décisive. ATQ avec DGT d'Attaque Basique cumulables sur les coups portés à une cible en Tension de Tonalité - Brouillé.",
+    passive: "Briseur de Barrière : ATQ +12 %. DGT sur des cibles en Tension de Tonalité - Brouillé → DGT d'Attaque Basique personnels +6 % (cumuls x3, 4 s, TRI 0,5 s, un nouveau déclenchement réinitialise la durée).",
   },
   'Boson Astrolabe': {
     name: 'Astrolabe à Bosons',
-    desc: "5★ Standard. Rectificateur synthétique cartographiant les possibilités stellaires. ATQ et DGT d'Attaque Basique quand un coéquipier lance une compétence de Tune Break.",
-    passive: "Observateur de Trajectoire : ATQ +12 %. Un membre de l'équipe lance une compétence de Tune Break → ATQ personnelle +12 %, DGT d'Attaque Basique +12 % (14 s).",
+    desc: "5★ Standard. Rectificateur synthétique cartographiant les possibilités stellaires. ATQ et DGT d'Attaque Basique quand un coéquipier lance une compétence de Interruption de Tonalité.",
+    passive: "Observateur de Trajectoire : ATQ +12 %. Un membre de l'équipe lance une compétence de Interruption de Tonalité → ATQ personnelle +12 %, DGT d'Attaque Basique +12 % (14 s).",
   },
   "Bloodpact's Pledge": {
     name: 'Serment du Pacte de Sang',
@@ -276,8 +275,8 @@ export const WEAPON_DATA_FR = {
   },
   "Ocean's Gift": {
     name: "Don de l'Océan",
-    desc: "Rectificateur béni par la mer, espoir d'un pêcheur. DGT Spectro cumulables contre les ennemis en Frazzle.",
-    passive: "DGT sur des ennemis en Spectro Frazzle → +6 % DGT Spectro par 1 s (max x4, 6 s).",
+    desc: "Rectificateur béni par la mer, espoir d'un pêcheur. DGT Spectro cumulables contre les ennemis en Lumière Spectro.",
+    passive: "DGT sur des ennemis en Lumière Spectro → +6 % DGT Spectro par 1 s (max x4, 6 s).",
   },
   'Waltz in Masquerade': {
     name: "Valse en Masque",    desc: "Danses tourbillonnantes dissimulant des secrets chuchotés. ATQ cumulable sur les coups en État Négatif.",

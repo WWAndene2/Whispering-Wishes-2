@@ -140,3 +140,15 @@ describe('Spanish skill and chain-node names', () => {
     expect(localizeSkillName('es', 'Jiyan', 'Lone Lance Stage 1-5')).toBe('Lanza solitaria Fase 1-5');
   });
 });
+
+describe('Spanish character buff notes', () => {
+  it('covers every character that has a buff note and leaves the numeric fields untouched', async () => {
+    const { CHAR_BUFF_TABLE, getLocalizedCharBuffTable } = await import('../data/characters.js');
+    const { CHAR_BUFF_NOTE_ES } = await import('../data/characters.es.js');
+    const withNote = Object.entries(CHAR_BUFF_TABLE).filter(([, v]) => v.note).map(([k]) => k);
+    expect(Object.keys(CHAR_BUFF_NOTE_ES).sort()).toEqual(withNote.sort());
+    const es = getLocalizedCharBuffTable('es');
+    expect(es['Verina'].note).toBe(CHAR_BUFF_NOTE_ES['Verina']);
+    expect(es['Verina'].stat).toBe(CHAR_BUFF_TABLE['Verina'].stat);
+  });
+});

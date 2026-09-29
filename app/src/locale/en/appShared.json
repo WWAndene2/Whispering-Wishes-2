@@ -51,5 +51,6 @@
   "navCollection": "Collection",
   "skipToContent": "Skip to content",
   "notAffiliated": "Not affiliated with Kuro Games",
-  "contact": "Contact"
+  "contact": "Contact",
+  "tabAriaLabel": "{{name}} tab"
 }

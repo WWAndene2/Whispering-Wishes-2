@@ -51,5 +51,6 @@
   "navCollection": "Colección",
   "skipToContent": "Saltar al contenido",
   "notAffiliated": "Sin afiliación con Kuro Games",
-  "contact": "Contacto"
+  "contact": "Contacto",
+  "tabAriaLabel": "Pestaña {{name}}"
 }

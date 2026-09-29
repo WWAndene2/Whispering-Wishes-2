@@ -33,3 +33,13 @@ it('every locale/en module has a locale/es module file', () => {
   const en = readdirSync(join(LOCALE_DIR, 'en')).sort();
   expect(readdirSync(join(LOCALE_DIR, 'es')).sort()).toEqual(en);
 });
+
+describe('display-label overlays (data/localeTables.js)', () => {
+  it('Spanish covers every key the French overlay covers', async () => {
+    const tables = await import('../data/localeTables.js');
+    for (const [name, { fr, es }] of Object.entries(tables)) {
+      expect(Object.keys(es).sort(), name).toEqual(Object.keys(fr).sort());
+      for (const [key, label] of Object.entries(es)) expect(label, `${name}.${key}`).toBeTruthy();
+    }
+  });
+});

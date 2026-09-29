@@ -5,7 +5,7 @@
 import React, { useCallback } from 'react';
 import { X } from 'lucide-react';
 import { ECHO_DATA, ECHO_SETS, ALL_1COST_ECHOES, ALL_3COST_ECHOES, ALL_4COST_ECHOES, ALL_ECHO_SONATA_SETS, ALL_ECHO_BUFF_TYPES } from '../../data/echoes.js';
-import { ECHO_SETS_FR, RANK_FR } from '../../data/echoes.fr.js';
+import { ECHO_SETS_FR } from '../../data/echoes.fr.js';
 import { haptic } from '../../utils/haptics.js';
 import { getSetIcon, getElementIcon } from '../../shared/utils/elementVisuals.js';
 import { FocusTrapModal } from '../../shared/components/FocusTrapModal.jsx';
@@ -13,6 +13,7 @@ import { KuroSelect } from '../../shared/components/KuroSelect.jsx';
 import MonsterCard from '../../shared/components/MonsterCard.jsx';
 import { TargetInput } from '../../shared/components/TargetInput.jsx';
 import { t, pickTable } from '../../utils/i18n.js';
+import { RANK_TABLES } from '../../data/localeTables.js';
 
 // Every echo-dropping enemy the app tracks (1-cost commons through 4-cost bosses) is a legitimate
 // fight target — HP/ATK/DEF/RES/stagger data covers all 181 of them (see echoes.js), not just the
@@ -109,7 +110,7 @@ export default function EnemyEchoSelectorModal({
             <KuroSelect value={rankFilter ?? 'all'} onChange={v => setRankFilter?.(v)} small
               options={[
                 { value: 'all', label: t('teams.enemyEcho.allRanks') },
-                ...RANKS.map(r => ({ value: r, label: (pickTable({ fr: RANK_FR })[r]) || r })),
+                ...RANKS.map(r => ({ value: r, label: (pickTable(RANK_TABLES)[r]) || r })),
               ]}
               className="flex-1 text-sm" />
           </div>

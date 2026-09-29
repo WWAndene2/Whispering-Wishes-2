@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { Swords, TrendingUp, X, Play, User, Users, LayoutGrid } from 'lucide-react';
 import { WEAPON_DATA, getLocalizedWeaponData } from '../../data/weapons.js';
 import { CHARACTER_DATA } from '../../data/characters.js';
-import { WEAPON_TYPE_FR, STAT_NAME_FR, PV_LABEL_FR } from '../../data/characters.fr.js';
+
 import { COMMON_MAT_TIERS, FORGERY_MAT_TIERS, WEAPON_ASCENSION_COSTS_5, WEAPON_ASCENSION_COSTS_4, WEAPON_EXP_COSTS_5, WEAPON_EXP_COSTS_4, WEAPON_REFINE_SCALE } from '../../data/constants.js';
 import { getConveneAnimation, getWeaponBannerArt, DEFAULT_COLLECTION_IMAGES } from '../../data/banners.js';
 import { FocusTrapModal } from '../components/FocusTrapModal.jsx';
@@ -17,6 +17,7 @@ import { hideOnError } from '../utils/imageHelpers.js';
 import { MaterialItem } from '../components/MaterialItem.jsx';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
 import { t, formatNumber, getLocale , pickTable } from '../../utils/i18n.js';
+import { PV_LABEL_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
 
 const WEAPON_RARITY_COLORS = {
   5: { bg: 'bg-yellow-500/20', text: 'text-yellow-400', border: 'border-yellow-500/50' },
@@ -102,7 +103,7 @@ const WeaponDetailModal = ({ name, onClose, imageUrl, infoFraming, collectionDat
             <div className="flex items-center gap-2 mb-1">
               <span className={`kuro-badge ${colors.bg} ${colors.text} ${colors.border} inline-flex items-center gap-1`}>
                 {getWeaponTypeIcon(data.type) && <img src={getWeaponTypeIcon(data.type)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                {(pickTable({ fr: WEAPON_TYPE_FR })[data.type]) || data.type}
+                {(pickTable(WEAPON_TYPE_TABLES)[data.type]) || data.type}
               </span>
             </div>
             <h2 className="text-2xl font-semibold text-white">{displayName}</h2>
@@ -125,7 +126,7 @@ const WeaponDetailModal = ({ name, onClose, imageUrl, infoFraming, collectionDat
             )}
             <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-white/5 border border-[var(--border-medium)]">
               {getStatIcon(data.stat) && <img src={getStatIcon(data.stat)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-              <span className="text-sm text-gray-400">{(pickTable({ fr: STAT_NAME_FR })[data.stat]) || data.stat}</span>
+              <span className="text-sm text-gray-400">{(pickTable(STAT_NAME_TABLES)[data.stat]) || data.stat}</span>
               <span className="text-base font-bold text-white">{data.subStatValue || ''}</span>
             </div>
             {/* Only the signature owner belongs up here (2026-09-06) — this used to list every
@@ -171,7 +172,7 @@ const WeaponDetailModal = ({ name, onClose, imageUrl, infoFraming, collectionDat
                     {Object.entries(data.pv).map(([stat, val]) => (
                       <div key={stat} className="text-sm text-gray-300">
                         <span className="text-white font-medium">{Math.round(val * scale * 10) / 10}%</span>
-                        <div className="text-gray-500 text-2xs">{(pickTable({ fr: PV_LABEL_FR })[stat]) || stat.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).trim()}</div>
+                        <div className="text-gray-500 text-2xs">{(pickTable(PV_LABEL_TABLES)[stat]) || stat.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).trim()}</div>
                       </div>
                     ))}
                   </div>

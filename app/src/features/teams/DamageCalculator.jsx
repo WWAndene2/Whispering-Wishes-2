@@ -20,8 +20,9 @@ import { EnemyTargetCard, EnemyTargetModal } from './EnemyTargetSection.jsx';
 import { calcTeamStats as calcTeamStatsImpl } from './calcTeamStats.js';
 import { renderCharacterCard } from './characterCardRenderer.js';
 import { t, formatNumber, pickTable } from '../../utils/i18n.js';
-import { ROLE_FR, WEAPON_TYPE_FR, STAT_NAME_FR } from '../../data/characters.fr.js';
+
 import { ECHO_SETS_FR } from '../../data/echoes.fr.js';
+import { ROLE_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
 
 const DamageCalculator = forwardRef(function DamageCalculator({
   teamEquipment,
@@ -264,7 +265,7 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                       <div className="flex items-center flex-wrap gap-1 mt-1">
                         <span className={`kuro-badge ${rc.bg} ${rc.border} ${rc.text} font-medium inline-flex items-center gap-1`}>
                           {getRoleIcon(m.d.role) && <img src={getRoleIcon(m.d.role)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                          {(pickTable({ fr: ROLE_FR })[m.d.role]) || m.d.role}
+                          {(pickTable(ROLE_TABLES)[m.d.role]) || m.d.role}
                         </span>
                         <span className="kuro-badge font-medium"
                           style={{ color: getElementColor(m.d.element), background: getElementBg(m.d.element), border: `1px solid ${getElementBorder(m.d.element)}` }}>
@@ -273,7 +274,7 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                         </span>
                         <span className="text-sm text-gray-500 inline-flex items-center gap-1">
                           {getWeaponTypeIcon(m.d.weapon) && <img src={getWeaponTypeIcon(m.d.weapon)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                          {(pickTable({ fr: WEAPON_TYPE_FR })[m.d.weapon]) || m.d.weapon}
+                          {(pickTable(WEAPON_TYPE_TABLES)[m.d.weapon]) || m.d.weapon}
                         </span>
                       </div>
                     </div>
@@ -450,7 +451,7 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                               {equippedWeap ? (
                                 <div className="text-sm space-y-0.5">
                                   <div className="text-yellow-400/80 font-medium truncate">{eq.weapon}</div>
-                                  <div className="text-gray-500">{(pickTable({ fr: STAT_NAME_FR })[equippedWeap.stat]) || equippedWeap.stat} {equippedWeap.subStatValue}</div>
+                                  <div className="text-gray-500">{(pickTable(STAT_NAME_TABLES)[equippedWeap.stat]) || equippedWeap.stat} {equippedWeap.subStatValue}</div>
                                 </div>
                               ) : m.d.bestWeapon ? (
                                 <div className="text-sm space-y-0.5">

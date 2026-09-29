@@ -8,7 +8,8 @@ import { getStatIcon, getWeaponTypeIcon, getRarityIcon } from '../../shared/util
 import { FocusTrapModal } from '../../shared/components/FocusTrapModal.jsx';
 import { hideOnError } from '../../shared/utils/imageHelpers.js';
 import { getLocale, t , pickTable } from '../../utils/i18n.js';
-import { STAT_NAME_FR, WEAPON_TYPE_FR } from '../../data/characters.fr.js';
+import { STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
+
 
 const LOCALIZED_WEAPON_DATA = getLocalizedWeaponData(getLocale());
 // BANNER_HISTORY is declared newest-first (v3.6-p2 first, all the way back to v1.0-p1) — a weapon can
@@ -42,7 +43,7 @@ export default function WeaponSelector({
                               {(() => {
                                 const wt = CHARACTER_DATA[weaponSelectorTarget.charName]?.weapon;
                                 if (!wt) return t('teams.weaponSelector.any');
-                                return (pickTable({ fr: WEAPON_TYPE_FR })[wt]) || wt;
+                                return (pickTable(WEAPON_TYPE_TABLES)[wt]) || wt;
                               })()}
                             </p>
                           </div>
@@ -127,7 +128,7 @@ export default function WeaponSelector({
                                             <span className="text-sm text-gray-400">ATK {w.baseAtk}</span>
                                             <span className="text-sm text-cyan-400/80 inline-flex items-center gap-1">
                                               {getStatIcon(w.stat) && <img src={getStatIcon(w.stat)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                                              {(pickTable({ fr: STAT_NAME_FR })[w.stat]) || w.stat} {w.subStatValue}
+                                              {(pickTable(STAT_NAME_TABLES)[w.stat]) || w.stat} {w.subStatValue}
                                             </span>
                                           </div>
                                         </div>

@@ -225,7 +225,7 @@ const NO_OVERLAY = Object.freeze({});
 /**
  * Pick the display-text overlay for a locale out of { fr: TABLE_FR, es: TABLE_ES, ... }.
  * English (and any locale with no overlay) gets an empty table, so callers write
- * `pickTable({ fr: ROLE_FR })[role] || role` and fall through to the source text.
+ * `pickTable(ROLE_TABLES)[role] || role` and fall through to the source text.
  * @template T
  * @param {Record<string, T>} tables
  * @param {string} [locale] defaults to the active locale

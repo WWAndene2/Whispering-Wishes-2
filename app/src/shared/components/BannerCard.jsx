@@ -20,11 +20,11 @@ import { ConveneVideo } from './ConveneVideoLayer.jsx';
 import { ConvenePullPills } from './ConvenePullPills.jsx';
 import { ConvenePullSimModal } from './ConvenePullSimModal.jsx';
 import { t, getLocale , pickTable } from '../../utils/i18n.js';
-import { WEAPON_TYPE_FR, ROLE_FR } from '../../data/characters.fr.js';
 
 // Support/Healer runs under the banner countdown at full length, so it is abbreviated per locale.
-const SUPPORT_HEALER_SHORT = { fr: 'Sout./Soign.' };
+const SUPPORT_HEALER_SHORT = { fr: 'Sout./Soign.', es: 'Ap./San.' };
 import { CURRENT_BANNER_TITLES_FR } from '../../data/banners.fr.js';
+import { ROLE_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
 
 const BANNER_GRADIENT_MAP = {
   Fusion: { borderColor: 'rgba(249,115,22,0.4)', bgColor: 'rgba(249,115,22,0.2)', text: 'text-orange-400', glow: '249,115,22' },
@@ -94,7 +94,7 @@ const FEATURED_4STAR_TAG_STYLE = { color: 'var(--rarity-4star)', backgroundColor
 const FEATURED_4STAR_FRAME_BORDER = 'rgba(192,132,252,0.5)';
 
 // Weapon-type labels as shown next to a Support/Healer role tag (see the tag row below).
-const SUPPORT_HEALER_WEAPON_SHORT = { Broadblade: 'Broad.', Rectifier: 'Rect.', Amplificateur: 'Amplif.' };
+const SUPPORT_HEALER_WEAPON_SHORT = { Broadblade: 'Broad.', Rectifier: 'Rect.', Amplificateur: 'Amplif.', 'Hoja ancha': 'H. ancha', Rectificador: 'Rect.' };
 
 const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, timerColor, collectionImages, setDetailModal, pity, calc }) => {
   const isChar = type === 'character';
@@ -208,7 +208,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
               and the weapon-type name), not just its icon - matching the Element tag's own
               icon+text layout, via the same kuro-badge class on all three. Role's label
               collapses 'Main DPS'/'Sub DPS' to the shorter 'DPS' (the icon is already shared
-              between them); Healer/Support/Support-Healer keep their own distinct ROLE_FR text. */}
+              between them); Healer/Support/Support-Healer keep their own distinct role text. */}
           {/* Direct user request: invert the tag->name / name->title spacing - this one bigger,
               the title's smaller (opposite of the first, insufficient attempt below). */}
           <div className="flex items-center gap-[2px] flex-wrap mb-1">
@@ -219,7 +219,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
               // banner's countdown (Chisa, v3.7-p1).
               const roleLabel = role.includes('DPS') ? 'DPS'
                 : role === 'Support/Healer' ? (SUPPORT_HEALER_SHORT[getLocale()] || 'Sup./Heal.')
-                : (pickTable({ fr: ROLE_FR })[role]) || role;
+                : (pickTable(ROLE_TABLES)[role]) || role;
               return (
                 <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={tagStyle}>
                   <img src={getRoleIcon(role)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />
@@ -241,7 +241,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
                 {/* Only next to the Support/Healer tag (the one long role label) is the weapon type
                     shortened too, so that row clears the countdown (Chisa, Suisui). */}
                 {(() => {
-                  const label = (pickTable({ fr: WEAPON_TYPE_FR })[item.weaponType]) || item.weaponType;
+                  const label = (pickTable(WEAPON_TYPE_TABLES)[item.weaponType]) || item.weaponType;
                   const role = CHARACTER_DATA[item.name]?.role || item.role;
                   return role === 'Support/Healer' ? (SUPPORT_HEALER_WEAPON_SHORT[label] || label) : label;
                 })()}
@@ -252,7 +252,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
             {(isChar ? item.element : item.type) && <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={tagStyle}>
               {isChar && getElementIcon(item.element) && <img src={getElementIcon(item.element)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
               {!isChar && getWeaponTypeIcon(item.type) && <img src={getWeaponTypeIcon(item.type)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-              {isChar ? item.element : ((pickTable({ fr: WEAPON_TYPE_FR })[item.type]) || item.type)}
+              {isChar ? item.element : ((pickTable(WEAPON_TYPE_TABLES)[item.type]) || item.type)}
             </span>}
           </div>
           {/* Direct user request: for a NEW item, deterministically split the

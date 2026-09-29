@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Sparkles, Swords, User, Users, TrendingUp, Target, Zap, X, LayoutGrid, RotateCw, Play } from 'lucide-react';
 import { CHARACTER_DATA, CHAR_BUFF_TABLE, SKILL_MULTIPLIERS, CHARACTER_ROTATIONS, RESONANCE_CHAIN_DATA, getSkillIcon, CHAIN_NODE_ICONS, getLocalizedCharacterData, getLocalizedCharBuffTable, getLocalizedCharacterRotations, getLocalizedChainNodeNames, findSkillMultiplierRow, localizeSkillName, localizeSkillDesc, localizeSkillMult } from '../../data/characters.js';
-import { SKILL_TYPE_FR, CHARACTER_TAG_FR, WEAPON_TYPE_FR, ROLE_FR } from '../../data/characters.fr.js';
+import { CHARACTER_TAG_FR } from '../../data/characters.fr.js';
 import { WEAPON_DATA, getLocalizedWeaponData } from '../../data/weapons.js';
 import { getSonataLoadouts } from '../../data/echoes.js';
 import { DEFAULT_COLLECTION_IMAGES, getConveneAnimation, getCharacterBannerArt } from '../../data/banners.js';
@@ -23,6 +23,7 @@ import { FullSpineViewerButton } from '../components/FullSpineViewerButton.jsx';
 import { ConveneVideo } from '../components/ConveneVideoLayer.jsx';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
 import { t, formatNumber, getLocale , pickTable } from '../../utils/i18n.js';
+import { ROLE_TABLES, SKILL_TYPE_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
 
 // Shared element color maps. `hex` (same source as elementVisuals.js's ELEMENT_COLORS)
 // drives the header's corner fade: lighter top-left, subtly darker/cooler
@@ -231,11 +232,11 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
               </span>
               <span className="kuro-badge kuro-badge-neutral inline-flex items-center gap-1">
                 {getWeaponTypeIcon(data.weapon) && <img src={getWeaponTypeIcon(data.weapon)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                {(pickTable({ fr: WEAPON_TYPE_FR })[data.weapon]) || data.weapon}
+                {(pickTable(WEAPON_TYPE_TABLES)[data.weapon]) || data.weapon}
               </span>
               <span className="kuro-badge kuro-badge-neutral inline-flex items-center gap-1">
                 {getRoleIcon(data.role) && <img src={getRoleIcon(data.role)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                {(pickTable({ fr: ROLE_FR })[data.role]) || data.role}
+                {(pickTable(ROLE_TABLES)[data.role]) || data.role}
               </span>
             </div>
             <h2 className="text-2xl font-semibold text-white">{name}</h2>
@@ -362,11 +363,11 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                     </span>
                     <span className="kuro-badge kuro-badge-neutral inline-flex items-center gap-1">
                       {getWeaponTypeIcon(data.weapon) && <img src={getWeaponTypeIcon(data.weapon)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                      {(pickTable({ fr: WEAPON_TYPE_FR })[data.weapon]) || data.weapon}
+                      {(pickTable(WEAPON_TYPE_TABLES)[data.weapon]) || data.weapon}
                     </span>
                     {!audited && <span className="kuro-badge kuro-badge-neutral inline-flex items-center gap-1">
                 {getRoleIcon(data.role) && <img src={getRoleIcon(data.role)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                {(pickTable({ fr: ROLE_FR })[data.role]) || data.role}
+                {(pickTable(ROLE_TABLES)[data.role]) || data.role}
               </span>}
                   </div>
                   {!audited && data.dmgFocus?.length > 0 && (
@@ -477,7 +478,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                     <div key={i} className={`px-2 py-1.5 rounded space-y-0.5 ${typeBg[type] || 'bg-white/5'}`}>
                       <div className="flex items-center gap-1.5">
                         {skillIcon && <img src={skillIcon} alt="" className="w-4 h-4 rounded shrink-0" onError={hideOnError} />}
-                        <span className={`text-sm font-medium break-words ${typeColors[type] || 'text-gray-400'}`}>{(pickTable({ fr: SKILL_TYPE_FR })[type]) || type}</span>
+                        <span className={`text-sm font-medium break-words ${typeColors[type] || 'text-gray-400'}`}>{(pickTable(SKILL_TYPE_TABLES)[type]) || type}</span>
                       </div>
                       <div className="text-sm text-gray-200 font-medium break-words">{localizeSkillName(getLocale(), name, skillName)}</div>
                       <div className="text-sm text-gray-400 break-words">{localizeSkillMult(getLocale(), name, skillName, mult)}</div>

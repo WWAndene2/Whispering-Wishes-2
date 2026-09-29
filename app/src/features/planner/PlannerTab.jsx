@@ -32,12 +32,13 @@ import { TargetInput } from '../../shared/components/TargetInput.jsx';
 import { AstriteCalendar } from './AstriteCalendar.jsx';
 import EchoFarmPlanner from './EchoFarmPlanner.jsx';
 import { t, formatNumber, formatDate, getLocale , pickTable } from '../../utils/i18n.js';
-import { ROLE_FR, WEAPON_VERDICT_REASON_FR, WEAPON_ALT_REASON_FR } from '../../data/characters.fr.js';
+import { WEAPON_VERDICT_REASON_FR, WEAPON_ALT_REASON_FR } from '../../data/characters.fr.js';
 import { calcStats } from '../../core/calcStats.js';
 import { computePullAllocation } from '../../core/pullAllocation.js';
 import { TIER_SCORES } from '../../data/tierScores.js';
 import { isHealerRole, isSupportRole } from '../../engine/math/roleMatch.js';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
+import { ROLE_TABLES } from '../../data/localeTables.js';
 
 
 // Computes the full material/shell/EXP-potion requirement for one Ascension Planner target.
@@ -1139,7 +1140,7 @@ function PlannerTab({
                               <div className="absolute top-1 right-1"><Star size={8} className={rarity5 ? 'text-yellow-400' : 'text-purple-400'} fill="currentColor" /></div>
                               {cd?.role && <div className="absolute bottom-4 inset-x-0 flex justify-center"><span className="text-2xs px-1 py-0.5 rounded bg-black/60 text-gray-300 border border-[var(--border-medium)] inline-flex items-center gap-1">
                                 {getRoleIcon(cd.role) && <img src={getRoleIcon(cd.role)} alt="" className="w-2.5 h-2.5" onError={hideOnError} />}
-                                {(pickTable({ fr: ROLE_FR })[cd.role]) || cd.role}
+                                {(pickTable(ROLE_TABLES)[cd.role]) || cd.role}
                               </span></div>}
                               <div className="absolute bottom-0 inset-x-0 p-1 z-10"><div className="text-white text-2xs font-medium truncate text-center leading-tight">{name}</div></div>
                             </button>

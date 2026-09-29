@@ -10,7 +10,8 @@ import { haptic } from '../../utils/haptics.js';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { hideOnError } from '../../shared/utils/imageHelpers.js';
 import { t, formatNumber, pickTable } from '../../utils/i18n.js';
-import { ROLE_FR } from '../../data/characters.fr.js';
+import { ROLE_TABLES } from '../../data/localeTables.js';
+
 
 const roleColors = {
   DPS: { bg: 'bg-red-500/15', text: 'text-red-400' },
@@ -122,7 +123,7 @@ export default function DPSComparisonCard({
                         <div className="flex justify-center"><img src={getRarityIcon(rarity5 ? 5 : 4)} alt={rarity5 ? '5★' : '4★'} className="h-2.5" onError={hideOnError} /></div>
                         <span className={`text-2xs px-1 py-0.5 rounded ${rc2.bg} ${rc2.text} inline-flex items-center justify-center gap-1 mt-0.5`}>
                           {getRoleIcon(m.d.role) && <img src={getRoleIcon(m.d.role)} alt="" className="w-2.5 h-2.5" onError={hideOnError} />}
-                          {(pickTable({ fr: ROLE_FR })[m.d.role]) || m.d.role}
+                          {(pickTable(ROLE_TABLES)[m.d.role]) || m.d.role}
                         </span>
                       </div>
                     );

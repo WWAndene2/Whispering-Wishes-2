@@ -1,1 +1,110 @@
-{}
+{
+  "importPromptPre": "Importa tu historial de Convocaciones en la pestaña",
+  "importPromptTab": "Perfil",
+  "importPromptPost": "para llevar el control de lo que tienes.",
+  "dismiss": "Descartar",
+  "progress": {
+    "title": "Progreso de la colección",
+    "resonator5": "Resonador 5★",
+    "resonator4": "Resonador 4★",
+    "weapon5": "Arma 5★",
+    "weapon4": "Arma 4★",
+    "weapon3": "Arma 3★",
+    "weapon2": "Arma 2★",
+    "weapon1": "Arma 1★"
+  },
+  "search": {
+    "placeholder": "Buscar por nombre, DPS, Electro, Espada ancha…",
+    "ariaLabel": "Buscar en la colección por palabra clave",
+    "clear": "Borrar búsqueda"
+  },
+  "view": {
+    "resonators": "Resonadores",
+    "viewResonators": "Ver Resonadores",
+    "weapons": "Armas",
+    "viewWeapons": "Ver armas",
+    "echoes": "Ecos",
+    "viewEchoes": "Ver ecos"
+  },
+  "filters": {
+    "active": "Filtros activos",
+    "clearAll": "Borrar todo",
+    "allTypes": "Todos los tipos",
+    "allElements": "Todos los elementos",
+    "byWeaponType": "Filtrar por tipo de arma",
+    "byElement": "Filtrar por elemento",
+    "statScaling": "Escalado de atributos",
+    "byStatScaling": "Filtrar por escalado de atributos",
+    "allDamage": "Todo el daño",
+    "byDamageType": "Filtrar por tipo de daño",
+    "allRoles": "Todos los roles",
+    "mainDps": "DPS principal",
+    "subDps": "DPS secundario",
+    "support": "Apoyo",
+    "healer": "Sanador",
+    "byRole": "Filtrar por rol",
+    "allCombatRoles": "Todos los roles de combate",
+    "byCombatRole": "Filtrar por rol de combate",
+    "allRegions": "Todas las regiones",
+    "byRegion": "Filtrar por región",
+    "allTiers": "Todos los niveles",
+    "byTier": "Filtrar por nivel",
+    "ownership": "Posesión",
+    "owned": "Obtenido",
+    "notOwned": "No obtenido",
+    "byOwnedStatus": "Filtrar por estado de posesión",
+    "allSubstats": "Todos los atributos secundarios",
+    "bySubstat": "Filtrar por atributo secundario",
+    "allSets": "Todos los conjuntos",
+    "bySonataSet": "Filtrar por conjunto de Sonata",
+    "allBuffs": "Todos los potenciadores",
+    "byBuffType": "Filtrar por tipo de potenciador"
+  },
+  "damage": {
+    "basicAtk": "Daño de ataque básico",
+    "heavyAtk": "Daño de ataque pesado",
+    "skill": "Daño de Habilidad de Resonancia",
+    "liberation": "Daño de Liberación de Resonancia",
+    "echo": "Daño de Habilidad de Eco",
+    "coordinated": "Ataque coordinado"
+  },
+  "sort": {
+    "refresh": "Actualizar imágenes si no cargan",
+    "refreshAria": "Actualizar imágenes",
+    "byCopies": "Ordenar por copias",
+    "byRelease": "Ordenar por fecha de lanzamiento",
+    "az": "Ordenar A-Z",
+    "za": "Ordenar Z-A",
+    "sortedZA": "Ordenado de Z a A, haz clic para A a Z",
+    "sortAlpha": "Ordenar alfabéticamente"
+  },
+  "sections": {
+    "costEchoes": "Ecos por coste",
+    "resonators": "Resonadores",
+    "weapons": "Armas"
+  },
+  "grid": {
+    "noneFound": "No se encontraron {{type}}",
+    "typeEchoes": "ecos",
+    "typeWeapons": "armas",
+    "typeCharacters": "personajes",
+    "tryAdjusting": "Prueba a ajustar o borrar los filtros",
+    "clearFilters": "Borrar filtros",
+    "shownCount": "{{owned}}/{{shown}} mostrados",
+    "totalSuffix": " ({{total}} en total)",
+    "showLess": "Mostrar menos",
+    "showAll": "Mostrar todos ({{count}})",
+    "ownedSuffix": ", obtenido",
+    "notOwnedLabel": ", no obtenido",
+    "currentProfilePic": ", foto de perfil actual",
+    "newLabel": ", nuevo",
+    "newBadge": "Nuevo",
+    "currentProfilePicTitle": "Foto de perfil actual",
+    "setProfilePic": "Usar como foto de perfil",
+    "setProfilePicAria": "Usar a {{name}} como foto de perfil"
+  },
+  "widget": {
+    "removeOne": "Quitar 1 copia",
+    "addOne": "Añadir 1 copia"
+  }
+}

@@ -1731,13 +1731,14 @@ export function getCurrentBannerAuto(now = Date.now()) {
 }
 
 import { CURRENT_BANNER_TITLES_FR, EVENTS_FR } from './banners.fr.js';
+import { CURRENT_BANNER_TITLES_ES, EVENTS_ES } from './banners.es.js';
 
 // Locale-aware CURRENT_BANNERS: only the display-only `title` fields on
 // characters/weapons are swapped; every other field (names, dates, art URLs,
 // standard banner arrays) is shared and returned as-is.
 export function getLocalizedCurrentBanners(locale) {
   const base = getCurrentBannerAuto();
-  const titles = { fr: CURRENT_BANNER_TITLES_FR }[locale];
+  const titles = { fr: CURRENT_BANNER_TITLES_FR, es: CURRENT_BANNER_TITLES_ES }[locale];
   if (!titles) return base;
   const translateTitle = (entry) => ({
     ...entry,
@@ -1767,7 +1768,7 @@ export function resolveEventWindow(ev, now = Date.now()) {
 export function getLocalizedEvents(locale, now = Date.now()) {
   const out = {};
   for (const [key, base] of Object.entries(EVENTS)) {
-    const fr = ({ fr: EVENTS_FR })[locale]?.[key];
+    const fr = ({ fr: EVENTS_FR, es: EVENTS_ES })[locale]?.[key];
     out[key] = resolveEventWindow({ ...base, ...(fr ? { name: fr.name, subtitle: fr.subtitle, description: fr.description } : {}) }, now);
   }
   return out;

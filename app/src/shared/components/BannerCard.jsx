@@ -23,8 +23,7 @@ import { t, getLocale , pickTable } from '../../utils/i18n.js';
 
 // Support/Healer runs under the banner countdown at full length, so it is abbreviated per locale.
 const SUPPORT_HEALER_SHORT = { fr: 'Sout./Soign.', es: 'Ap./San.' };
-import { CURRENT_BANNER_TITLES_FR } from '../../data/banners.fr.js';
-import { ROLE_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
+import { ROLE_TABLES, WEAPON_TYPE_TABLES, CURRENT_BANNER_TITLE_TABLES } from '../../data/localeTables.js';
 
 const BANNER_GRADIENT_MAP = {
   Fusion: { borderColor: 'rgba(249,115,22,0.4)', bgColor: 'rgba(249,115,22,0.2)', text: 'text-orange-400', glow: '249,115,22' },
@@ -285,7 +284,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
             })() : item.name}
             </button>
           </h2>
-          {item.title && <p className="text-gray-200 text-sm line-clamp-1">{(pickTable({ fr: CURRENT_BANNER_TITLES_FR })[item.title]) || item.title}</p>}
+          {item.title && <p className="text-gray-200 text-sm line-clamp-1">{(pickTable(CURRENT_BANNER_TITLE_TABLES)[item.title]) || item.title}</p>}
         </div>
         
         {item.featured4Stars?.length > 0 && <div className="banner-featured">

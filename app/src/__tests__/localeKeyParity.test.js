@@ -43,3 +43,18 @@ describe('display-label overlays (data/localeTables.js)', () => {
     }
   });
 });
+
+describe('event overlays (data/banners.*.js)', () => {
+  it('Spanish covers every event the app defines', async () => {
+    const { EVENTS } = await import('../data/banners.js');
+    const { EVENTS_ES } = await import('../data/banners.es.js');
+    expect(Object.keys(EVENTS_ES).sort()).toEqual(Object.keys(EVENTS).sort());
+    for (const [key, ev] of Object.entries(EVENTS_ES)) for (const f of ['name', 'subtitle', 'description']) expect(ev[f], `${key}.${f}`).toBeTruthy();
+  });
+
+  it('Spanish material names cover every French one', async () => {
+    const { MATERIAL_NAME_FR } = await import('../data/materialData.fr.js');
+    const { MATERIAL_NAME_ES } = await import('../data/materialData.es.js');
+    expect(Object.keys(MATERIAL_NAME_ES).sort()).toEqual(Object.keys(MATERIAL_NAME_FR).sort());
+  });
+});

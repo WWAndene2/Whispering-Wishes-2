@@ -111,12 +111,12 @@ describe('character label overlays (data/characters.*.js)', () => {
 });
 
 describe('Spanish skill text fallbacks', () => {
-  it('translates the generic words of a skill name and leaves the bespoke name in English', async () => {
+  it('translates generic skill names, composes translated bespoke names, and leaves unknown names in English', async () => {
     const { localizeSkillName, localizeSkillDesc } = await import('../data/characters.js');
     expect(localizeSkillName('es', 'Jiyan', 'Stage 1-4')).toBe('Fase 1-4');
-    expect(localizeSkillName('es', 'Hiyuki', 'Dodge Counter - Present Self')).toBe('Contraataque de esquiva - Present Self');
-    expect(localizeSkillName('es', 'Hiyuki', 'Foreclaimed Self Stage 1-3')).toBe('Foreclaimed Self Fase 1-3');
-    expect(localizeSkillName('es', 'Jiyan', 'Lone Lance')).toBe('Lone Lance');
+    expect(localizeSkillName('es', 'Hiyuki', 'Dodge Counter - Present Self')).toBe('Contraataque de esquiva - Yo presente');
+    expect(localizeSkillName('es', 'Hiyuki', 'Foreclaimed Self Stage 1-3')).toBe('Yo reclamado Fase 1-3');
+    expect(localizeSkillName('es', 'Jiyan', 'Some Unlisted Skill')).toBe('Some Unlisted Skill');
     expect(localizeSkillDesc('es', 'X', 's', 'Considered Echo Skill DMG.')).toBe('Se considera daño de habilidad de Eco.');
     expect(localizeSkillDesc('es', 'X', 's', 'Hits for Heavy Attack DMG')).toBe('Hits for daño de ataque pesado');
   });

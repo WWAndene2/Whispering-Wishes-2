@@ -125,7 +125,7 @@ export default function WeaponSelector({
                                             {isBest && <span className="kuro-badge kuro-badge-emerald">{t('teams.weaponSelector.bis')}</span>}
                                           </div>
                                           <div className="flex items-center gap-2 mt-0.5">
-                                            <span className="text-sm text-gray-400">ATK {w.baseAtk}</span>
+                                            <span className="text-sm text-gray-400">{(pickTable(STAT_NAME_TABLES)['ATK']) || 'ATK'} {w.baseAtk}</span>
                                             <span className="text-sm text-cyan-400/80 inline-flex items-center gap-1">
                                               {getStatIcon(w.stat) && <img src={getStatIcon(w.stat)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
                                               {(pickTable(STAT_NAME_TABLES)[w.stat]) || w.stat} {w.subStatValue}

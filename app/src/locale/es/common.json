@@ -1,1 +1,24 @@
-{}
+{
+  "visualSlider": {
+    "fadeDirection": "Dirección del degradado",
+    "top": "↑ Arriba",
+    "bottom": "↓ Abajo",
+    "fadeToTop": "↑ Degradar hacia arriba",
+    "fadeToBottom": "↓ Degradar hacia abajo",
+    "setDirectionTopAria": "Establecer la dirección de {{key}} hacia arriba",
+    "setDirectionBottomAria": "Establecer la dirección de {{key}} hacia abajo"
+  },
+  "confirm": "Confirmar",
+  "cancel": "Cancelar",
+  "delete": "Eliminar",
+  "save": "Guardar",
+  "load": "Cargar",
+  "clear": "Borrar",
+  "close": "Cerrar",
+  "search": "Buscar",
+  "error": "Algo salió mal",
+  "reload": "Recargar",
+  "undo": "Deshacer",
+  "expandSection": "Expandir sección",
+  "collapseSection": "Contraer sección"
+}

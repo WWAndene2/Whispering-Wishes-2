@@ -1,1 +1,3 @@
-{}
+{
+  "tooltip": "La garantía suave empieza en la tirada {{start}} (la probabilidad aumenta). La garantía dura llega en la tirada 80 (5★ asegurado). 50/50 significa un 50 % de probabilidad de obtener al personaje destacado; si lo pierdes, la siguiente vez está garantizado."
+}

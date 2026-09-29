@@ -1,1 +1,18 @@
-{}
+{
+  "tabCrash": {
+    "title": "Algo salió mal",
+    "message": "La pestaña {{tab}} ha encontrado un error.",
+    "reload": "↻ Recargar",
+    "reloadAria": "Recargar la pestaña {{tab}}",
+    "details": "Detalles del error"
+  },
+  "appCrash": {
+    "title": "Whispering Wishes se ha cerrado",
+    "message": "Ocurrió un error inesperado. Tus datos están a salvo en el almacenamiento local.",
+    "tryAgain": "Reintentar",
+    "reloadPage": "Recargar página",
+    "details": "Detalles del error",
+    "genericMessage": "Ocurrió un error inesperado."
+  },
+  "loading": "Cargando..."
+}

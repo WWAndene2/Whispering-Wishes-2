@@ -1,1 +1,14 @@
-{}
+{
+  "offline": "Sin conexión: algunas funciones pueden estar limitadas",
+  "updateTitle": "Actualización disponible",
+  "updateSubtitle": "Hay una nueva versión lista",
+  "updateAction": "Actualizar",
+  "installTitle": "Instalar Whispering Wishes",
+  "installSubtitleNative": "Añádela a la pantalla de inicio para una mejor experiencia",
+  "installActionNative": "Instalar",
+  "installSubtitleIframe": "Ábrela en una pestaña nueva para instalarla como aplicación",
+  "installActionIframe": "Abrir",
+  "dismissAria": "Descartar el aviso de instalación",
+  "guideSubtitle": "Añadir a la pantalla de inicio",
+  "gotIt": "Entendido"
+}

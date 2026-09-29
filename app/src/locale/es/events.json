@@ -1,1 +1,17 @@
-{}
+{
+  "refreshTimers": "Actualizar temporizadores",
+  "bannerRefreshed": "¡Datos del banner actualizados!",
+  "server": "Servidor: {{server}}",
+  "title": "Eventos y reinicios",
+  "weeklyProgress": "Progreso semanal",
+  "weeklyRewards": "Recompensas semanales",
+  "astrite": "Astrita",
+  "done": "hecho",
+  "completed": "Completado",
+  "pending": "Pendiente",
+  "skipped": "Omitido",
+  "noEvents": "No hay eventos en seguimiento actualmente",
+  "noEventsHint": "Los eventos aparecerán automáticamente con cada actualización de versión",
+  "expired": "Expirado",
+  "resetTimesFooter": "Horas de reinicio según el servidor {{server}} (UTC{{offset}})"
+}

@@ -1,1 +1,10 @@
-{}
+{
+  "tracker": "Seguimiento",
+  "events": "Eventos",
+  "calculator": "Calculadora",
+  "planner": "Planificador",
+  "stats": "Estadísticas",
+  "collection": "Colección",
+  "teams": "Equipos",
+  "profile": "Perfil"
+}

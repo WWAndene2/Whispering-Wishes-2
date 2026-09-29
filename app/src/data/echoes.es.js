@@ -4,9 +4,7 @@
 
 /** @type {Record<string, string>} */
 export const RANK_ES = { Calamity: 'Calamidad', Overlord: 'Señor supremo', Elite: 'Élite', Common: 'Común' };
-
-// Sonata set names and 2/3/5-piece effects. Keys are the English set names of ECHO_SETS. Game mechanic
-// proper nouns without a Spanish term (Tune Rupture,
+// Sonata set names and 2/3/5-piece effects. Keys are the English set names of ECHO_SETS.
 // Hack - Shifting) stay in English, as in echoes.fr.js.
 /** @type {Record<string, { name: string, p2?: string, p3?: string, p5?: string }>} */
 export const ECHO_SETS_ES = {
@@ -35,14 +33,14 @@ export const ECHO_SETS_ES = {
   'Pact of Neonlight Leap': { name: 'Pacto de neón saltón', p2: '+10 % de daño Espectro', p5: 'Outro → el siguiente obtiene +15 % de ATQ; por punto de Bonificación de Ruptura de Tonalidad +0,3 % de ATQ (máx. +15 %)' },
   'Rite of Gilded Revelation': { name: 'Rito de revelación dorada', p2: '+10 % de daño Espectro', p5: 'Ataque básico → +10 % de daño Espectro (máx. x3); con 3 acumulaciones + Liberación → +40 % de daño de ataque básico' },
   'Halo of Starry Radiance': { name: 'Halo de luz estelar', p2: '+10 % de curación', p5: 'Curar → por cada 1 % de Tasa de Desentono, +0,2 % de ATQ para el equipo (máx. +25 %)' },
-  'Reel of Spliced Memories': { name: 'Carrete de recuerdos empalmados', p2: '+10 % de ATQ', p5: 'Tune Rupture - Shifting o Interferencia de Tonalidad - Shifting → Bonificación de Ruptura de Tonalidad del equipo +20 durante 30 s (los efectos del mismo nombre no se acumulan)' },
+  'Reel of Spliced Memories': { name: 'Carrete de recuerdos empalmados', p2: '+10 % de ATQ', p5: 'Fractura de Tonalidad - Cambiante o Interferencia de Tonalidad - Cambiante → Bonificación de Ruptura de Tonalidad del equipo +20 durante 30 s (los efectos del mismo nombre no se acumulan)' },
   'Wishes of Quiet Snowfall': { name: 'Deseos de una nevada tranquila', p2: '+10 % de daño Glacio', p5: 'Rozadura gélida → +10 % de daño Glacio propio (15 s); Nevada (25 s de reutilización): daño de liberación → +25 % de tasa crítica (6 s, ampliable) o Outro → +25 % de daño Glacio para quien entra (15 s)' },
-  'Trailblazing Star': { name: 'Estrella pionera', p2: '+10 % de daño Fusión', p5: 'Estallido de fusión/Tune Rupture → +20 % de tasa crítica, +20 % de daño Fusión durante 8 s' },
+  'Trailblazing Star': { name: 'Estrella pionera', p2: '+10 % de daño Fusión', p5: 'Estallido de fusión/Fractura de Tonalidad → +20 % de tasa crítica, +20 % de daño Fusión durante 8 s' },
   'Chromatic Foam': { name: 'Espuma cromática', p2: '+10 % de daño Fusión', p5: 'Estallido de fusión → +10 % de daño Fusión durante 15 s; Outro → +25 % de daño Fusión para el siguiente durante 15 s' },
   'Sound of True Name': { name: 'Sonido del nombre verdadero', p2: '+10 % de daño Aero', p5: 'Daño de habilidad de Eco → +20 % de tasa crítica de Eco, +15 % de daño Aero durante 5 s' },
-  'Shadow of Shattered Dreams': { name: 'Sombra de sueños rotos', p2: '1 pieza: Hack - Shifting → +35 % de daño de ataque básico y +35 % de daño de ataque pesado propios durante 15 s' },
+  'Shadow of Shattered Dreams': { name: 'Sombra de sueños rotos', p2: '1 pieza: Hackeo - Cambiante → +35 % de daño de ataque básico y +35 % de daño de ataque pesado propios durante 15 s' },
   'Song of Feathered Trace': { name: 'Canción de trazaplumas', p2: '+10 % de regeneración de energía', p5: 'Ruina de destrucción → tasa crítica propia +20 %, +35 % de daño de ataque pesado durante 15 s (Pluma de Xuanling); Rozadura gélida → ATQ del equipo +0,1 % por cada 1 % de regen. de energía, hasta +25 %, durante 10 s (Pluma de Chongming)' },
-  "Heart of Evil's Purge": { name: 'Corazón purificador del mal', p2: '+10 % de daño Aero', p5: 'Interferencia de Tonalidad - Shifting → +20 % de daño crítico, +30 % de daño Aero durante 15 s' },
+  "Heart of Evil's Purge": { name: 'Corazón purificador del mal', p2: '+10 % de daño Aero', p5: 'Interferencia de Tonalidad - Cambiante → +20 % de daño crítico, +30 % de daño Aero durante 15 s' },
   'Lamp of Nether Road': { name: 'Farol del inframundo', p2: '+10 % de PV', p5: 'Obtener un escudo → +5 % de tasa crítica durante 5 s (máx. x4, 0,5 s de reutilización); con el máximo de acumulaciones → +15 % de daño Fusión' },
 };
 

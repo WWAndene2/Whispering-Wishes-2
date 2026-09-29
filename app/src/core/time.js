@@ -23,7 +23,7 @@ const getTimeRemaining = (endDate) => {
 
 // Events are stored with UTC times based on Europe server timezone.
 // IMPORTANT: UTC conversion must account for DST at the EVENT date, not today.
-// The Europe server runs on fixed UTC+1 (no DST, see data/servers.js).
+// Every server runs on a fixed offset (no DST, see data/servers.js).
 // For server-specific events (ending at XX:59, following reset times),
 // adjust by timezone difference when viewing in another server.
 // Reference: Europe — getServerOffset('Europe', date)

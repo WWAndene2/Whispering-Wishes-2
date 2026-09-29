@@ -7,9 +7,9 @@
 // Source: community event timeline
 const SERVERS = {
   'Asia': { name: 'Asia', timezone: 'Asia/Shanghai', utcOffset: 8, resetHour: 4, hasDST: false },
-  'America': { name: 'America', timezone: 'America/New_York', utcOffset: -5, resetHour: 4, hasDST: true },
-  // Fixed UTC+1, no DST: in-game daily reset is 05:00 Paris time in summer (user-confirmed
-  // 2026-09-29), i.e. 03:00 UTC = 04:00 UTC+1; with DST it would be 04:00 Paris.
+  'America': { name: 'America', timezone: 'America/New_York', utcOffset: -5, resetHour: 4, hasDST: false },
+  // Every server runs on a fixed offset, no DST (user-confirmed 2026-09-29: Europe UTC+1,
+  // America UTC-5, Asia/SEA/TW/HK/MO UTC+8; the Europe daily reset is 05:00 Paris time in summer).
   'Europe': { name: 'Europe', timezone: 'Europe/Paris', utcOffset: 1, resetHour: 4, hasDST: false },
   'SEA': { name: 'SEA', timezone: 'Asia/Singapore', utcOffset: 8, resetHour: 4, hasDST: false },
   'HMT': { name: 'HMT', timezone: 'Asia/Hong_Kong', utcOffset: 8, resetHour: 4, hasDST: false },

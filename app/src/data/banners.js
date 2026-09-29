@@ -26,7 +26,9 @@ const CURRENT_BANNERS = {
   // snapshot's bar end (see BANNER_HISTORY's v3.7 comment for its px-to-UTC mapping), which
   // also gives the corrected v3.6 event ends in EVENTS below; the "08:00 UTC boundary"
   // convention those entries assumed does not hold.
-  startDate: '2026-09-10T08:00:00Z',
+  // Start: 2026-09-10 11:00 Paris (CEST) = 09:00 UTC, per the in-game banner dates
+  // (user-supplied 2026-09-29: "Thu, 10 Sep 2026 11:00 - Tue, 29 Sep 2026 12:59" local).
+  startDate: '2026-09-10T09:00:00Z',
   endDate: '2026-09-29T11:00:00Z',
   characterBannerImage: './banners/_shared/Banner_Jingran.webp',
   weaponBannerImage: './banners/history/v3-6-p2/S7m6cfPC-Thousandfold-Delivrance.jpg',

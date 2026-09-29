@@ -18,19 +18,28 @@ import { t } from '../../utils/i18n.js';
 // wherever those currency names appear in an event's rewards badge text.
 const REWARD_ICON_CURRENCIES = ['Radiant Tide', 'Astrite'];
 const REWARD_ICON_PATTERN = new RegExp(`(${REWARD_ICON_CURRENCIES.join('|')})`, 'g');
+// Each icon sits the same distance from its neighbours as the reward name from the badge's left
+// edge (kuro-badge: 1px border + 8px padding = 9px): 6px margin + the badge's 3px flex gap. The text
+// right after an icon drops its leading space so that gap stays 9px.
 function renderRewardsWithIcons(rewardsText) {
   if (!rewardsText) return rewardsText;
-  return rewardsText.split(REWARD_ICON_PATTERN).map((part, i) => {
+  const parts = rewardsText.split(REWARD_ICON_PATTERN);
+  return parts.map((part, i) => {
     const iconSrc = REWARD_ICON_CURRENCIES.includes(part) ? getCurrencyIcon(part) : null;
-    if (!iconSrc) return part;
+    if (!iconSrc) return i > 0 && REWARD_ICON_CURRENCIES.includes(parts[i - 1]) ? part.trimStart() : part;
+    const followedByText = parts.slice(i + 1).join('').trim() !== '';
     return (
       <React.Fragment key={i}>
         {part}
-        <img src={iconSrc} alt="" className="inline w-4 h-4 -mt-0.5 ml-1" onError={hideOnError} />
+        <img src={iconSrc} alt="" className={`inline w-4 h-4 -mt-0.5 ml-[6px] ${followedByText ? 'mr-[6px]' : ''}`} onError={hideOnError} />
       </React.Fragment>
     );
   });
 }
+
+// Reward badge fill: the same 32.5% fill / invisible border as the banner cards' tags.
+const REWARD_GRAY_RGB = '107,114,128';
+const rewardBadgeStyle = (rgb) => ({ backgroundColor: `rgba(${rgb},0.325)`, borderColor: 'transparent' });
 
 const EventCard = memo(({ event, server, bannerImage, visualSettings, status, onStatusChange, isExpired }) => {
   const [resetTick, setResetTick] = useState(0);
@@ -144,7 +153,7 @@ const EventCard = memo(({ event, server, bannerImage, visualSettings, status, on
               <span className="kuro-badge kuro-badge-red font-medium">{t('events.expired')}</span>
             ) : (
               <>
-                <div className={`text-sm mb-1 ${isDaily || isWeekly ? 'text-gray-400' : 'text-[color:var(--text-heading)]'}`}>{isDaily ? 'Resets in' : isWeekly ? 'Weekly reset' : 'Ends in'}</div>
+                <div className="text-sm mb-1 text-[color:var(--text-heading)]">{isDaily ? 'Resets in' : isWeekly ? 'Weekly reset' : 'Ends in'}</div>
                 <CountdownTimer endDate={endDate} color={event.color} alwaysShow={isDaily || isWeekly || isRecurring} onExpire={handleExpire} recalcFn={recalcFn} />
               </>
             )}
@@ -152,7 +161,10 @@ const EventCard = memo(({ event, server, bannerImage, visualSettings, status, on
         </div>
 
         <div className="lh-row flex justify-between items-end">
-          <div className={event.rewards ? `kuro-badge font-medium ${isExpired ? 'kuro-badge-gray' : showDoneStyle ? 'kuro-badge-emerald' : isSkipped ? 'kuro-badge-gray line-through' : `${colors.bg} ${colors.text}`}` : ''}>
+          <div
+            className={event.rewards ? `kuro-badge font-medium ${isExpired || isSkipped ? 'text-gray-400' : showDoneStyle ? 'text-emerald-400' : colors.text}${isSkipped ? ' line-through' : ''}` : ''}
+            style={event.rewards ? rewardBadgeStyle(isExpired || isSkipped ? REWARD_GRAY_RGB : showDoneStyle ? EVENT_ACCENT_COLORS.emerald.rgb : colors.rgb) : undefined}
+          >
             {renderRewardsWithIcons(event.rewards)}
           </div>
           {onStatusChange && !isExpired && (

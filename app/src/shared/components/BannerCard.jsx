@@ -33,13 +33,14 @@ const BANNER_GRADIENT_MAP = {
 };
 
 const EVENT_ACCENT_COLORS = {
-  cyan: { text: 'text-cyan-400', border: 'border-cyan-500/30', bg: 'bg-cyan-500/20' },
-  pink: { text: 'text-pink-400', border: 'border-pink-500/30', bg: 'bg-pink-500/20' },
-  orange: { text: 'text-orange-400', border: 'border-orange-500/30', bg: 'bg-orange-500/20' },
-  purple: { text: 'text-purple-400', border: 'border-purple-500/30', bg: 'bg-purple-500/20' },
-  yellow: { text: 'text-yellow-400', border: 'border-yellow-500/30', bg: 'bg-yellow-500/20' },
-  emerald: { text: 'text-emerald-400', border: 'border-emerald-500/30', bg: 'bg-emerald-500/20' },
-  red: { text: 'text-red-400', border: 'border-red-500/30', bg: 'bg-red-500/20' },
+  // rgb: the same *-500 colour as bg/border, for inline rgba() fills.
+  cyan: { text: 'text-cyan-400', border: 'border-cyan-500/30', bg: 'bg-cyan-500/20', rgb: '6,182,212' },
+  pink: { text: 'text-pink-400', border: 'border-pink-500/30', bg: 'bg-pink-500/20', rgb: '236,72,153' },
+  orange: { text: 'text-orange-400', border: 'border-orange-500/30', bg: 'bg-orange-500/20', rgb: '249,115,22' },
+  purple: { text: 'text-purple-400', border: 'border-purple-500/30', bg: 'bg-purple-500/20', rgb: '168,85,247' },
+  yellow: { text: 'text-yellow-400', border: 'border-yellow-500/30', bg: 'bg-yellow-500/20', rgb: '234,179,8' },
+  emerald: { text: 'text-emerald-400', border: 'border-emerald-500/30', bg: 'bg-emerald-500/20', rgb: '16,185,129' },
+  red: { text: 'text-red-400', border: 'border-red-500/30', bg: 'bg-red-500/20', rgb: '239,68,68' },
 };
 
 const BANNER_CARD_OVERLAY_STYLE = Object.freeze({ background: 'linear-gradient(to top, rgba(8,12,20,0.85) 60%, transparent)', padding: '8px 12px 12px', textShadow: '0 2px 8px rgba(0,0,0,0.9), 0 1px 3px rgba(0,0,0,0.8)' });

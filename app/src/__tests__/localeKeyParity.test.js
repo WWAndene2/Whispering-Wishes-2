@@ -94,7 +94,7 @@ describe('character label overlays (data/characters.*.js)', () => {
     const titled = Object.entries(CHARACTER_DATA).filter(([, d]) => d.title).map(([n]) => n);
     expect(Object.keys(CHARACTER_TITLE_ES).sort()).toEqual(titled.sort());
     expect(getLocalizedCharacterData('es')['Jiyan'].title).toBe('Jinete del viento');
-    expect(getLocalizedCharacterData('es')['Jiyan'].desc).toBe(CHARACTER_DATA['Jiyan'].desc);
+    expect(getLocalizedCharacterData('es')['Jiyan'].desc).toContain('Guardabosques de Medianoche');
   });
 
   it('Spanish tags cover every tag or say deliberately to keep it', async () => {
@@ -150,5 +150,14 @@ describe('Spanish character buff notes', () => {
     const es = getLocalizedCharBuffTable('es');
     expect(es['Verina'].note).toBe(CHAR_BUFF_NOTE_ES['Verina']);
     expect(es['Verina'].stat).toBe(CHAR_BUFF_TABLE['Verina'].stat);
+  });
+});
+
+describe('Spanish character biographies', () => {
+  it('covers every character that has a description', async () => {
+    const { CHARACTER_DATA } = await import('../data/characters.js');
+    const { CHARACTER_DESC_ES } = await import('../data/characters.es.js');
+    const withDesc = Object.entries(CHARACTER_DATA).filter(([, d]) => d.desc).map(([n]) => n);
+    expect(Object.keys(CHARACTER_DESC_ES).sort()).toEqual(withDesc.sort());
   });
 });

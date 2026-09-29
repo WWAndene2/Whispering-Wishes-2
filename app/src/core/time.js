@@ -23,10 +23,10 @@ const getTimeRemaining = (endDate) => {
 
 // Events are stored with UTC times based on Europe server timezone.
 // IMPORTANT: UTC conversion must account for DST at the EVENT date, not today.
-// Europe uses CET (UTC+1) in winter and CEST (UTC+2) in summer (changes last Sun of Mar/Oct).
+// The Europe server runs on fixed UTC+1 (no DST, see data/servers.js).
 // For server-specific events (ending at XX:59, following reset times),
 // adjust by timezone difference when viewing in another server.
-// Reference: Europe — dynamic via getServerOffset('Europe', date) for CET/CEST
+// Reference: Europe — getServerOffset('Europe', date)
 // P9-FIX: Use date-aware offset lookup (MEDIUM-5b — DST at event date, not current date)
 const getEuropeOffset = (atDate) => getServerOffset('Europe', atDate);
 

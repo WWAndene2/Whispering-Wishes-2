@@ -12,7 +12,7 @@
     "fourStarExpectedNoTarget": "4★ esperados",
     "fourStarConvenesNeeded": "Invocaciones necesarias para 4★",
     "fourStarNeedsMore": "El objetivo de 4★ requiere más Invocaciones que el de 5★",
-    "ratesDisclosure": "Probabilidades: 0,8 % base, garantía suave 66-79, garantía dura 80. Híbrido de programación dinámica y Monte Carlo."
+    "ratesDisclosure": "Probabilidades: 0.8 % base, garantía suave 66-79, garantía dura 80. Híbrido de programación dinámica y Monte Carlo."
   },
   "intro": "Calcula tus probabilidades de Invocación introduciendo tus recursos a continuación.",
   "astrite": "Astrita",

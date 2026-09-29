@@ -83,7 +83,7 @@
     "percentileGood": "Más suerte que el {{percentile}} % de los jugadores: ¡por encima de la media!",
     "percentileAverage": "Suerte en torno a la media (percentil {{percentile}})",
     "percentileLow": "Menos suerte que la mayoría: sigue registrando para ver tu evolución",
-    "basedOn": "Basado en tu garantía media frente a la media teórica (53,0), ajustado al tamaño de la muestra"
+    "basedOn": "Basado en tu garantía media frente a la media teórica (53.0), ajustado al tamaño de la muestra"
   },
   "consent": {
     "title": "Clasificación - Aviso de uso compartido de datos",

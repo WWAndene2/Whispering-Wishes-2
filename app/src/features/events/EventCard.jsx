@@ -18,9 +18,9 @@ import { t } from '../../utils/i18n.js';
 // wherever those currency names appear in an event's rewards badge text.
 const REWARD_ICON_CURRENCIES = ['Radiant Tide', 'Astrite'];
 const REWARD_ICON_PATTERN = new RegExp(`(${REWARD_ICON_CURRENCIES.join('|')})`, 'g');
-// Each icon sits the same distance from its neighbours as the reward name from the badge's left
-// edge (kuro-badge: 1px border + 8px padding = 9px): 6px margin + the badge's 3px flex gap. The text
-// right after an icon drops its leading space so that gap stays 9px.
+// Each icon sits 8px from its neighbours, the same as the reward name from the badge's left edge
+// (kuro-badge's 8px padding; the badge has no border and no flex gap, see rewardBadgeStyle). The
+// text right after an icon drops its leading space so that gap stays 8px.
 function renderRewardsWithIcons(rewardsText) {
   if (!rewardsText) return rewardsText;
   const parts = rewardsText.split(REWARD_ICON_PATTERN);
@@ -31,15 +31,16 @@ function renderRewardsWithIcons(rewardsText) {
     return (
       <React.Fragment key={i}>
         {part}
-        <img src={iconSrc} alt="" className={`inline w-4 h-4 -mt-0.5 ml-[6px] ${followedByText ? 'mr-[6px]' : ''}`} onError={hideOnError} />
+        <img src={iconSrc} alt="" className={`inline w-4 h-4 -mt-0.5 ml-2 ${followedByText ? 'mr-2' : ''}`} onError={hideOnError} />
       </React.Fragment>
     );
   });
 }
 
-// Reward badge fill: the same 32.5% fill / invisible border as the banner cards' tags.
+// Reward badge fill: the same 32.5% fill as the banner cards' tags, with no border at all (not a
+// transparent one, which would add 1px to every spacing) and no flex gap, so every spacing is 8px.
 const REWARD_GRAY_RGB = '107,114,128';
-const rewardBadgeStyle = (rgb) => ({ backgroundColor: `rgba(${rgb},0.325)`, borderColor: 'transparent' });
+const rewardBadgeStyle = (rgb) => ({ backgroundColor: `rgba(${rgb},0.325)`, borderWidth: 0, gap: 0 });
 
 const EventCard = memo(({ event, server, bannerImage, visualSettings, status, onStatusChange, isExpired }) => {
   const [resetTick, setResetTick] = useState(0);

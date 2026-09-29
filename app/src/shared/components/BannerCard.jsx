@@ -84,6 +84,9 @@ const generateMaskGradient = (fadePos, fadeIntensity) => {
   return result;
 };
 
+// Weapon-type labels as shown next to a Support/Healer role tag (see the tag row below).
+const SUPPORT_HEALER_WEAPON_SHORT = { Broadblade: 'Broad.', Rectifier: 'Rect.', Amplificateur: 'Amplif.' };
+
 const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, timerColor, collectionImages, setDetailModal, pity, calc }) => {
   const isChar = type === 'character';
   const style = BANNER_GRADIENT_MAP[item.element] || BANNER_GRADIENT_MAP.Fusion;
@@ -223,8 +226,13 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
               // tags in this row share the same border color, not just the same dimensions.
               <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={{ borderColor: style.borderColor, backgroundColor: style.bgColor }}>
                 <img src={getWeaponTypeIcon(item.weaponType)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />
-                {/* Broadblade is shortened here only, for the same countdown clearance as Support/Healer above. */}
-                {(getLocale() === 'fr' && WEAPON_TYPE_FR[item.weaponType]) || (item.weaponType === 'Broadblade' ? 'Broad.' : item.weaponType)}
+                {/* Only next to the Support/Healer tag (the one long role label) is the weapon type
+                    shortened too, so that row clears the countdown (Chisa, Suisui). */}
+                {(() => {
+                  const label = (getLocale() === 'fr' && WEAPON_TYPE_FR[item.weaponType]) || item.weaponType;
+                  const role = CHARACTER_DATA[item.name]?.role || item.role;
+                  return role === 'Support/Healer' ? (SUPPORT_HEALER_WEAPON_SHORT[label] || label) : label;
+                })()}
               </span>
             )}
             {/* A character or weapon seeded before its data exists (an upcoming debut) has no

@@ -197,8 +197,9 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
           {/* Direct user request: invert the tag->name / name->title spacing - this one bigger,
               the title's smaller (opposite of the first, insufficient attempt below). */}
           <div className="flex items-center gap-[2px] flex-wrap mb-1">
-            {isChar && getRoleIcon(CHARACTER_DATA[item.name]?.role) && (() => {
-              const role = CHARACTER_DATA[item.name].role;
+            {isChar && getRoleIcon(CHARACTER_DATA[item.name]?.role || item.role) && (() => {
+              // item.role covers a debut seeded before its CHARACTER_DATA entry exists.
+              const role = CHARACTER_DATA[item.name]?.role || item.role;
               const roleLabel = role.includes('DPS') ? 'DPS' : (getLocale() === 'fr' && ROLE_FR[role]) || role;
               return (
                 <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={{ borderColor: style.borderColor, backgroundColor: style.bgColor }}>

@@ -107,9 +107,11 @@ const BANNER_HISTORY = [
   // v3.7-p2's third weapon: the snapshot repeats "Freeze Frame - Lucilla Weapon Banner" on
   // Lynae's row; Lynae's signature weapon is Spectrum Blaster (her v3.0-p1/v3.2-p2/v3.5-p1 reruns).
   // titles are each banner's own subtitle from the snapshot. Character and weapon featured
-  // 4★s are user-supplied (2026-09-29).
-  { id: 'v3.7-p2', version: '3.7', phase: 2, characters: ['Suoming', 'Lucilla', 'Lynae'], weapons: ['Unspoken Rue', 'Freeze Frame', 'Spectrum Blaster'], startDate: '2026-10-22', endDate: '2026-11-11', startAt: '2026-10-22T09:00:00Z', endAt: '2026-11-11T11:00:00Z', bannerArt: './characters/suoming/Suoming_Banner.webp', titles: { Suoming: 'Nine Deaths, One Unbent Heart', Lucilla: 'Tomorrow in the Frame', Lynae: 'Undefined Spectrum' }, characterFeatured4Stars: ['Lumi', 'Danjin', 'Chixia'], weaponFeatured4Stars: ['Overture', 'Relativistic Jet', 'Amity Accord'], predicted: true },
-  { id: 'v3.7-p1', version: '3.7', phase: 1, characters: ['Hsin', 'Chisa', 'Iuno'], weapons: ['Blooming Jadehaven', 'Kumokiri', "Moongazer's Sigil"], startDate: '2026-09-30', endDate: '2026-10-22', startAt: '2026-09-30T02:00:00Z', endAt: '2026-10-22T09:00:00Z', bannerArt: './characters/hsin/Hsin_Banner.jpg', titles: { Hsin: 'As Full as Tonight, Forever', Chisa: 'Horizon of Danbreak', Iuno: "Across Time's Waxes and Wanes" }, characterFeatured4Stars: ['Buling', 'Taoqi', 'Youhu'], weaponFeatured4Stars: ['Fusion Accretion', 'Commando of Conviction', 'Dauntless Evernight'], predicted: true },
+  // 4★s are user-supplied (2026-09-29), as is characterInfo: element/weapon/role for a debut
+  // with no CHARACTER_DATA entry yet (Hsin is Main/Sub DPS; roles use CHARACTER_DATA's
+  // 'Main DPS'/'Sub DPS' values, both shown as "DPS").
+  { id: 'v3.7-p2', version: '3.7', phase: 2, characters: ['Suoming', 'Lucilla', 'Lynae'], weapons: ['Unspoken Rue', 'Freeze Frame', 'Spectrum Blaster'], startDate: '2026-10-22', endDate: '2026-11-11', startAt: '2026-10-22T09:00:00Z', endAt: '2026-11-11T11:00:00Z', bannerArt: './characters/suoming/Suoming_Banner.webp', characterInfo: { Suoming: { element: 'Electro', weapon: 'Sword', role: 'Main DPS' } }, titles: { Suoming: 'Nine Deaths, One Unbent Heart', Lucilla: 'Tomorrow in the Frame', Lynae: 'Undefined Spectrum' }, characterFeatured4Stars: ['Lumi', 'Danjin', 'Chixia'], weaponFeatured4Stars: ['Overture', 'Relativistic Jet', 'Amity Accord'], predicted: true },
+  { id: 'v3.7-p1', version: '3.7', phase: 1, characters: ['Hsin', 'Chisa', 'Iuno'], weapons: ['Blooming Jadehaven', 'Kumokiri', "Moongazer's Sigil"], startDate: '2026-09-30', endDate: '2026-10-22', startAt: '2026-09-30T02:00:00Z', endAt: '2026-10-22T09:00:00Z', bannerArt: './characters/hsin/Hsin_Banner.jpg', characterInfo: { Hsin: { element: 'Electro', weapon: 'Rectifier', role: 'Main DPS' } }, titles: { Hsin: 'As Full as Tonight, Forever', Chisa: 'Horizon of Danbreak', Iuno: "Across Time's Waxes and Wanes" }, characterFeatured4Stars: ['Buling', 'Taoqi', 'Youhu'], weaponFeatured4Stars: ['Fusion Accretion', 'Commando of Conviction', 'Dauntless Evernight'], predicted: true },
   // Version 3.6 (upcoming — dates are the source's own estimate: "based on the Version Update's confirmed
   // release date, and the usual 21-day cycle for Version halves." Characters/weapons confirmed via
   // the source archive 453303 (Aug 10 2026 update), kit data not final until release.)
@@ -1676,7 +1678,7 @@ export function getCurrentBannerAuto(now = Date.now()) {
   // falling back to CURRENT_BANNERS' phase-1 list for an entry that hasn't been given its own
   // (matching the previous, always-wrong-past-phase-1 behavior for those).
   const characters = active.characters.map(name => {
-    const cd = CHARACTER_DATA[name] || {};
+    const cd = CHARACTER_DATA[name] || active.characterInfo?.[name] || {};
     const theme = CHARACTER_THEMES.find(t => t.name === name);
     return {
       id: slugify(name),
@@ -1684,6 +1686,7 @@ export function getCurrentBannerAuto(now = Date.now()) {
       title: active.titles?.[name] || cd.title || '',
       element: cd.element || '',
       weaponType: cd.weapon || '',
+      role: cd.role || '',
       isNew: isFirstAppearance(name),
       featured4Stars: active.characterFeatured4Stars || CURRENT_BANNERS.characters[0]?.featured4Stars || [],
       imageUrl: theme?.bannerArt || active.bannerArt || PLACEHOLDER_IMAGE,
@@ -1692,7 +1695,7 @@ export function getCurrentBannerAuto(now = Date.now()) {
   });
   const weapons = active.weapons.map((name, i) => {
     const forCharacter = active.characters[i] || active.characters[0];
-    const cd = CHARACTER_DATA[forCharacter] || {};
+    const cd = CHARACTER_DATA[forCharacter] || active.characterInfo?.[forCharacter] || {};
     const theme = WEAPON_THEMES.find(t => t.name === name);
     return {
       id: slugify(name),

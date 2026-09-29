@@ -224,7 +224,8 @@ describe('Spanish weapon and echo display names', () => {
     for (const k of Object.keys(WEAPON_NAME_ES)) expect(WEAPON_DATA[k], k).toBeDefined();
     for (const k of Object.keys(ECHO_NAME_ES)) expect(ECHO_DATA[k], k).toBeDefined();
     expect(getLocalizedWeaponName('Static Mist', 'es')).toBe('Niebla estática');
-    expect(getLocalizedWeaponName('Static Mist', 'fr')).toBe('Static Mist');
+    expect(getLocalizedWeaponName('Static Mist', 'fr')).toBe('Brouillard stable');
+    expect(getLocalizedEchoName('Inferno Rider', 'fr')).toBe("Chevalier d'Inferno");
     expect(getLocalizedEchoName('Inferno Rider', 'es')).toBe('Jinete Infernal');
     expect(getLocalizedWeaponData('es')['Static Mist'].displayName).toBe('Niebla estática');
     expect(getLocalizedEchoData('es')['Inferno Rider'].displayName).toBe('Jinete Infernal');

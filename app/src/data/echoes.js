@@ -893,10 +893,10 @@ const ALL_ECHO_BUFF_TYPES = [...new Set(Object.values(ECHO_DATA).flatMap(e => Ar
 // [SECTION:LOCALIZATION] — locale-aware overlays for echoes.fr.js.
 // English data above is the single source of truth for numbers/mechanics;
 // these merge in translated *text* fields only, keyed by the same names.
-import { ECHO_SETS_FR, ECHO_DATA_FR, translateBuffFr } from './echoes.fr.js';
+import { ECHO_SETS_FR, ECHO_DATA_FR, ECHO_NAME_FR, translateBuffFr } from './echoes.fr.js';
 import { ECHO_SETS_ES, ECHO_DATA_ES, ECHO_NAME_ES, translateBuffEs } from './echoes.es.js';
 
-const ECHO_NAME_TABLES = { es: ECHO_NAME_ES };
+const ECHO_NAME_TABLES = { fr: ECHO_NAME_FR, es: ECHO_NAME_ES };
 
 /** Display name of an echo in `locale`; the English name doubles as the id, so it is the fallback. */
 /** @param {string} name @param {string} locale */

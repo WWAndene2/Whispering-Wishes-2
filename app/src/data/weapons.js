@@ -649,10 +649,10 @@ const WEAPON_DATA = {
 // directly — parsePassive() regex-parses the raw English passive string as
 // a fallback whenever a weapon has no `pv`, so feeding it translated text
 // would silently corrupt DPS calculations.
-import { WEAPON_DATA_FR } from './weapons.fr.js';
+import { WEAPON_DATA_FR, WEAPON_NAME_FR } from './weapons.fr.js';
 import { WEAPON_DATA_ES, WEAPON_NAME_ES } from './weapons.es.js';
 
-const WEAPON_NAME_TABLES = { es: WEAPON_NAME_ES };
+const WEAPON_NAME_TABLES = { fr: WEAPON_NAME_FR, es: WEAPON_NAME_ES };
 
 /** Display name of a weapon in `locale`; the English name doubles as the id, so it is the fallback. */
 /** @param {string} name @param {string} locale */

@@ -494,7 +494,7 @@ export const CHARACTER_ROTATION_NOTE_FR = {
     'MAINTENEZ Attaque Basique et maintenez plus longtemps pour Chargée II — puisque le Taux de Résonance est maintenant plafonné par les 2 lancers de Duo et que Réponse Instantanée est active, ceci remplit entièrement le Taux de Synchronisation à 200/200 (compté comme DGT de Libération). Annulez sa récupération en appuyant immédiatement sur Libération.',
     'Appuyez sur Libération (ou Compétence) juste après l\'Attaque Lourde — consomme tout le Taux de Synchronisation et le Taux de Résonance pour son énorme 2e nuke Ultime, mettant fin à Édit de la Chute Céleste : Libre et repassant en Forme Aemeath.',
     'Appuyez une fois de plus sur Compétence pour repasser en Forme Méca avant de changer de personnage (garde les futures rotations cohérentes).',
-    'Utilisez votre Écho équipé (Sigillum) à tout moment pratique de la rotation.',
+    'Utilisez votre Écho équipé (Sigilium) à tout moment pratique de la rotation.',
     'Changez de personnage pour déclencher ceci automatiquement. Confère à chaque autre coéquipier +10 % d\'Amplification de tous les DGT pendant 20 s, montant à +20 % pour celui qui applique personnellement Rupture Tacet ou Explosion Fusion (selon le Mode de Résonance actuel d\'Aemeath).',
   ],
   'Lynae': [
@@ -1764,7 +1764,7 @@ export const SKILL_NAME_FR = {
     'Impromptu Show (aimed shot)': 'Spectacle Impromptu (tir visé)',
     'Impromptu Show (fully charged)': 'Spectacle Impromptu (pleinement chargé)',
     'Impromptu Show': 'Spectacle Impromptu',
-    'Passionate Variation': 'Variation Passionnée',
+    'Passionate Variation': 'Variation fantastique Passionnée',
     'Violent Finale': 'Finale Violente',
     'Marcato (Coordinated ATK)': 'Marcato (Attaque Coordonnée)',
     'Fury Fugue': 'Fugue Furieuse',
@@ -3058,7 +3058,7 @@ export const WEAPON_VERDICT_REASON_FR = {
 // alongside WEAPON_VERDICT_REASON_FR in the same PlannerTab.jsx card.
 export const WEAPON_ALT_REASON_FR = {
   'Mornye': {
-    headline: 'Discord restaure 16 Énergie de Concerto par lancer de Compétence',
+    headline: 'Discorde restaure 16 Énergie de Concerto par lancer de Compétence',
     detail: 'le double de l\'effet de son Arme Signature, tout en respectant confortablement son besoin de Régén. d\'Énergie — un remplacement F2P propre pour cet emplacement.',
   },
 };

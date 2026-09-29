@@ -84,6 +84,10 @@ const generateMaskGradient = (fadePos, fadeIntensity) => {
   return result;
 };
 
+// Featured 4★ name tags: the 4★ rarity purple (--rarity-4star, #c084fc) at the same 32.5% fill /
+// 50% border as the role/weapon/element tags.
+const FEATURED_4STAR_TAG_STYLE = { color: 'var(--rarity-4star)', backgroundColor: 'rgba(192,132,252,0.325)', borderColor: 'rgba(192,132,252,0.5)' };
+
 // Weapon-type labels as shown next to a Support/Healer role tag (see the tag row below).
 const SUPPORT_HEALER_WEAPON_SHORT = { Broadblade: 'Broad.', Rectifier: 'Rect.', Amplificateur: 'Amplif.' };
 
@@ -305,7 +309,8 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
                     </div>
                   )}
                   <span
-                    className="block w-12 text-[8px] text-cyan-300 bg-cyan-500/30 px-1.5 py-0.5 rounded backdrop-blur-sm text-center truncate cursor-pointer"
+                    className="block w-12 text-[8px] px-1.5 py-0.5 rounded border backdrop-blur-sm text-center truncate cursor-pointer"
+                    style={FEATURED_4STAR_TAG_STYLE}
                     title={n}
                     onClick={() => setDetailModal?.({ show: true, type: isChar ? 'character' : 'weapon', name: n, imageUrl: previewImg, framing })}
                   >{n}</span>

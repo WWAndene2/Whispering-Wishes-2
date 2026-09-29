@@ -27,7 +27,12 @@
     "closeStatsAria": "Close echo stats",
     "subStats": "Sub Stats",
     "rollValue": "Roll Value",
-    "unequipAria": "Unequip echo"
+    "unequipAria": "Unequip echo",
+    "allSets": "All Sets",
+    "allBuffs": "All Buffs",
+    "orangeGlowHint": "Orange glow = recommended for {{name}}",
+    "slotHeader": "{{name}} — Slot {{slot}} ({{cost}}-Cost)",
+    "slotHeaderShort": "{{name}} — Slot {{slot}} · {{cost}}-Cost"
   },
   "weaponSelector": {
     "title": "Select Weapon",

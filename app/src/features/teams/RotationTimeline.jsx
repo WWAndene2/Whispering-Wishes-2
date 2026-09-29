@@ -54,6 +54,18 @@ const STAT_LABELS_FR = {
   fusionBurst: 'Explosion Fusion', electroFlare: 'Électromagnétisme',
 };
 
+// Spanish terse labels for STAT_LABELS above (same narrow-chip constraint). `erosion` is this
+// engine's own key for the Havoc-flavored reaction (Havoc Bane), not Aero Erosion.
+const STAT_LABELS_ES = {
+  atkPct: 'ATQ', allDmg: 'Todo daño', elemDmg: 'Daño elem.', amplify: 'Amp.',
+  basicDmg: 'Básico', heavyDmg: 'Pesado', libDmg: 'Lib', echoDmg: 'Eco',
+  skillDmg: 'Hab.', critRate: 'TC', critDmg: 'DC', resShred: 'RES↓', defShred: 'DEF↓',
+  coordDmg: 'Coord.', glacioDmg: 'Glacio', fusionDmg: 'Fusión', electroDmg: 'Electro',
+  aeroDmg: 'Aero', spectroDmg: 'Espectro', havocDmg: 'Destrucción',
+  frazzle: 'Espectro estridente', erosion: 'Ruina de destrucción',
+  fusionBurst: 'Estallido de fusión', electroFlare: 'Llamarada eléctrica',
+};
+
 // Which element a DOT reaction's own RES lookup uses (dotReactions.js: Spectro/Havoc/Fusion/Electro
 // respectively) — reused here only to pick a themed bar color via ELEMENT_COLORS below, not a claim
 // the reaction itself deals that element's DMG type for any other calculation.
@@ -82,6 +94,15 @@ export const STAT_LABELS_FULL_FR = {
   aeroDmg: 'DGT Aero', spectroDmg: 'DGT Spectro', havocDmg: 'DGT Havoc',
 };
 
+// Spanish version — consumed by calcTeamStats.js's fmtBuff() (Rotation Guide's Inherits/Own Kit/Hands Off badges).
+export const STAT_LABELS_FULL_ES = {
+  atkPct: 'ATQ', allDmg: 'Todo el daño', elemDmg: 'Daño elemental', amplify: 'Amplificación de daño',
+  basicDmg: 'Daño de ataque básico', heavyDmg: 'Daño de ataque pesado', libDmg: 'Daño de liberación', echoDmg: 'Daño de habilidad de Eco',
+  skillDmg: 'Daño de habilidad de resonancia', critRate: 'Tasa crít.', critDmg: 'Daño crít.', resShred: 'Reducción de RES', defShred: 'Reducción de DEF',
+  coordDmg: 'Daño de ataque coordinado', glacioDmg: 'Daño Glacio', fusionDmg: 'Daño Fusión', electroDmg: 'Daño Electro',
+  aeroDmg: 'Daño Aero', spectroDmg: 'Daño Espectro', havocDmg: 'Daño Destrucción',
+};
+
 
 // Short (1-word) chip labels for the action sub-bars below — the same widths that already forced
 // STAT_LABELS to abbreviate apply here (a Basic ATK action chip on a 3-member team's field segment
@@ -100,6 +121,13 @@ const SHORT_STEP_LABEL_FR = {
   'Mid-air': 'Air', 'Mid-air ATK': 'Air', Echo: 'Écho', Outro: 'Outro', Step: '•',
 };
 
+// Spanish version of the short step chip labels.
+const SHORT_STEP_LABEL_ES = {
+  Intro: 'Intro', Skill: 'Hab.', Liberation: 'Lib', Ultimate: 'Lib',
+  'Heavy ATK': 'Pesado', 'Basic ATK': 'Básico', Forte: 'Forte',
+  'Mid-air': 'Aire', 'Mid-air ATK': 'Aire', Echo: 'Eco', Outro: 'Outro', Step: '•',
+};
+
 export default function RotationTimeline({ rotationTimeline }) {
   // Collapsed state persists per-tab-session, same convention as the Team Overview card's own
   // collapse toggle in DamageCalculator.jsx.
@@ -110,7 +138,7 @@ export default function RotationTimeline({ rotationTimeline }) {
   // one session likely wants to keep whatever zoom they picked.
   const [zoom, setZoom] = useSessionState('ww-rotation-timeline-zoom', 1);
   const locale = getLocale();
-  const statLabel = (key) => (pickTable({ fr: STAT_LABELS_FR }, locale)[key]) || STAT_LABELS[key] || key;
+  const statLabel = (key) => (pickTable({ fr: STAT_LABELS_FR, es: STAT_LABELS_ES }, locale)[key]) || STAT_LABELS[key] || key;
   const ZOOM_MIN = 0.5, ZOOM_MAX = 3, ZOOM_STEP = 0.25;
   const zoomIn = () => setZoom(z => Math.min(ZOOM_MAX, Math.round((z + ZOOM_STEP) * 100) / 100));
   const zoomOut = () => setZoom(z => Math.max(ZOOM_MIN, Math.round((z - ZOOM_STEP) * 100) / 100));
@@ -300,7 +328,7 @@ export default function RotationTimeline({ rotationTimeline }) {
                             title={`${sty.label}: ${localizeSkillName(locale, row.label, a.skill)}${a.note ? ' — ' + a.note : ''}`}
                             className={`absolute rounded-sm border flex items-center justify-center overflow-hidden ${sty.cls}`}
                             style={{ left: `${actionLeftPct}%`, width: `${Math.max(actionWidthPct, 1)}%`, top: 0, bottom: 0 }}>
-                            <span className="truncate px-0.5 text-2xs font-bold">{((pickTable({ fr: SHORT_STEP_LABEL_FR }, locale)[a.type]) || SHORT_STEP_LABEL[a.type]) || a.type}</span>
+                            <span className="truncate px-0.5 text-2xs font-bold">{((pickTable({ fr: SHORT_STEP_LABEL_FR, es: SHORT_STEP_LABEL_ES }, locale)[a.type]) || SHORT_STEP_LABEL[a.type]) || a.type}</span>
                           </div>
                         );
                       })}

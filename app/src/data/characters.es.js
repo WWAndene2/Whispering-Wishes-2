@@ -34,8 +34,21 @@ export const WEAPON_TYPE_ES = {
   'Rectifier': 'Rectificador',
 };
 
+// Official Spanish element names (Glacio, Electro and Aero are the same word in Spanish).
+/** @type {Record<string, string>} */
+export const ELEMENT_NAME_ES = {
+  'Fusion': 'Fusión',
+  'Spectro': 'Espectro',
+  'Havoc': 'Destrucción',
+};
+
 /** @type {Record<string, string>} */
 export const STAT_NAME_ES = {
+  'Healing Bonus': "Bonif. de curación",
+  'Basic ATK DMG': "Daño de ataque básico",
+  'Heavy ATK DMG': "Daño de ataque pesado",
+  'Resonance Skill DMG': "Daño de habilidad de resonancia",
+  'Resonance Liberation DMG': "Daño de liberación de resonancia",
   'ATK': 'ATQ',
   'DEF': 'DEF',
   'Crit Rate': 'Tasa crít.',

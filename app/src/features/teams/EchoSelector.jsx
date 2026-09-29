@@ -11,9 +11,11 @@ import { FocusTrapModal } from '../../shared/components/FocusTrapModal.jsx';
 import { KuroSelect } from '../../shared/components/KuroSelect.jsx';
 import { hideOnError } from '../../shared/utils/imageHelpers.js';
 import { EchoImage } from '../../shared/components/EchoImage.jsx';
-import { ECHO_SETS_TABLES } from '../../data/localeTables.js';
+import { ECHO_SETS_TABLES, ELEMENT_NAME_TABLES, STAT_NAME_TABLES } from '../../data/localeTables.js';
 
 const LOCALIZED_ECHO_DATA = getLocalizedEchoData(getLocale());
+// Display-only stat/buff label: table entry, else "<Element> DMG" localized, else the English text.
+const statLabel = (x) => pickTable(STAT_NAME_TABLES)[x] || (/^\w+ DMG$/.test(x) ? t('teams.damageCalc.elemDmgBadge', { element: pickTable(ELEMENT_NAME_TABLES)[x.replace(/ DMG$/, '')] || x.replace(/ DMG$/, '') }) : x);
 // ECHO_SETS is declared oldest-first (each block of sets is commented with its game version, e.g.
 // "v3.5 — Land of Xuanfang") — reversed here so the "All Sets" dropdown lists the newest sonata
 // sets first, matching the convention used for the Target picker's own set filter.
@@ -90,7 +92,7 @@ export default function EchoSelector({
                 <div className="px-4 py-3 border-b border-[var(--border-medium)] flex items-center justify-between flex-shrink-0" data-sheet-header>
                   <div>
                     <h3 className="text-white font-semibold text-xl">{t('teams.echoSelector.title')}</h3>
-                    <p className="text-gray-400 text-sm">{echoSelectorTarget.charName} — Slot {slotIdx + 1} ({costNum}-Cost)</p>
+                    <p className="text-gray-400 text-sm">{t('teams.echoSelector.slotHeader', { name: echoSelectorTarget.charName, slot: slotIdx + 1, cost: costNum })}</p>
                   </div>
                   <button onClick={() => { setEchoSelectorOpen(false); setEchoSetFilter('all'); setEchoBuffFilter('all'); }} className="p-3 min-w-[calc(48px*var(--ui-scale,1))] min-h-[calc(48px*var(--ui-scale,1))] flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all" aria-label={t('teams.echoSelector.closeAria')}><X size={16} /></button>
                 </div>
@@ -102,10 +104,10 @@ export default function EchoSelector({
                       value={echoSetFilter}
                       onChange={v => setEchoSetFilter(v)}
                       options={[
-                        { value: 'all', label: 'All Sets' },
+                        { value: 'all', label: t('teams.echoSelector.allSets') },
                         ...availableSets.map(s => ({
                           value: s,
-                          label: <span className="inline-flex items-center gap-1.5"><img src={getSetIcon(s)} alt="" width={14} height={14} className="shrink-0" /> {s}</span>,
+                          label: <span className="inline-flex items-center gap-1.5"><img src={getSetIcon(s)} alt="" width={14} height={14} className="shrink-0" /> {pickTable(ECHO_SETS_TABLES)[s]?.name || s}</span>,
                         })),
                       ]}
                       className="flex-1 text-sm"
@@ -114,14 +116,14 @@ export default function EchoSelector({
                       value={echoBuffFilter}
                       onChange={v => setEchoBuffFilter(v)}
                       options={[
-                        { value: 'all', label: 'All Buffs' },
+                        { value: 'all', label: t('teams.echoSelector.allBuffs') },
                         ...availableBuffs.map(b => {
                           const icon = getElementIcon(b.replace(/ DMG$/, ''));
                           return {
                             value: b,
                             label: icon
-                              ? <span className="inline-flex items-center gap-1.5"><img src={icon} alt="" width={14} height={14} className="shrink-0" /> {b}</span>
-                              : b,
+                              ? <span className="inline-flex items-center gap-1.5"><img src={icon} alt="" width={14} height={14} className="shrink-0" /> {statLabel(b)}</span>
+                              : statLabel(b),
                           };
                         }),
                       ]}
@@ -135,7 +137,7 @@ export default function EchoSelector({
                   {recommendedEchoes.size > 0 && (
                     <div className="flex items-center gap-1.5 text-sm text-orange-400">
                       <Star size={12} className="text-orange-400" fill="currentColor" />
-                      <span>Orange glow = recommended for {echoSelectorTarget.charName}</span>
+                      <span>{t('teams.echoSelector.orangeGlowHint', { name: echoSelectorTarget.charName })}</span>
                     </div>
                   )}
                 </div>
@@ -221,7 +223,7 @@ export default function EchoSelector({
                                   {isRec && <span className="text-2xs px-1 py-0.5 rounded font-bold bg-orange-500 text-white kuro-tshadow-badge">★ REC</span>}
                                 </div>
                                 <div className="flex items-center gap-1 mt-0.5 flex-wrap">
-                                  {buffs.map(b => <span key={b} className="text-sm text-gray-400">{b}</span>)}
+                                  {buffs.map(b => <span key={b} className="text-sm text-gray-400">{statLabel(b)}</span>)}
                                   {ed?.sets && <span className="text-sm text-gray-500">· {ed.sets.map(s => (pickTable(ECHO_SETS_TABLES)[s]?.name) || s).join(', ')}</span>}
                                 </div>
                               </div>
@@ -331,7 +333,7 @@ export default function EchoSelector({
                     )}
                     <div className="min-w-0">
                       <h3 className="text-white font-semibold text-xl truncate">{LOCALIZED_ECHO_DATA[echoName]?.displayName || echoName}</h3>
-                      <p className="text-gray-400 text-sm">{charName} — Slot {slotIdx + 1} · {costNum}-Cost</p>
+                      <p className="text-gray-400 text-sm">{t('teams.echoSelector.slotHeaderShort', { name: charName, slot: slotIdx + 1, cost: costNum })}</p>
                     </div>
                   </div>
                   <button onClick={() => setEchoStatPanel(null)} className="p-3 min-w-[calc(48px*var(--ui-scale,1))] min-h-[calc(48px*var(--ui-scale,1))] flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all flex-shrink-0" aria-label={t('teams.echoSelector.closeStatsAria')}><X size={16} /></button>
@@ -416,7 +418,7 @@ export default function EchoSelector({
                             className={`px-2 py-1.5 rounded-lg text-base text-left transition-all border ${isRec && !isActive ? 'kuro-shadow-rec-subtle' : ''} ${isActive ? `bg-${costColor}-500/20 border-${costColor}-500/50 text-${costColor}-400 font-semibold` : isRec ? 'border-orange-500/40 bg-orange-500/8 text-orange-300 hover:bg-orange-500/15' : 'border-[var(--border-medium)] text-gray-400 hover:border-white/20 hover:text-gray-200'}`}
                             onClick={() => { updateEchoData({ mainStat: isActive ? null : stat }); haptic.light(); }}
                           >
-                            {isRec && !isActive && <span className="text-orange-400 mr-1">★</span>}{stat}
+                            {isRec && !isActive && <span className="text-orange-400 mr-1">★</span>}{statLabel(stat)}
                           </button>
                         );
                       })}
@@ -448,7 +450,7 @@ export default function EchoSelector({
                               haptic.light();
                             }}
                           >
-                            {isRec && !isActive && <span className="text-orange-400 mr-1">★</span>}{stat}
+                            {isRec && !isActive && <span className="text-orange-400 mr-1">★</span>}{statLabel(stat)}
                           </button>
                         );
                       })}
@@ -476,7 +478,7 @@ export default function EchoSelector({
                           };
                           return (
                             <div key={stat} className="flex items-center justify-between gap-2 px-2 py-1 rounded-lg border border-[var(--border-medium)]">
-                              <span className="text-sm text-gray-400 truncate">{stat}</span>
+                              <span className="text-sm text-gray-400 truncate">{statLabel(stat)}</span>
                               <div className="flex items-center gap-2 flex-shrink-0">
                                 <button type="button" className="w-6 h-6 rounded bg-white/5 hover:bg-white/10 text-gray-300 disabled:opacity-30" disabled={grade <= 1} onClick={() => setGrade(grade - 1)}>−</button>
                                 <span className="text-sm font-semibold text-white tabular-nums w-14 text-center">{isFlat ? value : value + '%'}</span>

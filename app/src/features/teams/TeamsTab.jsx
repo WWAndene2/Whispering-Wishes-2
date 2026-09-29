@@ -17,7 +17,7 @@ import DamageCalculator from './DamageCalculator.jsx';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
 import { useSessionState } from '../../hooks/useSessionState.js';
 import { t, formatNumber, pickTable } from '../../utils/i18n.js';
-import { ROLE_TABLES } from '../../data/localeTables.js';
+import { ELEMENT_NAME_TABLES, ROLE_TABLES } from '../../data/localeTables.js';
 
 
 // Maps the English scoreTeam() tags to their teams.tab.suggestionTags locale keys; the English tag stays the id.
@@ -962,7 +962,7 @@ function TeamsTab({
                               <div key={i} className="kuro-badge font-medium inline-flex items-center gap-1"
                                 style={{ color: getElementColor(d.element), background: getElementBg(d.element), border: `1px solid ${getElementBorder(d.element)}` }}>
                                 {getElementIcon(d.element) && <img src={getElementIcon(d.element)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                                {getElementShape(d.element)}{getElementShape(d.element) ? ' ' : ''}{d.element}
+                                {getElementShape(d.element)}{getElementShape(d.element) ? ' ' : ''}{pickTable(ELEMENT_NAME_TABLES)[d.element] || d.element}
                               </div>
                             ) : null;
                           })}

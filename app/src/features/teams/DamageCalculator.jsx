@@ -22,11 +22,12 @@ import { renderCharacterCard } from './characterCardRenderer.js';
 import { t, formatNumber, pickTable, getLocale } from '../../utils/i18n.js';
 
 
-import { CHARACTER_TAG_TABLES, ECHO_SETS_TABLES, ROLE_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
+import { CHARACTER_TAG_TABLES, ELEMENT_NAME_TABLES, ECHO_SETS_TABLES, ROLE_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
 
 // Display-only localizers: the English names/tags stay the ids everywhere.
 const tagLabel = (x) => pickTable(CHARACTER_TAG_TABLES)[x] || x;
 const statLabel = (x) => pickTable(STAT_NAME_TABLES)[x] || x;
+const elementLabel = (x) => pickTable(ELEMENT_NAME_TABLES)[x] || x;
 // "Sigillum + Trailblazing Star 5pc" style entries: an echo name, or a set name with an "Npc" suffix.
 const localizeEchoRec = (entry) => {
   const m = /^(.*?) (\d+)pc$/.exec(entry);
@@ -629,7 +630,7 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                         <span className="kuro-badge font-medium"
                           style={{ color: getElementColor(m.d.element), background: getElementBg(m.d.element), border: `1px solid ${getElementBorder(m.d.element)}` }}>
                           {getElementIcon(m.d.element) && <img src={getElementIcon(m.d.element)} alt="" className="w-3.5 h-3.5 inline-block align-middle mr-0.5" onError={hideOnError} />}
-                          {getElementShape(m.d.element)}{getElementShape(m.d.element) ? ' ' : ''}{t('teams.damageCalc.elemDmgBadge', { element: m.d.element })}
+                          {getElementShape(m.d.element)}{getElementShape(m.d.element) ? ' ' : ''}{t('teams.damageCalc.elemDmgBadge', { element: elementLabel(m.d.element) })}
                         </span>
                         {/* Audited combatRoles is the authoritative, iconed tag source (see
                             CharacterDetailModal) — falls back to plain dmgFocus tags, iconed via
@@ -696,7 +697,7 @@ const DamageCalculator = forwardRef(function DamageCalculator({
                         <span className="kuro-badge font-medium"
                           style={{ color: getElementColor(m.d.element), background: getElementBg(m.d.element), border: `1px solid ${getElementBorder(m.d.element)}` }}>
                           {getElementIcon(m.d.element) && <img src={getElementIcon(m.d.element)} alt="" className="w-3.5 h-3.5 inline-block align-middle mr-0.5" onError={hideOnError} />}
-                          {getElementShape(m.d.element)}{getElementShape(m.d.element) ? ' ' : ''}{m.d.element} +{elemDmg.toFixed(0)}%
+                          {getElementShape(m.d.element)}{getElementShape(m.d.element) ? ' ' : ''}{elementLabel(m.d.element)} +{elemDmg.toFixed(0)}%
                         </span>
                         {skillDmg > 0 && <span className="kuro-badge kuro-badge-amber">{t('teams.damageCalc.skillBadge', { v: skillDmg.toFixed(0) })}</span>}
                         {atkPct > 0 && <span className="kuro-badge kuro-badge-emerald">{t('teams.damageCalc.atkPctBadge', { v: atkPct.toFixed(0) })}</span>}

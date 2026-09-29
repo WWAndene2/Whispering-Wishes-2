@@ -14,7 +14,7 @@ import { CHARACTER_DATA, CHAR_BUFF_TABLE, CHARACTER_ROTATIONS, getLocalizedChara
 import { WEAPON_DATA } from '../../data/weapons.js';
 import { ECHO_SETS, ECHO_DATA, ECHO_SKILL_BUFFS, getEnemyStatsAtLevel, getLocalizedEchoName } from '../../data/echoes.js';
 import { WEAPON_REFINE_SCALE } from '../../data/constants.js';
-import { STAT_LABELS_FULL, STAT_LABELS_FULL_FR } from './RotationTimeline.jsx';
+import { STAT_LABELS_FULL, STAT_LABELS_FULL_FR, STAT_LABELS_FULL_ES } from './RotationTimeline.jsx';
 import { t, getLocale , pickTable } from '../../utils/i18n.js';
 import {
   ATTACKER_FACTOR, BASE_CRIT_RATE, BASE_CRIT_DMG,
@@ -496,7 +496,7 @@ export function calcTeamStats(slots, teamIdx, mainDpsOverride, teamEquipment, en
       // than one flat, undifferentiated buff dump. One block per on-field window, in the order
       // actually computed above. ──
       const locale = getLocale();
-      const fmtBuff = (b) => `+${b.value}% ${(pickTable({ fr: STAT_LABELS_FULL_FR }, locale)[b.stat]) || STAT_LABELS_FULL[b.stat] || b.stat}${b.duration ? ` (${b.duration}s)` : ''}`;
+      const fmtBuff = (b) => `+${b.value}% ${(pickTable({ fr: STAT_LABELS_FULL_FR, es: STAT_LABELS_FULL_ES }, locale)[b.stat]) || STAT_LABELS_FULL[b.stat] || b.stat}${b.duration ? ` (${b.duration}s)` : ''}`;
       const STEP_REASON = {
         en: {
           mainDps: 'Main DPS — comes on-field last to receive every buff stacked up before it',
@@ -509,6 +509,12 @@ export function calcTeamStats(slots, teamIdx, mainDpsOverride, teamEquipment, en
           teamOutro: "Buff pour toute l'équipe qui persiste après les changements — placé en premier pour couvrir toute la rotation",
           nextOutro: 'Le buff ne profite qu\'au personnage suivant — placé juste avant la fenêtre du DPS',
           subDps: 'Fenêtre de DPS secondaire / utilitaire',
+        },
+        es: {
+          mainDps: 'DPS principal — entra en campo el último para recibir todos los potenciadores acumulados antes',
+          teamOutro: 'El potenciador de todo el equipo persiste tras los cambios — va primero para cubrir toda la rotación',
+          nextOutro: 'El potenciador solo llega a quien entre después — se coloca justo antes de la ventana del DPS',
+          subDps: 'Ventana de DPS secundario / utilidad',
         },
       };
       const reasons = STEP_REASON[locale] || STEP_REASON.en;

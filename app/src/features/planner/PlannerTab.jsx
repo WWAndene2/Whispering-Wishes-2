@@ -37,7 +37,7 @@ import { computePullAllocation } from '../../core/pullAllocation.js';
 import { TIER_SCORES } from '../../data/tierScores.js';
 import { isHealerRole, isSupportRole } from '../../engine/math/roleMatch.js';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
-import { ROLE_TABLES, WEAPON_ALT_REASON_TABLES, WEAPON_VERDICT_REASON_TABLES } from '../../data/localeTables.js';
+import { ELEMENT_NAME_TABLES, ROLE_TABLES, WEAPON_ALT_REASON_TABLES, WEAPON_VERDICT_REASON_TABLES } from '../../data/localeTables.js';
 
 
 // Computes the full material/shell/EXP-potion requirement for one Ascension Planner target.
@@ -948,7 +948,7 @@ function PlannerTab({
                         {top.fillsRoleGap
                           ? t(top.d.role === 'Main DPS' ? 'planner.recommendationFillsMainDps' : 'planner.recommendationFillsSupport', { name: top.name })
                           : top.fillsElementGap
-                            ? t('planner.recommendationFillsElementGap', { name: top.name, element: top.d.element })
+                            ? t('planner.recommendationFillsElementGap', { name: top.name, element: pickTable(ELEMENT_NAME_TABLES)[top.d.element] || top.d.element })
                             : top.fillsDamageTypeGap
                               ? t('planner.recommendationFillsDamageTypeGap', { name: top.name, types: (top.d.dmgFocus || []).join(', ') })
                               : top.fillsBuffGap

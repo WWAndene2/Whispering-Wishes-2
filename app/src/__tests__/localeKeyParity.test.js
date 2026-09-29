@@ -40,7 +40,7 @@ describe('display-label overlays (data/localeTables.js)', () => {
     // CHARACTER_TAG_TABLES is checked against the source data instead (see the character overlay tests):
     // Spanish deliberately leaves untranslated the status-effect names French has official terms for.
     for (const [name, { fr, es }] of Object.entries(tables)) {
-      if (name !== 'CHARACTER_TAG_TABLES') expect(Object.keys(es).sort(), name).toEqual(Object.keys(fr).sort());
+      if (name !== 'CHARACTER_TAG_TABLES' && name !== 'ELEMENT_NAME_TABLES') expect(Object.keys(es).sort(), name).toEqual(Object.keys(fr).sort());
       for (const [key, label] of Object.entries(es)) expect(label, `${name}.${key}`).toBeTruthy();
     }
   });

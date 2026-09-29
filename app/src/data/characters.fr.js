@@ -2001,6 +2001,11 @@ export const WEAPON_TYPE_FR = {
 // to the player leaves those comparisons untouched.
 /** @type {Record<string, string>} */
 export const STAT_NAME_FR = {
+  'Healing Bonus': "Bonus de Soins",
+  'Basic ATK DMG': "DGT d'Attaque Normale",
+  'Heavy ATK DMG': "DGT d'Attaque Lourde",
+  'Resonance Skill DMG': "DGT de Compétence de Résonance",
+  'Resonance Liberation DMG': "DGT de Libération de Résonance",
   'ATK': 'ATQ',
   'DEF': 'DÉF',
   'Crit Rate': 'Taux Critique',

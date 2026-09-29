@@ -24,7 +24,7 @@ import { getLocalizedWeaponName } from '../../data/weapons.js';
 
 // Support/Healer runs under the banner countdown at full length, so it is abbreviated per locale.
 const SUPPORT_HEALER_SHORT = { fr: 'Sout./Soign.', es: 'Ap./San.' };
-import { ROLE_TABLES, WEAPON_TYPE_TABLES, CURRENT_BANNER_TITLE_TABLES } from '../../data/localeTables.js';
+import { ELEMENT_NAME_TABLES, ROLE_TABLES, WEAPON_TYPE_TABLES, CURRENT_BANNER_TITLE_TABLES } from '../../data/localeTables.js';
 
 const BANNER_GRADIENT_MAP = {
   Fusion: { borderColor: 'rgba(249,115,22,0.4)', bgColor: 'rgba(249,115,22,0.2)', text: 'text-orange-400', glow: '249,115,22' },
@@ -253,7 +253,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
             {(isChar ? item.element : item.type) && <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={tagStyle}>
               {isChar && getElementIcon(item.element) && <img src={getElementIcon(item.element)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
               {!isChar && getWeaponTypeIcon(item.type) && <img src={getWeaponTypeIcon(item.type)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-              {isChar ? item.element : ((pickTable(WEAPON_TYPE_TABLES)[item.type]) || item.type)}
+              {isChar ? (pickTable(ELEMENT_NAME_TABLES)[item.element] || item.element) : ((pickTable(WEAPON_TYPE_TABLES)[item.type]) || item.type)}
             </span>}
           </div>
           {/* Direct user request: for a NEW item, deterministically split the

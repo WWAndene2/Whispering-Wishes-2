@@ -27,7 +27,12 @@
     "closeStatsAria": "Fermer les stats de l'écho",
     "subStats": "Sous-stats",
     "rollValue": "Valeur de relance",
-    "unequipAria": "Déséquiper l'écho"
+    "unequipAria": "Déséquiper l'écho",
+    "allSets": "Tous les sets",
+    "allBuffs": "Tous les buffs",
+    "orangeGlowHint": "Lueur orange = recommandé pour {{name}}",
+    "slotHeader": "{{name}} — Emplacement {{slot}} (coût {{cost}})",
+    "slotHeaderShort": "{{name}} — Emplacement {{slot}} · coût {{cost}}"
   },
   "weaponSelector": {
     "title": "Sélectionner une arme",
@@ -295,7 +300,7 @@
       "dualDps": "Double DPS",
       "echoAmp": "Amp. d'Écho",
       "echoSetPotential": "Potentiel du set d'Échos",
-      "erosion": "Érosion Aéronautique",
+      "erosion": "Ravage Havoc",
       "frazzle": "Lumière Spectro",
       "goodWeapon": "Bonne arme",
       "heavyAmp": "Amp. attaque lourde",

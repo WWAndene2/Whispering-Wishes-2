@@ -22,7 +22,7 @@ import { FullSpineViewerButton } from '../components/FullSpineViewerButton.jsx';
 import { ConveneVideo } from '../components/ConveneVideoLayer.jsx';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
 import { t, formatNumber, getLocale , pickTable } from '../../utils/i18n.js';
-import { CHARACTER_TAG_TABLES, ROLE_TABLES, SKILL_TYPE_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
+import { CHARACTER_TAG_TABLES, ELEMENT_NAME_TABLES, ROLE_TABLES, SKILL_TYPE_TABLES, STAT_NAME_TABLES, WEAPON_TYPE_TABLES } from '../../data/localeTables.js';
 
 // Shared element color maps. `hex` (same source as elementVisuals.js's ELEMENT_COLORS)
 // drives the header's corner fade: lighter top-left, subtly darker/cooler
@@ -227,7 +227,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
             <div className="flex items-center gap-2 mb-1">
               <span className={`kuro-badge ${colors.bg} ${colors.text} border ${colors.border} inline-flex items-center gap-1`}>
                 {getElementIcon(data.element) && <img src={getElementIcon(data.element)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                {data.element}
+                {pickTable(ELEMENT_NAME_TABLES)[data.element] || data.element}
               </span>
               <span className="kuro-badge kuro-badge-neutral inline-flex items-center gap-1">
                 {getWeaponTypeIcon(data.weapon) && <img src={getWeaponTypeIcon(data.weapon)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
@@ -358,7 +358,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                   <div className="flex flex-wrap gap-1.5">
                     <span className={`kuro-badge font-medium border ${colors.border} ${colors.text} inline-flex items-center gap-1`} style={{ background: 'rgba(255,255,255,0.05)' }}>
                       {getElementIcon(data.element) && <img src={getElementIcon(data.element)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
-                      {t('modals.characterDetail.elementDmg', { element: data.element })}
+                      {t('modals.characterDetail.elementDmg', { element: pickTable(ELEMENT_NAME_TABLES)[data.element] || data.element })}
                     </span>
                     <span className="kuro-badge kuro-badge-neutral inline-flex items-center gap-1">
                       {getWeaponTypeIcon(data.weapon) && <img src={getWeaponTypeIcon(data.weapon)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}

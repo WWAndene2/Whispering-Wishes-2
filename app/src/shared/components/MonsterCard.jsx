@@ -9,6 +9,7 @@ import React, { useState, memo } from 'react';
 import { Skull } from 'lucide-react';
 import { getElementIcon, getStatIcon } from '../utils/elementVisuals.js';
 import { t, pickTable, getLocale } from '../../utils/i18n.js';
+import { ELEMENT_NAME_TABLES } from '../../data/localeTables.js';
 import { hideOnError } from '../utils/imageHelpers.js';
 import { TargetInput } from './TargetInput.jsx';
 import { getEnemyStatsAtLevel, getEnemyStaggerStatsAtLevel, getLocalizedEchoName } from '../../data/echoes.js';
@@ -154,7 +155,7 @@ function MonsterCard({
           return (
             <span key={el} className={`kuro-badge ${resBadgeClass(val)} inline-flex items-center gap-1`}>
               {icon && <img src={icon} alt="" className="w-3 h-3" onError={hideOnError} />}
-              {el === 'physical' ? t('teams.monsterCard.physical') : ELEMENT_LABEL[el]} {val}%
+              {el === 'physical' ? t('teams.monsterCard.physical') : (pickTable(ELEMENT_NAME_TABLES)[ELEMENT_LABEL[el]] || ELEMENT_LABEL[el])} {val}%
             </span>
           );
         }) : (

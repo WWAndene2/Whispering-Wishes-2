@@ -27,7 +27,12 @@
     "closeStatsAria": "Cerrar las estadísticas del eco",
     "subStats": "Atributos secundarios",
     "rollValue": "Valor de tirada",
-    "unequipAria": "Desequipar eco"
+    "unequipAria": "Desequipar eco",
+    "allSets": "Todos los conjuntos",
+    "allBuffs": "Todos los potenciadores",
+    "orangeGlowHint": "Resplandor naranja = recomendado para {{name}}",
+    "slotHeader": "{{name}} — Ranura {{slot}} (coste {{cost}})",
+    "slotHeaderShort": "{{name}} — Ranura {{slot}} · coste {{cost}}"
   },
   "weaponSelector": {
     "title": "Seleccionar arma",
@@ -295,7 +300,7 @@
       "dualDps": "Doble DPS",
       "echoAmp": "Amp. de Eco",
       "echoSetPotential": "Potencial del conjunto de ecos",
-      "erosion": "Erosión eólica",
+      "erosion": "Ruina de destrucción",
       "frazzle": "Espectro estridente",
       "goodWeapon": "Arma buena",
       "heavyAmp": "Amp. de ataque pesado",

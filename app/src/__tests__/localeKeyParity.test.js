@@ -202,3 +202,15 @@ describe('Spanish skill descriptions and multiplier text', () => {
     }
   });
 });
+
+describe('Spanish achievements', () => {
+  it('covers every achievement and series id and localizes them', async () => {
+    const { ACHIEVEMENTS_ES, ACHIEVEMENT_SERIES_ES } = await import('../data/achievements.es.js');
+    const { ACHIEVEMENTS_FR, ACHIEVEMENT_SERIES_FR } = await import('../data/achievements.fr.js');
+    expect(Object.keys(ACHIEVEMENTS_ES).sort()).toEqual(Object.keys(ACHIEVEMENTS_FR).sort());
+    expect(Object.keys(ACHIEVEMENT_SERIES_ES).sort()).toEqual(Object.keys(ACHIEVEMENT_SERIES_FR).sort());
+    const { getLocalizedAchievements } = await import('../data/achievements.js');
+    const es = getLocalizedAchievements('es');
+    for (const [id, tr] of Object.entries(ACHIEVEMENTS_ES)) expect(es[id].name).toBe(tr.name);
+  });
+});

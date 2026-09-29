@@ -1239,10 +1239,11 @@ const ALL_ACHIEVEMENT_VERSIONS = [...new Set(Object.values(ACHIEVEMENTS).map(a =
 // English data above is the single source of truth; these merge in
 // translated name/desc/category text only, keyed by the same ids.
 import { ACHIEVEMENTS_FR, ACHIEVEMENT_SERIES_FR } from './achievements.fr.js';
+import { ACHIEVEMENTS_ES, ACHIEVEMENT_SERIES_ES } from './achievements.es.js';
 
 /** @param {string} locale */
 export function getLocalizedAchievements(locale) {
-  const overlay = { fr: ACHIEVEMENTS_FR }[locale];
+  const overlay = { fr: ACHIEVEMENTS_FR, es: ACHIEVEMENTS_ES }[locale];
   if (!overlay) return ACHIEVEMENTS;
   const out = {};
   for (const [id, base] of Object.entries(ACHIEVEMENTS)) {
@@ -1254,7 +1255,7 @@ export function getLocalizedAchievements(locale) {
 
 /** @param {string} locale */
 export function getLocalizedAchievementSeries(locale) {
-  const overlay = { fr: ACHIEVEMENT_SERIES_FR }[locale];
+  const overlay = { fr: ACHIEVEMENT_SERIES_FR, es: ACHIEVEMENT_SERIES_ES }[locale];
   if (!overlay) return ACHIEVEMENT_SERIES;
   const out = {};
   for (const [id, base] of Object.entries(ACHIEVEMENT_SERIES)) {

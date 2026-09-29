@@ -16,16 +16,20 @@ import { TabErrorBoundary } from '../../shared/errors/ErrorBoundaries.jsx';
 import { t, formatNumber, getLocale } from '../../utils/i18n.js';
 import { getCurrencyIcon } from '../../shared/utils/elementVisuals.js';
 import { hideOnError } from '../../shared/utils/imageHelpers.js';
-
-const LOCALIZED_EVENT_ENTRIES = Object.entries(getLocalizedEvents(getLocale()));
+import { getEventRunId, readEventStatus, makeEventStatus } from './eventRuns.js';
 
 // Events are seeded ahead of their start (next version's runs), so one whose currentStart
 // hasn't come yet is left out of the tab and its counts until it begins.
-const hasEventStarted = (ev, server) => {
+const hasEventStarted = (ev, server, now) => {
   if (!ev.currentStart) return true;
   const startMs = new Date(getServerAdjustedEnd(ev.currentStart, server)).getTime();
-  return isNaN(startMs) || startMs <= Date.now();
+  return isNaN(startMs) || startMs <= now;
 };
+
+// How often the tab re-reads the event list while open, so a run that starts or ends (and an
+// event's move to its next scheduled run) shows without a reload. Also re-read on return to
+// the app.
+const EVENT_REFRESH_MS = 60000;
 
 function EventsTab({
   state,
@@ -38,16 +42,35 @@ function EventsTab({
   const refreshCooldownRef = useRef(0);
   const [refreshCooling, setRefreshCooling] = useState(false);
 
-  // P4-10 audit fix: prune stale eventStatus keys on mount.
-  // Banner rotations remove events from EVENTS but their 'done'/'skipped' status
-  // entries would otherwise accumulate in localStorage forever. Runs once per
-  // mount to clear any keys no longer in the current EVENTS map.
+  const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
-    const validKeys = new Set(LOCALIZED_EVENT_ENTRIES.map(([key]) => key));
-    const staleKeys = Object.keys(state.eventStatus || {}).filter(k => !validKeys.has(k));
-    staleKeys.forEach(key => dispatch({ type: 'SET_EVENT_STATUS', eventKey: key, status: null }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const refresh = () => setNow(Date.now());
+    const id = setInterval(refresh, EVENT_REFRESH_MS);
+    const onVisible = () => { if (document.visibilityState === 'visible') refresh(); };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => { clearInterval(id); document.removeEventListener('visibilitychange', onVisible); };
   }, []);
+  const entries = useMemo(() => Object.entries(getLocalizedEvents(getLocale(), now)), [now]);
+  const runIds = useMemo(
+    () => Object.fromEntries(entries.map(([key, ev]) => [key, getEventRunId(ev, state.server)])),
+    [entries, state.server]
+  );
+  const statusOf = useCallback((key) => readEventStatus(state.eventStatus[key], runIds[key]), [state.eventStatus, runIds]);
+
+  // P4-10 audit fix: prune stale eventStatus keys. Banner rotations remove events from EVENTS
+  // but their 'done'/'skipped' status entries would otherwise accumulate in localStorage
+  // forever. Also clears a status left from an event's previous run, and stamps a status saved
+  // before runs were tracked with the current run so it clears when that run ends.
+  useEffect(() => {
+    const byKey = Object.fromEntries(entries);
+    for (const [key, stored] of Object.entries(state.eventStatus || {})) {
+      if (!byKey[key]) { dispatch({ type: 'SET_EVENT_STATUS', eventKey: key, status: null }); continue; }
+      const runId = runIds[key];
+      if (runId == null) continue;
+      if (typeof stored === 'string') dispatch({ type: 'SET_EVENT_STATUS', eventKey: key, status: makeEventStatus(stored, runId) });
+      else if (stored && typeof stored === 'object' && 'status' in stored && stored.run !== runId) dispatch({ type: 'SET_EVENT_STATUS', eventKey: key, status: null });
+    }
+  }, [entries, runIds, state.eventStatus, dispatch]);
 
   // L1-FIX: Memoize event progress stats (was 60+ array iterations per render)
   const progressStats = useMemo(() => {
@@ -61,17 +84,17 @@ function EventsTab({
     const checkedDailyDays = (dailyStatus && dailyStatus.weekStart === weekStartKey && Array.isArray(dailyStatus.days))
       ? Math.min(7, dailyStatus.days.length) : 0;
 
-    const startedEntries = LOCALIZED_EVENT_ENTRIES.filter(([, ev]) => hasEventStarted(ev, state.server));
+    const startedEntries = entries.filter(([, ev]) => hasEventStarted(ev, state.server, now));
     // Weekly rewards: daily recurring (×7, the max across a full week) + weekly recurring sources
-    const totalAstrite = LOCALIZED_EVENT_ENTRIES.reduce((sum, [, ev]) => {
+    const totalAstrite = entries.reduce((sum, [, ev]) => {
       const val = parseInt(ev.rewards, 10) || 0;
       if (!val) return sum;
       if (ev.dailyReset) return sum + val * 7;
       if (ev.weeklyReset) return sum + val;
       return sum;
     }, 0);
-    const doneKeys = startedEntries.filter(([key]) => key !== 'dailyReset' && state.eventStatus[key] === 'done');
-    const skippedKeys = startedEntries.filter(([key]) => key !== 'dailyReset' && state.eventStatus[key] === 'skipped');
+    const doneKeys = startedEntries.filter(([key]) => key !== 'dailyReset' && statusOf(key) === 'done');
+    const skippedKeys = startedEntries.filter(([key]) => key !== 'dailyReset' && statusOf(key) === 'skipped');
     // BUG FIX 2026-09-11: this reduce was missing totalAstrite's own `ev.weeklyReset` guard,
     // so marking ANY event done — including one-off/limited-time events with no dailyReset/
     // weeklyReset flag at all (Tower of Adversity, Whimpering Wastes, Pioneer Podcast, Endstate
@@ -87,7 +110,7 @@ function EventsTab({
       const val = parseInt(ev.rewards, 10) || 0;
       if (!val || !ev.weeklyReset) return sum;
       return sum + val;
-    }, 0) + (parseInt(LOCALIZED_EVENT_ENTRIES.find(([k]) => k === 'dailyReset')?.[1]?.rewards, 10) || 0) * checkedDailyDays;
+    }, 0) + (parseInt(entries.find(([k]) => k === 'dailyReset')?.[1]?.rewards, 10) || 0) * checkedDailyDays;
     const skippedAstrite = skippedKeys.reduce((sum, [, ev]) => {
       const val = parseInt(ev.rewards, 10) || 0;
       if (!val || !ev.weeklyReset) return sum;
@@ -98,7 +121,7 @@ function EventsTab({
     const doneCount = doneKeys.length + (dailyFullyChecked ? 1 : 0);
     const pendingCount = startedEntries.length - doneCount - skippedKeys.length;
     return { totalAstrite, earnedAstrite, skippedAstrite, hasProgress, doneCount, skippedCount: skippedKeys.length, pendingCount, totalCount: startedEntries.length };
-  }, [state.eventStatus, state.server]);
+  }, [state.eventStatus, state.server, entries, now, statusOf]);
 
   // L1-FIX: Memoize active/expired event split
   const { active, expired, eventImageMap } = useMemo(() => {
@@ -112,8 +135,6 @@ function EventsTab({
       weeklyBoss: activeBanners.weeklyBossImage,
       dailyReset: activeBanners.dailyResetImage,
     };
-    const serverOffset = getServerOffset(state.server);
-    const now = Date.now() + serverOffset * 3600000;
     const isEventExpired = (ev) => {
       if (ev.dailyReset || ev.weeklyReset) return false;
       const isRecurring = ev.resetType && /^~?\d+\s*(days?|d|h|m)?$/i.test(ev.resetType.trim());
@@ -121,15 +142,15 @@ function EventsTab({
       if (!ev.currentEnd) return false;
       const end = getServerAdjustedEnd(ev.currentEnd, state.server);
       const endMs = new Date(end).getTime();
-      return !isNaN(endMs) && endMs <= Date.now();
+      return !isNaN(endMs) && endMs <= now;
     };
-    const started = LOCALIZED_EVENT_ENTRIES.filter(([, ev]) => hasEventStarted(ev, state.server));
+    const started = entries.filter(([, ev]) => hasEventStarted(ev, state.server, now));
     return {
       active: started.filter(([, ev]) => !isEventExpired(ev)),
       expired: started.filter(([, ev]) => isEventExpired(ev)),
       eventImageMap: imgMap,
     };
-  }, [activeBanners, state.server]);
+  }, [activeBanners, state.server, entries, now]);
 
   // L1-FIX: Stable renderCard callback (was recreated every render)
   const renderCard = useCallback(([key, ev], isExpired) => (
@@ -139,11 +160,11 @@ function EventsTab({
       server={state.server}
       bannerImage={eventImageMap[key] || ev.imageUrl}
       visualSettings={visualSettings}
-      status={state.eventStatus[key]}
+      status={statusOf(key)}
       isExpired={isExpired}
-      onStatusChange={(s) => dispatch({ type: 'SET_EVENT_STATUS', eventKey: key, status: s })}
+      onStatusChange={(s) => dispatch({ type: 'SET_EVENT_STATUS', eventKey: key, status: makeEventStatus(s, runIds[key]) })}
     />
-  ), [state.server, state.eventStatus, eventImageMap, visualSettings, dispatch]);
+  ), [state.server, statusOf, runIds, eventImageMap, visualSettings, dispatch]);
 
   return (
     <div role="tabpanel" id="tabpanel-events" aria-labelledby="tab-events" tabIndex="0">
@@ -214,7 +235,7 @@ function EventsTab({
       </Card>
 
       <div className="space-y-3 event-grid">
-        {LOCALIZED_EVENT_ENTRIES.length === 0 ? (
+        {entries.length === 0 ? (
           <div className="kuro-empty-state text-center py-8">
             <Calendar size={24} className="mx-auto mb-2 opacity-50" />
             {t('events.noEvents')}

@@ -90,6 +90,9 @@ const SUPPORT_HEALER_WEAPON_SHORT = { Broadblade: 'Broad.', Rectifier: 'Rect.', 
 const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, timerColor, collectionImages, setDetailModal, pity, calc }) => {
   const isChar = type === 'character';
   const style = BANNER_GRADIENT_MAP[item.element] || BANNER_GRADIENT_MAP.Fusion;
+  // Role/weapon/element tags: element colour at 50% for both fill and border (the card's own
+  // border keeps style.borderColor).
+  const tagStyle = { borderColor: `rgba(${style.glow},0.5)`, backgroundColor: `rgba(${style.glow},0.5)` };
   const imgUrl = item.imageUrl || bannerImage;
   const [spineFailed, setSpineFailed] = useState(false);
   const [conveneVideoPlaying, setConveneVideoPlaying] = useState(false);
@@ -209,7 +212,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
                 : role === 'Support/Healer' ? (getLocale() === 'fr' ? 'Sout./Soign.' : 'Sup./Heal.')
                 : (getLocale() === 'fr' && ROLE_FR[role]) || role;
               return (
-                <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={{ borderColor: style.borderColor, backgroundColor: style.bgColor }}>
+                <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={tagStyle}>
                   <img src={getRoleIcon(role)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />
                   {roleLabel}
                 </span>
@@ -224,7 +227,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
               // Direct user request: border color matches the element kuro-badge's own
               // borderColor (style.borderColor) instead of a generic white/10, so all three
               // tags in this row share the same border color, not just the same dimensions.
-              <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={{ borderColor: style.borderColor, backgroundColor: style.bgColor }}>
+              <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={tagStyle}>
                 <img src={getWeaponTypeIcon(item.weaponType)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />
                 {/* Only next to the Support/Healer tag (the one long role label) is the weapon type
                     shortened too, so that row clears the countdown (Chisa, Suisui). */}
@@ -237,7 +240,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
             )}
             {/* A character or weapon seeded before its data exists (an upcoming debut) has no
                 element/type yet — no empty tag for it. */}
-            {(isChar ? item.element : item.type) && <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={{ borderColor: style.borderColor, backgroundColor: style.bgColor }}>
+            {(isChar ? item.element : item.type) && <span className={`kuro-badge ${style.text} inline-flex items-center gap-1 min-h-6`} style={tagStyle}>
               {isChar && getElementIcon(item.element) && <img src={getElementIcon(item.element)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
               {!isChar && getWeaponTypeIcon(item.type) && <img src={getWeaponTypeIcon(item.type)} alt="" className="w-3.5 h-3.5" onError={hideOnError} />}
               {isChar ? item.element : ((getLocale() === 'fr' && WEAPON_TYPE_FR[item.type]) || item.type)}

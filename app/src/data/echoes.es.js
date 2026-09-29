@@ -6,8 +6,8 @@
 export const RANK_ES = { Calamity: 'Calamidad', Overlord: 'Señor supremo', Elite: 'Élite', Common: 'Común' };
 
 // Sonata set names and 2/3/5-piece effects. Keys are the English set names of ECHO_SETS. Game mechanic
-// proper nouns without a Spanish term (Tune Break/Rupture/Strain,
-// Off-Tune Rate, Hack - Shifting) stay in English, as in echoes.fr.js.
+// proper nouns without a Spanish term (Tune Rupture,
+// Hack - Shifting) stay in English, as in echoes.fr.js.
 /** @type {Record<string, { name: string, p2?: string, p3?: string, p5?: string }>} */
 export const ECHO_SETS_ES = {
   'Freezing Frost': { name: 'Escarcha helada', p2: '+10 % de daño Glacio', p5: 'Ataque básico/pesado → +10 % de daño Glacio (máx. x3)' },
@@ -32,17 +32,17 @@ export const ECHO_SETS_ES = {
   "Flamewing's Shadow": { name: 'Sombra de ala de fuego', p3: 'Habilidad de Eco → +20 % de tasa crítica de ataque pesado; ataque pesado → +20 % de tasa crítica de Eco; ambos → +16 % de daño Fusión' },
   'Thread of Severed Fate': { name: 'Hilo del destino cortado', p3: 'Ruina de destrucción → +20 % de ATQ, +30 % de daño de liberación durante 5 s' },
   'Dream of the Lost': { name: 'Sueño del más allá', p3: '0 de energía de resonancia → +20 % de tasa crítica, +35 % de daño de habilidad de Eco' },
-  'Pact of Neonlight Leap': { name: 'Pacto del salto de neón', p2: '+10 % de daño Espectro', p5: 'Outro → el siguiente obtiene +15 % de ATQ; por punto de Tune Break Boost +0,3 % de ATQ (máx. +15 %)' },
+  'Pact of Neonlight Leap': { name: 'Pacto del salto de neón', p2: '+10 % de daño Espectro', p5: 'Outro → el siguiente obtiene +15 % de ATQ; por punto de Bonificación de Ruptura de Tonalidad +0,3 % de ATQ (máx. +15 %)' },
   'Rite of Gilded Revelation': { name: 'Rito de la revelación dorada', p2: '+10 % de daño Espectro', p5: 'Ataque básico → +10 % de daño Espectro (máx. x3); con 3 acumulaciones + Liberación → +40 % de daño de ataque básico' },
-  'Halo of Starry Radiance': { name: 'Halo de radiancia estelar', p2: '+10 % de curación', p5: 'Curar → por cada 1 % de Off-Tune Rate, +0,2 % de ATQ para el equipo (máx. +25 %)' },
-  'Reel of Spliced Memories': { name: 'Carrete de recuerdos empalmados', p2: '+10 % de ATQ', p5: 'Tune Rupture - Shifting o Tune Strain - Shifting → Tune Break Boost del equipo +20 durante 30 s (los efectos del mismo nombre no se acumulan)' },
+  'Halo of Starry Radiance': { name: 'Halo de radiancia estelar', p2: '+10 % de curación', p5: 'Curar → por cada 1 % de Tasa de Desentono, +0,2 % de ATQ para el equipo (máx. +25 %)' },
+  'Reel of Spliced Memories': { name: 'Carrete de recuerdos empalmados', p2: '+10 % de ATQ', p5: 'Tune Rupture - Shifting o Interferencia de Tonalidad - Shifting → Bonificación de Ruptura de Tonalidad del equipo +20 durante 30 s (los efectos del mismo nombre no se acumulan)' },
   'Wishes of Quiet Snowfall': { name: 'Deseos de nevada silenciosa', p2: '+10 % de daño Glacio', p5: 'Rozadura gélida → +10 % de daño Glacio propio (15 s); Nevada (25 s de reutilización): daño de liberación → +25 % de tasa crítica (6 s, ampliable) o Outro → +25 % de daño Glacio para quien entra (15 s)' },
   'Trailblazing Star': { name: 'Estrella pionera', p2: '+10 % de daño Fusión', p5: 'Estallido de fusión/Tune Rupture → +20 % de tasa crítica, +20 % de daño Fusión durante 8 s' },
   'Chromatic Foam': { name: 'Espuma cromática', p2: '+10 % de daño Fusión', p5: 'Estallido de fusión → +10 % de daño Fusión durante 15 s; Outro → +25 % de daño Fusión para el siguiente durante 15 s' },
   'Sound of True Name': { name: 'Sonido del verdadero nombre', p2: '+10 % de daño Aero', p5: 'Daño de habilidad de Eco → +20 % de tasa crítica de Eco, +15 % de daño Aero durante 5 s' },
   'Shadow of Shattered Dreams': { name: 'Sombra de sueños rotos', p2: '1 pieza: Hack - Shifting → +35 % de daño de ataque básico y +35 % de daño de ataque pesado propios durante 15 s' },
   'Song of Feathered Trace': { name: 'Canto de la huella emplumada', p2: '+10 % de regeneración de energía', p5: 'Ruina de destrucción → tasa crítica propia +20 %, +35 % de daño de ataque pesado durante 15 s (Pluma de Xuanling); Rozadura gélida → ATQ del equipo +0,1 % por cada 1 % de regen. de energía, hasta +25 %, durante 10 s (Pluma de Chongming)' },
-  "Heart of Evil's Purge": { name: 'Corazón de la purga del mal', p2: '+10 % de daño Aero', p5: 'Tune Strain - Shifting → +20 % de daño crítico, +30 % de daño Aero durante 15 s' },
+  "Heart of Evil's Purge": { name: 'Corazón de la purga del mal', p2: '+10 % de daño Aero', p5: 'Interferencia de Tonalidad - Shifting → +20 % de daño crítico, +30 % de daño Aero durante 15 s' },
   'Lamp of Nether Road': { name: 'Lámpara del camino del inframundo', p2: '+10 % de PV', p5: 'Obtener un escudo → +5 % de tasa crítica durante 5 s (máx. x4, 0,5 s de reutilización); con el máximo de acumulaciones → +15 % de daño Fusión' },
 };
 
@@ -104,9 +104,9 @@ export const ECHO_DATA_ES = {
   "Spearback": { desc: "Una feroz bestia parecida a un oso cubierta de espinas de tacetita con forma de flecha. La habilidad invoca a Spearback para 5 ataques: los primeros 4 infligen un 29 % de daño Físico cada uno y el último un 51 % de daño Físico." },
   "Carapace": { desc: "Un constructo de élite que se camufla entre las ruinas de la ciudad. La habilidad se transforma en Carapace para un ataque giratorio (112 % de daño Aero) seguido de un tajo (168 % de daño Aero)." },
   "Roseshroom": { desc: "Una Discordia Tácita fúngica madura que canaliza energía oscura por su sombrero. La habilidad invoca a Roseshroom para disparar un láser que inflige un 57 % de daño Destrucción hasta 3 veces." },
-  "Violet-Feathered Heron": { desc: "Una garza de alas moradas que solo despliega sus alas durante las tormentas eléctricas. La habilidad adopta una Postura de parada; el contraataque inflige un 288 % de daño Electro. Si es atacada durante la parada, contraataca antes y recupera 5 de energía de Concerto." },
+  "Violet-Feathered Heron": { desc: "Una garza de alas moradas que solo despliega sus alas durante las tormentas eléctricas. La habilidad adopta una Postura de parada; el contraataque inflige un 288 % de daño Electro. Si es atacada durante la parada, contraataca antes y recupera 5 de energía de Concierto." },
   "Cyan-Feathered Heron": { desc: "Una garza de alas cian que habita en bosques y costas. La habilidad se transforma y carga contra los enemigos infligiendo un 236 % de daño Aero e interrumpiendo sus habilidades especiales al impactar." },
-  "Flautist": { desc: "Una Discordia Tácita humanoide que empuña el sonido como arma. La habilidad se transforma y emite continuamente láseres Electro que infligen un 53 % de daño Electro x10. Obtiene 1 de energía de Concerto por golpe." },
+  "Flautist": { desc: "Una Discordia Tácita humanoide que empuña el sonido como arma. La habilidad se transforma y emite continuamente láseres Electro que infligen un 53 % de daño Electro x10. Obtiene 1 de energía de Concierto por golpe." },
   "Hoochief": { desc: "Una gran Discordia Tácita primate que domina el viento. La habilidad se transforma en Hoochief Cyclone y golpea a los enemigos con un 268 % de daño Aero." },
   "Stonewall Bracer": { desc: "Un corpulento constructo con armadura de piedra. La habilidad se transforma y carga hacia delante con un 112 % de daño Físico, luego golpea con un 168 % de daño Físico y obtiene un escudo igual al 10 % de los PV máx. durante 7 s." },
   "Autopuppet Scout": { desc: "Una marioneta de combate abandonada que se esconde en las ruinas de la ciudad. La habilidad se transforma e inflige un 272 % de daño Glacio a los alrededores y genera hasta 3 Muros de hielo que bloquean a los enemigos." },
@@ -130,7 +130,7 @@ export const ECHO_DATA_ES = {
   "Kerasaur": { desc: "Un saurio con cuernos de las Mesetas Sanguis. La habilidad se transforma en Kerasaur para saltar y estrellarse con un 268,2 % de daño Aero; poco después, lanza de nuevo la habilidad de Eco para cargar contra el objetivo con otro 268,2 % de daño Aero. En la ranura principal otorga +12 % de daño Aero y +12 % de daño de liberación de resonancia." },
   "Hurriclaw": { desc: "Una bestia de garras que domina el viento. La habilidad se transforma en Hurriclaw para cargar hacia delante e infligir un 156,6 % de daño Aero al impactar más un barrido de 156,6 % de daño Aero. Mantén pulsado para seguir cargando, o usa de nuevo la habilidad de Eco durante la carga para barrer." },
   "Nightmare: Viridblaze Saurian": { desc: "Una variante pesadilla del saurio que escupe fuego. La habilidad lo invoca para escupir fuego de forma continua e infligir un 17,12 % de daño Fusión 10 veces." },
-  "Nightmare: Violet-Feathered Heron": { desc: "Una variante pesadilla de la garza de alas moradas. La habilidad adopta una Postura de parada; el contraataque inflige un 288 % de daño Electro. Si es atacada durante la parada, contraataca antes con un tajo de ala de rayo y recupera 5 de energía de Concerto." },
+  "Nightmare: Violet-Feathered Heron": { desc: "Una variante pesadilla de la garza de alas moradas. La habilidad adopta una Postura de parada; el contraataque inflige un 288 % de daño Electro. Si es atacada durante la parada, contraataca antes con un tajo de ala de rayo y recupera 5 de energía de Concierto." },
   "Nightmare: Cyan-Feathered Heron": { desc: "Una variante pesadilla de la garza de alas cian. La habilidad se transforma para cargar contra los enemigos e infligir un 236,8 % de daño Aero; esta habilidad de Eco interrumpe las habilidades especiales enemigas al impactar." },
   "Nightmare: Roseshroom": { desc: "Una variante pesadilla de la criatura fúngica oscura. La habilidad la invoca para disparar un láser que inflige un 57,07 % de daño Destrucción hasta 3 veces." },
   "Nightmare: Tambourinist": { desc: "Una variante pesadilla del que convierte el ritmo en arma sonora. La habilidad lo invoca para tocar Melodías de aniquilación; cualquier miembro del equipo que obtenga una Melodía inflige un 14,4 % adicional de daño Destrucción a su objetivo al impactar, hasta 10 veces durante 10 s." },

@@ -10718,12 +10718,13 @@ import { CHARACTER_DESC_FR, CHARACTER_TITLE_FR, CHAR_BUFF_NOTE_FR, CHARACTER_ROT
 
 /** @param {string} locale */
 export function getLocalizedCharacterData(locale) {
-  if (locale !== 'fr') return CHARACTER_DATA;
+  const overlay = { fr: { desc: CHARACTER_DESC_FR, title: CHARACTER_TITLE_FR } }[locale];
+  if (!overlay) return CHARACTER_DATA;
   const out = {};
   for (const [name, base] of Object.entries(CHARACTER_DATA)) {
-    const fr = CHARACTER_DESC_FR[name];
-    const title = CHARACTER_TITLE_FR[name];
-    out[name] = { ...base, ...(fr ? { desc: fr } : {}), ...(title ? { title } : {}) };
+    const desc = overlay.desc[name];
+    const title = overlay.title[name];
+    out[name] = { ...base, ...(desc ? { desc } : {}), ...(title ? { title } : {}) };
   }
   return out;
 }
@@ -10734,10 +10735,11 @@ export function getLocalizedCharacterData(locale) {
 // case-insensitive substring match against element names — translating it
 // would silently break elemental conditional buff application.
 export function getLocalizedCharBuffTable(locale) {
-  if (locale !== 'fr') return CHAR_BUFF_TABLE;
+  const notes = { fr: CHAR_BUFF_NOTE_FR }[locale];
+  if (!notes) return CHAR_BUFF_TABLE;
   const out = {};
   for (const [name, base] of Object.entries(CHAR_BUFF_TABLE)) {
-    const note = CHAR_BUFF_NOTE_FR[name];
+    const note = notes[name];
     out[name] = note ? { ...base, note } : base;
   }
   return out;
@@ -10746,11 +10748,11 @@ export function getLocalizedCharBuffTable(locale) {
 // CHAIN_NODE_NAMES: per-character S1-S6 Resonance Chain sequence-node titles,
 // display-only (rendered in CharacterDetailModal.jsx's Resonance Chain grid).
 export function getLocalizedChainNodeNames(locale) {
-  if (locale !== 'fr') return CHAIN_NODE_NAMES;
+  const names = { fr: CHAIN_NODE_NAMES_FR }[locale];
+  if (!names) return CHAIN_NODE_NAMES;
   const out = {};
   for (const [name, base] of Object.entries(CHAIN_NODE_NAMES)) {
-    const fr = CHAIN_NODE_NAMES_FR[name];
-    out[name] = fr || base;
+    out[name] = names[name] || base;
   }
   return out;
 }
@@ -10792,11 +10794,12 @@ export function findSkillMultiplierRow(charName, step) {
 // RotationGuideCard.jsx). `type`/`skill` are NOT touched: they're matched
 // against SKILL_MULTIPLIERS via substring lookup at render time.
 export function getLocalizedCharacterRotations(locale) {
-  if (locale !== 'fr') return CHARACTER_ROTATIONS;
+  const allNotes = { fr: CHARACTER_ROTATION_NOTE_FR }[locale];
+  if (!allNotes) return CHARACTER_ROTATIONS;
   const out = {};
   for (const [name, steps] of Object.entries(CHARACTER_ROTATIONS)) {
-    const notesFr = CHARACTER_ROTATION_NOTE_FR[name];
-    out[name] = notesFr ? steps.map((step, i) => (notesFr[i] ? { ...step, note: notesFr[i] } : step)) : steps;
+    const notes = allNotes[name];
+    out[name] = notes ? steps.map((step, i) => (notes[i] ? { ...step, note: notes[i] } : step)) : steps;
   }
   return out;
 }

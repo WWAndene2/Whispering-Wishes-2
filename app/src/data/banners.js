@@ -1737,10 +1737,11 @@ import { CURRENT_BANNER_TITLES_FR, EVENTS_FR } from './banners.fr.js';
 // standard banner arrays) is shared and returned as-is.
 export function getLocalizedCurrentBanners(locale) {
   const base = getCurrentBannerAuto();
-  if (locale !== 'fr') return base;
+  const titles = { fr: CURRENT_BANNER_TITLES_FR }[locale];
+  if (!titles) return base;
   const translateTitle = (entry) => ({
     ...entry,
-    ...(CURRENT_BANNER_TITLES_FR[entry.title] ? { title: CURRENT_BANNER_TITLES_FR[entry.title] } : {}),
+    ...(titles[entry.title] ? { title: titles[entry.title] } : {}),
   });
   return {
     ...base,

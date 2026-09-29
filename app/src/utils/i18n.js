@@ -11,7 +11,7 @@
 //        setAppLocale('fr')                    → updates `document.dir` + re-renders via hook
 //
 // Adding a new language:
-// 1. Create src/locale/xx.json with the same key shape as en.json
+// 1. Create src/locale/xx/*.json modules with the same key shape as locale/en
 // 2. Add the language to SUPPORTED_LOCALES below
 // 3. Missing keys fall back to English automatically
 //
@@ -67,6 +67,25 @@ import frApp2 from '../locale/fr/app2.json';
 import frAppShared from '../locale/fr/appShared.json';
 import frErrors from '../locale/fr/errors.json';
 import frPwa from '../locale/fr/pwa.json';
+import esTeams from '../locale/es/teams.json';
+import esAnalytics from '../locale/es/analytics.json';
+import esAppShared from '../locale/es/appShared.json';
+import esApp from '../locale/es/app.json';
+import esProfile from '../locale/es/profile.json';
+import esEvents from '../locale/es/events.json';
+import esAdmin from '../locale/es/admin.json';
+import esTabs from '../locale/es/tabs.json';
+import esTracker from '../locale/es/tracker.json';
+import esMap from '../locale/es/map.json';
+import esPity from '../locale/es/pity.json';
+import esModals from '../locale/es/modals.json';
+import esApp2 from '../locale/es/app2.json';
+import esPlanner from '../locale/es/planner.json';
+import esCommon from '../locale/es/common.json';
+import esPwa from '../locale/es/pwa.json';
+import esCalculator from '../locale/es/calculator.json';
+import esCollection from '../locale/es/collection.json';
+import esErrors from '../locale/es/errors.json';
 
 const en = {
   app: { ...enApp, ...enApp2, ...enAppShared },
@@ -108,18 +127,39 @@ const fr = {
   pwa: frPwa,
 };
 
+const es = {
+  app: { ...esApp, ...esApp2, ...esAppShared },
+  tabs: esTabs,
+  tracker: esTracker,
+  calculator: esCalculator,
+  planner: esPlanner,
+  common: esCommon,
+  pity: esPity,
+  events: esEvents,
+  analytics: esAnalytics,
+  teams: esTeams,
+  collection: esCollection,
+  map: esMap,
+  profile: esProfile,
+  modals: esModals,
+  admin: esAdmin,
+  errors: esErrors,
+  pwa: esPwa,
+};
+
 // RTL locale list (WCAG + Unicode BIDI). When setAppLocale switches to one of
 // these, we flip `document.dir` so CSS logical properties can reflow.
 const RTL_LOCALES = new Set(['ar', 'he', 'fa', 'ur', 'yi']);
 
 // Registry of available locales. Add new JSON files here as translations land.
-const SUPPORTED_LOCALES = { en, fr };
+const SUPPORTED_LOCALES = { en, fr, es };
 
 // BCP-47 locale → Intl uses this directly.
 // For single-tag locales like 'en' we let Intl pick the regional default.
 const LOCALE_OVERRIDES = {
   // Map bare language → preferred BCP-47 tag if we want a specific region.
   // Leave empty to accept browser default; populate when we have translations.
+  es: 'es-419', // neutral Latin-American Spanish for number/date formatting
 };
 
 const LOCALE_STORAGE_KEY = 'ww_locale';
@@ -136,7 +176,7 @@ function _readStoredLocale() {
 let currentLocale = _readStoredLocale();
 let strings = SUPPORTED_LOCALES[currentLocale] || en;
 if (typeof document !== 'undefined' && document.documentElement) {
-  document.documentElement.lang = currentLocale;
+  document.documentElement.lang = LOCALE_OVERRIDES[currentLocale] || currentLocale;
   document.documentElement.dir = RTL_LOCALES.has(currentLocale) ? 'rtl' : 'ltr';
 }
 
@@ -169,7 +209,7 @@ export const setAppLocale = (locale) => {
   currentLocale = locale;
   strings = SUPPORTED_LOCALES[locale];
   if (typeof document !== 'undefined' && document.documentElement) {
-    document.documentElement.lang = locale;
+    document.documentElement.lang = LOCALE_OVERRIDES[locale] || locale;
     document.documentElement.dir = RTL_LOCALES.has(locale) ? 'rtl' : 'ltr';
   }
   try {

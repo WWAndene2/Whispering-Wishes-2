@@ -1242,22 +1242,24 @@ import { ACHIEVEMENTS_FR, ACHIEVEMENT_SERIES_FR } from './achievements.fr.js';
 
 /** @param {string} locale */
 export function getLocalizedAchievements(locale) {
-  if (locale !== 'fr') return ACHIEVEMENTS;
+  const overlay = { fr: ACHIEVEMENTS_FR }[locale];
+  if (!overlay) return ACHIEVEMENTS;
   const out = {};
   for (const [id, base] of Object.entries(ACHIEVEMENTS)) {
-    const fr = ACHIEVEMENTS_FR[id];
-    out[id] = { ...base, ...(fr ? { name: fr.name, desc: fr.desc } : {}) };
+    const tr = overlay[id];
+    out[id] = { ...base, ...(tr ? { name: tr.name, desc: tr.desc } : {}) };
   }
   return out;
 }
 
 /** @param {string} locale */
 export function getLocalizedAchievementSeries(locale) {
-  if (locale !== 'fr') return ACHIEVEMENT_SERIES;
+  const overlay = { fr: ACHIEVEMENT_SERIES_FR }[locale];
+  if (!overlay) return ACHIEVEMENT_SERIES;
   const out = {};
   for (const [id, base] of Object.entries(ACHIEVEMENT_SERIES)) {
-    const fr = ACHIEVEMENT_SERIES_FR[id];
-    out[id] = { ...base, ...(fr ? { name: fr.name, category: fr.category } : {}) };
+    const tr = overlay[id];
+    out[id] = { ...base, ...(tr ? { name: tr.name, category: tr.category } : {}) };
   }
   return out;
 }

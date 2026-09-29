@@ -897,21 +897,23 @@ import { ECHO_SETS_FR, ECHO_DATA_FR, translateBuffFr } from './echoes.fr.js';
 
 /** @param {string} locale */
 export function getLocalizedEchoSets(locale) {
-  if (locale !== 'fr') return ECHO_SETS;
+  const overlay = { fr: ECHO_SETS_FR }[locale];
+  if (!overlay) return ECHO_SETS;
   const out = {};
   for (const [name, base] of Object.entries(ECHO_SETS)) {
-    out[name] = { ...base, ...(ECHO_SETS_FR[name] || {}) };
+    out[name] = { ...base, ...(overlay[name] || {}) };
   }
   return out;
 }
 
 /** @param {string} locale */
 export function getLocalizedEchoData(locale) {
-  if (locale !== 'fr') return ECHO_DATA;
+  const overlay = { fr: { data: ECHO_DATA_FR, translateBuff: translateBuffFr } }[locale];
+  if (!overlay) return ECHO_DATA;
   const out = {};
   for (const [name, base] of Object.entries(ECHO_DATA)) {
-    const fr = ECHO_DATA_FR[name];
-    out[name] = { ...base, buff: translateBuffFr(base.buff), ...(fr?.name ? { displayName: fr.name } : {}), ...(fr?.desc ? { desc: fr.desc } : {}) };
+    const tr = overlay.data[name];
+    out[name] = { ...base, buff: overlay.translateBuff(base.buff), ...(tr?.name ? { displayName: tr.name } : {}), ...(tr?.desc ? { desc: tr.desc } : {}) };
   }
   return out;
 }

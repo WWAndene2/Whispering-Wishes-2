@@ -653,11 +653,12 @@ import { WEAPON_DATA_FR } from './weapons.fr.js';
 
 /** @param {string} locale */
 export function getLocalizedWeaponData(locale) {
-  if (locale !== 'fr') return WEAPON_DATA;
+  const overlay = { fr: WEAPON_DATA_FR }[locale];
+  if (!overlay) return WEAPON_DATA;
   const out = {};
   for (const [name, base] of Object.entries(WEAPON_DATA)) {
-    const fr = WEAPON_DATA_FR[name];
-    out[name] = { ...base, ...(fr?.name ? { displayName: fr.name } : {}), ...(fr?.desc ? { desc: fr.desc } : {}), ...(fr?.passive ? { passive: fr.passive } : {}) };
+    const tr = overlay[name];
+    out[name] = { ...base, ...(tr?.name ? { displayName: tr.name } : {}), ...(tr?.desc ? { desc: tr.desc } : {}), ...(tr?.passive ? { passive: tr.passive } : {}) };
   }
   return out;
 }

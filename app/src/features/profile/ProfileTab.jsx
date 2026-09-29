@@ -129,7 +129,7 @@ function ProfileTab({
   } = useCloudStorage();
 
   // ── Tab-local state ──────────────────────────────────────────────────────
-  const appLocale = useAppLocale();
+  const appLocale = useAppLocale().split('-')[0]; // 'es-419' → 'es'
   const [showIdCard, setShowIdCard] = useState(false);
   const [showPicPicker, setShowPicPicker] = useState(false);
   const [idCardFormat, setIdCardFormat] = useState('landscape');
@@ -591,6 +591,15 @@ function ProfileTab({
                       className={`kuro-btn w-full text-sm ${appLocale === 'fr' ? 'active-gold' : ''}`}
                     >
                       {t('app.languageFrench')}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { haptic.light(); setAppLocale('es'); }}
+                      role="radio"
+                      aria-checked={appLocale === 'es'}
+                      className={`kuro-btn w-full text-sm ${appLocale === 'es' ? 'active-gold' : ''}`}
+                    >
+                      {t('app.languageSpanish')}
                     </button>
                   </div>
                 </div>

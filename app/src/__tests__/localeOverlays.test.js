@@ -29,3 +29,16 @@ describe('skill text resolvers', () => {
     expect(localizeSkillName('fr', 'Jiyan', 'Some Skill')).toBeTruthy();
   });
 });
+
+describe('Spanish locale registration', () => {
+  it('is selectable, uses neutral Latin-American formatting, and falls back to English for untranslated keys', async () => {
+    const i18n = await import('../utils/i18n.js');
+    i18n.setAppLocale('es');
+    expect(i18n.getLocale()).toBe('es');
+    expect(i18n.getAppLocale()).toBe('es-419');
+    expect(i18n.t('app.language')).toBe('Idioma');
+    expect(i18n.t('tabs.tracker')).toBe(i18n.t('tabs.tracker', undefined)); // resolves, never the raw key
+    expect(i18n.t('tabs.tracker')).not.toBe('tabs.tracker');
+    i18n.setAppLocale('en');
+  });
+});

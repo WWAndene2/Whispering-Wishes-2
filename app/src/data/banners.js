@@ -21,9 +21,13 @@ const PLACEHOLDER_IMAGE = './banners/_shared/cK3h3qFh-Abby-Card2.webp';
 // characters[].title is what BannerCard.jsx actually renders under the banner name.
 const CURRENT_BANNERS = {
   version: '3.6', phase: 2, // Game version (not app version)
-  // Sep 10, 10:00 CEST (UTC+2) = 08:00 UTC -> Sep 29, 10:00 CEST (UTC+2) = 08:00 UTC
+  // End corrected 2026-09-29 to 11:00 UTC (13:00 CEST): the in-game countdown read 4h10 at
+  // 06:50 UTC, where the old 08:00 UTC end showed 1h10. That matches the 2026-09-29 timeline
+  // snapshot's bar end (see BANNER_HISTORY's v3.7 comment for its px-to-UTC mapping), which
+  // also gives the corrected v3.6 event ends in EVENTS below; the "08:00 UTC boundary"
+  // convention those entries assumed does not hold.
   startDate: '2026-09-10T08:00:00Z',
-  endDate: '2026-09-29T08:00:00Z',
+  endDate: '2026-09-29T11:00:00Z',
   characterBannerImage: './banners/_shared/Banner_Jingran.webp',
   weaponBannerImage: './banners/history/v3-6-p2/S7m6cfPC-Thousandfold-Delivrance.jpg',
   eventBannerImage: PLACEHOLDER_IMAGE,
@@ -318,7 +322,7 @@ const EVENTS = {
     // Corrected 2026-08-25: hour aligned to the confirmed 08:00 UTC version-boundary convention
     // (was already the right day via the community timeline's pixel-geometry read, just the
     // wrong hour — see the giftsOfDriftingMist block above for the technique).
-    currentEnd: '2026-09-29T07:59:59Z',
+    currentEnd: '2026-09-29T02:59:59Z',
     // v3.7 run, from the 2026-09-29 community timeline snapshot (see BANNER_HISTORY's v3.7 comment).
     schedule: [{ currentStart: '2026-09-30T02:00:00Z', currentEnd: '2026-11-12T02:59:59Z' }],
     // Direct user request 2026-09-11: drop the free Public Channel track from the badge
@@ -349,7 +353,7 @@ const EVENTS = {
     // cycle display only. Corrected 2026-08-25: the community timeline's pixel geometry
     // (bar-div left/width vs. the day-marker grid) shows this arena's bar actually ends Sep 28,
     // one day before Pioneer Podcast/most other v3.6 events — not the same date as previously guessed.
-    currentEnd: '2026-09-28T07:59:59Z',
+    currentEnd: '2026-09-28T12:59:59Z',
     permanent: true,
     rewards: '120 Astrite',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-cyan-900/30',
@@ -366,7 +370,7 @@ const EVENTS = {
     // wrong — the timeline's own bar-div pixel geometry (left/width px vs. the day-marker grid,
     // 32px = 1 day) shows this actually spans the FULL v3.6 version, both phases, ending Sep 29.
     currentStart: '2026-08-20T08:00:00Z',
-    currentEnd: '2026-09-29T07:59:59Z',
+    currentEnd: '2026-09-29T12:59:59Z',
     introducedVersion: '3.2',
     // Direct user request 2026-09-11: badge shows the flat total only — the "(8x50 Astrite
     // plateaus)" breakdown is dropped from display text. `stages` keeps that detail for
@@ -437,7 +441,7 @@ const EVENTS = {
     color: 'yellow',
     currentStart: '2026-08-20T08:00:00Z',
     // pixel geometry: bar spans the full v3.6 version (both phases), not just phase 1 — ends Sep 29.
-    currentEnd: '2026-09-29T07:59:59Z',
+    currentEnd: '2026-09-29T02:59:59Z',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-yellow-900/30',
     accentColor: 'yellow',
     imageUrl: './banners/_shared/HTN1ZNWj-wuwa-gifts-of-drifting-mist.png', // real event cover art, sourced 2026-08-21 from a community timeline's event-cover-images API (the reference has no article for this event yet), uploaded to imgbb 2026-08-21
@@ -466,7 +470,7 @@ const EVENTS = {
     currentStart: '2026-08-22T08:00:00Z',
     // pixel geometry: runs almost the entire v3.6 version (through Sep 29), not just 5 days as the
     // previous text-scrape pass estimated.
-    currentEnd: '2026-09-29T07:59:59Z',
+    currentEnd: '2026-09-29T10:59:59Z',
     rewards: '1200 Astrite', // Direct user correction 2026-09-11 — one-time, not weekly/monthly (no dailyReset/weeklyReset flag)
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-red-900/30',
     accentColor: 'red',
@@ -512,7 +516,7 @@ const EVENTS = {
     // pixel geometry: starts at the phase-1/phase-2 boundary (Sep 10), not the Aug 20 launch —
     // this is a phase-2-only event, the opposite of what the earlier text-scrape guess assumed.
     currentStart: '2026-09-10T08:00:00Z',
-    currentEnd: '2026-09-29T07:59:59Z',
+    currentEnd: '2026-09-29T02:59:59Z',
     rewards: '600 Astrite', // Direct user correction 2026-09-11 — one-time, not weekly/monthly (no dailyReset/weeklyReset flag)
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-orange-900/30',
     accentColor: 'orange',
@@ -526,7 +530,7 @@ const EVENTS = {
     color: 'lime',
     // pixel geometry: starts Sep 17 (a week into phase 2), not at the Aug 20 launch.
     currentStart: '2026-09-17T08:00:00Z',
-    currentEnd: '2026-09-29T07:59:59Z',
+    currentEnd: '2026-09-29T02:59:59Z',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-lime-900/30',
     accentColor: 'lime',
     // Direct user-provided asset (2026-09-10): the event's own official cover card from
@@ -544,7 +548,7 @@ const EVENTS = {
     // pixel geometry: this does NOT start with the version either — a 7-day window right before
     // the version ends (Sep 22 -> Sep 29), not Aug 20 -> Sep 10 as previously modeled.
     currentStart: '2026-09-22T08:00:00Z',
-    currentEnd: '2026-09-29T07:59:59Z',
+    currentEnd: '2026-09-29T02:59:59Z',
     schedule: [{ currentStart: '2026-11-04T03:00:00Z', currentEnd: '2026-11-11T02:59:59Z' }], // v3.7, 2026-09-29 timeline snapshot
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-pink-900/30',
     accentColor: 'pink',

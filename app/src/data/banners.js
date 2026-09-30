@@ -372,9 +372,9 @@ const EVENTS = {
     // Corrected 2026-08-25: previous end (Sep 10, matching only the v3.6-p1 banner window) was
     // wrong — the timeline's own bar-div pixel geometry (left/width px vs. the day-marker grid,
     // 32px = 1 day) shows this actually spans the FULL v3.6 version, both phases, ending Sep 29.
-    // v3.7 run: the full version, same window as the version's other full-length events.
-    currentStart: '2026-09-30T03:00:00Z',
-    currentEnd: '2026-11-11T02:59:59Z',
+    // v3.7 run, Sep 30 04:00 - Nov 11 14:59 on the user-supplied event list (UTC+2 display).
+    currentStart: '2026-09-30T02:00:00Z',
+    currentEnd: '2026-11-11T12:59:59Z',
     introducedVersion: '3.2',
     // Direct user request 2026-09-11: badge shows the flat total only — the "(8x50 Astrite
     // plateaus)" breakdown is dropped from display text. `stages` keeps that detail for
@@ -394,8 +394,9 @@ const EVENTS = {
     // 28-day cycle, independent of version boundaries — confirmed still active on
     // the community timeline's v3.6 event bar 2026-08-20. Next cycle = prior cycle
     // (Jul 20 -> Aug 17) + 28 days.
-    currentStart: '2026-08-17T02:00:00Z',
-    currentEnd: '2026-09-14T01:59:00Z',
+    // Run of 2026-09-14 05:00 - 10-12 04:59 (user-supplied event list, UTC+2 display).
+    currentStart: '2026-09-14T03:00:00Z',
+    currentEnd: '2026-10-12T02:59:59Z',
     introducedVersion: '1.0', // Since launch
     rewards: '800 Astrite', // Direct user correction 2026-09-11 (was 700) — per event duration/reset
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-orange-900/30',
@@ -653,35 +654,41 @@ const EVENTS = {
   artisansSearch: {
     name: "Artisan's Search",
     subtitle: 'Featured Combat Event',
-    description: 'v3.7 limited-time combat event.',
+    description: 'Battle waves of enemies in a special Sonoro Sphere against the clock, with unique buffs. Deal damage to collect Coins, lose them when hit; clearing a wave grants bonus time.',
     resetType: 'Limited-time',
     color: 'red',
     currentStart: '2026-10-08T03:00:00Z',
     currentEnd: '2026-11-26T02:59:59Z',
+    rewards: '500 Astrite',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-red-900/30',
     accentColor: 'red',
+    imageUrl: './banners/_shared/Artisans-Search.webp',
   },
   wakingMoonFishing: {
     name: 'Waking Moon Fishing',
     subtitle: 'Web Event',
-    description: 'v3.7 limited-time web event.',
+    description: 'Challenge event stages and complete event tasks to earn Astrite, Shell Credits, Advanced Sealed Tubes and other rewards.',
     resetType: 'Limited-time',
     color: 'cyan',
     currentStart: '2026-10-15T09:00:00Z',
     currentEnd: '2026-11-01T08:59:59Z',
+    rewards: '100 Astrite',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-cyan-900/30',
     accentColor: 'cyan',
+    imageUrl: './banners/_shared/Waking-Moon-Fishing.webp',
   },
   echoErase: {
     name: 'Echo Erase',
     subtitle: 'Leisure Event',
-    description: 'v3.7 limited-time leisure event.',
+    description: 'A new stage opens each day, in Easy and Hard: clear Easy to unlock Hard, and complete each stage\'s goals for rewards.',
     resetType: 'Limited-time',
     color: 'purple',
     currentStart: '2026-10-22T09:00:00Z',
     currentEnd: '2026-11-09T02:59:59Z',
+    rewards: '400 Astrite',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-purple-900/30',
     accentColor: 'purple',
+    imageUrl: './banners/_shared/Echo-Erase.webp',
   },
   giftsOfSingingDrizzle: {
     name: 'Gifts of Singing Drizzle',
@@ -697,13 +704,15 @@ const EVENTS = {
   beyondTheWavesXuanfang: {
     name: 'Beyond the Waves: Land of Xuanfang',
     subtitle: 'Featured Exploration Event',
-    description: 'v3.7 limited-time exploration event.',
+    description: 'Complete event tasks once a day for Adventure Logs and exchange them for Adventure Packages; collect every delivery in an Inventory to unlock the next (3 in all).',
     resetType: 'Limited-time',
     color: 'lime',
     currentStart: '2026-10-29T03:00:00Z',
     currentEnd: '2026-11-11T02:59:59Z',
+    rewards: '400 Astrite',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-lime-900/30',
     accentColor: 'lime',
+    imageUrl: './banners/_shared/Beyond-The-Waves-Land-Of-Xuanfang.webp',
   },
 };
 

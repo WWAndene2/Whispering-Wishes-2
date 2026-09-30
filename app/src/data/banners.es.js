@@ -42,11 +42,11 @@ export const EVENTS_ES = {
   moonlitPath: { name: 'Sendero a la luz de la luna', subtitle: 'Evento destacado', description: 'Consigue Anillos lunares para alcanzar recompensas por hitos, incluido un Resonador a elección.' },
   bloomsForTheShadow: { name: 'Flores para la Sombra', subtitle: 'Evento de ocio permanente', description: 'Conoce a la Sombra del Zorro del Nexo que se alza sobre el Nexo del Simulacro de Mengzhou. Se desbloquea con la misión principal «Simulacro del Corazón».' },
   pastDreamsTracedSeals: { name: 'Sueños pasados, sellos trazados', subtitle: 'Evento de ocio permanente', description: 'Acompaña a Suoming a registrar los paisajes del Nexo del Simulacro de Mengzhou y los recuerdos largamente sellados del Pacto de los Diez Sellos.' },
-  artisansSearch: { name: 'La búsqueda del artesano', subtitle: 'Evento de combate destacado', description: 'Evento de combate por tiempo limitado de la v3.7.' },
-  wakingMoonFishing: { name: 'Pesca de la Luna Despierta', subtitle: 'Evento web', description: 'Evento web por tiempo limitado de la v3.7.' },
-  echoErase: { name: 'Borrado de Ecos', subtitle: 'Evento de ocio', description: 'Evento de ocio por tiempo limitado de la v3.7.' },
+  artisansSearch: { name: 'La búsqueda del artesano', subtitle: 'Evento de combate destacado', description: 'Combate oleadas de enemigos en una Esfera Sonora especial contra el reloj y con mejoras únicas. Inflige daño para reunir Monedas y piérdelas al recibirlo; superar una oleada da tiempo extra.' },
+  wakingMoonFishing: { name: 'Pesca de la Luna Despierta', subtitle: 'Evento web', description: 'Supera fases y completa tareas del evento para ganar Astrita, Créditos de concha, Tubos sellados avanzados y otras recompensas.' },
+  echoErase: { name: 'Borrado de Ecos', subtitle: 'Evento de ocio', description: 'Cada día se abre una fase nueva, en Fácil y Difícil: supera Fácil para desbloquear Difícil y cumple los objetivos de cada fase para obtener recompensas.' },
   giftsOfSingingDrizzle: { name: 'Regalos de la Llovizna Cantora', subtitle: 'Evento de inicio de sesión por tiempo limitado', description: 'Durante el evento, inicia sesión para reclamar las recompensas de inicio de sesión del día desde la página del evento.' },
-  beyondTheWavesXuanfang: { name: 'Más allá de las olas: Tierra de Xuanfang', subtitle: 'Evento de exploración destacado', description: 'Evento de exploración por tiempo limitado de la v3.7.' },
+  beyondTheWavesXuanfang: { name: 'Más allá de las olas: Tierra de Xuanfang', subtitle: 'Evento de exploración destacado', description: 'Completa tareas del evento una vez al día para obtener Diarios de aventura y cámbialos por Paquetes de aventura; reúne todas las entregas de un Inventario para desbloquear el siguiente (3 en total).' },
 };
 
 // Event reward wording (EventCard's reward badge), keyed by the English reward text fragment.

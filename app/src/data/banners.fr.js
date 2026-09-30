@@ -158,17 +158,17 @@ export const EVENTS_FR = {
   artisansSearch: {
     name: 'La Quête de l’Artisan',
     subtitle: 'Événement de combat',
-    description: 'Événement de combat à durée limitée de la v3.7.',
+    description: 'Affrontez des vagues d’ennemis dans une Sphère Sonore spéciale, contre la montre et avec des bonus uniques. Infligez des dégâts pour gagner des Pièces, perdez-en en étant touché ; chaque vague vaincue ajoute du temps.',
   },
   wakingMoonFishing: {
     name: 'Pêche de la Lune Éveillée',
     subtitle: 'Événement web',
-    description: 'Événement web à durée limitée de la v3.7.',
+    description: 'Relevez les niveaux et accomplissez les tâches de l’événement pour gagner de l’Astrite, des Crédits Coquillage, des Tubes scellés avancés et d’autres récompenses.',
   },
   echoErase: {
     name: 'Effacement d’Échos',
     subtitle: 'Événement de détente',
-    description: 'Événement de détente à durée limitée de la v3.7.',
+    description: 'Un nouveau niveau s’ouvre chaque jour, en Facile et Difficile : terminez le Facile pour débloquer le Difficile, et remplissez les objectifs de chaque niveau pour les récompenses.',
   },
   giftsOfSingingDrizzle: {
     name: 'Cadeaux de la Bruine Chantante',
@@ -178,6 +178,6 @@ export const EVENTS_FR = {
   beyondTheWavesXuanfang: {
     name: 'Au-delà des Vagues : Terre de Xuanfang',
     subtitle: 'Événement d’exploration',
-    description: 'Événement d’exploration à durée limitée de la v3.7.',
+    description: 'Accomplissez les tâches de l’événement une fois par jour pour obtenir des Journaux d’aventure et échangez-les contre des Colis d’aventure ; récupérez toutes les livraisons d’un Inventaire pour débloquer le suivant (3 au total).',
   },
 };

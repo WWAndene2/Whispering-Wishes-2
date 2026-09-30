@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { optimizeRoute, routeLength } from '../features/map/mapRoute.js';
+import { optimizeRoute, routeLength, teleportLegs } from '../features/map/mapRoute.js';
 
 const pts = (arr) => arr.map(([x, y], i) => ({ id: i, x, y }));
 
@@ -26,5 +26,17 @@ describe('optimizeRoute', () => {
   it('handles tiny inputs', () => {
     expect(optimizeRoute([])).toEqual([]);
     expect(optimizeRoute(pts([[1, 1]]))).toHaveLength(1);
+  });
+});
+
+describe('teleportLegs', () => {
+  const tps = [{ x: 1000, y: 0 }, { x: 0, y: 500 }];
+  it('warps a long leg to the teleporter nearest its destination', () => {
+    const legs = teleportLegs([{ x: 0, y: 0 }, { x: 1010, y: 0 }], tps, 128);
+    expect(legs).toEqual([tps[0]]);
+  });
+  it('walks when the warp would not save distance', () => {
+    expect(teleportLegs([{ x: 0, y: 0 }, { x: 100, y: 0 }], tps, 128)).toEqual([null]);
+    expect(teleportLegs([{ x: 0, y: 0 }, { x: 1010, y: 0 }], [], 128)).toEqual([null]);
   });
 });

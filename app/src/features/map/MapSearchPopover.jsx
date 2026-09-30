@@ -18,7 +18,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Search, X, ChevronLeft, ChevronRight, Maximize2, BookmarkPlus, Map as MapIcon, History, SearchX, Spline, Link2, Crosshair, CheckCheck, Camera } from 'lucide-react';
+import { Search, X, ChevronLeft, ChevronRight, Maximize2, BookmarkPlus, Map as MapIcon, History, SearchX, Spline, Link2, Crosshair, CheckCheck, Camera, Zap } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { searchMap, highlightRanges } from './mapSearch.js';
 import { getIconImageUrl } from './iconImageCache.js';
@@ -95,7 +95,9 @@ export function MapSearchPopover({
   onClearRouteStart,
   routeLinked,
   onToggleRouteLinked,
-  linkableCount,       // routes that linking would merge         // (key) => void
+  linkableCount,       // routes that linking would merge
+  routeTeleport,       // long legs start from the nearest teleporter
+  onToggleRouteTeleport,
   onRemoveTag,         // (key) => void
   onClearTags,
   recent,              // [key]
@@ -238,6 +240,16 @@ export function MapSearchPopover({
                 )}
               </div>
               <div className="map-search-route-note">{t('map.search.startFromCard')}</div>
+              <div className="map-search-style-row">
+                <button
+                  type="button"
+                  className={`kuro-btn kuro-btn-sm map-search-line ${routeTeleport ? 'active-gold' : ''}`}
+                  aria-pressed={routeTeleport}
+                  onClick={onToggleRouteTeleport}
+                >
+                  <Zap size={12} aria-hidden="true" /> {t('map.search.useTeleports')}
+                </button>
+              </div>
               {linkableCount > 1 && (
                 <div className="map-search-style-row">
                   <button

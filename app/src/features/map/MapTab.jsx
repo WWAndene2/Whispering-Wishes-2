@@ -25,7 +25,7 @@ import { ReferenceImageLayer } from './ReferenceImageLayer.jsx';
 import { IconKindPicker } from './IconKindPicker.jsx';
 import { MapSearchPopover } from './MapSearchPopover.jsx';
 import { buildSearchIndex, resolveFilterKey } from './mapSearch.js';
-import { optimizeRoute } from './mapRoute.js';
+import { optimizeRoute, teleportLegs } from './mapRoute.js';
 import { t } from '../../utils/i18n.js';
 import { haptic } from '../../utils/haptics.js';
 
@@ -61,6 +61,10 @@ const SEARCH_BREATH_MS = 2400;
 // Optimized-route lines (search selection and saved tags): the colours a tag can pick
 // (the first is the selection's own) and each line style's canvas dash pattern.
 const SEARCH_ROUTE_COLORS = ['#edaf18', '#22d3ee', '#f472b6', '#a3e635', '#fb923c', '#a78bfa', '#f87171', '#ffffff'];
+// Warp overhead, in map pixels, a teleport must beat before a route leg uses it
+// (teleporters sit a median ~124 px from their nearest neighbour).
+const TELEPORT_OVERHEAD_PX = 128;
+const TELEPORT_KINDS = new Set(['resonance-nexus', 'resonance-beacon']);
 const SEARCH_ROUTE_DASH = { solid: [], dashed: [12, 8], dotted: [2, 6], dashdot: [12, 6, 2, 6] };
 
 // Icon categories visible by default; every other category starts hidden the
@@ -227,6 +231,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   const [routeStartPicking, setRouteStartPicking] = useState(false);
   useEffect(() => { try { localStorage.setItem('ww-map-route-start', JSON.stringify(routeStart)); } catch {} }, [routeStart]);
   useEffect(() => { try { localStorage.setItem('ww-map-route-linked', routeLinked ? '1' : '0'); } catch {} }, [routeLinked]);
+  const [routeTeleport, setRouteTeleport] = useState(() => { try { return localStorage.getItem('ww-map-route-teleport') === '1'; } catch { return false; } });
+  useEffect(() => { try { localStorage.setItem('ww-map-route-teleport', routeTeleport ? '1' : '0'); } catch {} }, [routeTeleport]);
   // Saved searches, shown as tags under the search bar and applied to the map
   // while active (even with the panel closed). Persisted as result keys, so a
   // tag keeps following its icons when the map data is edited.
@@ -911,6 +917,10 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       ? { id: '__route-start', x: routeStart.x, y: routeStart.y, isStart: true } : null;
     // Returns the route through `pts`, prefixed with the chosen start when there is one.
     const order = (pts) => (start ? optimizeRoute([start, ...pts], 0) : optimizeRoute(pts));
+    // With teleports on, each route gets `warps`: per leg, the teleporter it warps to (or null).
+    const teleporters = routeTeleport
+      ? iconDrafts.filter(ic => TELEPORT_KINDS.has(ic.kind) && (ic.floor == null || ic.floor === viewFloor)) : [];
+    const withWarps = (r) => (routeTeleport ? { ...r, warps: teleportLegs(r.points, teleporters, TELEPORT_OVERHEAD_PX) } : r);
     if (routeLinked && groups.length > 1) {
       // One path through every group's icons; each leg is drawn in the style of the group its
       // destination belongs to (an icon in two groups keeps the first one's style).
@@ -920,12 +930,12 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       if (all.length + (start ? 1 : 0) < 2) return [];
       const points = order(all);
       const legs = points.slice(1).map(ic => ({ color: styleOf.get(ic.id).color, line: styleOf.get(ic.id).line }));
-      return [{ key: 'linked', color: groups[0].color, line: groups[0].line, points, legs, members: groups.map(g => g.key) }];
+      return [withWarps({ key: 'linked', color: groups[0].color, line: groups[0].line, points, legs, members: groups.map(g => g.key) })];
     }
     return groups
       .filter(g => g.pts.length + (start ? 1 : 0) >= 2)
-      .map(g => ({ key: g.key, color: g.color, line: g.line, points: order(g.pts) }));
-  }, [searchSelected, searchRouteOn, searchTags, searchIndex, iconDrafts, viewFloor, hideFound, foundIds, routeStart, routeLinked]);
+      .map(g => withWarps({ key: g.key, color: g.color, line: g.line, points: order(g.pts) }));
+  }, [searchSelected, searchRouteOn, searchTags, searchIndex, iconDrafts, viewFloor, hideFound, foundIds, routeStart, routeLinked, routeTeleport]);
   // The route the stepper walks: the selection's own, or the linked route when the selection is part of it.
   const selectionRoute = searchRoutes.find(r => r.key === 'selection' || (r.key === 'linked' && r.members.includes('selection'))) || null;
   const routeStopCount = (r) => r.points.filter(p => !p.isStart).length;
@@ -2456,8 +2466,21 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         ctx.lineJoin = 'round';
         ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
         ctx.shadowBlur = 4;
-        if (r.legs) {
-          for (let i = 1; i < pts.length; i++) strokeLeg(pts[i - 1], pts[i], r.legs[i - 1].color, r.legs[i - 1].line);
+        if (r.legs || r.warps) {
+          // A warped leg starts at its teleporter, marked with a ring, instead of the previous stop.
+          for (let i = 1; i < pts.length; i++) {
+            const style = r.legs ? r.legs[i - 1] : r;
+            const via = r.warps && r.warps[i - 1];
+            const from = via ? map.latLngToContainerPoint(map.unproject([via.x, via.y], NATIVE_ZOOM)) : pts[i - 1];
+            strokeLeg(from, pts[i], style.color, style.line);
+            if (via) {
+              ctx.setLineDash([]);
+              ctx.strokeStyle = style.color;
+              ctx.beginPath();
+              ctx.arc(from.x, from.y, 12, 0, Math.PI * 2);
+              ctx.stroke();
+            }
+          }
         } else {
           ctx.strokeStyle = r.color;
           ctx.lineCap = r.line === 'dotted' ? 'round' : 'butt';
@@ -5677,6 +5700,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                 onClearRouteStart={() => { setRouteStart(null); setRouteStartPicking(false); }}
                 routeLinked={routeLinked}
                 onToggleRouteLinked={() => setRouteLinked(v => !v)}
+                routeTeleport={routeTeleport}
+                onToggleRouteTeleport={() => setRouteTeleport(v => !v)}
                 linkableCount={(searchSelected && searchRouteOn ? 1 : 0) + searchTags.filter(tg => tg.active && tg.route).length}
                 routeColors={SEARCH_ROUTE_COLORS}
                 onRemoveTag={handleSearchRemoveTag}

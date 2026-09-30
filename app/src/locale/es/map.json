@@ -101,7 +101,8 @@
     "unlinkRoutes": "Separar las rutas",
     "startRun": "Empezar el recorrido",
     "nextStop": "Siguiente parada",
-    "foundNext": "Encontrado → siguiente"
+    "foundNext": "Encontrado → siguiente",
+    "useTeleports": "Usar teletransportes"
   },
   "card": {
     "markFound": "Marcar como encontrado",

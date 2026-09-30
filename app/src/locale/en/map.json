@@ -101,7 +101,8 @@
     "unlinkRoutes": "Unlink routes",
     "startRun": "Start the run",
     "nextStop": "Next stop",
-    "foundNext": "Found → next"
+    "foundNext": "Found → next",
+    "useTeleports": "Use teleports"
   },
   "card": {
     "markFound": "Mark as found",

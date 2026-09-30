@@ -83,3 +83,24 @@ export function optimizeRoute(points, startIndex = null) {
   const order = n <= 400 ? twoOpt(points, best, startIndex != null) : best;
   return order.map(i => points[i]);
 }
+
+/**
+ * For each leg of an ordered route, the teleporter to warp to instead of walking, or null.
+ * A leg a→b teleports when walking from the teleporter nearest b, plus `overhead` (the
+ * warp itself, in map pixels), is shorter than walking a→b.
+ */
+export function teleportLegs(points, teleporters, overhead) {
+  const legs = [];
+  for (let i = 1; i < points.length; i++) {
+    const a = points[i - 1];
+    const b = points[i];
+    let via = null;
+    let viaD = Infinity;
+    for (const t of teleporters) {
+      const d = dist(t, b);
+      if (d < viaD) { viaD = d; via = t; }
+    }
+    legs.push(via && viaD + overhead < dist(a, b) ? via : null);
+  }
+  return legs;
+}

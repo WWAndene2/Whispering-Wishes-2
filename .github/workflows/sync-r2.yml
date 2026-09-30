@@ -6,17 +6,12 @@ name: Sync assets to R2 (jsDelivr fallback)
 # JSDELIVR_ASSET_BASE) — a standby copy to switch to if jsDelivr ever throttles
 # or goes down, not the live source today. Nothing in the app actually points
 # at R2 yet; this workflow only keeps the bucket's contents in sync with
-# main so it's ready the moment someone flips the base URL over.
+# main so it's ready the moment someone flips the base URL over. Runs on every
+# push to main (aws s3 sync only uploads what differs, so a push that touches
+# none of these folders is a cheap no-op).
 on:
   push:
     branches: [main]
-    paths:
-      - 'app/public/convene-animations/**'
-      - 'app/public/portraits/**'
-      - 'app/public/spine/**'
-      - 'app/public/animated-bg/**'
-      - 'app/public/audio/**'
-      - '.github/workflows/sync-r2.yml'
   workflow_dispatch:
 
 # One run per workflow and branch: a second trigger for the same push (GitHub has

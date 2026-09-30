@@ -19,13 +19,13 @@ name: Purge jsDelivr cache
 # Fix: purge every changed map tile's jsDelivr URL immediately after it lands on
 # main, so every PoP is forced to refetch on next request instead of serving
 # whatever it happened to cache last. Limited to map tiles (user decision
-# 2026-09-30): the other CDN-routed directories are not purged on push.
+# 2026-09-30): the other CDN-routed directories are not purged on push, and
+# editing this workflow file alone does not start it either.
 on:
   push:
     branches: [main]
     paths:
       - 'app/public/map-tiles/**'
-      - '.github/workflows/purge-jsdelivr.yml'
   workflow_dispatch:
 
 # One run per commit: a second trigger for the same push (GitHub has delivered some

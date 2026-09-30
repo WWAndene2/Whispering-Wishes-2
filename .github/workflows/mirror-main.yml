@@ -1,9 +1,9 @@
 name: Mirror main to Whispering-Wishes-2
 
+# Disabled (user decision 2026-09-30): the mirror push never worked, so it no
+# longer runs on push to main. Kept as manual-only so it can be retried.
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 # One run at a time: a duplicate trigger queues behind the running push instead of
 # racing it to the mirror (two concurrent pushes made one of them fail).

@@ -1,15 +1,12 @@
 name: Build APK
 
-# Only ever builds from main — either automatically on a push that touches
-# the app, or manually via workflow_dispatch (the ref dropdown defaults to
+# Only ever builds from main — either automatically on every push to main,
+# or manually via workflow_dispatch (the ref dropdown defaults to
 # main; the guard below hard-stops the job if someone runs it from another
 # branch anyway, so main is enforced regardless of what's picked there).
 on:
   push:
     branches: [main]
-    paths:
-      - 'app/**'
-      - '.github/workflows/build-apk.yml'
   workflow_dispatch:
 
 permissions:

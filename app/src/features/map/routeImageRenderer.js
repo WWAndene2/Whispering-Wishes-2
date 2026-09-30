@@ -71,7 +71,7 @@ const panel = (ctx, x, y, w, h, r = RADIUS) => {
 const floorOf = (p) => p.floor ?? 0;
 const SUB_LABEL = 32;       // label strip at the top of a sub-map card
 const INSET_MIN = 128;      // narrowest inset, room for its name
-const INSET_EDGE = 8;
+const INSET_EDGE = 16;
 const INSET_RADIUS = 12;
 const INSET_MARGIN = 12;    // inset to panel edge / to another inset
 

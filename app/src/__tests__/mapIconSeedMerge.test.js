@@ -72,3 +72,27 @@ describe('loadIconDrafts', () => {
     for (const list of Object.values(ICON_SEED_ADDITIONS)) for (const id of list) expect(ids.has(id), id).toBe(true);
   });
 });
+
+describe('seed removals', () => {
+  const dup = { id: 'dup', kind: 'k', x: 5, y: 7 };
+  const keep = { id: 'keep', kind: 'k', x: 5, y: 7 };
+  it('removes a listed icon still at its seeded position', () => {
+    const { icons, removed } = mergeIconSeed([keep, dup], 1, [keep], {}, 2, {}, { 2: [['dup', 5, 7]] });
+    expect(removed).toBe(1);
+    expect(icons.map(i => i.id)).toEqual(['keep']);
+  });
+  it('keeps a listed icon the player moved', () => {
+    const { icons, removed } = mergeIconSeed([keep, { ...dup, x: 9 }], 1, [keep], {}, 2, {}, { 2: [['dup', 5, 7]] });
+    expect(removed).toBe(0);
+    expect(icons).toHaveLength(2);
+  });
+  it('no icon in the seed shares both its pixel and kind with another', () => {
+    const seen = new Set();
+    for (const ic of DEFAULT_ICON_DRAFTS) {
+      const key = `${ic.kind}|${ic.x}|${ic.y}|${ic.floor}`;
+      if (ic.id !== 'icon-mulnd1fy-3iz') expect(seen.has(key), ic.id).toBe(false);
+      seen.add(key);
+    }
+  });
+});
+

@@ -3,7 +3,7 @@
 // localStorage persistence for zone drafts, icon drafts and freehand paint strokes.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { DEFAULT_ZONE_DRAFTS, DEFAULT_PAINT_STROKES, DEFAULT_ICON_DRAFTS, ICON_SEED_ADDITIONS, ICON_SEED_CHANGES, ICON_SEED_VERSION } from '../../data/mapDefaults.js';
+import { DEFAULT_ZONE_DRAFTS, DEFAULT_PAINT_STROKES, DEFAULT_ICON_DRAFTS, ICON_SEED_ADDITIONS, ICON_SEED_CHANGES, ICON_SEED_REMOVALS, ICON_SEED_VERSION } from '../../data/mapDefaults.js';
 
 export const DRAFTS_KEY = 'ww-zone-drafts';
 export const PAINT_KEY = 'ww-paint-strokes';
@@ -40,15 +40,18 @@ export function savePaintStrokes(list) {
  * icons each newer version introduced (ICON_SEED_ADDITIONS) that the player
  * doesn't have, and applies each newer version's field changes
  * (ICON_SEED_CHANGES: [id, field, from, to]) only where the player's icon
- * still holds `from` — edits and deletions the player made are never undone.
+ * still holds `from`, and removes each newer version's ICON_SEED_REMOVALS
+ * ([id, x, y]) only where the player's icon is still at (x, y) — edits and
+ * deletions the player made are never undone.
  * A missing version means the player predates versioning (version 1).
- * Pure: returns { icons, added, changed }.
+ * Pure: returns { icons, added, changed, removed }.
  */
-export function mergeIconSeed(saved, fromVersion, seed = DEFAULT_ICON_DRAFTS, additions = ICON_SEED_ADDITIONS, toVersion = ICON_SEED_VERSION, changes = ICON_SEED_CHANGES) {
+export function mergeIconSeed(saved, fromVersion, seed = DEFAULT_ICON_DRAFTS, additions = ICON_SEED_ADDITIONS, toVersion = ICON_SEED_VERSION, changes = ICON_SEED_CHANGES, removals = ICON_SEED_REMOVALS) {
   const byId = new Map(seed.map(ic => [ic.id, ic]));
   let icons = saved;
   let added = 0;
   let changed = 0;
+  let removed = 0;
   for (let v = fromVersion + 1; v <= toVersion; v++) {
     const have = new Set(icons.map(ic => ic.id));
     const add = (additions[v] || []).filter(id => !have.has(id) && byId.has(id)).map(id => byId.get(id));
@@ -60,8 +63,14 @@ export function mergeIconSeed(saved, fromVersion, seed = DEFAULT_ICON_DRAFTS, ad
       icons[i] = { ...icons[i], [field]: to };
       changed++;
     }
+    for (const [id, x, y] of removals[v] || []) {
+      const i = icons.findIndex(ic => ic.id === id);
+      if (i === -1 || icons[i].x !== x || icons[i].y !== y) continue;
+      icons = icons.filter((_, j) => j !== i);
+      removed++;
+    }
   }
-  return { icons, added, changed };
+  return { icons, added, changed, removed };
 }
 
 /** Loads the icon drafts (seed for a new player), merging in newer seed icons. */
@@ -76,8 +85,8 @@ export function loadIconDrafts() {
     }
     const from = Number(localStorage.getItem(ICON_SEED_VERSION_KEY)) || 1;
     if (from >= ICON_SEED_VERSION) return parsed;
-    const { icons, added, changed } = mergeIconSeed(parsed, from);
-    if (added || changed) localStorage.setItem(ICON_DRAFTS_KEY, JSON.stringify(icons));
+    const { icons, added, changed, removed } = mergeIconSeed(parsed, from);
+    if (added || changed || removed) localStorage.setItem(ICON_DRAFTS_KEY, JSON.stringify(icons));
     localStorage.setItem(ICON_SEED_VERSION_KEY, String(ICON_SEED_VERSION));
     return icons;
   } catch { return DEFAULT_ICON_DRAFTS; }

@@ -93,7 +93,7 @@ function placeInsets(insets, main, landAt, stopsOut, anchorOut) {
         const inside = (q, m) => q.x > x - m && q.x < x + v.w + m && q.y > y - m && q.y < y + v.h + m;
         const overlaps = placed.some(o => x < o.x + o.w + INSET_MARGIN && o.x < x + v.w + INSET_MARGIN && y < o.y + o.h + INSET_MARGIN && o.y < y + v.h + INSET_MARGIN);
         const hidden = stopsOut.filter(q => inside(q, 16)).length + anchors.filter(q => inside(q, 8)).length;
-        const land = landAt(x, y, v.w, v.h);
+        const land = landAt(Math.max(0, x - INSET_MARGIN), Math.max(0, y - INSET_MARGIN), v.w + INSET_MARGIN * 2, v.h + INSET_MARGIN * 2);
         const d = Math.hypot(x + v.w / 2 - a.x, y + v.h / 2 - a.y) / Math.max(main.w, main.h);
         const score = (overlaps ? 1e6 : 0) + hidden * 1000 + land * 2000 + d * 100;
         if (!best || score < best.score) best = { x, y, score };
@@ -363,10 +363,16 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
       main.x = 0;
       main.y = 0;
       const scratch = document.createElement('canvas');
+      // The sea as drawn (through the tile filter), sampled from a 1 px swatch.
+      const swatch = document.createElement('canvas').getContext('2d');
+      swatch.filter = TILE_FILTER;
+      swatch.fillStyle = SEA;
+      swatch.fillRect(0, 0, 1, 1);
+      const seaPx = swatch.getImageData(0, 0, 1, 1).data;
       scratch.width = main.w;
       scratch.height = main.h;
       await drawGround(main, scratch.getContext('2d'));
-      // Land mask (bright pixels = land or sub-map), summed on a 4 px grid so any
+      // Land mask (any pixel not open sea: land, coast haze or sub-map), summed on a 4 px grid so any
       // rectangle's land share is four lookups.
       const G = 4;
       const gw = Math.ceil(main.w / G);
@@ -377,7 +383,7 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
         for (let gy = 0; gy < gh; gy++) {
           for (let gx = 0; gx < gw; gx++) {
             const i = ((gy * G) * main.w + gx * G) * 4;
-            const land = (px[i] + px[i + 1] + px[i + 2]) / 3 > 48 ? 1 : 0;
+            const land = Math.abs(px[i] - seaPx[0]) + Math.abs(px[i + 1] - seaPx[1]) + Math.abs(px[i + 2] - seaPx[2]) > 24 ? 1 : 0;
             sum[(gy + 1) * (gw + 1) + gx + 1] = land + sum[gy * (gw + 1) + gx + 1] + sum[(gy + 1) * (gw + 1) + gx] - sum[gy * (gw + 1) + gx];
           }
         }

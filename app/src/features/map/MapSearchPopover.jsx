@@ -13,10 +13,12 @@
 //   • empty query → recent searches + quick suggestions
 //   • optimized route through the selection's icons (toggle), and per saved tag a
 //     route on/off, a colour and a line style (solid, dashes, dots, dash-dot)
+//   • route options: where routes start (best start, a map tap, a pin/icon set from its
+//     card) and linking every shown route into one optimized path
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Search, X, ChevronLeft, ChevronRight, Maximize2, BookmarkPlus, Map as MapIcon, History, SearchX, Spline } from 'lucide-react';
+import { Search, X, ChevronLeft, ChevronRight, Maximize2, BookmarkPlus, Map as MapIcon, History, SearchX, Spline, Link2, Crosshair } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { searchMap, highlightRanges } from './mapSearch.js';
 import { getIconImageUrl } from './iconImageCache.js';
@@ -83,7 +85,15 @@ export function MapSearchPopover({
   routeOn,             // route line through the selection's icons
   onToggleRoute,
   routeStops,          // stops on the selection's route (current floor)
-  routeColors,         // colours a tag's route can use         // (key) => void
+  routeColors,         // colours a tag's route can use
+  routeActive,         // some route is (or can be) shown — reveals the route options
+  routeStart,          // { x, y, floor, label } | null
+  routeStartPicking,
+  onPickRouteStart,
+  onClearRouteStart,
+  routeLinked,
+  onToggleRouteLinked,
+  linkableCount,       // routes that linking would merge         // (key) => void
   onRemoveTag,         // (key) => void
   onClearTags,
   recent,              // [key]
@@ -204,6 +214,39 @@ export function MapSearchPopover({
               })}
               {tags.length > 1 && (
                 <button type="button" className="map-search-link" onClick={onClearTags}>{t('map.search.clearTags')}</button>
+              )}
+            </div>
+          )}
+
+          {/* ── Route options: start point and linking ── */}
+          {routeActive && (
+            <div className="map-search-style" role="group" aria-label={t('map.search.routeOptions')}>
+              <div className="map-search-style-row">
+                <span className="map-search-style-label">{t('map.search.routeStart')}</span>
+                <span className="map-search-route-note">
+                  {routeStart ? (routeStart.label || t('map.search.startPoint')) : t('map.search.startAuto')}
+                </span>
+              </div>
+              <div className="map-search-style-row">
+                <button type="button" className={`kuro-btn kuro-btn-sm map-search-line ${routeStartPicking ? 'active-gold' : ''}`} onClick={onPickRouteStart}>
+                  <Crosshair size={12} aria-hidden="true" /> {t('map.search.pickStart')}
+                </button>
+                {routeStart && (
+                  <button type="button" className="kuro-btn kuro-btn-sm map-search-line" onClick={onClearRouteStart}>{t('map.search.startAuto')}</button>
+                )}
+              </div>
+              <div className="map-search-route-note">{t('map.search.startFromCard')}</div>
+              {linkableCount > 1 && (
+                <div className="map-search-style-row">
+                  <button
+                    type="button"
+                    className={`kuro-btn kuro-btn-sm map-search-line ${routeLinked ? 'active-gold' : ''}`}
+                    aria-pressed={routeLinked}
+                    onClick={onToggleRouteLinked}
+                  >
+                    <Link2 size={12} aria-hidden="true" /> {routeLinked ? t('map.search.unlinkRoutes') : t('map.search.linkRoutes', { count: linkableCount })}
+                  </button>
+                </div>
               )}
             </div>
           )}

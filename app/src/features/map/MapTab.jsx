@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Settings, Trash2, LocateFixed, Map as MapIcon, Hexagon, Plus, Construction, X, ImagePlus, Search, ChevronDown, ChevronRight, MapPin, Share2 } from 'lucide-react';
+import { Settings, Trash2, LocateFixed, Map as MapIcon, Hexagon, Plus, Construction, X, ImagePlus, Search, ChevronDown, ChevronRight, MapPin, Share2, Spline } from 'lucide-react';
 import { Card, CardHeader } from '../../shared/components/Card.jsx';
 import { MAP_ZONES } from '../../data/mapZones.js';
 import { OVERLAY_CATALOG, loadOverlayDrafts, saveOverlayDrafts } from '../../data/mapOverlays.js';
@@ -217,6 +217,16 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   const [searchStep, setSearchStep] = useState(-1);
   // Optimized-route line through the selected result's icons (search panel toggle).
   const [searchRouteOn, setSearchRouteOn] = useState(false);
+  // Where every route starts: null (best start found), or a point the player chose — a map
+  // tap, a pin or an icon ({ x, y, floor, label }). Linked mode merges every shown route
+  // (selection + saved tags with their route on) into one optimized path.
+  const [routeStart, setRouteStart] = useState(() => {
+    try { const v = JSON.parse(localStorage.getItem('ww-map-route-start') || 'null'); return v && Number.isFinite(v.x) && Number.isFinite(v.y) ? v : null; } catch { return null; }
+  });
+  const [routeLinked, setRouteLinked] = useState(() => { try { return localStorage.getItem('ww-map-route-linked') === '1'; } catch { return false; } });
+  const [routeStartPicking, setRouteStartPicking] = useState(false);
+  useEffect(() => { try { localStorage.setItem('ww-map-route-start', JSON.stringify(routeStart)); } catch {} }, [routeStart]);
+  useEffect(() => { try { localStorage.setItem('ww-map-route-linked', routeLinked ? '1' : '0'); } catch {} }, [routeLinked]);
   // Saved searches, shown as tags under the search bar and applied to the map
   // while active (even with the panel closed). Persisted as result keys, so a
   // tag keeps following its icons when the map data is edited.
@@ -877,21 +887,42 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   // style. Only icons on the floor in view are routed; found icons are left out while
   // "hide found" is on.
   const searchRoutes = useMemo(() => {
-    const out = [];
-    const build = (key, ids, color, line) => {
+    // Each group: the icons one route covers and the style it is drawn in.
+    const groups = [];
+    const addGroup = (key, ids, color, line) => {
       const wanted = new Set(ids);
       const pts = iconDrafts.filter(ic => wanted.has(ic.id)
         && (ic.floor == null || ic.floor === viewFloor)
         && !(hideFound && foundIds.has(ic.id)));
-      if (pts.length >= 2) out.push({ key, color, line, points: optimizeRoute(pts) });
+      if (pts.length) groups.push({ key, color, line, pts });
     };
-    if (searchSelected && searchRouteOn) build('selection', searchSelected.iconIds, SEARCH_ROUTE_COLORS[0], 'solid');
+    if (searchSelected && searchRouteOn) addGroup('selection', searchSelected.iconIds, SEARCH_ROUTE_COLORS[0], 'solid');
     searchTags.forEach((tg, i) => {
-      if (tg.active && tg.route) build(tg.key, resolveFilterKey(searchIndex, tg.key), tg.color || SEARCH_ROUTE_COLORS[i % SEARCH_ROUTE_COLORS.length], tg.line || 'dashed');
+      if (tg.active && tg.route) addGroup(tg.key, resolveFilterKey(searchIndex, tg.key), tg.color || SEARCH_ROUTE_COLORS[i % SEARCH_ROUTE_COLORS.length], tg.line || 'dashed');
     });
-    return out;
-  }, [searchSelected, searchRouteOn, searchTags, searchIndex, iconDrafts, viewFloor, hideFound, foundIds]);
-  const selectionRoute = searchRoutes.find(r => r.key === 'selection') || null;
+    // The chosen start counts only on its own floor (null floor = every floor).
+    const start = routeStart && (routeStart.floor == null || routeStart.floor === viewFloor)
+      ? { id: '__route-start', x: routeStart.x, y: routeStart.y, isStart: true } : null;
+    // Returns the route through `pts`, prefixed with the chosen start when there is one.
+    const order = (pts) => (start ? optimizeRoute([start, ...pts], 0) : optimizeRoute(pts));
+    if (routeLinked && groups.length > 1) {
+      // One path through every group's icons; each leg is drawn in the style of the group its
+      // destination belongs to (an icon in two groups keeps the first one's style).
+      const styleOf = new Map();
+      groups.forEach(g => g.pts.forEach(ic => { if (!styleOf.has(ic.id)) styleOf.set(ic.id, g); }));
+      const all = [...new Map(groups.flatMap(g => g.pts.map(ic => [ic.id, ic]))).values()];
+      if (all.length + (start ? 1 : 0) < 2) return [];
+      const points = order(all);
+      const legs = points.slice(1).map(ic => ({ color: styleOf.get(ic.id).color, line: styleOf.get(ic.id).line }));
+      return [{ key: 'linked', color: groups[0].color, line: groups[0].line, points, legs, members: groups.map(g => g.key) }];
+    }
+    return groups
+      .filter(g => g.pts.length + (start ? 1 : 0) >= 2)
+      .map(g => ({ key: g.key, color: g.color, line: g.line, points: order(g.pts) }));
+  }, [searchSelected, searchRouteOn, searchTags, searchIndex, iconDrafts, viewFloor, hideFound, foundIds, routeStart, routeLinked]);
+  // The route the stepper walks: the selection's own, or the linked route when the selection is part of it.
+  const selectionRoute = searchRoutes.find(r => r.key === 'selection' || (r.key === 'linked' && r.members.includes('selection'))) || null;
+  const routeStopCount = (r) => r.points.filter(p => !p.isStart).length;
   // Order for stepping through results one by one (1, 2, 3…): the same order
   // icons appear in the Regions tree — zones in tree pre-order, each zone's
   // icons in their stored order; icons outside any tree zone come last.
@@ -912,8 +943,10 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     for (const icons of byZone.values()) out.push(...icons);
     // With the selection's route on, the stepper walks the route first, then the rest.
     if (selectionRoute) {
-      const onRoute = new Set(selectionRoute.points.map(ic => ic.id));
-      return [...selectionRoute.points, ...out.filter(ic => !onRoute.has(ic.id))];
+      const inSel = new Set(out.map(ic => ic.id));
+      const routed = selectionRoute.points.filter(ic => inSel.has(ic.id));
+      const onRoute = new Set(routed.map(ic => ic.id));
+      return [...routed, ...out.filter(ic => !onRoute.has(ic.id))];
     }
     return out;
   }, [searchSelected, searchFocusIds, iconDrafts, draftTree, selectionRoute]);
@@ -2380,26 +2413,41 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       // scale. Icons whose floor is set and doesn't match viewFloor
       // are hidden (icons with floor==null are "all floors"). Categories
       // toggled off in the Hexagon filter are skipped.
-      // ── Optimized search routes, under the icons they link.
+      // ── Optimized search routes, under the icons they link. A linked route draws each leg in
+      // the style of the saved search its destination belongs to.
+      const strokeLeg = (a, b, color, line) => {
+        ctx.strokeStyle = color;
+        ctx.lineCap = line === 'dotted' ? 'round' : 'butt';
+        ctx.setLineDash(SEARCH_ROUTE_DASH[line] || []);
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      };
       searchRoutes.forEach((r) => {
         const pts = r.points.map(ic => map.latLngToContainerPoint(map.unproject([ic.x, ic.y], NATIVE_ZOOM)));
         ctx.save();
-        ctx.strokeStyle = r.color;
         ctx.lineWidth = 3;
         ctx.lineJoin = 'round';
-        ctx.lineCap = r.line === 'dotted' ? 'round' : 'butt';
-        ctx.setLineDash(SEARCH_ROUTE_DASH[r.line] || []);
         ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
         ctx.shadowBlur = 4;
-        ctx.beginPath();
-        pts.forEach((pt, i) => (i ? ctx.lineTo(pt.x, pt.y) : ctx.moveTo(pt.x, pt.y)));
-        ctx.stroke();
-        // Start of the route: a filled dot under the first icon.
+        if (r.legs) {
+          for (let i = 1; i < pts.length; i++) strokeLeg(pts[i - 1], pts[i], r.legs[i - 1].color, r.legs[i - 1].line);
+        } else {
+          ctx.strokeStyle = r.color;
+          ctx.lineCap = r.line === 'dotted' ? 'round' : 'butt';
+          ctx.setLineDash(SEARCH_ROUTE_DASH[r.line] || []);
+          ctx.beginPath();
+          pts.forEach((pt, i) => (i ? ctx.lineTo(pt.x, pt.y) : ctx.moveTo(pt.x, pt.y)));
+          ctx.stroke();
+        }
+        // Start of the route: a filled dot, ringed white when it is the player's chosen start.
         ctx.setLineDash([]);
-        ctx.fillStyle = r.color;
+        ctx.fillStyle = r.legs ? r.legs[0].color : r.color;
         ctx.beginPath();
         ctx.arc(pts[0].x, pts[0].y, 6, 0, Math.PI * 2);
         ctx.fill();
+        if (r.points[0].isStart) { ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke(); }
         ctx.restore();
       });
 
@@ -3509,6 +3557,12 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     if (!map) return;
     const onClick = (e) => {
       if (Date.now() < suppressMapClickUntilRef.current) return;
+      if (routeStartPicking) {
+        const p = map.project(e.latlng, NATIVE_ZOOM);
+        setRouteStartPicking(false);
+        setRouteStart({ x: Math.round(p.x), y: Math.round(p.y), floor: viewFloor || null, label: '' });
+        return;
+      }
       if (pinPlacing) {
         const p = map.project(e.latlng, NATIVE_ZOOM);
         setPinPlacing(false);
@@ -3525,7 +3579,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     };
     map.on('click', onClick);
     return () => map.off('click', onClick);
-  }, [authorMode, mapReady, iconAtPoint, pinAtPoint, pinPlacing, viewFloor]);
+  }, [authorMode, mapReady, iconAtPoint, pinAtPoint, pinPlacing, viewFloor, routeStartPicking]);
   useEffect(() => { if (authorMode) { setIconCardId(null); setPinCardId(null); setPinPlacing(false); setPinEditor(null); } }, [authorMode]);
 
   // ── Long-press to delete (author mode) ────────────────────────────────
@@ -4505,6 +4559,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           padding: var(--space-sm, 8px);
           max-height: 60vh; overflow-y: auto;
         }
+        /* The body scrolls; its blocks keep their own height instead of being squashed to fit. */
+        .map-search-popover .map-search-body > * { flex-shrink: 0; }
         .map-search-bar {
           display: flex; align-items: center; gap: var(--space-xs, 4px);
           height: 32px;
@@ -5445,6 +5501,14 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
               </div>
             )}
 
+            {routeStartPicking && (
+              <div className="icon-undo-bar" role="status" style={{ top: `${headerHeight + 8}px` }} onClick={(e) => e.stopPropagation()}>
+                <Spline size={16} aria-hidden="true" />
+                <span>{t('map.search.pickStartHint')}</span>
+                <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => setRouteStartPicking(false)}>{t('map.pins.cancel')}</button>
+              </div>
+            )}
+
             {pinCardId && !pinEditor && (() => {
               const pin = pins.find(p => p.id === pinCardId);
               if (!pin) return null;
@@ -5455,6 +5519,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                     <div className="map-icon-card-name">{pin.note || t(`map.pins.marker.${pin.marker}`)}</div>
                     <div className="map-icon-card-facts">{activePreset ? activePreset.name : t('map.pins.title')}{pin.floor ? ` · ${t('map.card.floor', { floor: pin.floor })}` : ''}</div>
                   </div>
+                  <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => setRouteStart({ x: pin.x, y: pin.y, floor: pin.floor ?? null, label: pin.note || t(`map.pins.marker.${pin.marker}`) })} aria-label={t('map.search.startHere')} title={t('map.search.startHere')}><Spline size={14} /></button>
                   <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => sharePin(pin)} aria-label={t('map.share.sharePin')} title={t('map.share.sharePin')}><Share2 size={14} /></button>
                   {!activePreset && <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => setPinEditor({ ...pin })}>{t('map.pins.edit')}</button>}
                   <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => setPinCardId(null)} aria-label={t('map.search.close')}><X size={14} /></button>
@@ -5525,6 +5590,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                   <button type="button" className={`kuro-btn kuro-btn-sm ${found ? 'is-active' : ''}`} onClick={() => toggleFound(ic.id)} aria-pressed={found} disabled={!!activePreset}>
                     {found ? `✓ ${t('map.card.found')}` : t('map.card.markFound')}
                   </button>
+                  <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => setRouteStart({ x: ic.x, y: ic.y, floor: ic.floor ?? null, label: k?.name || '' })} aria-label={t('map.search.startHere')} title={t('map.search.startHere')}><Spline size={14} /></button>
                   <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={() => setIconCardId(null)} aria-label={t('map.search.close')}><X size={14} /></button>
                 </div>
               );
@@ -5575,7 +5641,15 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                 onUpdateTag={handleSearchUpdateTag}
                 routeOn={searchRouteOn}
                 onToggleRoute={() => { setSearchStep(-1); setSearchRouteOn(v => !v); }}
-                routeStops={selectionRoute ? selectionRoute.points.length : 0}
+                routeStops={selectionRoute ? routeStopCount(selectionRoute) : 0}
+                routeActive={searchRoutes.length > 0 || searchTags.some(tg => tg.active && tg.route) || searchRouteOn}
+                routeStart={routeStart}
+                routeStartPicking={routeStartPicking}
+                onPickRouteStart={() => { setRouteStartPicking(true); setSearchOpen(false); }}
+                onClearRouteStart={() => { setRouteStart(null); setRouteStartPicking(false); }}
+                routeLinked={routeLinked}
+                onToggleRouteLinked={() => setRouteLinked(v => !v)}
+                linkableCount={(searchSelected && searchRouteOn ? 1 : 0) + searchTags.filter(tg => tg.active && tg.route).length}
                 routeColors={SEARCH_ROUTE_COLORS}
                 onRemoveTag={handleSearchRemoveTag}
                 onClearTags={() => { setSearchStep(-1); setSearchTags([]); }}

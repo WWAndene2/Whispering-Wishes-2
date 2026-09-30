@@ -88,7 +88,17 @@
     "lineDotted": "Dots",
     "lineDashDot": "Dash-dot",
     "colorN": "Color {{n}}",
-    "styleDone": "Done"
+    "styleDone": "Done",
+    "routeOptions": "Route options",
+    "routeStart": "Routes start from",
+    "startAuto": "Best start",
+    "startPoint": "Point on the map",
+    "pickStart": "Tap on map",
+    "pickStartHint": "Tap the map where your routes should start",
+    "startHere": "Start routes here",
+    "startFromCard": "Or open a pin or an icon (e.g. a Nexus) and tap its route button.",
+    "linkRoutes": "Link {{count}} routes into one",
+    "unlinkRoutes": "Unlink routes"
   },
   "card": {
     "markFound": "Mark as found",

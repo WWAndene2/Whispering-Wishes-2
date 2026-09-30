@@ -88,7 +88,17 @@
     "lineDotted": "Points",
     "lineDashDot": "Tiret-point",
     "colorN": "Couleur {{n}}",
-    "styleDone": "OK"
+    "styleDone": "OK",
+    "routeOptions": "Options d'itinéraire",
+    "routeStart": "Départ des itinéraires",
+    "startAuto": "Meilleur départ",
+    "startPoint": "Point sur la carte",
+    "pickStart": "Toucher la carte",
+    "pickStartHint": "Touchez la carte à l'endroit où les itinéraires doivent commencer",
+    "startHere": "Commencer les itinéraires ici",
+    "startFromCard": "Ou ouvrez une épingle ou une icône (ex. un Nexus) et touchez son bouton d'itinéraire.",
+    "linkRoutes": "Relier {{count}} itinéraires en un seul",
+    "unlinkRoutes": "Séparer les itinéraires"
   },
   "card": {
     "markFound": "Marquer trouvé",

@@ -88,7 +88,17 @@
     "lineDotted": "Puntos",
     "lineDashDot": "Guion-punto",
     "colorN": "Color {{n}}",
-    "styleDone": "Listo"
+    "styleDone": "Listo",
+    "routeOptions": "Opciones de ruta",
+    "routeStart": "Las rutas empiezan en",
+    "startAuto": "Mejor inicio",
+    "startPoint": "Punto del mapa",
+    "pickStart": "Tocar el mapa",
+    "pickStartHint": "Toca el mapa donde deben empezar las rutas",
+    "startHere": "Empezar las rutas aquí",
+    "startFromCard": "O abre un pin o un icono (p. ej. un Nexo) y toca su botón de ruta.",
+    "linkRoutes": "Unir {{count}} rutas en una",
+    "unlinkRoutes": "Separar las rutas"
   },
   "card": {
     "markFound": "Marcar como encontrado",

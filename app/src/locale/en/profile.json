@@ -174,7 +174,7 @@
     "openSoundSettings": "Open Sound & Vibration Settings",
     "animationsAriaLabel": "Animations: {{current}} — click to switch to {{next}}",
     "animationsTitle": "Currently: {{current}}. Click to cycle.",
-    "backgrounds": "Thème",
+    "backgrounds": "Theme",
     "backgroundsDesc": "Set images for header, navigation, and background independently",
     "targetHeader": "Header",
     "targetNavigation": "Navigation",

@@ -30,7 +30,7 @@
     "all": "Tous",
     "completed": "Complétés",
     "notCompleted": "Non complétés",
-    "hiddenAll": "Tous (Caché : Tous)",
+    "hiddenAll": "Tous (cachés compris)",
     "hiddenOnly": "Cachés uniquement",
     "visibleOnly": "Visibles uniquement",
     "hiddenAchievement": "Trophée caché",

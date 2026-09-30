@@ -108,6 +108,7 @@ const BANNER_HISTORY = [
   // each bar's inline left/width px against its day grid (32px = 1 day, x=18 = Mon 2026-06-29
   // 00:00 Europe/Paris, time axis in real elapsed ms — the 28-day Tower/Whimpering Wastes cycles
   // only line up across the Oct 25 DST change that way). Snapshot times rounded to the hour.
+  // v3.7-p1's start is the end of the 2026-09-29 22:00–05:00 CEST maintenance (user-confirmed), 03:00 UTC.
   // startAt/endAt carry the exact switch times for getCurrentBannerAuto; startDate/endDate stay
   // date-only like every other entry (TrackerTab appends 'T12:00:00' to them).
   // v3.7-p2's third weapon: the snapshot repeats "Freeze Frame - Lucilla Weapon Banner" on
@@ -117,7 +118,7 @@ const BANNER_HISTORY = [
   // with no CHARACTER_DATA entry yet (Hsin is Main/Sub DPS; roles use CHARACTER_DATA's
   // 'Main DPS'/'Sub DPS' values, both shown as "DPS").
   { id: 'v3.7-p2', version: '3.7', phase: 2, characters: ['Suoming', 'Lucilla', 'Lynae'], weapons: ['Unspoken Rue', 'Freeze Frame', 'Spectrum Blaster'], startDate: '2026-10-22', endDate: '2026-11-11', startAt: '2026-10-22T09:00:00Z', endAt: '2026-11-11T11:00:00Z', bannerArt: './characters/suoming/Suoming_Banner.webp', characterInfo: { Suoming: { element: 'Electro', weapon: 'Sword', role: 'Main DPS' } }, titles: { Suoming: 'Nine Deaths, One Unbent Heart', Lucilla: 'Tomorrow in the Frame', Lynae: 'Undefined Spectrum' }, characterFeatured4Stars: ['Lumi', 'Danjin', 'Chixia'], weaponFeatured4Stars: ['Overture', 'Relativistic Jet', 'Amity Accord'], predicted: true },
-  { id: 'v3.7-p1', version: '3.7', phase: 1, characters: ['Hsin', 'Chisa', 'Iuno'], weapons: ['Blooming Jadehaven', 'Kumokiri', "Moongazer's Sigil"], startDate: '2026-09-30', endDate: '2026-10-22', startAt: '2026-09-30T02:00:00Z', endAt: '2026-10-22T09:00:00Z', bannerArt: './characters/hsin/Hsin_Banner.jpg', characterInfo: { Hsin: { element: 'Electro', weapon: 'Rectifier', role: 'Main DPS' } }, titles: { Hsin: 'As Full as Tonight, Forever', Chisa: 'Horizon of Danbreak', Iuno: "Across Time's Waxes and Wanes" }, characterFeatured4Stars: ['Buling', 'Taoqi', 'Youhu'], weaponFeatured4Stars: ['Fusion Accretion', 'Commando of Conviction', 'Dauntless Evernight'], predicted: true },
+  { id: 'v3.7-p1', version: '3.7', phase: 1, characters: ['Hsin', 'Chisa', 'Iuno'], weapons: ['Blooming Jadehaven', 'Kumokiri', "Moongazer's Sigil"], startDate: '2026-09-30', endDate: '2026-10-22', startAt: '2026-09-30T03:00:00Z', endAt: '2026-10-22T09:00:00Z', bannerArt: './characters/hsin/Hsin_Banner.jpg', characterInfo: { Hsin: { element: 'Electro', weapon: 'Rectifier', role: 'Main DPS' } }, titles: { Hsin: 'As Full as Tonight, Forever', Chisa: 'Horizon of Danbreak', Iuno: "Across Time's Waxes and Wanes" }, characterFeatured4Stars: ['Buling', 'Taoqi', 'Youhu'], weaponFeatured4Stars: ['Fusion Accretion', 'Commando of Conviction', 'Dauntless Evernight'], predicted: true },
   // Version 3.6 (upcoming — dates are the source's own estimate: "based on the Version Update's confirmed
   // release date, and the usual 21-day cycle for Version halves." Characters/weapons confirmed via
   // the source archive 453303 (Aug 10 2026 update), kit data not final until release.)
@@ -326,7 +327,7 @@ const EVENTS = {
     // wrong hour — see the giftsOfDriftingMist block above for the technique).
     currentEnd: '2026-09-29T02:59:59Z',
     // v3.7 run, from the 2026-09-29 community timeline snapshot (see BANNER_HISTORY's v3.7 comment).
-    schedule: [{ currentStart: '2026-09-30T02:00:00Z', currentEnd: '2026-11-12T02:59:59Z' }],
+    schedule: [{ currentStart: '2026-09-30T03:00:00Z', currentEnd: '2026-11-12T02:59:59Z' }],
     // Direct user request 2026-09-11: drop the free Public Channel track from the badge
     // entirely — only the Insider Channel reward is shown. `options` keeps the itemized
     // breakdown (not read by EventsTab's own astrite-total math — pioneerPodcast has no
@@ -565,7 +566,7 @@ const EVENTS = {
     description: "During the event, log in to claim the day's login rewards from the event page.",
     resetType: 'Limited-time',
     color: 'yellow',
-    currentStart: '2026-09-30T02:00:00Z',
+    currentStart: '2026-09-30T03:00:00Z',
     currentEnd: '2026-11-11T02:59:59Z',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-yellow-900/30',
     accentColor: 'yellow',
@@ -576,7 +577,7 @@ const EVENTS = {
     description: 'v3.7 limited-time web event.',
     resetType: 'Limited-time',
     color: 'cyan',
-    currentStart: '2026-09-30T02:00:00Z',
+    currentStart: '2026-09-30T03:00:00Z',
     currentEnd: '2026-11-11T22:59:59Z',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-cyan-900/30',
     accentColor: 'cyan',
@@ -587,7 +588,7 @@ const EVENTS = {
     description: 'v3.7 limited-time exploration event.',
     resetType: 'Limited-time',
     color: 'lime',
-    currentStart: '2026-09-30T02:00:00Z',
+    currentStart: '2026-09-30T03:00:00Z',
     currentEnd: '2026-11-11T02:59:59Z',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-lime-900/30',
     accentColor: 'lime',
@@ -598,7 +599,7 @@ const EVENTS = {
     description: 'v3.7 limited-time leisure event.',
     resetType: 'Limited-time',
     color: 'purple',
-    currentStart: '2026-09-30T02:00:00Z',
+    currentStart: '2026-09-30T03:00:00Z',
     currentEnd: '2026-11-12T02:59:59Z',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-purple-900/30',
     accentColor: 'purple',

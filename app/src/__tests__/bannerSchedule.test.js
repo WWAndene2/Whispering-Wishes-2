@@ -5,8 +5,8 @@ const at = (iso) => Date.parse(iso);
 
 describe('getCurrentBannerAuto', () => {
   it('switches to v3.7 phase 1 at its exact start time', () => {
-    expect(getCurrentBannerAuto(at('2026-09-30T01:59:00Z')).version).not.toBe('3.7');
-    const p1 = getCurrentBannerAuto(at('2026-09-30T02:00:00Z'));
+    expect(getCurrentBannerAuto(at('2026-09-30T02:59:00Z')).version).not.toBe('3.7');
+    const p1 = getCurrentBannerAuto(at('2026-09-30T03:00:00Z'));
     expect([p1.version, p1.phase]).toEqual(['3.7', 1]);
     expect(p1.characters.map(c => c.name)).toEqual(['Hsin', 'Chisa', 'Iuno']);
     expect(p1.characters.map(c => c.title)).toEqual(['As Full as Tonight, Forever', 'Horizon of Danbreak', "Across Time's Waxes and Wanes"]);
@@ -41,8 +41,8 @@ describe('resolveEventWindow', () => {
   it('is applied by getLocalizedEvents in both locales', () => {
     for (const locale of ['en', 'fr']) {
       const events = getLocalizedEvents(locale, at('2026-10-01T00:00:00Z'));
-      expect(events.pioneerPodcast.currentStart).toBe('2026-09-30T02:00:00Z');
-      expect(events.giftsOfWakingMoon.currentStart).toBe('2026-09-30T02:00:00Z');
+      expect(events.pioneerPodcast.currentStart).toBe('2026-09-30T03:00:00Z');
+      expect(events.giftsOfWakingMoon.currentStart).toBe('2026-09-30T03:00:00Z');
     }
   });
 });

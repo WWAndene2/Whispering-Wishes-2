@@ -26,6 +26,7 @@ const EVENT_COLORS = {
   tacticalHologram:     '#a3e635',  // lime
   pioneerPodcast:       '#fb923c',  // pumpkin (pity ring orange)
   illusiveRealm:        '#c4b5fd',  // lavender
+  dailyReset:           '#22c55e',  // green, same as the "Dailies" legend dot
 };
 const BANNER_COLOR = '#edaf18';  // gold
 const GAME_LAUNCH = new Date('2024-05-23'); // Wuthering Waves global launch date
@@ -36,6 +37,7 @@ const LEGEND_LABEL_KEYS = {
   banner: 'planner.calendar.bannerLegend', weeklyBoss: 'planner.calendar.legendWeeklyBoss', illusiveRealm: 'planner.calendar.legendIllusiveRealm',
   towerOfAdversity: 'planner.calendar.legendTowerOfAdversity', whimperingWastes: 'planner.calendar.legendWhimperingWastes',
   matrix: 'planner.calendar.legendMatrix', tacticalHologram: 'planner.calendar.legendTacticalHologram', pioneerPodcast: 'planner.calendar.legendPioneerPodcast',
+  dailyReset: 'planner.calendar.legendDailyReset',
 };
 const getLegendLabel = (group) => t(LEGEND_LABEL_KEYS[group] || group);
 
@@ -295,6 +297,7 @@ function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planDat
     const imageFor = (key, group) => {
       const own = EVENTS[group]?.imageUrl || EVENTS[key]?.imageUrl;
       if (own) return own;
+      if (key === 'dailyReset') return activeBanners?.dailyResetImage || null;
       if (key.startsWith('pp-')) return EVENTS.pioneerPodcast?.imageUrl || null;
       if (key.startsWith('dpm-')) return EVENTS.endstateMatrix?.imageUrl || null;
       if (key.startsWith('th-')) return EVENTS.tacticalHologram?.imageUrl || null;
@@ -315,6 +318,14 @@ function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planDat
         bars.push({ key, label, color, start: eStart, end: eEnd, astrite, ended, endLabel, startLabel, daysLeft, endDate: cEnd, image: imageFor(key, extra.legendGroup), ...extra });
       }
     };
+
+    // Daily Reset — one continuous bar across the month (it resets every day, so there is nothing to segment).
+    const dailyEv = EVENTS.dailyReset;
+    if (dailyEv) {
+      addBar('dailyReset', dailyEv.name, EVENT_COLORS.dailyReset, monthStart, monthEnd, parseInt(dailyEv.rewards, 10) || 0, {
+        legendGroup: 'dailyReset', description: `${dailyEv.subtitle} — ${dailyEv.description}`, startLabel: null, endLabel: null, daysLeft: null, endDate: null,
+      });
+    }
 
     // Weekly events — segmented bars (only after their introduction)
     const todayIdx = Math.floor((today - monthStart) / 86400000);

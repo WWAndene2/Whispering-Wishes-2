@@ -256,7 +256,8 @@
     "eventDescription": "{{name}} — {{desc}}. Rewards: {{rewards}}",
     "eventDescriptionCycle": "{{name}} — {{desc}}. {{resetType}} cycle. Rewards: {{rewards}}",
     "doubledPawnsMatrixLabel": "Doubled Pawns Matrix v{{version}}",
-    "tacticalHologramLabel": "Tactical Hologram: {{name}}"
+    "tacticalHologramLabel": "Tactical Hologram: {{name}}",
+    "legendDailyReset": "Daily Reset"
   },
   "perDayShort": "{{n}}/day"
 }

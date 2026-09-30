@@ -256,7 +256,8 @@
     "eventDescription": "{{name}} — {{desc}}. Recompensas: {{rewards}}",
     "eventDescriptionCycle": "{{name}} — {{desc}}. Ciclo de {{resetType}}. Recompensas: {{rewards}}",
     "doubledPawnsMatrixLabel": "Matriz de Peones Dobles v{{version}}",
-    "tacticalHologramLabel": "Holograma Táctico: {{name}}"
+    "tacticalHologramLabel": "Holograma Táctico: {{name}}",
+    "legendDailyReset": "Reinicio diario"
   },
   "perDayShort": "{{n}}/día"
 }

@@ -154,6 +154,8 @@ export const MATERIAL_NAME_FR = {
   'Past Reveries': 'Rêveries du Passé',
   'Redbell': 'Clochette Rouge',
   'Skyward Glazed Heart': 'Cœur Émaillé Céleste',
+  'Bloom of Hearkening': "Fleur de l'Écoute",
+  'Remnant of the Wheel': 'Vestige de la Roue',
   'We Who Question': 'Nous Qui Questionnons',
   "Loong's Pearl": 'Perle du Loong',
   "Sentinel's Dagger": 'Dague de la Sentinelle',

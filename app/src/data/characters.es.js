@@ -153,6 +153,7 @@ export const CHARACTER_TAG_ES = {
   "Spectro Frazzle": "Espectro estridente",
   "Frazzle": "Espectro estridente",
   "Electro Flare": "Llamarada eléctrica",
+  "Unison": "Unísono",
   "Havoc Bane": "Ruina de destrucción",
   "Tune Rupture Response": "Respuesta de Fractura de Tonalidad",
   "Tune Strain Response": "Respuesta de Interferencia de Tonalidad",
@@ -385,9 +386,11 @@ export const SKILL_NAME_ES = {
     "Resonance Skill - Pillars Aligned": "Habilidad de resonancia - Pilares alineados",
     "Beholding All Horizons": "Contemplar todos los horizontes",
     "Stilling All Horizons": "Aquietar todos los horizontes",
-    "Answering Form: Manifold Unison": "Forma Respuesta: Unísono múltiple",
-    "Illumining Form: Manifold Unison": "Forma Iluminación: Unísono múltiple",
+    "Intro Skill - Answering Form: Manifold Unison": "Habilidad Intro - Forma Respuesta: Unísono múltiple",
+    "Intro Skill - Illumining Form: Manifold Unison": "Habilidad Intro - Forma Iluminación: Unísono múltiple",
     "Herself a Thousand Lanterns": "Ella misma, mil faroles",
+    "Intro Skill - Answering Form": "Habilidad Intro - Forma Respuesta",
+    "Intro Skill - Illumining Form": "Habilidad Intro - Forma Iluminación",
   },
   "Suisui": {
     "Zephyr Stance Stage 1-4": "Postura Céfiro Fase 1-4",
@@ -2194,9 +2197,10 @@ export const SKILL_DESC_ES = {
     "Resonance Skill - Pillars Aligned": "Con 300 de Corazón iluminado; entra en Dominio de mecanismos (13 s). Se considera daño de habilidad de resonancia; 12 s de reutilización.",
     "Beholding All Horizons": "Ataque pesado con 0 de Corazón iluminado en Dominio de mecanismos; se considera daño de habilidad de resonancia.",
     "Stilling All Horizons": "Contemplar todos los horizontes potenciado (Ley del cielo, una vez cada 24 s); se considera daño de habilidad de resonancia.",
-    "Answering Form: Manifold Unison": "Modo Unísono; se considera daño de habilidad de resonancia.",
-    "Illumining Form: Manifold Unison": "Modo Unísono; se considera daño de habilidad de resonancia.",
+    "Intro Skill - Answering Form: Manifold Unison": "Modo Unísono; se considera daño de habilidad de resonancia.",
+    "Intro Skill - Illumining Form: Manifold Unison": "Modo Unísono; se considera daño de habilidad de resonancia.",
     "Herself a Thousand Lanterns": "Modo Llamarada eléctrica: el daño Electro del equipo se amplifica un 20 % (20 s). Modo Unísono: los aliados de Unísono obtienen un 20 % de amplificación de todo el daño (30 s).",
+    "Intro Skill - Answering Form": "Otorga 60 de Corazón de respuesta.",
   },
   "Suisui": {
     "Zephyr Stance Stage 1-4": "Combo de Céfiro (postura curativa); acumula Aliento de nube.",
@@ -2870,8 +2874,8 @@ export const SKILL_DESC_ES = {
 export const MULT_DESC_ES = {
   "Hsin": {
     "Formshift": "Sin daño directo: entra en Forma Iluminación y Manifestación del corazón, otorga 21 acumulaciones de Edicto (45 s)",
-    "Answering Form": "7.88 %×2+7.88 %×2+126.02 % (Llamarada eléctrica) / 10.28 %+20.55 %+10.28 %+20.55 %×3 (Unísono)",
-    "Illumining Form": "11.42 %×4+11.42 %×2+39.97 %×4 (Llamarada eléctrica) / 56.59 %×4+5.66 %+11.32 %×2+14.15 %×2 (Unísono)",
+    "Intro Skill - Answering Form": "7.88 %×2+7.88 %×2+126.02 % (Llamarada eléctrica) / 10.28 %+20.55 %+10.28 %+20.55 %×3 (Unísono)",
+    "Intro Skill - Illumining Form": "11.42 %×4+11.42 %×2+39.97 %×4 (Llamarada eléctrica) / 56.59 %×4+5.66 %+11.32 %×2+14.15 %×2 (Unísono)",
     "Herself a Thousand Lanterns": "100 % de ATQ + amplificación de daño del equipo",
   },
   "Suisui": {

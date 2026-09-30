@@ -699,3 +699,33 @@ Outro
 22,562
 Echo
 33,951
+
+---
+
+## Game data (nanoka.cc / encore.moe snapshots, user-supplied 30/September/2026)
+
+Sources: `ww.nanoka.cc/character/1311` and `ww.nanoka.cc/weapon/21050116` (.mht snapshots),
+`encore.moe/echo/6000225` (.mht snapshot), and encore.moe's API for monsters 340000330/331/332.
+
+### Hsin (character 1311, in-game codename Xin)
+- Base HP 10 300, Base ATK 463, Base DEF 1 112 (Lv.90).
+- Affiliation (game data): Mengzhou City Hall. Birthday and birthplace: Unknown.
+- Combat Roles: Main Damage Dealer, Resonance Skill DMG, Coordinated Attack, Electro Flare, Unison.
+- Voice cast: CN Ju Huahua, JP Noto Mamiko, EN Suzie Yeung, KR So Yeon.
+- Ascension Lv.1 -> 90: Shell Credit x170 000, LF/MF/HF/FF Autopuppet Kernel x4/x12/x4 (+ higher tiers),
+  Solidarity's Loneflame x46, Bloom of Hearkening x60.
+- Skill materials (all Forte): Shell Credit x2 030 000, Autopuppet Kernel family, Remnant of the Wheel x26,
+  String family (Spliced/Broken/Solidified/Melodic String).
+- Minor Fortes: Crit. Rate +1.20% / +2.80%, ATK +1.80% / +4.20% (totals +8% Crit Rate, +12% ATK).
+
+### Blooming Jadehaven (weapon 21050116)
+- Lv.90: ATK 588, Crit. Rate 24.3%. Passive "Hundredfold Artifice".
+- Ascension: Shell Credit x330 000, LF/MF/HF/FF Exoswarm Core, String family.
+
+### Reminiscence: Suhsin the Inevitable (echo 6000225, monster 340000332)
+- Echo Skill: 4 x 27.36% + 1 x 164.16% Electro DMG; equipped by Hsin, 5 x 8.20% + 1 x 232.56% in a larger
+  area. Main slot: +10% Electro DMG, +10% more for 30s after Electro Flare / Unison / Unison Response. CD 20s.
+- Monster: Calamity Class, Electro. Base HP 3500 / ATK 40 / DEF 800 (x GrowthRates/10000 per level;
+  Lv.90: 1 636 035 / 1 340 / 1 512). Base RES 10% for every element; its description states a higher
+  Electro RES. Paradox: each stack (from nearby Unison Response, max 2) makes it take 15% more total DMG;
+  at 2 stacks its RES to all Attributes becomes 0.

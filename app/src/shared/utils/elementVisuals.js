@@ -247,6 +247,7 @@ const COMBAT_ROLE_ICONS = {
   'Echo Skill DMG Amplification':          './ui-icons/i.ibb.co-ccGBSck3-Role-Echo-Skill-DMGAmplification.webp',
   'Glacio Chafe':                          './ui-icons/i.ibb.co-CK3CZrT8-Role-Glacio-Chafe-Role.webp',
   'Electro Flare':                         './ui-icons/i.ibb.co-wFQpCbgN-Role-Electro-Flare-Role.webp',
+  'Unison':                                './ui-icons/Role-Unison.webp', // game RoleLabel SP_RoleLabelI8, via encore.moe
   'Fusion Burst':                          './ui-icons/i.ibb.co-YFnMtBws-Role-Fusion-Burst-Role.webp',
   'Havoc Bane':                            './ui-icons/i.ibb.co-kV0kLwbb-Role-Havoc-Bane-Role.webp',
   'Tune Rupture Response':                 './ui-icons/i.ibb.co-5X8kGT3f-Role-Tune-Rupture-Response.webp',

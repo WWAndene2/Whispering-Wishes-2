@@ -933,9 +933,11 @@ export const SKILL_NAME_FR = {
     'Resonance Skill - Pillars Aligned': 'Compétence de Résonance - Piliers Alignés',
     'Beholding All Horizons': 'Contempler Tous les Horizons',
     'Stilling All Horizons': 'Apaiser Tous les Horizons',
-    'Answering Form: Manifold Unison': 'Forme Réponse : Unisson Multiple',
-    'Illumining Form: Manifold Unison': 'Forme Illumination : Unisson Multiple',
+    'Intro Skill - Answering Form: Manifold Unison': 'Compétence d\'Intro - Forme Réponse : Unisson Multiple',
+    'Intro Skill - Illumining Form: Manifold Unison': 'Compétence d\'Intro - Forme Illumination : Unisson Multiple',
     'Herself a Thousand Lanterns': 'Elle-même, Mille Lanternes',
+    'Intro Skill - Answering Form': 'Compétence d\'Intro - Forme Réponse',
+    'Intro Skill - Illumining Form': 'Compétence d\'Intro - Forme Illumination',
   },
   'Suisui': {
     'Zephyr Stance Stage 1-4': 'Posture du Zéphyr Étape 1-4',
@@ -1958,6 +1960,7 @@ export const CHARACTER_TAG_FR = {
   // Confirmed by the user against the game's actual French client — was 'Électromagnétique'
   // (adjective form); the real term is the noun 'Électromagnétisme'.
   'Electro Flare': 'Électromagnétisme',
+  'Unison': 'Unisson',
   'Fusion DMG Amplification': 'Amplification DGT Fusion',
   'Fusion Burst': 'Explosion Fusion',
   'Glacio DMG Amplification': 'Amplification DGT Glacio',
@@ -2248,8 +2251,8 @@ export function applyGenericDescPhrases(desc) {
 export const MULT_DESC_FR = {
   'Hsin': {
     'Formshift': 'Aucun DGT direct — entre en Forme Illumination et Manifestation du Cœur, confère 21 cumuls d\'Édit (45 s)',
-    'Answering Form': '7,88 %×2+7,88 %×2+126,02 % (Électromagnétisme) / 10,28 %+20,55 %+10,28 %+20,55 %×3 (Unisson)',
-    'Illumining Form': '11,42 %×4+11,42 %×2+39,97 %×4 (Électromagnétisme) / 56,59 %×4+5,66 %+11,32 %×2+14,15 %×2 (Unisson)',
+    'Intro Skill - Answering Form': '7,88 %×2+7,88 %×2+126,02 % (Électromagnétisme) / 10,28 %+20,55 %+10,28 %+20,55 %×3 (Unisson)',
+    'Intro Skill - Illumining Form': '11,42 %×4+11,42 %×2+39,97 %×4 (Électromagnétisme) / 56,59 %×4+5,66 %+11,32 %×2+14,15 %×2 (Unisson)',
     'Herself a Thousand Lanterns': '100 % ATQ + Amplification des DGT de l\'équipe',
   },
   'Lucy': {
@@ -2482,9 +2485,10 @@ export const SKILL_DESC_FR = {
     'Resonance Skill - Pillars Aligned': 'À 300 Cœur Illuminé ; entre en Domination Mécanique (13 s). Considérée comme DGT de Compétence de Résonance ; 12 s de recharge.',
     'Beholding All Horizons': 'Attaque Lourde à 0 Cœur Illuminé en Domination Mécanique ; considérée comme DGT de Compétence de Résonance.',
     'Stilling All Horizons': 'Contempler Tous les Horizons renforcé (Loi du Ciel, une fois toutes les 24 s) ; considéré comme DGT de Compétence de Résonance.',
-    'Answering Form: Manifold Unison': 'Mode Unisson ; considéré comme DGT de Compétence de Résonance.',
-    'Illumining Form: Manifold Unison': 'Mode Unisson ; considéré comme DGT de Compétence de Résonance.',
+    'Intro Skill - Answering Form: Manifold Unison': 'Mode Unisson ; considéré comme DGT de Compétence de Résonance.',
+    'Intro Skill - Illumining Form: Manifold Unison': 'Mode Unisson ; considéré comme DGT de Compétence de Résonance.',
     'Herself a Thousand Lanterns': 'Mode Électromagnétisme : DGT Electro de l\'équipe amplifiés de 20 % (20 s). Mode Unisson : les alliés d\'Unisson gagnent 20 % d\'Amplification de tous les DGT (30 s).',
+    'Intro Skill - Answering Form': 'Confère 60 Cœur de Réponse.',
   },
   'Lucy': {
     'Locked Thread Stage 2-4': 'Accumule le dernier TCP vers 100.',

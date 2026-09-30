@@ -1846,12 +1846,15 @@ const CHARACTER_DATA = {
   // v3.7 — Hsin. Kit, build, teams and rotation from the prydwen.gg build-guide snapshot the user
   // supplied (Data dump/Hsin/Hsin.md, 30/September/2026, reviewed for Patch 3.7); lore from the
   // reference infobox/intro (one of Huanglong's seven Sentinels, "The Moon Fox", Mengzhou).
-  // Her Lv.90 base stats and ascension/skill materials are not published by either source yet, so
-  // baseHp/baseAtk/baseDef/maxEnergy, ascension and skillMaterials are left out: she is listed in
-  // CHARACTERS_AWAITING_STATS below, which keeps her out of the damage calculators until they land.
+  // Lv.90 base stats (BASE_STATS below) and ascension/skill materials from the nanoka.cc game-data
+  // snapshot the user supplied (ww.nanoka.cc/character/1311, 30 September 2026): boss Solidarity's
+  // Loneflame, specialty Bloom of Hearkening, Autopuppet Kernel family, weekly Remnant of the Wheel,
+  // String forgery family.
   'Hsin': { rarity: 5, element: 'Electro', weapon: 'Rectifier', role: 'Main DPS',
     desc: "The Moon Fox, one of Huanglong's seven Sentinels, who watches over Mengzhou and its ever-glowing lanterns. Electro Main DPS who moves from Answering Form into Illumining Form and Mechanism Dominion, commanding Xuanfang Mechanisms. In Electro Flare mode she banks surplus Flare as Heart of Thunder for a single detonation, and in Unison mode she earns a free extra Outro every rotation.",
     skills: ['Manifold Bloom', 'Heartward by Moon', 'Nexus Alight', 'Forms Turn, Heart Abides'],
+    ascension: { boss: "Solidarity's Loneflame", common: 'Autopuppet Kernel', specialty: 'Bloom of Hearkening' },
+    skillMaterials: { weeklyDrop: 'Remnant of the Wheel', forgery: 'String' },
     // bestEchoes: [mainEcho, set] — the guide's own "Best Echo Sets" (Heart of Sworn Vigil, 100%) and
     // its only Main Echo pick, Reminiscence: Suhsin the Inevitable (+20% Electro DMG in the main slot).
     bestEchoes: ['Reminiscence: Suhsin the Inevitable', 'Heart of Sworn Vigil 5pc'], bestWeapon: 'Blooming Jadehaven',
@@ -2846,6 +2849,9 @@ const CHARACTER_DATA = {
   // to 0 real DEF added (0 × any% = 0), matching his real fixed-DEF mechanic instead of coincidentally
   // matching it only because it's never read.
   ['Jingran',       15375, 313, 0,    125],
+  // Hsin: nanoka.cc game data (Base HP 10 300 / ATK 463 / DEF 1 112); maxEnergy 125 is Pillars
+  // Across Heaven's own Resonance Cost in her kit.
+  ['Hsin',          10300, 463, 1112, 125],
   // 4★
   ['Aalto',         9850,  263, 1076, 150],
   ['Baizhi',        12813, 213, 1002, 175],
@@ -3729,6 +3735,8 @@ const CHARACTER_DATA = {
   ['Hiyuki', ['Main Damage Dealer', 'Resonance Liberation Damage', 'Glacio Chafe']],
   ['Suisui', ['Support and Healer', 'DMG Amplification', 'Glacio Chafe']],
   ['Qingxiao', ['Main Damage Dealer', 'Tune Strain Response']],
+  // Hsin: her in-game Combat Role tags as listed by nanoka.cc and encore.moe (same order in both).
+  ['Hsin', ['Main Damage Dealer', 'Resonance Skill Damage', 'Coordinated Attack', 'Electro Flare', 'Unison']],
   // Jingran intentionally omitted: unreleased (3.6, Aug 20 2026) — the reference infobox has an empty
   // `role` field since Kuro hasn't published her kit yet, matching the "Unconfirmed" placeholder already
   // used for her bestEchoes/weapon data elsewhere in this file rather than guessing.
@@ -4952,10 +4960,10 @@ const SKILL_MULTIPLIERS = {
     ['Forte', 'Resonance Skill - Pillars Aligned', '179.43%×4+17.95%+35.89%×2+44.86%×2', 'At 300 Illumining Heart; enters Mechanism Dominion (13s). Considered Resonance Skill DMG; 12s cooldown.'],
     ['Forte', 'Beholding All Horizons', '10.27%×4+369.70%', 'Heavy Attack at 0 Illumining Heart in Mechanism Dominion; considered Resonance Skill DMG.'],
     ['Forte', 'Stilling All Horizons', '27.05%×4+973.49%', 'Empowered Beholding All Horizons (Law of Heaven, once every 24s); considered Resonance Skill DMG.'],
-    ['Intro', 'Answering Form', '7.88%×2+7.88%×2+126.02% (Electro Flare) / 10.28%+20.55%+10.28%+20.55%×3 (Unison)', 'Grants 60 Answering Heart.'],
-    ['Intro', 'Answering Form: Manifold Unison', '60.59%+121.18%+60.59%+121.18%×3', 'Unison mode; considered Resonance Skill DMG.'],
-    ['Intro', 'Illumining Form', '11.42%×4+11.42%×2+39.97%×4 (Electro Flare) / 56.59%×4+5.66%+11.32%×2+14.15%×2 (Unison)'],
-    ['Intro', 'Illumining Form: Manifold Unison', '157.22%×4+15.73%+31.45%×2+39.31%×2', 'Unison mode; considered Resonance Skill DMG.'],
+    ['Intro', 'Intro Skill - Answering Form', '7.88%×2+7.88%×2+126.02% (Electro Flare) / 10.28%+20.55%+10.28%+20.55%×3 (Unison)', 'Grants 60 Answering Heart.'],
+    ['Intro', 'Intro Skill - Answering Form: Manifold Unison', '60.59%+121.18%+60.59%+121.18%×3', 'Unison mode; considered Resonance Skill DMG.'],
+    ['Intro', 'Intro Skill - Illumining Form', '11.42%×4+11.42%×2+39.97%×4 (Electro Flare) / 56.59%×4+5.66%+11.32%×2+14.15%×2 (Unison)'],
+    ['Intro', 'Intro Skill - Illumining Form: Manifold Unison', '157.22%×4+15.73%+31.45%×2+39.31%×2', 'Unison mode; considered Resonance Skill DMG.'],
     ['Outro', 'Herself a Thousand Lanterns', '100% ATK + team DMG Amplification', 'Electro Flare mode: team Electro DMG Amplified by 20% (20s). Unison mode: Unison allies gain 20% All DMG Amplification (30s).'],
   ],
   // Two real zero-damage rotation-step bugs fixed 2026-09-02 against a fresh the source dump: 'Mid-air:
@@ -7560,7 +7568,7 @@ const CHARACTER_ROTATIONS = {
   // standard 1-2-3 team rotation. Its Unison rotation (two Manifold Unison Intros, skipping Illumining
   // Form) is described in the guide too but not stored here.
   'Hsin': [
-    { type: 'Intro', skill: 'Answering Form', note: 'Swap in — the Intro grants 60 Answering Heart and chains straight into Basic Attack Stage 4 in Electro Flare mode.' },
+    { type: 'Intro', skill: 'Intro Skill - Answering Form', note: 'Swap in — the Intro grants 60 Answering Heart and chains straight into Basic Attack Stage 4 in Electro Flare mode.' },
     { type: 'Basic ATK', skill: 'Answering Form Stage 1-4', note: 'Only Stage 4 here, right after the Intro — it fills Answering Heart to 100.' },
     { type: 'Forte', skill: 'Realm Protector', note: 'Hold Normal Attack at 100 Answering Heart — the empowered Realm Wanderer, considered Resonance Skill DMG. Unlocks Formshift.' },
     { type: 'Liberation', skill: 'Formshift', note: 'Enters Illumining Form and Heart Manifest, grants 21 Edict stacks (Soaring Pillar Coordinated Attacks) and inflicts 5 Electro Flare stacks nearby.' },
@@ -9045,6 +9053,34 @@ const RESONANCE_CHAIN_DATA = {
 // Source: the reference per-character Skill_* image assets, re-hosted on ibb.co.
 // Only characters that have been audited so far are populated.
 const SKILL_ICONS = {
+  // Hsin: her own skill atlas (SkillIconXin) and generic Rectifier Normal Attack icon, as labelled on
+  // the nanoka.cc game-data page: B1 Resonance Skill, C1 Liberation, Y Forte Circuit, QTE Intro, T Outro.
+  // Keys are exact SKILL_MULTIPLIERS row names.
+  'Hsin': {
+    'Answering Form Stage 1-4': './characters/_shared/RkMykBkT-Skill-Rectifier.webp',
+    'Answering Form': './characters/_shared/RkMykBkT-Skill-Rectifier.webp',
+    'Reign at Ease': './characters/_shared/RkMykBkT-Skill-Rectifier.webp',
+    'Illumining Form Stage 1-3': './characters/_shared/RkMykBkT-Skill-Rectifier.webp',
+    'Illumining Form': './characters/_shared/RkMykBkT-Skill-Rectifier.webp',
+    'Modular Heartlock': './characters/_shared/RkMykBkT-Skill-Rectifier.webp',
+    'Upward Cut - Illumining Form': './characters/_shared/RkMykBkT-Skill-Rectifier.webp',
+    'Pillars Aligned Stage 1-4': './characters/_shared/RkMykBkT-Skill-Rectifier.webp',
+    'Heartward by Moon - Answering Form': './characters/hsin/SP_IconXinB1.webp',
+    'Heartward by Moon - Illumining Form': './characters/hsin/SP_IconXinB1.webp',
+    'Formshift': './characters/hsin/SP_IconXinC1.webp',
+    'Soaring Pillar': './characters/hsin/SP_IconXinC1.webp',
+    'Pillars Across Heaven': './characters/hsin/SP_IconXinC1.webp',
+    'Realm Wanderer': './characters/hsin/SP_IconXinY.webp',
+    'Realm Protector': './characters/hsin/SP_IconXinY.webp',
+    'Resonance Skill - Pillars Aligned': './characters/hsin/SP_IconXinY.webp',
+    'Beholding All Horizons': './characters/hsin/SP_IconXinY.webp',
+    'Stilling All Horizons': './characters/hsin/SP_IconXinY.webp',
+    'Intro Skill - Answering Form': './characters/hsin/SP_IconXinQTE.webp',
+    'Intro Skill - Answering Form: Manifold Unison': './characters/hsin/SP_IconXinQTE.webp',
+    'Intro Skill - Illumining Form': './characters/hsin/SP_IconXinQTE.webp',
+    'Intro Skill - Illumining Form: Manifold Unison': './characters/hsin/SP_IconXinQTE.webp',
+    'Herself a Thousand Lanterns': './characters/hsin/SP_IconXinT.webp',
+  },
   // Aalto/Baizhi/Chixia: Intro/Outro icons added 2026-08-18 (previously missing entirely — only
   // Basic/Skill/Liberation/Forte were populated). Aalto's Forte Circuit's real name is 'Misty Cover'
   // (was wrongly keyed 'Mistcloak Dash', the Forte's internal dash mechanic, not its own skill name) —
@@ -10112,6 +10148,15 @@ const getSkillIcon = (name, skillName, type) => {
 // Combat page infobox gallery, which lists nodes S1→S6 top to bottom), re-hosted on ibb.co.
 // Only characters that have been audited so far are populated.
 const CHAIN_NODE_ICONS = {
+  // Hsin: game icons T_IconDevice_XinM1-6 via nanoka.cc, labelled with each node's name there.
+  'Hsin': {
+    s1: './characters/hsin/T_IconDevice_XinM1_UI.webp',
+    s2: './characters/hsin/T_IconDevice_XinM2_UI.webp',
+    s3: './characters/hsin/T_IconDevice_XinM3_UI.webp',
+    s4: './characters/hsin/T_IconDevice_XinM4_UI.webp',
+    s5: './characters/hsin/T_IconDevice_XinM5_UI.webp',
+    s6: './characters/hsin/T_IconDevice_XinM6_UI.webp',
+  },
   'Aalto': {
     s1: './characters/aalto/NkJrMMZ-aalto-s1.webp',
     s2: './characters/aalto/3mWXdcDs-aalto-s2.webp',
@@ -10832,11 +10877,6 @@ const ALL_5STAR_RESONATORS = RELEASE_ORDER.filter(name => CHARACTER_DATA[name]?.
 const ALL_4STAR_RESONATORS = Object.keys(CHARACTER_DATA).filter(name => CHARACTER_DATA[name].rarity === 4);
 const ALL_CHARACTERS = new Set([...ALL_5STAR_RESONATORS, ...ALL_4STAR_RESONATORS]);
 
-// Released resonators whose Lv.90 base stats and ascension materials are not published yet: their
-// profile is complete, but the Teams builder and the Planner leave them out until those numbers are
-// filled in (both need baseHp/baseAtk/baseDef and ascension). Remove a name once its data lands.
-const CHARACTERS_AWAITING_STATS = new Set(['Hsin']);
-
 // Announced but unreleased resonators, shown in the Collection as "coming soon" cards
 // and kept out of CHARACTER_DATA (which feeds the damage calculators) until their kit
 // and stats are published. Fields come from their banner entry in BANNER_HISTORY.
@@ -10960,7 +11000,6 @@ export {
   ALL_5STAR_RESONATORS,
   ALL_4STAR_RESONATORS,
   UPCOMING_RESONATORS,
-  CHARACTERS_AWAITING_STATS,
 };
 
 // Per-locale skill text. A locale with no entry here returns the English source text.

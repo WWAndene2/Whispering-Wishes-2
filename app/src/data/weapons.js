@@ -54,7 +54,10 @@ const WEAPON_DATA = {
   'Blooming Jadehaven': { rarity: 5, type: 'Rectifier', stat: 'Crit Rate', baseAtk: 588, subStatValue: '+24.3%',
     desc: 'Hsin signature. Inflicting Electro Flare or triggering Unison Response amplifies her Resonance Skill DMG and ignores Electro RES, while an on-field aura amplifies the Electro Flare DMG nearby targets take.',
     passive: 'All-Attribute DMG +12%. After inflicting Electro Flare or triggering Unison Response: self Resonance Skill DMG Amplified by 36% and ignores 10% Electro RES. While on-field: Electro Flare DMG taken by nearby targets Amplified by 30% (30s, up to 1x/0.1s). Strongest same-name effect applies.',
-    pv: { allDmg: 12, skillDmg: 36, resShred: 10 }, bestFor: ['Hsin'] },
+    pv: { allDmg: 12, skillDmg: 36, resShred: 10 }, bestFor: ['Hsin'],
+    // String forgery + Exoswarm Core common, from the nanoka.cc game-data snapshot
+    // (ww.nanoka.cc/weapon/21050116, 30 September 2026).
+    ascensionMaterials: { forgery: 'String', common: 'Exoswarm Core' } },
   'Glint of Clouds': { rarity: 5, type: 'Sword', stat: 'Crit Rate', baseAtk: 500, subStatValue: '+36.0%',
     desc: "Qingxiao signature. Jade blade wreathed in mist and cloud. Stacking Aero DMG Bonus on inflicting Tune Strain - Shifting, ignoring DEF at max stacks.",
     passive: 'ATK +12%. Inflicting Tune Strain - Shifting grants 11.2% Aero DMG Bonus (2s, stacks ×5, 0.5s ICD); at max stacks, duration extends to 30s and Aero DMG ignores 10% DEF',

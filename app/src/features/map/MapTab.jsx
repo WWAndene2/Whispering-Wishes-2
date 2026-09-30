@@ -26,6 +26,7 @@ import { IconKindPicker } from './IconKindPicker.jsx';
 import { MapSearchPopover } from './MapSearchPopover.jsx';
 import { buildSearchIndex, resolveFilterKey } from './mapSearch.js';
 import { optimizeRoute, teleportLegs } from './mapRoute.js';
+import { renderRouteImage, saveRouteImage } from './routeImageRenderer.js';
 import { t } from '../../utils/i18n.js';
 import { haptic } from '../../utils/haptics.js';
 
@@ -936,6 +937,30 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       .filter(g => g.pts.length + (start ? 1 : 0) >= 2)
       .map(g => withWarps({ key: g.key, color: g.color, line: g.line, points: order(g.pts) }));
   }, [searchSelected, searchRouteOn, searchTags, searchIndex, iconDrafts, viewFloor, hideFound, foundIds, routeStart, routeLinked, routeTeleport]);
+  // Saves every route on the map as one PNG (routeImageRenderer.js).
+  const [routeExporting, setRouteExporting] = useState(false);
+  const handleExportRoutes = useCallback(async () => {
+    if (!searchRoutes.length || routeExporting) return;
+    const labelOf = (key) => (key === 'selection' ? searchSelected?.label : searchTags.find(tg => tg.key === key)?.label) || '';
+    setRouteExporting(true);
+    try {
+      const blob = await renderRouteImage({
+        routes: searchRoutes.map(r => ({ ...r, label: r.key === 'linked' ? r.members.map(labelOf).join(' + ') : labelOf(r.key) })),
+        tileBase: BASE,
+        title: t('map.search.exportTitle'),
+        stopsLabel: (count) => t('map.search.exportStops', { count }),
+        footer: 'whisperingwishes.app',
+      });
+      if (!blob) throw new Error('empty');
+      await saveRouteImage(blob, `map-route-${Date.now()}.png`);
+      showToast(t('map.search.exportSaved'));
+    } catch (e) {
+      console.error('Route image export failed:', e);
+      showToast(t('map.search.exportFailed'));
+    } finally {
+      setRouteExporting(false);
+    }
+  }, [searchRoutes, routeExporting, searchSelected, searchTags, t, showToast]);
   // The route the stepper walks: the selection's own, or the linked route when the selection is part of it.
   const selectionRoute = searchRoutes.find(r => r.key === 'selection' || (r.key === 'linked' && r.members.includes('selection'))) || null;
   const routeStopCount = (r) => r.points.filter(p => !p.isStart).length;
@@ -5701,6 +5726,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                 routeLinked={routeLinked}
                 onToggleRouteLinked={() => setRouteLinked(v => !v)}
                 routeTeleport={routeTeleport}
+                onExportRoutes={searchRoutes.length ? handleExportRoutes : null}
+                routeExporting={routeExporting}
                 onToggleRouteTeleport={() => setRouteTeleport(v => !v)}
                 linkableCount={(searchSelected && searchRouteOn ? 1 : 0) + searchTags.filter(tg => tg.active && tg.route).length}
                 routeColors={SEARCH_ROUTE_COLORS}

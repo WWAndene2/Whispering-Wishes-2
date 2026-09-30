@@ -102,7 +102,12 @@
     "startRun": "Start the run",
     "nextStop": "Next stop",
     "foundNext": "Found → next",
-    "useTeleports": "Use teleports"
+    "useTeleports": "Use teleports",
+    "exportRoute": "Save as image",
+    "exportTitle": "Whispering Wishes · Route",
+    "exportStops": "{{count}} stops",
+    "exportSaved": "Route image saved",
+    "exportFailed": "Couldn’t save the route image"
   },
   "card": {
     "markFound": "Mark as found",

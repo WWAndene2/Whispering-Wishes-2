@@ -102,7 +102,12 @@
     "startRun": "Lancer le parcours",
     "nextStop": "Arrêt suivant",
     "foundNext": "Trouvé → suivant",
-    "useTeleports": "Utiliser les téléporteurs"
+    "useTeleports": "Utiliser les téléporteurs",
+    "exportRoute": "Enregistrer en image",
+    "exportTitle": "Whispering Wishes · Itinéraire",
+    "exportStops": "{{count}} arrêts",
+    "exportSaved": "Image de l’itinéraire enregistrée",
+    "exportFailed": "Impossible d’enregistrer l’image de l’itinéraire"
   },
   "card": {
     "markFound": "Marquer trouvé",

@@ -98,6 +98,8 @@ export function MapSearchPopover({
   linkableCount,       // routes that linking would merge
   routeTeleport,       // long legs start from the nearest teleporter
   onToggleRouteTeleport,
+  onExportRoutes,      // () => void | null — save the routes on the map as an image
+  routeExporting,
   onRemoveTag,         // (key) => void
   onClearTags,
   recent,              // [key]
@@ -249,6 +251,11 @@ export function MapSearchPopover({
                 >
                   <Zap size={12} aria-hidden="true" /> {t('map.search.useTeleports')}
                 </button>
+                {onExportRoutes && (
+                  <button type="button" className="kuro-btn kuro-btn-sm map-search-line" onClick={onExportRoutes} disabled={routeExporting}>
+                    <Camera size={12} aria-hidden="true" /> {t('map.search.exportRoute')}
+                  </button>
+                )}
               </div>
               {linkableCount > 1 && (
                 <div className="map-search-style-row">

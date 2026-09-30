@@ -70,6 +70,46 @@ const panel = (ctx, x, y, w, h, r = RADIUS) => {
 // floor gets its own card beside it.
 const floorOf = (p) => p.floor ?? 0;
 const SUB_LABEL = 32;       // label strip at the top of a sub-map card
+const INSET_MIN = 192;      // sub-map inset width range on the main map
+const INSET_MAX = 384;
+const INSET_EDGE = 16;
+const INSET_RADIUS = 12;
+const INSET_MARGIN = 12;    // inset to panel edge / to another inset
+
+// Picks a spot for each inset on the main panel (positions relative to it): open sea near where
+// the sub-map really is. Candidates on a 16 px grid are scored by the stops and anchor dots
+// they would hide, the land under them (from the drawn map's pixels) and their distance to the
+// sub-map's anchor; spots overlapping a placed inset lose to any other. Returns the worst
+// placement's score without the distance term (0 = every inset on clear sea).
+function placeInsets(insets, main, landAt, stopsOut, anchorOut) {
+  const placed = [];
+  const anchors = insets.map(v => anchorOut(v.anchor));
+  let worst = 0;
+  insets.forEach((v, idx) => {
+    const a = anchors[idx];
+    let best = null;
+    for (let y = INSET_MARGIN; y + v.h <= main.h - INSET_MARGIN; y += 16) {
+      for (let x = INSET_MARGIN; x + v.w <= main.w - INSET_MARGIN; x += 16) {
+        const inside = (q, m) => q.x > x - m && q.x < x + v.w + m && q.y > y - m && q.y < y + v.h + m;
+        const overlaps = placed.some(o => x < o.x + o.w + INSET_MARGIN && o.x < x + v.w + INSET_MARGIN && y < o.y + o.h + INSET_MARGIN && o.y < y + v.h + INSET_MARGIN);
+        const hidden = stopsOut.filter(q => inside(q, 16)).length + anchors.filter(q => inside(q, 8)).length;
+        const land = landAt(x, y, v.w, v.h);
+        const d = Math.hypot(x + v.w / 2 - a.x, y + v.h / 2 - a.y) / Math.max(main.w, main.h);
+        const score = (overlaps ? 1e6 : 0) + hidden * 1000 + land * 2000 + d * 100;
+        if (!best || score < best.score) best = { x, y, score };
+      }
+    }
+    // A panel too small for the inset: pin it to the top-left corner.
+    const spot = best || { x: INSET_MARGIN, y: INSET_MARGIN, score: 1e6 };
+    v.relX = spot.x;
+    v.relY = spot.y;
+    v.anchorRel = a;
+    placed.push({ x: spot.x, y: spot.y, w: v.w, h: v.h });
+    // Distance alone never forces a retry: only hidden stops, land or overlap do.
+    worst = Math.max(worst, spot.score - (Math.hypot(spot.x + v.w / 2 - a.x, spot.y + v.h / 2 - a.y) / Math.max(main.w, main.h)) * 100);
+  });
+  return worst;
+}
 
 // Marker scale for a view: full size when neighbouring stops are 40 output px or more apart,
 // down to half size on dense routes; order badges only near full size.
@@ -110,15 +150,15 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
     for (const p of r.points) if (!p.isStart) numberOf.set(p, ++n);
   }
 
-  // ── Main panel: ground-floor stops, framed on them, over the base map.
+  // ── Main panel: ground-floor stops, framed on them, over the base map. `extraE` / `extraS`
+  // widen it (output px) with more of the map to the east / south, to make room for insets.
   const groundPts = all.filter(p => floorOf(p) === 0);
-  let main = null;
-  if (groundPts.length) {
+  const makeMain = (extraE = 0, extraS = 0) => {
     const rawMinX = Math.min(...groundPts.map(p => p.x));
     const rawMinY = Math.min(...groundPts.map(p => p.y));
-    const rawMaxX = Math.max(...groundPts.map(p => p.x));
-    const rawMaxY = Math.max(...groundPts.map(p => p.y));
-    const side = Math.max(rawMaxX - rawMinX, rawMaxY - rawMinY, 1);
+    const rawMaxX0 = Math.max(...groundPts.map(p => p.x));
+    const rawMaxY0 = Math.max(...groundPts.map(p => p.y));
+    const side = Math.max(rawMaxX0 - rawMinX, rawMaxY0 - rawMinY, 1);
     // Deepest tile level whose scale keeps the longest side within MAX_SIDE.
     let z = NATIVE_ZOOM;
     while (z > 0 && side * 2 ** (z - NATIVE_ZOOM) > MAX_SIDE) z--;
@@ -126,18 +166,21 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
     const up = Math.min(2, Math.max(1, MIN_SIDE / (side * tileScale)));
     const k = tileScale * up; // output px per native map px
     const pad = EDGE / k;
+    const rawMaxX = rawMaxX0 + extraE / k;
+    const rawMaxY = rawMaxY0 + extraS / k;
     const minX = rawMinX - pad;
     const minY = rawMinY - pad;
     const w = Math.max(MIN_SIDE, Math.round((rawMaxX - rawMinX + 2 * pad) * k));
     const h = Math.round((rawMaxY - rawMinY + 2 * pad) * k);
-    main = {
-      floor: 0, k, minX, minY, w, h, label: null,
+    return {
+      floor: 0, k, minX, minY, w, h, label: null, extraE, extraS, radius: RADIUS,
       offX: (w - (rawMaxX - rawMinX + 2 * pad) * k) / 2, offY: 0,
       base: { z, tileScale, up, maxX: rawMaxX + pad, maxY: rawMaxY + pad },
       overlays: overlays.filter(ov => ov.floor === 0),
     };
-  }
-  const w = main ? main.w : MIN_SIDE;
+  };
+  let main = groundPts.length ? makeMain() : null;
+  let w = main ? main.w : MIN_SIDE;
 
   // ── Sub-map cards: one per other floor holding a stop, framed on its whole sub-map.
   const subFloors = [...new Set(all.map(floorOf).filter(f => f !== 0))];
@@ -151,24 +194,147 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
       minX, minY, bw: Math.max(1, Math.max(...pts.map(p => p.x)) - minX), bh: Math.max(1, Math.max(...pts.map(p => p.y)) - minY),
     };
   });
+  // With a main panel, sub-maps are insets placed on it (see placeInsets); without one
+  // (every stop underground) they are cards in rows of two.
+  const insetMode = !!main;
   const cols = subs.length > 1 ? 2 : 1;
-  const cellW = (w - GAP * (cols - 1)) / cols;
+  const cellW = insetMode ? Math.min(INSET_MAX, Math.max(INSET_MIN, Math.round(w * 0.3))) : (w - GAP * (cols - 1)) / cols;
+  const edge = insetMode ? INSET_EDGE : EDGE;
   for (const v of subs) {
-    const inner = cellW - EDGE * 2;
+    const inner = cellW - edge * 2;
     v.k = Math.min(inner / v.bw, inner / v.bh); // at most square
     v.w = cellW;
-    v.h = Math.round(v.bh * v.k + EDGE * 2 + SUB_LABEL);
+    v.h = Math.round(v.bh * v.k + edge * 2 + SUB_LABEL);
     v.offX = (cellW - v.bw * v.k) / 2;
+    v.offY = SUB_LABEL + edge;
+    v.radius = insetMode ? INSET_RADIUS : RADIUS;
+    // Where the sub-map really is: the centre of its overlays.
+    const cs = v.overlays.length ? v.overlays.map(ov => ({ x: ov.center[0], y: ov.center[1] })) : [{ x: v.minX + v.bw / 2, y: v.minY + v.bh / 2 }];
+    v.anchor = { x: cs.reduce((a, c) => a + c.x, 0) / cs.length, y: cs.reduce((a, c) => a + c.y, 0) / cs.length };
   }
   // Card rows: each row as tall as its tallest card.
   const subRows = [];
-  for (let i = 0; i < subs.length; i += cols) subRows.push(subs.slice(i, i + cols));
+  if (!insetMode) for (let i = 0; i < subs.length; i += cols) subRows.push(subs.slice(i, i + cols));
 
   await Promise.all(['700 32px Rajdhani', '600 16px Rajdhani', '700 24px Cinzel', '700 12px "JetBrains Mono"']
     .map(f => document.fonts?.load(f).catch(() => null)));
   const [appIco, bgImg] = await Promise.all([loadImage(APP_ICON), backdrop ? loadImage(backdrop.url) : null]);
   const iconUrls = [...new Set([...all.map(p => p.iconUrl), ...legend.map(l => l.iconUrl)].filter(Boolean))];
   const iconImgs = new Map((await Promise.all(iconUrls.map(u => loadImage(u).then(img => [u, img])))).filter(([, img]) => img));
+
+  const viewOut = (v) => (p) => ({ x: v.x + v.offX + (p.x - v.minX) * v.k, y: v.y + v.offY + (p.y - v.minY) * v.k });
+  // A map view's ground: sea, base tiles (main panel only) and sub-maps.
+  const drawGround = async (v, ctx) => {
+    const { x: vx, y: vy, w: vw, h: vh, k } = v;
+    const toOut = viewOut(v);
+    ctx.save();
+    roundRect(ctx, vx, vy, vw, vh, v.radius ?? RADIUS);
+    ctx.filter = TILE_FILTER;
+    ctx.fillStyle = SEA;
+    ctx.fill();
+    ctx.clip();
+    if (v.base) {
+      // Base tiles, clipped to the map's own extent: tiles past it carry black padding.
+      const { z, tileScale, up } = v.base;
+      const jobs = [];
+      for (let tx = Math.max(0, Math.floor((v.minX * tileScale) / TILE_SIZE)); tx <= Math.floor((v.base.maxX * tileScale) / TILE_SIZE); tx++) {
+        for (let ty = Math.max(0, Math.floor((v.minY * tileScale) / TILE_SIZE)); ty <= Math.floor((v.base.maxY * tileScale) / TILE_SIZE); ty++) {
+          jobs.push(loadImage(`${tileBase}map-tiles/Solaris_3/${z}/${ty}/${tx}.webp`).then(img => ({ img, tx, ty })));
+        }
+      }
+      const tiles = await Promise.all(jobs);
+      const m0 = toOut({ x: 0, y: 0 });
+      const m1 = toOut({ x: MAP_W, y: MAP_H });
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(m0.x, m0.y, m1.x - m0.x, m1.y - m0.y);
+      ctx.clip();
+      const tileOut = TILE_SIZE * up;
+      for (const t of tiles) {
+        if (t.img) ctx.drawImage(t.img, vx + v.offX + t.tx * tileOut - v.minX * k, vy + v.offY + t.ty * tileOut - v.minY * k, tileOut, tileOut);
+      }
+      ctx.restore();
+    }
+    ctx.filter = 'none';
+    // Sub-maps: each overlay's tiles at the pyramid level closest to 1:1 with the output,
+    // placed with its centre, scale and rotation.
+    for (const ov of v.overlays) {
+      const displayScale = ov.scale * k;
+      let oz = null;
+      let factor = 1;
+      if (ov.pyramid) {
+        oz = Math.min(ov.maxZoom, Math.max(ov.minZoom, Math.round(ov.maxZoom + Math.log2(displayScale))));
+        factor = 2 ** (ov.maxZoom - oz);
+      }
+      const tilePx = TILE_SIZE * factor;
+      const c = toOut({ x: ov.center[0], y: ov.center[1] });
+      const rot = (ov.rotation * Math.PI) / 180;
+      // View corners in overlay-local px, to fetch only the tiles inside the view.
+      const local = [[vx, vy], [vx + vw, vy], [vx + vw, vy + vh], [vx, vy + vh]].map(([sx, sy]) => {
+        const dx = (sx - c.x) / displayScale;
+        const dy = (sy - c.y) / displayScale;
+        return [dx * Math.cos(-rot) - dy * Math.sin(-rot) + ov.naturalWidth / 2, dx * Math.sin(-rot) + dy * Math.cos(-rot) + ov.naturalHeight / 2];
+      });
+      const x0 = Math.max(0, Math.floor(Math.min(...local.map(q => q[0])) / tilePx));
+      const x1 = Math.min(Math.ceil(ov.naturalWidth / tilePx) - 1, Math.floor(Math.max(...local.map(q => q[0])) / tilePx));
+      const y0 = Math.max(0, Math.floor(Math.min(...local.map(q => q[1])) / tilePx));
+      const y1 = Math.min(Math.ceil(ov.naturalHeight / tilePx) - 1, Math.floor(Math.max(...local.map(q => q[1])) / tilePx));
+      if (x0 > x1 || y0 > y1) continue;
+      const jobs = [];
+      for (let ty = y0; ty <= y1; ty++) for (let tx = x0; tx <= x1; tx++) jobs.push(loadImage(ov.tileUrl(oz, ty, tx)).then(img => ({ img, tx, ty })));
+      const imgs = await Promise.all(jobs);
+      ctx.save();
+      ctx.globalAlpha = ov.opacity;
+      ctx.translate(c.x, c.y);
+      ctx.rotate(rot);
+      ctx.scale(displayScale, displayScale);
+      for (const { img, tx, ty } of imgs) {
+        if (img) ctx.drawImage(img, tx * tilePx - ov.naturalWidth / 2, ty * tilePx - ov.naturalHeight / 2, tilePx, tilePx);
+      }
+      ctx.restore();
+    }
+    ctx.restore();
+  };
+  // Insets on the main panel: placed on an offscreen copy of it; while one would hide stops,
+  // land or another inset, the panel takes in more of the map (east, then south) and retries.
+  if (main && subs.length) {
+    const step = subs[0].w + INSET_MARGIN * 2;
+    for (let attempt = 0; ; attempt++) {
+      main.x = 0;
+      main.y = 0;
+      const scratch = document.createElement('canvas');
+      scratch.width = main.w;
+      scratch.height = main.h;
+      await drawGround(main, scratch.getContext('2d'));
+      // Land mask (bright pixels = land or sub-map), summed on a 4 px grid so any
+      // rectangle's land share is four lookups.
+      const G = 4;
+      const gw = Math.ceil(main.w / G);
+      const gh = Math.ceil(main.h / G);
+      const sum = new Float32Array((gw + 1) * (gh + 1));
+      try {
+        const px = scratch.getContext('2d').getImageData(0, 0, main.w, main.h).data;
+        for (let gy = 0; gy < gh; gy++) {
+          for (let gx = 0; gx < gw; gx++) {
+            const i = ((gy * G) * main.w + gx * G) * 4;
+            const land = (px[i] + px[i + 1] + px[i + 2]) / 3 > 48 ? 1 : 0;
+            sum[(gy + 1) * (gw + 1) + gx + 1] = land + sum[gy * (gw + 1) + gx + 1] + sum[(gy + 1) * (gw + 1) + gx] - sum[gy * (gw + 1) + gx];
+          }
+        }
+      } catch { /* unreadable pixels: place on stops and distance alone */ }
+      const landAt = (x, y, rw, rh) => {
+        const x0 = Math.floor(x / G); const y0 = Math.floor(y / G);
+        const x1 = Math.min(gw, Math.ceil((x + rw) / G)); const y1 = Math.min(gh, Math.ceil((y + rh) / G));
+        const at = (gx, gy) => sum[gy * (gw + 1) + gx];
+        return (at(x1, y1) - at(x0, y1) - at(x1, y0) + at(x0, y0)) / Math.max(1, (x1 - x0) * (y1 - y0));
+      };
+      const rel = viewOut(main);
+      const worst = placeInsets([...subs].sort((a, b) => b.w * b.h - a.w * a.h), main, landAt, groundPts.map(rel), rel);
+      if (worst < 200 || attempt >= 5) break;
+      main = attempt % 2 === 0 ? makeMain(main.extraE + step, main.extraS) : makeMain(main.extraE, main.extraS + step);
+    }
+    w = main.w;
+  }
 
   // Legend chips, laid out in rows before the canvas height is known.
   const measure = document.createElement('canvas').getContext('2d');
@@ -190,7 +356,16 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
   // ── Vertical layout
   const W = w + MARGIN * 2;
   let y = MARGIN + HEADER + GAP;
-  if (main) { main.x = MARGIN; main.y = y; y += main.h + GAP; }
+  if (main) {
+    main.x = MARGIN;
+    main.y = y;
+    y += main.h + GAP;
+    for (const v of subs) {
+      v.x = main.x + v.relX;
+      v.y = main.y + v.relY;
+      v.anchorOut = { x: main.x + v.anchorRel.x, y: main.y + v.anchorRel.y };
+    }
+  }
   for (const row of subRows) {
     const rh = Math.max(...row.map(v => v.h));
     row.forEach((v, i) => { v.x = MARGIN + i * (cellW + GAP); v.y = y; v.h = rh; v.offY = SUB_LABEL + (rh - SUB_LABEL - v.bh * v.k) / 2; });
@@ -260,76 +435,14 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
 
   // Draws one map view: sea, base tiles (main panel only), sub-maps, then the legs and stops
   // of this floor. A leg is drawn only when both its ends are on the view's floor.
-  const drawView = async (v) => {
+  // A map view's vignette, route legs, stops, label and frame.
+  const drawRoutes = (v) => {
     const { x: vx, y: vy, w: vw, h: vh, k } = v;
-    const toOut = (p) => ({ x: vx + v.offX + (p.x - v.minX) * k, y: vy + v.offY + (p.y - v.minY) * k });
+    const toOut = viewOut(v);
     const inView = (p) => floorOf(p) === v.floor;
     ctx.save();
-    roundRect(ctx, vx, vy, vw, vh, RADIUS);
-    ctx.filter = TILE_FILTER;
-    ctx.fillStyle = SEA;
-    ctx.fill();
+    roundRect(ctx, vx, vy, vw, vh, v.radius ?? RADIUS);
     ctx.clip();
-    if (v.base) {
-      // Base tiles, clipped to the map's own extent: tiles past it carry black padding.
-      const { z, tileScale, up } = v.base;
-      const jobs = [];
-      for (let tx = Math.max(0, Math.floor((v.minX * tileScale) / TILE_SIZE)); tx <= Math.floor((v.base.maxX * tileScale) / TILE_SIZE); tx++) {
-        for (let ty = Math.max(0, Math.floor((v.minY * tileScale) / TILE_SIZE)); ty <= Math.floor((v.base.maxY * tileScale) / TILE_SIZE); ty++) {
-          jobs.push(loadImage(`${tileBase}map-tiles/Solaris_3/${z}/${ty}/${tx}.webp`).then(img => ({ img, tx, ty })));
-        }
-      }
-      const tiles = await Promise.all(jobs);
-      const m0 = toOut({ x: 0, y: 0 });
-      const m1 = toOut({ x: MAP_W, y: MAP_H });
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(m0.x, m0.y, m1.x - m0.x, m1.y - m0.y);
-      ctx.clip();
-      const tileOut = TILE_SIZE * up;
-      for (const t of tiles) {
-        if (t.img) ctx.drawImage(t.img, vx + v.offX + t.tx * tileOut - v.minX * k, vy + v.offY + t.ty * tileOut - v.minY * k, tileOut, tileOut);
-      }
-      ctx.restore();
-    }
-    ctx.filter = 'none';
-    // Sub-maps: each overlay's tiles at the pyramid level closest to 1:1 with the output,
-    // placed with its centre, scale and rotation.
-    for (const ov of v.overlays) {
-      const displayScale = ov.scale * k;
-      let oz = null;
-      let factor = 1;
-      if (ov.pyramid) {
-        oz = Math.min(ov.maxZoom, Math.max(ov.minZoom, Math.round(ov.maxZoom + Math.log2(displayScale))));
-        factor = 2 ** (ov.maxZoom - oz);
-      }
-      const tilePx = TILE_SIZE * factor;
-      const c = toOut({ x: ov.center[0], y: ov.center[1] });
-      const rot = (ov.rotation * Math.PI) / 180;
-      // View corners in overlay-local px, to fetch only the tiles inside the view.
-      const local = [[vx, vy], [vx + vw, vy], [vx + vw, vy + vh], [vx, vy + vh]].map(([sx, sy]) => {
-        const dx = (sx - c.x) / displayScale;
-        const dy = (sy - c.y) / displayScale;
-        return [dx * Math.cos(-rot) - dy * Math.sin(-rot) + ov.naturalWidth / 2, dx * Math.sin(-rot) + dy * Math.cos(-rot) + ov.naturalHeight / 2];
-      });
-      const x0 = Math.max(0, Math.floor(Math.min(...local.map(q => q[0])) / tilePx));
-      const x1 = Math.min(Math.ceil(ov.naturalWidth / tilePx) - 1, Math.floor(Math.max(...local.map(q => q[0])) / tilePx));
-      const y0 = Math.max(0, Math.floor(Math.min(...local.map(q => q[1])) / tilePx));
-      const y1 = Math.min(Math.ceil(ov.naturalHeight / tilePx) - 1, Math.floor(Math.max(...local.map(q => q[1])) / tilePx));
-      if (x0 > x1 || y0 > y1) continue;
-      const jobs = [];
-      for (let ty = y0; ty <= y1; ty++) for (let tx = x0; tx <= x1; tx++) jobs.push(loadImage(ov.tileUrl(oz, ty, tx)).then(img => ({ img, tx, ty })));
-      const imgs = await Promise.all(jobs);
-      ctx.save();
-      ctx.globalAlpha = ov.opacity;
-      ctx.translate(c.x, c.y);
-      ctx.rotate(rot);
-      ctx.scale(displayScale, displayScale);
-      for (const { img, tx, ty } of imgs) {
-        if (img) ctx.drawImage(img, tx * tilePx - ov.naturalWidth / 2, ty * tilePx - ov.naturalHeight / 2, tilePx, tilePx);
-      }
-      ctx.restore();
-    }
     // Edge vignette so the tiles sink into the frame.
     const vig = ctx.createRadialGradient(vx + vw / 2, vy + vh / 2, Math.min(vw, vh) * 0.4, vx + vw / 2, vy + vh / 2, Math.max(vw, vh) * 0.75);
     vig.addColorStop(0, 'rgba(8, 8, 16, 0)');
@@ -402,13 +515,45 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
       ctx.fillText(v.label, vx + 16, vy + SUB_LABEL / 2 + 1);
     }
     ctx.restore();
-    roundRect(ctx, vx, vy, vw, vh, RADIUS);
-    ctx.strokeStyle = 'rgba(237, 175, 24, 0.32)';
+    roundRect(ctx, vx, vy, vw, vh, v.radius ?? RADIUS);
+    ctx.strokeStyle = v.anchorOut ? 'rgba(237, 175, 24, 0.6)' : 'rgba(237, 175, 24, 0.32)';
     ctx.lineWidth = 1;
     ctx.stroke();
   };
-  if (main) await drawView(main);
-  for (const v of subs) await drawView(v);
+  if (main) {
+    await drawGround(main, ctx);
+    drawRoutes(main);
+    // Insets: dashed leaders to where each sub-map really is (all first, so an inset covers
+    // any leader passing under it), then each inset over a soft shadow.
+    ctx.save();
+    roundRect(ctx, main.x, main.y, main.w, main.h, RADIUS);
+    ctx.clip();
+    for (const v of subs) {
+      const ex = Math.min(Math.max(v.anchorOut.x, v.x), v.x + v.w);
+      const ey = Math.min(Math.max(v.anchorOut.y, v.y), v.y + v.h);
+      ctx.strokeStyle = 'rgba(237, 175, 24, 0.8)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 4]);
+      ctx.beginPath(); ctx.moveTo(ex, ey); ctx.lineTo(v.anchorOut.x, v.anchorOut.y); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = GOLD;
+      ctx.beginPath(); ctx.arc(v.anchorOut.x, v.anchorOut.y, 4, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+    for (const v of subs) {
+      ctx.save();
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+      ctx.shadowBlur = 16;
+      roundRect(ctx, v.x, v.y, v.w, v.h, INSET_RADIUS);
+      ctx.fillStyle = BG;
+      ctx.fill();
+      ctx.restore();
+      await drawGround(v, ctx);
+      drawRoutes(v);
+    }
+  } else {
+    for (const v of subs) { await drawGround(v, ctx); drawRoutes(v); }
+  }
 
   // ── Legend chips
   for (const c of chips) {

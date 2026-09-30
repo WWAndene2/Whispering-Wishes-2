@@ -84,8 +84,6 @@
     "assetBanner": "Banner",
     "assetAnimatedBannerSplashArt": "Animated Banner SplashArt",
     "viewAnimatedBannerSplashArtAria": "Play {{name}}'s animated banner splash art",
-    "viewAnimatedSpriteAria": "Play {{name}}'s animated sprite",
-    "closeAnimatedAssetAria": "Stop the animation",
     "birthday": "Birthday",
     "birthplace": "Birthplace",
     "region": "Region",

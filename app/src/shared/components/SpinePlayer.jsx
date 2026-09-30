@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 // WHISPERING WISHES — shared/components/SpinePlayer.jsx
-// Animated Spine character renderer. Two independent systems live here:
+// Animated Spine character renderer. Three independent systems live here:
 //
 //   BANNER_SPINE_CHARACTERS — Spine 4.2 JSON, in-repo at /spine/role_<id>/,
 //     rendered by BannerCard on the tracker. Runtime: window.spine (4.2).
@@ -8,6 +8,11 @@
 //   SPRITE_SPINE_CHARACTERS — Spine 4.1 binary .skel from the source,
 //     placed under /portraits/<id>/, rendered in CollectionGridCard and the
 //     detail modals. Runtime: window.spine41 (4.1).
+//
+//   LUCKDRAW_SPINE_CHARACTERS — Spine 4.1 binary .skel of a character's
+//     animated convene-banner splash art (the game's UiLuckdraw rig), placed
+//     under /spine/role_<id>/, rendered in the detail modal's Assets section
+//     as "Animated Banner SplashArt". Runtime: window.spine41 (4.1).
 //
 // The two systems share this file but NOT their keyspace: sprite keys derive
 // from the source's portrait codename (lowercased) and may collide with banner
@@ -250,6 +255,13 @@ export const SPRITE_SPINE_CHARACTERS = {
   lucy:            spriteEntry('Lucy',              'Spectro', 'Lucy'),
   jingran:         spriteEntry('Jingran',           'Fusion',  'Jingran'),
   xuanling:        spriteEntry('Yangyang: Xuanling','Havoc',   'Xuanling'),
+  xin:             spriteEntry('Hsin',              'Electro', 'Xin'),
+};
+
+// Luckdraw spine — the game's UiLuckdraw/Spine/Character/C_<Id>_01 rig,
+// sourced from encore.moe's character API (Hsin: character 1311).
+export const LUCKDRAW_SPINE_CHARACTERS = {
+  xin: { name: 'Hsin', element: 'Electro', skelUrl: 'spine/role_xin/c_xin_01.skel', atlasUrl: 'spine/role_xin/c_xin_01.atlas' },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two
@@ -262,6 +274,9 @@ export const SPINE_CHARACTERS = {
   ...Object.fromEntries(
     Object.entries(SPRITE_SPINE_CHARACTERS).map(([k, v]) => [`sprite:${k}`, { ...v, surface: 'collection' }]),
   ),
+  ...Object.fromEntries(
+    Object.entries(LUCKDRAW_SPINE_CHARACTERS).map(([k, v]) => [`luckdraw:${k}`, { ...v, surface: 'luckdraw' }]),
+  ),
 };
 
 const BANNER_NAME_TO_KEY = Object.fromEntries(
@@ -269,6 +284,9 @@ const BANNER_NAME_TO_KEY = Object.fromEntries(
 );
 const SPRITE_NAME_TO_KEY = Object.fromEntries(
   Object.entries(SPRITE_SPINE_CHARACTERS).map(([k, v]) => [v.name.toLowerCase(), k]),
+);
+const LUCKDRAW_NAME_TO_KEY = Object.fromEntries(
+  Object.entries(LUCKDRAW_SPINE_CHARACTERS).map(([k, v]) => [v.name.toLowerCase(), k]),
 );
 
 // Feature flag: sprite-surface Spine animations (SPRITE_SPINE_CHARACTERS) are
@@ -285,6 +303,10 @@ export function getSpineId(displayName, { surface = 'banner' } = {}) {
   if (surface === 'collection') {
     const key = SPRITE_NAME_TO_KEY[lc];
     return key ? `sprite:${key}` : null;
+  }
+  if (surface === 'luckdraw') {
+    const key = LUCKDRAW_NAME_TO_KEY[lc];
+    return key ? `luckdraw:${key}` : null;
   }
   const key = BANNER_NAME_TO_KEY[lc];
   return key ? `banner:${key}` : null;

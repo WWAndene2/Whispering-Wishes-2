@@ -17,14 +17,18 @@ import { t } from '../../utils/i18n.js';
 // Spine sprite directly in place when pressed (toggling to a stop button),
 // instead of the small round button used everywhere else which opens a
 // separate full-screen panel.
-const FullSpineViewerButton = ({ name, imageUrl, className = '', variant = 'button', label }) => {
+// spineId / tileTy / tileFit / ariaLabel let the same tile play another rig
+// than the character's full sprite (the Assets section's Animated Banner
+// SplashArt tile passes its Luckdraw rig, framed whole instead of the
+// sprite's +4 ty nudge).
+const FullSpineViewerButton = ({ name, imageUrl, className = '', variant = 'button', label, spineId, tileTy = 4, tileFit = 'cover', ariaLabel: ariaLabelProp }) => {
   const [open, setOpen] = React.useState(false);
   const [tilePlaying, setTilePlaying] = React.useState(false);
-  const fullSpineId = getSpineId(name, { surface: 'collection' });
+  const fullSpineId = spineId || getSpineId(name, { surface: 'collection' });
 
   if (!imageUrl) return null;
 
-  const ariaLabel = t('modals.characterDetail.viewFullSpineAria', { name });
+  const ariaLabel = ariaLabelProp || t('modals.characterDetail.viewFullSpineAria', { name });
 
   return (
     <>
@@ -57,9 +61,9 @@ const FullSpineViewerButton = ({ name, imageUrl, className = '', variant = 'butt
             backgroundColor="#00000000"
             scaleOverride={1}
             txOverride={0}
-            tyOverride={4}
+            tyOverride={tileTy}
             fallbackImgUrl={imageUrl}
-            fallbackImgStyle={{ objectFit: 'cover', objectPosition: 'center' }}
+            fallbackImgStyle={{ objectFit: tileFit, objectPosition: 'center' }}
           />
           <button
             onClick={(e) => { e.stopPropagation(); setTilePlaying(p => !p); }}

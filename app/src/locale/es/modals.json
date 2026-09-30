@@ -84,8 +84,6 @@
     "assetBanner": "Banner",
     "assetAnimatedBannerSplashArt": "SplashArt de banner animado",
     "viewAnimatedBannerSplashArtAria": "Reproducir el splash art de banner animado de {{name}}",
-    "viewAnimatedSpriteAria": "Reproducir el sprite animado de {{name}}",
-    "closeAnimatedAssetAria": "Detener la animación",
     "birthday": "Cumpleaños",
     "birthplace": "Lugar de nacimiento",
     "region": "Región",

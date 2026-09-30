@@ -774,7 +774,7 @@ const DEFAULT_COLLECTION_IMAGES = {
   // Jingran sourced 2026-08-18 from the reference File:Jingran_Full_Sprite.png (uploaded 2026-08-17,
   // ahead of his 3.6-p2 release, via the reference API — bypasses the site's Cloudflare challenge).
   'Jingran': './banners/characters/jingran/yB024Z5G-jingran-sprite.webp',
-  // v3.7 — Hsin: still from the user-supplied animated full sprite, backdrop removed.
+  // v3.7 — Hsin: one frame of her own Spine sprite rig (portraits/xin/), rendered transparent.
   'Hsin': './banners/characters/hsin/Hsin-Full-Sprite.webp',
   // Suoming (unreleased, "coming soon" card): no full sprite yet, her banner art stands in.
   'Suoming': './characters/suoming/Suoming_Banner.webp',
@@ -1608,20 +1608,12 @@ const CONVENE_ANIMATIONS = {
 };
 const getConveneAnimation = (name) => CONVENE_ANIMATIONS[name] || null;
 
-// Animated profile assets per character, shown in the character detail modal's Assets section:
-// bannerSplashArt is the animated gacha-banner splash art ("Animated Banner SplashArt"), fullSprite
-// the animated full-body sprite (its poster is the collection sprite), bannerSplashArtPoster the splash
-// art's first frame shown before playback. The clips are transparent VP9 WebM loops cut out of user-supplied screen
-// recordings; they live under portraits/, which the APK excludes and the service worker serves from
-// jsDelivr.
-const ANIMATED_ASSETS = {
-  Hsin: {
-    bannerSplashArt: './portraits/hsin/Hsin_Animated_Banner_SplashArt.webm',
-    bannerSplashArtPoster: './portraits/hsin/Hsin_Animated_Banner_SplashArt.webp',
-    fullSprite: './portraits/hsin/Hsin_Animated_Fullsprite.webm',
-  },
+// First frame of a character's Luckdraw Spine rig (LUCKDRAW_SPINE_CHARACTERS in SpinePlayer.jsx),
+// shown on the Animated Banner SplashArt tile until it plays. Rendered from the rig itself.
+const LUCKDRAW_STILLS = {
+  Hsin: './banners/characters/hsin/Hsin-Luckdraw-Still.webp',
 };
-const getAnimatedAssets = (name) => ANIMATED_ASSETS[name] || null;
+const getLuckdrawStill = (name) => LUCKDRAW_STILLS[name] || null;
 
 // ══════════════════════════════════════════════════════════════════════════════
 // EVENT HISTORY — Recurring event periods with verified dates
@@ -1892,7 +1884,7 @@ export {
   ANIMATED_BACKGROUNDS,
   CONVENE_ANIMATIONS,
   getConveneAnimation,
-  getAnimatedAssets,
+  getLuckdrawStill,
   getCharacterBannerArt,
   getWeaponBannerArt,
   preloadBannerHistoryArt,

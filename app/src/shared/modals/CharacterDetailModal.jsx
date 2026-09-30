@@ -8,7 +8,7 @@ import { Sparkles, Swords, User, Users, TrendingUp, Target, Zap, X, LayoutGrid, 
 import { CHARACTER_DATA, CHAR_BUFF_TABLE, SKILL_MULTIPLIERS, CHARACTER_ROTATIONS, RESONANCE_CHAIN_DATA, getSkillIcon, CHAIN_NODE_ICONS, getLocalizedCharacterData, getLocalizedCharBuffTable, getLocalizedCharacterRotations, getLocalizedChainNodeNames, findSkillMultiplierRow, localizeSkillName, localizeSkillDesc, localizeSkillMult } from '../../data/characters.js';
 import { WEAPON_DATA, getLocalizedWeaponData } from '../../data/weapons.js';
 import { getSonataLoadouts } from '../../data/echoes.js';
-import { DEFAULT_COLLECTION_IMAGES, getConveneAnimation, getCharacterBannerArt, getAnimatedAssets } from '../../data/banners.js';
+import { DEFAULT_COLLECTION_IMAGES, getConveneAnimation, getCharacterBannerArt, getLuckdrawStill } from '../../data/banners.js';
 import { COMMON_MAT_TIERS, FORGERY_MAT_TIERS, RESONATOR_ASCENSION_COSTS, RESONATOR_EXP_COSTS, SKILL_UPGRADE_COSTS } from '../../data/constants.js';
 import { FocusTrapModal } from '../components/FocusTrapModal.jsx';
 import { stepStyle } from '../constants/rotationStepStyles.js';
@@ -19,7 +19,6 @@ import { splitIntoParagraphs } from '../utils/textFormat.js';
 import { MaterialItem } from '../components/MaterialItem.jsx';
 import { SpinePlayer, getSpineId, SPINE_SPRITES_ENABLED_OUTSIDE_PANEL } from '../components/SpinePlayer.jsx';
 import { FullSpineViewerButton } from '../components/FullSpineViewerButton.jsx';
-import { AnimatedAssetTile } from '../components/AnimatedAssetTile.jsx';
 import { ConveneVideo } from '../components/ConveneVideoLayer.jsx';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
 import { t, formatNumber, getLocale , pickTable } from '../../utils/i18n.js';
@@ -99,7 +98,8 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
   const data = CHARACTER_DATA[name];
   if (!data) return null;
   const conveneVideoUrl = getConveneAnimation(name);
-  const animatedAssets = getAnimatedAssets(name);
+  const luckdrawSpineId = getSpineId(name, { surface: 'luckdraw' });
+  const luckdrawStill = getLuckdrawStill(name);
   // Falls back to the collection thumbnail when this character has no dedicated banner splash
   // on file — without this, a character WITH a convene video but no bannerArt entry (e.g. one
   // that's aged off the currently-tracked CHARACTER_THEMES roster) lost the whole Assets tile
@@ -905,7 +905,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
               convene video, playable right in its own tile). 2026-08-27:
               starting with Qingxiao; every asset here is null-safe and
               simply omits a tile when that character doesn't have it yet. */}
-          {(imageUrl || bannerArtUrl || animatedAssets) && (
+          {(imageUrl || bannerArtUrl || luckdrawSpineId) && (
             <div>
               <h3 className="text-white font-semibold text-xl mb-2 flex items-center gap-2">
                 <LayoutGrid size={14} className="text-gray-300" /> {t('modals.characterDetail.assetsSection')}
@@ -920,17 +920,14 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                 {/* Was aspect-[1/2] — shortened ~35% (1:2 -> 1:1.3) to
                     crop off the bottom gap the -20% ty raise opened up,
                     matching it back against the top. */}
-                {/* A character with an animated full sprite video plays that in place
-                    of the Spine viewer (it has no Spine sprite of its own). */}
-                {animatedAssets?.fullSprite ? (
-                  <AnimatedAssetTile videoUrl={animatedAssets.fullSprite} posterUrl={imageUrl} label={t('modals.characterDetail.assetSprite')} ariaLabel={t('modals.characterDetail.viewAnimatedSpriteAria', { name })} closeAriaLabel={t('modals.characterDetail.closeAnimatedAssetAria')} className="w-full aspect-[1/1.3]" />
-                ) : imageUrl && (
+                {imageUrl && (
                   <FullSpineViewerButton name={name} imageUrl={imageUrl} variant="tile" label={t('modals.characterDetail.assetSprite')} className="w-full aspect-[1/1.3]" />
                 )}
-                {/* Animated Banner SplashArt: the animated gacha-banner splash art,
-                    6:5 like its source clip (948x790). */}
-                {animatedAssets?.bannerSplashArt && (
-                  <AnimatedAssetTile videoUrl={animatedAssets.bannerSplashArt} posterUrl={animatedAssets.bannerSplashArtPoster} label={t('modals.characterDetail.assetAnimatedBannerSplashArt')} ariaLabel={t('modals.characterDetail.viewAnimatedBannerSplashArtAria', { name })} closeAriaLabel={t('modals.characterDetail.closeAnimatedAssetAria')} className="w-full aspect-[6/5]" />
+                {/* Animated Banner SplashArt: the game's Luckdraw rig (its animated
+                    convene-banner splash art), square like the rig's own bounds and
+                    framed whole; its first frame stands in until ▶ is pressed. */}
+                {luckdrawSpineId && luckdrawStill && (
+                  <FullSpineViewerButton name={name} imageUrl={luckdrawStill} variant="tile" spineId={luckdrawSpineId} tileTy={0} tileFit="contain" label={t('modals.characterDetail.assetAnimatedBannerSplashArt')} ariaLabel={t('modals.characterDetail.viewAnimatedBannerSplashArtAria', { name })} className="w-full aspect-square" />
                 )}
                 {/* Banner Art and Banner Animation fused into one tile — the
                     art is what's shown either way, the video (when this

@@ -1,8 +1,9 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 // WHISPERING WISHES — features/map/routeImageRenderer.js
-// Saves the map's search routes as a PNG: the map tiles under the routes'
-// bounding box, each route in its colour and line style, numbered stops, the
-// warp rings of teleporter-aware legs, and a legend. Rendered from the tile
+// Saves the map's search routes as a PNG over the player's app background: the
+// map tiles under the routes' bounding box, each route in its colour and line
+// style, every stop as its map icon with its order badge, the warp rings of
+// teleporter-aware legs, and a legend with each search's icon. Rendered from the tile
 // pyramid directly rather than from the on-screen map, so the image is north-up
 // and framed on the routes whatever the view's zoom or rotation.
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -11,7 +12,7 @@ import { TILE_SIZE, NATIVE_ZOOM } from './tileMath.js';
 
 const MAX_SIDE = 1536;      // longest side of the map area, in output px
 const MIN_SIDE = 768;       // small routes are drawn larger, up to 2× the tile scale
-const PAD = 64;             // map px kept around the routes
+const EDGE = 32;            // output px kept between the outermost stops and the frame
 const MARGIN = 32;          // canvas edge to panels
 const GAP = 16;             // between panels
 const HEADER = 96;
@@ -63,23 +64,35 @@ const panel = (ctx, x, y, w, h, r = RADIUS) => {
 };
 
 /**
- * routes: [{ label, points: [{x, y, isStart?}], color, line, legs?, warps? }] in native map px.
+ * routes: [{ points: [{x, y, isStart?, iconUrl?}], color, line, legs?, warps? }] in native map px.
+ * legend: [{ label, iconUrl, color, line, stops }]. backdrop: { url, position } | null.
  * Returns a PNG Blob, or null when there is nothing to draw.
  */
-export async function renderRouteImage({ routes, tileBase, title, stopsLabel, footer }) {
+export async function renderRouteImage({ routes, legend, backdrop, tileBase, title, stopsLabel, footer }) {
   const all = routes.flatMap(r => [...r.points, ...(r.warps || []).filter(Boolean)]);
   if (!all.length) return null;
-  const minX = Math.min(...all.map(p => p.x)) - PAD;
-  const minY = Math.min(...all.map(p => p.y)) - PAD;
-  const maxX = Math.max(...all.map(p => p.x)) + PAD;
-  const maxY = Math.max(...all.map(p => p.y)) + PAD;
-  const side = Math.max(maxX - minX, maxY - minY);
+  const rawMinX = Math.min(...all.map(p => p.x));
+  const rawMinY = Math.min(...all.map(p => p.y));
+  const rawMaxX = Math.max(...all.map(p => p.x));
+  const rawMaxY = Math.max(...all.map(p => p.y));
+  const side = Math.max(rawMaxX - rawMinX, rawMaxY - rawMinY, 1);
   // Deepest tile level whose scale keeps the longest side within MAX_SIDE.
   let z = NATIVE_ZOOM;
   while (z > 0 && side * 2 ** (z - NATIVE_ZOOM) > MAX_SIDE) z--;
   const tileScale = 2 ** (z - NATIVE_ZOOM);
   const up = Math.min(2, Math.max(1, MIN_SIDE / (side * tileScale)));
   const k = tileScale * up; // output px per native map px
+  const pad = EDGE / k;
+  const minX = rawMinX - pad;
+  const minY = rawMinY - pad;
+  const maxX = rawMaxX + pad;
+  const maxY = rawMaxY + pad;
+  // Marker size follows how tightly the stops sit: full size when neighbours are 40 output px
+  // or more apart, down to half size on dense routes; order badges only near full size.
+  const stopsXY = routes.flatMap(r => r.points.filter(p => !p.isStart));
+  const nn = stopsXY.slice(0, 1000).map(a => Math.min(...stopsXY.filter(b => b !== a).map(b => Math.hypot(a.x - b.x, a.y - b.y)))).filter(Number.isFinite).sort((a, b) => a - b);
+  const f = nn.length ? Math.min(1, Math.max(0.5, (nn[nn.length >> 1] * k) / 40)) : 1;
+  const showBadge = f >= 0.75;
   const w = Math.max(MIN_SIDE, Math.round((maxX - minX) * k));
   const h = Math.round((maxY - minY) * k);
   // Map area centred in its panel when the route is narrower than MIN_SIDE.
@@ -87,12 +100,12 @@ export async function renderRouteImage({ routes, tileBase, title, stopsLabel, fo
 
   await Promise.all(['700 32px Rajdhani', '600 16px Rajdhani', '700 24px Cinzel', '700 12px "JetBrains Mono"']
     .map(f => document.fonts?.load(f).catch(() => null)));
-  const [appIco, ...tileImgs] = await (async () => {
+  const [appIco, bgImg, ...tileImgs] = await (async () => {
     const tx0 = Math.max(0, Math.floor((minX * tileScale) / TILE_SIZE));
     const ty0 = Math.max(0, Math.floor((minY * tileScale) / TILE_SIZE));
     const tx1 = Math.floor((maxX * tileScale) / TILE_SIZE);
     const ty1 = Math.floor((maxY * tileScale) / TILE_SIZE);
-    const jobs = [loadImage(APP_ICON)];
+    const jobs = [loadImage(APP_ICON), backdrop ? loadImage(backdrop.url) : null];
     for (let x = tx0; x <= tx1; x++) {
       for (let y = ty0; y <= ty1; y++) {
         jobs.push(loadImage(`${tileBase}map-tiles/Solaris_3/${z}/${y}/${x}.webp`).then(img => ({ img, x, y })));
@@ -106,13 +119,15 @@ export async function renderRouteImage({ routes, tileBase, title, stopsLabel, fo
   const chips = [];
   let cx = 0;
   let rows = 1;
-  for (const r of routes) {
-    const stops = stopsLabel(r.points.filter(p => !p.isStart).length);
+  const iconUrls = [...new Set([...routes.flatMap(r => [...r.points, ...(r.warps || []).filter(Boolean)].map(p => p.iconUrl)), ...legend.map(l => l.iconUrl)].filter(Boolean))];
+  const iconImgs = new Map((await Promise.all(iconUrls.map(u => loadImage(u).then(img => [u, img])))).filter(([, img]) => img));
+  for (const r of legend) {
+    const stops = stopsLabel(r.stops);
     measure.font = `600 16px ${DISPLAY}`;
     const lw = measure.measureText(r.label).width;
     measure.font = `12px ${DATA}`;
     const sw = measure.measureText(stops).width;
-    const cw = Math.min(w, 16 + 32 + 12 + lw + 12 + sw + 16);
+    const cw = Math.min(w, 12 + 32 + 12 + 32 + 12 + lw + 12 + sw + 16);
     if (cx > 0 && cx + cw > w) { cx = 0; rows++; }
     chips.push({ r, stops, x: cx, row: rows - 1, w: cw });
     cx += cw + 12;
@@ -128,9 +143,18 @@ export async function renderRouteImage({ routes, tileBase, title, stopsLabel, fo
   canvas.height = H;
   const ctx = canvas.getContext('2d');
 
-  // ── Backdrop: the app's near-black with a soft gold glow up top
+  // ── Backdrop: the player's app background at the app's 35% over its base colour, cover-fit
   ctx.fillStyle = BG;
   ctx.fillRect(0, 0, W, H);
+  if (bgImg) {
+    const sc = Math.max(W / bgImg.width, H / bgImg.height);
+    const [px, py] = (backdrop.position || '50% 50%').split(/\s+/).map(v => (parseFloat(v) || 50) / 100);
+    const dw = bgImg.width * sc;
+    const dh = bgImg.height * sc;
+    ctx.globalAlpha = 0.35;
+    ctx.drawImage(bgImg, (W - dw) * px, (H - dh) * (py ?? 0.5), dw, dh);
+    ctx.globalAlpha = 1;
+  }
   const glow = ctx.createRadialGradient(W / 2, 0, 0, W / 2, 0, W * 0.8);
   glow.addColorStop(0, 'rgba(237, 175, 24, 0.10)');
   glow.addColorStop(1, 'rgba(237, 175, 24, 0)');
@@ -201,14 +225,22 @@ export async function renderRouteImage({ routes, tileBase, title, stopsLabel, fo
       const from = via ? toOut(via) : pts[i - 1];
       stroke(from, pts[i], style.color, style.line);
       if (via) {
-        ctx.fillStyle = 'rgba(8, 8, 16, 0.6)';
+        // The teleporter warped to, as its own icon in a dashed ring.
+        ctx.fillStyle = 'rgba(11, 18, 32, 0.85)';
         ctx.strokeStyle = style.color;
         ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.arc(from.x, from.y, 12, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-        ctx.beginPath(); ctx.arc(from.x, from.y, 4, 0, Math.PI * 2); ctx.fillStyle = style.color; ctx.fill();
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath(); ctx.arc(from.x, from.y, 16 * f, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.setLineDash([]);
+        const ti = via.iconUrl && iconImgs.get(via.iconUrl);
+        if (ti) ctx.drawImage(ti, from.x - 12 * f, from.y - 12 * f, 24 * f, 24 * f);
       }
     }
-    // Stops: dark discs ringed in the route colour, numbered in the app's data font.
+  }
+  // Stops, drawn after every line so no route crosses an icon: the stop's map icon on a
+  // disc ringed in its route colour, with its order in a small badge.
+  for (const r of routes) {
+    const pts = r.points.map(toOut);
     let n = 0;
     r.points.forEach((p, i) => {
       const o = pts[i];
@@ -222,15 +254,22 @@ export async function renderRouteImage({ routes, tileBase, title, stopsLabel, fo
       n++;
       ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
       ctx.shadowBlur = 6;
-      ctx.fillStyle = 'rgba(11, 18, 32, 0.92)';
-      ctx.beginPath(); ctx.arc(o.x, o.y, 12, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = 'rgba(11, 18, 32, 0.85)';
+      ctx.beginPath(); ctx.arc(o.x, o.y, 16 * f, 0, Math.PI * 2); ctx.fill();
       ctx.shadowBlur = 0;
       ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.stroke();
-      ctx.fillStyle = TEXT;
-      ctx.font = `700 ${n > 99 ? 8 : 12}px ${DATA}`;
+      const img = p.iconUrl && iconImgs.get(p.iconUrl);
+      if (img) ctx.drawImage(img, o.x - 12 * f, o.y - 12 * f, 24 * f, 24 * f);
+      if (!showBadge) return;
+      const bx2 = o.x + 12 * f;
+      const by2 = o.y - 12 * f;
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.arc(bx2, by2, 8, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = BG;
+      ctx.font = `700 ${n > 99 ? 6 : 8}px ${DATA}`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(String(n), o.x, o.y + 1);
+      ctx.fillText(String(n), bx2, by2 + 1);
     });
   }
   ctx.restore();
@@ -248,12 +287,14 @@ export async function renderRouteImage({ routes, tileBase, title, stopsLabel, fo
     ctx.save();
     roundRect(ctx, x, y, c.w, CHIP, 12);
     ctx.clip();
-    stroke({ x: x + 16, y: my }, { x: x + 48, y: my }, c.r.color, c.r.line);
+    const li = c.r.iconUrl && iconImgs.get(c.r.iconUrl);
+    if (li) ctx.drawImage(li, x + 12, my - 16, 32, 32);
+    stroke({ x: x + 56, y: my }, { x: x + 88, y: my }, c.r.color, c.r.line);
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'left';
     ctx.fillStyle = TEXT;
     ctx.font = `600 16px ${DISPLAY}`;
-    ctx.fillText(c.r.label, x + 60, my + 1);
+    ctx.fillText(c.r.label, x + 100, my + 1);
     ctx.textAlign = 'right';
     ctx.fillStyle = MUTED;
     ctx.font = `12px ${DATA}`;

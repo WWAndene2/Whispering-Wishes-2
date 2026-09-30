@@ -27,6 +27,9 @@ import { MapSearchPopover } from './MapSearchPopover.jsx';
 import { buildSearchIndex, resolveFilterKey } from './mapSearch.js';
 import { optimizeRoute, teleportLegs } from './mapRoute.js';
 import { renderRouteImage, saveRouteImage } from './routeImageRenderer.js';
+import { DEFAULT_VISUAL_SETTINGS } from '../../hooks/useVisualSettings.js';
+import { VISUAL_SETTINGS_KEY } from '../../core/storageKeys.js';
+import { ANIMATED_BACKGROUNDS } from '../../data/banners.js';
 import { t } from '../../utils/i18n.js';
 import { haptic } from '../../utils/haptics.js';
 
@@ -65,8 +68,19 @@ const SEARCH_ROUTE_COLORS = ['#edaf18', '#22d3ee', '#f472b6', '#a3e635', '#fb923
 // Warp overhead, in map pixels, a teleport must beat before a route leg uses it
 // (teleporters sit a median ~124 px from their nearest neighbour).
 const TELEPORT_OVERHEAD_PX = 128;
+// The player's app background (Settings → backgrounds), for the route image backdrop: the
+// still image, or the poster of an animated one.
+const appBackdrop = () => {
+  let bg = DEFAULT_VISUAL_SETTINGS.appBg;
+  try { bg = JSON.parse(localStorage.getItem(VISUAL_SETTINGS_KEY) || '{}').appBg || bg; } catch {}
+  const url = bg?.type === 'animated'
+    ? (bg.poster || ANIMATED_BACKGROUNDS.find(a => a.id === bg.id)?.poster)
+    : bg?.url;
+  return url ? { url, position: typeof bg.objectPosition === 'string' ? bg.objectPosition : '50% 50%' } : null;
+};
 const TELEPORT_KINDS = new Set(['resonance-nexus', 'resonance-beacon']);
-// Boss spots (Overlord / Calamity) become fast-travel points once discovered — found, here.
+// Boss spots (Overlord / Calamity) are fast-travel points too. Like Nexuses and Beacons they
+// only work once discovered — found, here.
 const BOSS_KINDS = new Set(MAP_ICON_CATALOG.filter(k => k.tags?.includes('boss')).map(k => k.id));
 const SEARCH_ROUTE_DASH = { solid: [], dashed: [12, 8], dotted: [2, 6], dashdot: [12, 6, 2, 6] };
 
@@ -922,7 +936,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const order = (pts) => (start ? optimizeRoute([start, ...pts], 0) : optimizeRoute(pts));
     // With teleports on, each route gets `warps`: per leg, the teleporter it warps to (or null).
     const teleporters = routeTeleport
-      ? iconDrafts.filter(ic => (TELEPORT_KINDS.has(ic.kind) || (BOSS_KINDS.has(ic.kind) && foundIds.has(ic.id))) && (ic.floor == null || ic.floor === viewFloor)) : [];
+      ? iconDrafts.filter(ic => (TELEPORT_KINDS.has(ic.kind) || BOSS_KINDS.has(ic.kind)) && foundIds.has(ic.id) && (ic.floor == null || ic.floor === viewFloor)) : [];
     const withWarps = (r) => (routeTeleport ? { ...r, warps: teleportLegs(r.points, teleporters, TELEPORT_OVERHEAD_PX) } : r);
     if (routeLinked && groups.length > 1) {
       // One path through every group's icons; each leg is drawn in the style of the group its
@@ -933,7 +947,10 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       if (all.length + (start ? 1 : 0) < 2) return [];
       const points = order(all);
       const legs = points.slice(1).map(ic => ({ color: styleOf.get(ic.id).color, line: styleOf.get(ic.id).line }));
-      return [withWarps({ key: 'linked', color: groups[0].color, line: groups[0].line, points, legs, members: groups.map(g => g.key) })];
+      const memberOf = points.map(ic => styleOf.get(ic.id)?.key);
+      const memberStyles = Object.fromEntries(groups.map(g => [g.key, { color: g.color, line: g.line }]));
+      const memberStops = Object.fromEntries(groups.map(g => [g.key, memberOf.filter(k => k === g.key).length]));
+      return [withWarps({ key: 'linked', color: groups[0].color, line: groups[0].line, points, legs, members: groups.map(g => g.key), memberOf, memberStyles, memberStops })];
     }
     return groups
       .filter(g => g.pts.length + (start ? 1 : 0) >= 2)
@@ -946,8 +963,26 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const labelOf = (key) => (key === 'selection' ? searchSelected?.label : searchTags.find(tg => tg.key === key)?.label) || '';
     setRouteExporting(true);
     try {
+      const iconUrlOf = (kind) => {
+        const cat = kind && getIconCatalogEntry(kind);
+        return cat ? (BASE + cat.imageUrl.split('/').map(encodeURIComponent).join('/')).replace(/([^:])\/\//g, '$1/') : null;
+      };
+      const withIcons = (r) => ({
+        ...r,
+        points: r.points.map(p => (p.isStart ? p : { ...p, iconUrl: iconUrlOf(p.kind) })),
+        warps: r.warps?.map(v => v && { ...v, iconUrl: iconUrlOf(v.kind) }),
+      });
+      // Legend icon: the kind of the route's first stop (per member for a linked route).
+      const firstKindIn = (r, key) => (r.legs
+        ? r.points.find((p, i) => !p.isStart && r.memberOf?.[i] === key)?.kind
+        : r.points.find(p => !p.isStart)?.kind);
+      const legend = searchRoutes.flatMap(r => (r.key === 'linked'
+        ? r.members.map(m => ({ label: labelOf(m), iconUrl: iconUrlOf(firstKindIn(r, m)), ...r.memberStyles[m], stops: r.memberStops[m] }))
+        : [{ label: labelOf(r.key), iconUrl: iconUrlOf(firstKindIn(r)), color: r.color, line: r.line, stops: r.points.filter(p => !p.isStart).length }]));
       const blob = await renderRouteImage({
-        routes: searchRoutes.map(r => ({ ...r, label: r.key === 'linked' ? r.members.map(labelOf).join(' + ') : labelOf(r.key) })),
+        routes: searchRoutes.map(withIcons),
+        legend,
+        backdrop: appBackdrop(),
         tileBase: BASE,
         title: t('map.search.exportTitle'),
         stopsLabel: (count) => t('map.search.exportStops', { count }),

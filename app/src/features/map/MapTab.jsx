@@ -1036,6 +1036,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           if (!cat) return [];
           const dir = cat.imageUrl.replace(/\/[^/]+$/, '').split('/').map(encodeURIComponent).join('/');
           return [{
+            floor: ov.floor ?? 0, name: ov.name || cat.name,
             center: ov.center, scale: ov.scale ?? 1, rotation: ov.rotation || 0, opacity: ov.opacity ?? 1,
             naturalWidth: cat.naturalWidth, naturalHeight: cat.naturalHeight,
             pyramid: !!cat.pyramid, minZoom: cat.minZoom, maxZoom: cat.maxZoom,

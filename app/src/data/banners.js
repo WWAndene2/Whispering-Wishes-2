@@ -372,8 +372,9 @@ const EVENTS = {
     // Corrected 2026-08-25: previous end (Sep 10, matching only the v3.6-p1 banner window) was
     // wrong — the timeline's own bar-div pixel geometry (left/width px vs. the day-marker grid,
     // 32px = 1 day) shows this actually spans the FULL v3.6 version, both phases, ending Sep 29.
-    currentStart: '2026-08-20T08:00:00Z',
-    currentEnd: '2026-09-29T12:59:59Z',
+    // v3.7 run: the full version, same window as the version's other full-length events.
+    currentStart: '2026-09-30T03:00:00Z',
+    currentEnd: '2026-11-11T02:59:59Z',
     introducedVersion: '3.2',
     // Direct user request 2026-09-11: badge shows the flat total only — the "(8x50 Astrite
     // plateaus)" breakdown is dropped from display text. `stages` keeps that detail for
@@ -559,7 +560,8 @@ const EVENTS = {
   },
   // v3.7 events, from the 2026-09-29 community timeline snapshot (see BANNER_HISTORY's v3.7
   // comment for how its bar geometry maps to UTC). EventsTab keeps each one hidden until its
-  // currentStart. No cover art: the snapshot saved the page HTML only.
+  // currentStart. Cover art, names, rewards and the permanent events come from in-game
+  // screenshots of the Featured Event page (user-supplied 2026-09-30, player ID removed).
   giftsOfWakingMoon: {
     name: 'Gifts of Waking Moon',
     subtitle: '7 Day Login Event',
@@ -570,6 +572,7 @@ const EVENTS = {
     currentEnd: '2026-11-11T02:59:59Z',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-yellow-900/30',
     accentColor: 'yellow',
+    imageUrl: './banners/_shared/Gifts-Of-Waking-Moon.webp',
   },
   backToSolaris: {
     name: 'Back to Solaris',
@@ -583,26 +586,69 @@ const EVENTS = {
     accentColor: 'cyan',
   },
   dreamsInTheCapsuleArea: {
-    name: 'Dreams in the Capsule Area',
-    subtitle: 'Exploration Event',
-    description: 'v3.7 limited-time exploration event.',
+    name: 'Dreams in the Capsule',
+    subtitle: 'Featured Exploration Event',
+    description: "Explore the Heart Realms of Mengzhou, reshaped by the Court of Savantae and Hsin, and collect CSC Cipherlocks.",
     resetType: 'Limited-time',
     color: 'lime',
     currentStart: '2026-09-30T03:00:00Z',
     currentEnd: '2026-11-11T02:59:59Z',
+    rewards: '500 Astrite',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-lime-900/30',
     accentColor: 'lime',
+    imageUrl: './banners/_shared/Dreams-In-The-Capsule.webp',
   },
   cubieWars: {
     name: 'Cubie Wars',
-    subtitle: 'Leisure Event',
-    description: 'v3.7 limited-time leisure event.',
+    subtitle: 'Featured Leisure Event',
+    description: "Cubie Warriors battle with magical items on the Wooly Stage built by Encore and the Second Coming of Solaris.",
     resetType: 'Limited-time',
     color: 'purple',
     currentStart: '2026-09-30T03:00:00Z',
     currentEnd: '2026-11-12T02:59:59Z',
+    rewards: '1200 Astrite',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-purple-900/30',
     accentColor: 'purple',
+    imageUrl: './banners/_shared/Cubie-Wars.webp',
+  },
+  // Same time left as Cubie Wars on the screenshots (41d 18h), so the same end.
+  moonlitPath: {
+    name: 'Moonlit Path',
+    subtitle: 'Featured Event',
+    description: 'Obtain Moonlit Rings to reach milestone rewards, including a Selectable Resonator.',
+    resetType: 'Limited-time',
+    color: 'cyan',
+    currentStart: '2026-09-30T03:00:00Z',
+    currentEnd: '2026-11-12T02:59:59Z',
+    gradient: 'from-neutral-900/30 via-neutral-900/20 to-cyan-900/30',
+    accentColor: 'cyan',
+    imageUrl: './banners/_shared/Moonlit-Path.webp',
+  },
+  bloomsForTheShadow: {
+    name: 'Blooms for the Shadow',
+    subtitle: 'Permanent Leisure Event',
+    description: 'Meet the Nexus Fox Shadow looming over the Simulacrum Nexus of Mengzhou. Unlocked through the Main Quest "Simulacrum of the Heart".',
+    resetType: 'Permanent',
+    color: 'orange',
+    currentStart: '2026-09-30T03:00:00Z',
+    permanent: true,
+    rewards: '400 Astrite',
+    gradient: 'from-neutral-900/30 via-neutral-900/20 to-orange-900/30',
+    accentColor: 'orange',
+    imageUrl: './banners/_shared/Blooms-For-The-Shadow.webp',
+  },
+  pastDreamsTracedSeals: {
+    name: 'Past Dreams, Traced Seals',
+    subtitle: 'Permanent Leisure Event',
+    description: 'Join Suoming in recording the sights of the Simulacrum Nexus of Mengzhou and the long-sealed memories of the Ten Seals Covenant.',
+    resetType: 'Permanent',
+    color: 'yellow',
+    currentStart: '2026-09-30T03:00:00Z',
+    permanent: true,
+    rewards: '180 Astrite',
+    gradient: 'from-neutral-900/30 via-neutral-900/20 to-yellow-900/30',
+    accentColor: 'yellow',
+    imageUrl: './banners/_shared/Past-Dreams-Traced-Seals.webp',
   },
   artisansSearch: {
     name: "Artisan's Search",

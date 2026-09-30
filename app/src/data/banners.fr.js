@@ -120,5 +120,64 @@ export const EVENTS_FR = {
     name: 'Purification d’Accord',
     subtitle: 'Événement à durée limitée de double récompense d’Échos',
     description: 'Dépensez des Plaques d’Ondes pour réclamer des récompenses doublées après avoir terminé un défi de Suppression Tacet.',
+  },  giftsOfWakingMoon: {
+    name: 'Cadeaux de la Lune Éveillée',
+    subtitle: 'Événement de connexion sur 7 jours',
+    description: 'Pendant l’événement, connectez-vous pour réclamer les récompenses de connexion du jour depuis la page de l’événement.',
+  },
+  backToSolaris: {
+    name: 'Retour à Solaris',
+    subtitle: 'Événement web',
+    description: 'Événement web à durée limitée de la v3.7.',
+  },
+  dreamsInTheCapsuleArea: {
+    name: 'Rêves dans la Capsule',
+    subtitle: 'Événement d’exploration',
+    description: 'Explorez les Royaumes du Cœur de Mengzhou, refaçonnés par la Cour de Savantae et Hsin, et récoltez des Verrous chiffrés CSC.',
+  },
+  cubieWars: {
+    name: 'Guerre des Cubie',
+    subtitle: 'Événement de détente',
+    description: 'Les Guerriers Cubie s’affrontent avec des objets magiques sur la Scène Laineuse bâtie par Encore et le Second Avènement de Solaris.',
+  },
+  moonlitPath: {
+    name: 'Sentier au Clair de Lune',
+    subtitle: 'Événement',
+    description: 'Obtenez des Anneaux lunaires pour atteindre des paliers de récompenses, dont un Résonateur au choix.',
+  },
+  bloomsForTheShadow: {
+    name: 'Floraisons pour l’Ombre',
+    subtitle: 'Événement de détente permanent',
+    description: 'Rencontrez l’Ombre du Renard du Nexus qui surplombe le Nexus du Simulacre de Mengzhou. Débloqué par la quête principale « Simulacre du Cœur ».',
+  },
+  pastDreamsTracedSeals: {
+    name: 'Rêves passés, Sceaux retracés',
+    subtitle: 'Événement de détente permanent',
+    description: 'Accompagnez Suoming pour consigner les paysages du Nexus du Simulacre de Mengzhou et les souvenirs longtemps scellés du Pacte des Dix Sceaux.',
+  },
+  artisansSearch: {
+    name: 'La Quête de l’Artisan',
+    subtitle: 'Événement de combat',
+    description: 'Événement de combat à durée limitée de la v3.7.',
+  },
+  wakingMoonFishing: {
+    name: 'Pêche de la Lune Éveillée',
+    subtitle: 'Événement web',
+    description: 'Événement web à durée limitée de la v3.7.',
+  },
+  echoErase: {
+    name: 'Effacement d’Échos',
+    subtitle: 'Événement de détente',
+    description: 'Événement de détente à durée limitée de la v3.7.',
+  },
+  giftsOfSingingDrizzle: {
+    name: 'Cadeaux de la Bruine Chantante',
+    subtitle: 'Événement de connexion à durée limitée',
+    description: 'Pendant l’événement, connectez-vous pour réclamer les récompenses de connexion du jour depuis la page de l’événement.',
+  },
+  beyondTheWavesXuanfang: {
+    name: 'Au-delà des Vagues : Terre de Xuanfang',
+    subtitle: 'Événement d’exploration',
+    description: 'Événement d’exploration à durée limitée de la v3.7.',
   },
 };

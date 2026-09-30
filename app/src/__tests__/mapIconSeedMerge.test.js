@@ -90,7 +90,7 @@ describe('seed removals', () => {
     const seen = new Set();
     for (const ic of DEFAULT_ICON_DRAFTS) {
       const key = `${ic.kind}|${ic.x}|${ic.y}|${ic.floor}`;
-      if (ic.id !== 'icon-mulnd1fy-3iz') expect(seen.has(key), ic.id).toBe(false);
+      expect(seen.has(key), ic.id).toBe(false);
       seen.add(key);
     }
   });

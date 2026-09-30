@@ -122,7 +122,8 @@
 // 2026-09-29 export sat on the exact pixel of another icon of the same kind — one map click had
 // created two icons (stamp and "add many" both active). The second icon of each pair was removed
 // from the seed and ICON_SEED_ADDITIONS[8], and from players' saved maps through
-// ICON_SEED_REMOVALS[10].
+// ICON_SEED_REMOVALS[10]. Same for a Windchimer pair on Mt-Firmament created 76 ms apart by
+// stamp mode alone — one tap delivered as two clicks.
 //
 // DEFAULT_PAINT_STROKES is empty - the 552 strokes from that export (3232
 // points across blur/200, fade/200, blur/113) were baked directly into
@@ -1353,7 +1354,6 @@ export const DEFAULT_ICON_DRAFTS = [
   { id: 'icon-mulnbpch-78n', kind: 'windchimer', category: 'Collectible', subcategory: 'Windchimer', label: '', x: 4965, y: 9461, zoneId: 'huanglong-sub-1', floor: 0, locked: true, inTree: true },
   { id: 'icon-mulnbvwf-4ru', kind: 'windchimer', category: 'Collectible', subcategory: 'Windchimer', label: '', x: 4974, y: 9457, zoneId: 'huanglong-sub-1', floor: 0, locked: true, inTree: true },
   { id: 'icon-mulnd1du-77r', kind: 'windchimer', category: 'Collectible', subcategory: 'Windchimer', label: '', x: 4969, y: 9555, zoneId: 'huanglong-sub-1', floor: 0, locked: true, inTree: true },
-  { id: 'icon-mulnd1fy-3iz', kind: 'windchimer', category: 'Collectible', subcategory: 'Windchimer', label: '', x: 4969, y: 9555, zoneId: 'huanglong-sub-1', floor: 0, locked: true, inTree: true },
   { id: 'icon-mulndglk-3vq', kind: 'windchimer', category: 'Collectible', subcategory: 'Windchimer', label: '', x: 4970, y: 9547, zoneId: 'huanglong-sub-1', floor: 0, locked: true, inTree: true },
   { id: 'icon-mulndzgk-66g', kind: 'windchimer', category: 'Collectible', subcategory: 'Windchimer', label: '', x: 4910, y: 9598, zoneId: 'huanglong-sub-1', floor: 0, locked: true, inTree: true },
   { id: 'icon-mulneu2m-5p6', kind: 'windchimer', category: 'Collectible', subcategory: 'Windchimer', label: '', x: 4863, y: 9569, zoneId: 'huanglong-sub-1', floor: 0, locked: true, inTree: true },
@@ -1670,7 +1670,6 @@ export const ICON_SEED_ADDITIONS = {
     'icon-mulnbpch-78n',
     'icon-mulnbvwf-4ru',
     'icon-mulnd1du-77r',
-    'icon-mulnd1fy-3iz',
     'icon-mulndglk-3vq',
     'icon-mulndzgk-66g',
     'icon-mulneu2m-5p6',
@@ -1955,7 +1954,6 @@ export const ICON_SEED_CHANGES = {
     ['icon-mulnbpch-78n', 'floor', null, 0],
     ['icon-mulnbvwf-4ru', 'floor', null, 0],
     ['icon-mulnd1du-77r', 'floor', null, 0],
-    ['icon-mulnd1fy-3iz', 'floor', null, 0],
     ['icon-mulndglk-3vq', 'floor', null, 0],
     ['icon-mulndzgk-66g', 'floor', null, 0],
     ['icon-mulneu2m-5p6', 'floor', null, 0],
@@ -1995,6 +1993,7 @@ export const ICON_SEED_CHANGES = {
 // while the icon is still at (x, y) — an icon the player moved is theirs and stays.
 export const ICON_SEED_REMOVALS = {
   10: [
+    ['icon-mulnd1fy-3iz', 4969, 9555],
     ['icon-mum0dk26-63f', 8533, 10831],
     ['icon-mum0dryd-1gx', 8507, 10812],
     ['icon-mum0f3sz-6tf', 8463, 10855],

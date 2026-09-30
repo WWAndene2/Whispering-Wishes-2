@@ -3362,10 +3362,16 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const container = map.getContainer();
     const prevCursor = container.style.cursor;
     container.style.cursor = 'crosshair';
+    // One tap can reach Leaflet as two clicks (touch, then the emulated mouse click) a few dozen
+    // ms apart — a second click on the same pixel right after the first is dropped, not stamped.
+    let lastStamp = { x: null, y: null, t: 0 };
     const onClick = (e) => {
       if (Date.now() < suppressMapClickUntilRef.current) return;
       const pt = map.project(e.latlng, NATIVE_ZOOM);
       const [x, y] = clampToBounds(Math.round(pt.x), Math.round(pt.y), placementBounds);
+      const nowMs = Date.now();
+      if (x === lastStamp.x && y === lastStamp.y && nowMs - lastStamp.t < 400) return;
+      lastStamp = { x, y, t: nowMs };
       const zone = findEnclosingZone(x, y);
       const floor = zone ? resolveZoneFloor(zone) : null;
       const icon = {

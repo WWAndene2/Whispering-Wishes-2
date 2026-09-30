@@ -77,7 +77,7 @@
     "header": "Buscar",
     "route": "Mostrar la ruta optimizada",
     "routeHide": "Ocultar la ruta",
-    "routeStops": "Ruta: {{count}} paradas en esta planta",
+    "routeStops": "Ruta: {{count}} paradas",
     "routeNote": "Orden en línea recta entre los iconos, el más corto encontrado — no el camino real del juego.",
     "tagStyle": "Estilo de {{name}}",
     "tagRoute": "Ruta",
@@ -108,7 +108,8 @@
     "exportStops": "{{count}} paradas",
     "exportSaved": "Imagen de la ruta guardada",
     "exportFailed": "No se pudo guardar la imagen de la ruta",
-    "lineArrow": "Flechas"
+    "lineArrow": "Flechas",
+    "surface": "Superficie"
   },
   "card": {
     "markFound": "Marcar como encontrado",

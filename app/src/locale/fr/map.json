@@ -77,7 +77,7 @@
     "header": "Recherche",
     "route": "Afficher l'itinéraire optimisé",
     "routeHide": "Masquer l'itinéraire",
-    "routeStops": "Itinéraire : {{count}} étapes sur cet étage",
+    "routeStops": "Itinéraire : {{count}} étapes",
     "routeNote": "Ordre en ligne droite entre les icônes, le plus court trouvé — pas le chemin réel en jeu.",
     "tagStyle": "Style de {{name}}",
     "tagRoute": "Itinéraire",
@@ -108,7 +108,8 @@
     "exportStops": "{{count}} arrêts",
     "exportSaved": "Image de l’itinéraire enregistrée",
     "exportFailed": "Impossible d’enregistrer l’image de l’itinéraire",
-    "lineArrow": "Flèches"
+    "lineArrow": "Flèches",
+    "surface": "Surface"
   },
   "card": {
     "markFound": "Marquer trouvé",

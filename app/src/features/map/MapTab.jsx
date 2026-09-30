@@ -28,6 +28,7 @@ import { buildSearchIndex, resolveFilterKey } from './mapSearch.js';
 import { optimizeRoute, teleportLegs, progressionRoute } from './mapRoute.js';
 import { renderRouteImage, saveRouteImage } from './routeImageRenderer.js';
 import { ROUTE_LINE_DASH, drawArrowheads } from './routeLineStyle.js';
+import { drawFloorBubble } from './floorBubble.js';
 import { DEFAULT_VISUAL_SETTINGS } from '../../hooks/useVisualSettings.js';
 import { VISUAL_SETTINGS_KEY } from '../../core/storageKeys.js';
 import { ANIMATED_BACKGROUNDS } from '../../data/banners.js';
@@ -265,6 +266,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   const [routeStartPicking, setRouteStartPicking] = useState(false);
   useEffect(() => { try { localStorage.setItem('ww-map-route-start', JSON.stringify(routeStart)); } catch {} }, [routeStart]);
   useEffect(() => { try { localStorage.setItem('ww-map-route-linked', routeLinked ? '1' : '0'); } catch {} }, [routeLinked]);
+  // Floor-change bubbles drawn on the map this frame, in container px, for tap hit-testing.
+  const floorBubblesRef = useRef([]);
   const [routeTeleport, setRouteTeleport] = useState(() => { try { return localStorage.getItem('ww-map-route-teleport') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('ww-map-route-teleport', routeTeleport ? '1' : '0'); } catch {} }, [routeTeleport]);
   // Saved searches, shown as tags under the search bar and applied to the map
@@ -951,7 +954,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     });
     // The chosen start counts only on its own floor (null floor = every floor).
     const start = routeStart && onFloor(routeStart.floor)
-      ? { id: '__route-start', x: routeStart.x, y: routeStart.y, isStart: true } : null;
+      ? { id: '__route-start', x: routeStart.x, y: routeStart.y, floor: routeStart.floor, isStart: true } : null;
     // Returns the route through `pts`, prefixed with the chosen start when there is one.
     // Region of each icon (see REGION_PROGRESSION); a region is unlocked once any of its icons is found.
     const zoneById = new Map(allZones.map(z => [z.id, z]));
@@ -1000,7 +1003,9 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       .filter(g => g.pts.length + (start ? 1 : 0) >= 2)
       .map(g => withWarps({ key: g.key, color: g.color, line: g.line, points: order(g.pts) }));
   }, [searchSelected, searchRouteOn, searchTags, searchIndex, iconDrafts, hideFound, foundIds, routeStart, routeLinked, routeTeleport, allZones]);
-  const searchRoutes = useMemo(() => buildSearchRoutes(viewFloor), [buildSearchRoutes, viewFloor]);
+  // Routes run across every floor: the map draws the legs on the floor in view, and a leg that
+  // leaves it as a bubble naming the next map (see drawFloorBubble).
+  const searchRoutes = useMemo(() => buildSearchRoutes(null), [buildSearchRoutes]);
   // Saves every route on the map as one PNG (routeImageRenderer.js).
   const [routeExporting, setRouteExporting] = useState(false);
   const handleExportRoutes = useCallback(async () => {
@@ -2582,6 +2587,10 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         ctx.stroke();
         if (line === 'arrow') drawArrowheads(ctx, a, b, color);
       };
+      // A stop is on the floor in view when its floor matches (no floor = every floor).
+      const onView = (p) => p.floor == null || p.floor === viewFloor;
+      const floorName = (f) => (!f ? t('map.search.surface') : (overlayDrafts.find(o => (o.floor ?? 0) === f)?.name || t('map.card.floor', { floor: f })));
+      const bubbles = [];
       searchRoutes.forEach((r) => {
         const pts = r.points.map(ic => map.latLngToContainerPoint(map.unproject([ic.x, ic.y], NATIVE_ZOOM)));
         ctx.save();
@@ -2589,39 +2598,41 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         ctx.lineJoin = 'round';
         ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
         ctx.shadowBlur = 4;
-        if (r.legs || r.warps) {
-          // A warped leg starts at its teleporter, marked with a ring, instead of the previous stop.
-          for (let i = 1; i < pts.length; i++) {
-            const style = r.legs ? r.legs[i - 1] : r;
-            const via = r.warps && r.warps[i - 1];
-            const from = via ? map.latLngToContainerPoint(map.unproject([via.x, via.y], NATIVE_ZOOM)) : pts[i - 1];
-            strokeLeg(from, pts[i], style.color, style.line);
-            if (via) {
-              ctx.setLineDash([]);
-              ctx.strokeStyle = style.color;
-              ctx.beginPath();
-              ctx.arc(from.x, from.y, 12, 0, Math.PI * 2);
-              ctx.stroke();
-            }
+        for (let i = 1; i < pts.length; i++) {
+          const style = r.legs ? r.legs[i - 1] : r;
+          const a = r.points[i - 1];
+          const b = r.points[i];
+          // Leaving the floor in view: a bubble at the last stop here, toward the next map.
+          if (onView(a) && !onView(b)) {
+            bubbles.push({ at: pts[i - 1], toward: pts[i], color: style.color, label: floorName(b.floor), target: b });
+            continue;
           }
-        } else {
-          ctx.strokeStyle = r.color;
-          ctx.lineCap = r.line === 'dotted' ? 'round' : 'butt';
-          ctx.setLineDash(ROUTE_LINE_DASH[r.line] || []);
-          ctx.beginPath();
-          pts.forEach((pt, i) => (i ? ctx.lineTo(pt.x, pt.y) : ctx.moveTo(pt.x, pt.y)));
-          ctx.stroke();
-          if (r.line === 'arrow') for (let i = 1; i < pts.length; i++) drawArrowheads(ctx, pts[i - 1], pts[i], r.color);
+          if (!onView(a) || !onView(b)) continue;
+          // A warped leg starts at its teleporter, marked with a ring, instead of the previous stop.
+          const via = r.warps && r.warps[i - 1];
+          const from = via ? map.latLngToContainerPoint(map.unproject([via.x, via.y], NATIVE_ZOOM)) : pts[i - 1];
+          strokeLeg(from, pts[i], style.color, style.line);
+          if (via) {
+            ctx.setLineDash([]);
+            ctx.strokeStyle = style.color;
+            ctx.beginPath();
+            ctx.arc(from.x, from.y, 12, 0, Math.PI * 2);
+            ctx.stroke();
+          }
         }
         // Start of the route: a filled dot, ringed white when it is the player's chosen start.
-        ctx.setLineDash([]);
-        ctx.fillStyle = r.legs ? r.legs[0].color : r.color;
-        ctx.beginPath();
-        ctx.arc(pts[0].x, pts[0].y, 6, 0, Math.PI * 2);
-        ctx.fill();
-        if (r.points[0].isStart) { ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke(); }
+        if (onView(r.points[0])) {
+          ctx.setLineDash([]);
+          ctx.fillStyle = r.legs ? r.legs[0].color : r.color;
+          ctx.beginPath();
+          ctx.arc(pts[0].x, pts[0].y, 6, 0, Math.PI * 2);
+          ctx.fill();
+          if (r.points[0].isStart) { ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke(); }
+        }
         ctx.restore();
       });
+      // Floor-change bubbles, drawn last so they sit above icons; their boxes are kept for taps.
+      floorBubblesRef.current = bubbles.map(bb => drawFloorBubble(ctx, bb));
 
       const ICON_BASE_PX = 28;
       const trigger = () => overlayRedrawRef.current();
@@ -2705,7 +2716,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       map.off('move zoom viewreset zoomend resize', draw);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [overlayDrafts, viewFloor, mapReady, iconDrafts, iconFiltersOff, searchFocusIds, searchStepIconId, foundIds, hideFound, pins, pinCardId, searchRoutes]);
+  }, [overlayDrafts, viewFloor, mapReady, iconDrafts, iconFiltersOff, searchFocusIds, searchStepIconId, foundIds, hideFound, pins, pinCardId, searchRoutes, t]);
 
   // Cleanup shared canvas + any pending zone-arm timer on unmount.
   useEffect(() => {
@@ -3744,6 +3755,14 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         return;
       }
       const pt = map.latLngToContainerPoint(e.latlng);
+      // A floor-change bubble: go to its map, on the route's next stop.
+      const bubble = floorBubblesRef.current.find(bb => pt.x >= bb.x && pt.x <= bb.x + bb.w && pt.y >= bb.y && pt.y <= bb.y + bb.h);
+      if (bubble) {
+        const idx = searchStepList.findIndex(ic => ic.id === bubble.target.id);
+        if (idx >= 0) setSearchStep(idx);
+        handleFlyToIcon(bubble.target);
+        return;
+      }
       const pin = pinAtPoint(pt.x, pt.y);
       setPinCardId(pin ? pin.id : null);
       const ic = pin ? null : iconAtPoint(pt.x, pt.y);
@@ -3751,7 +3770,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     };
     map.on('click', onClick);
     return () => map.off('click', onClick);
-  }, [authorMode, mapReady, iconAtPoint, pinAtPoint, pinPlacing, viewFloor, routeStartPicking]);
+  }, [authorMode, mapReady, iconAtPoint, pinAtPoint, pinPlacing, viewFloor, routeStartPicking, searchStepList, handleFlyToIcon]);
   useEffect(() => { if (authorMode) { setIconCardId(null); setPinCardId(null); setPinPlacing(false); setPinEditor(null); } }, [authorMode]);
 
   // ── Long-press to delete (author mode) ────────────────────────────────

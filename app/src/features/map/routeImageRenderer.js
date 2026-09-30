@@ -70,7 +70,7 @@ const panel = (ctx, x, y, w, h, r = RADIUS) => {
  * legend: [{ label, iconUrl, color, line, stops }]. backdrop: { url, position } | null.
  * Returns a PNG Blob, or null when there is nothing to draw.
  */
-export async function renderRouteImage({ routes, legend, backdrop, overlays = [], floorMask = false, tileBase, title, stopsLabel, footer }) {
+export async function renderRouteImage({ routes, legend, backdrop, overlays = [], tileBase, title, stopsLabel, footer }) {
   const all = routes.flatMap(r => [...r.points, ...(r.warps || []).filter(Boolean)]);
   if (!all.length) return null;
   const rawMinX = Math.min(...all.map(p => p.x));
@@ -211,11 +211,6 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
   }
   ctx.restore();
   ctx.filter = 'none';
-  // Off the ground floor the base map is dimmed behind the sub-maps, as on screen.
-  if (floorMask) {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
-    ctx.fillRect(mx, mapY, w, h);
-  }
   // Sub-map overlays (Mengzhou, Lahai Roi…): each overlay's tiles at the pyramid level
   // closest to 1:1 with the output, placed with its centre, scale and rotation.
   for (const ov of overlays) {

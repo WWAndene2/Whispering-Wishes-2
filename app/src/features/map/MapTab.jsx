@@ -932,13 +932,16 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   // is on) and one per active saved tag with its route on, each in its own colour and line
   // style. Only icons on the floor in view are routed; found icons are left out while
   // "hide found" is on.
-  const searchRoutes = useMemo(() => {
+  // Builds the routes through icons on `floor` (null = every floor: the route image covers
+  // stops on every sub-map, the live map only the floor in view).
+  const buildSearchRoutes = useCallback((floor) => {
+    const onFloor = (f) => floor == null || f == null || f === floor;
     // Each group: the icons one route covers and the style it is drawn in.
     const groups = [];
     const addGroup = (key, ids, color, line) => {
       const wanted = new Set(ids);
       const pts = iconDrafts.filter(ic => wanted.has(ic.id)
-        && (ic.floor == null || ic.floor === viewFloor)
+        && onFloor(ic.floor)
         && !(hideFound && foundIds.has(ic.id)));
       if (pts.length) groups.push({ key, color, line, pts });
     };
@@ -947,7 +950,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       if (tg.active && tg.route) addGroup(tg.key, resolveFilterKey(searchIndex, tg.key), tg.color || SEARCH_ROUTE_COLORS[i % SEARCH_ROUTE_COLORS.length], tg.line || 'dashed');
     });
     // The chosen start counts only on its own floor (null floor = every floor).
-    const start = routeStart && (routeStart.floor == null || routeStart.floor === viewFloor)
+    const start = routeStart && onFloor(routeStart.floor)
       ? { id: '__route-start', x: routeStart.x, y: routeStart.y, isStart: true } : null;
     // Returns the route through `pts`, prefixed with the chosen start when there is one.
     // Region of each icon (see REGION_PROGRESSION); a region is unlocked once any of its icons is found.
@@ -977,7 +980,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     });
     // With teleports on, each route gets `warps`: per leg, the teleporter it warps to (or null).
     const teleporters = routeTeleport
-      ? iconDrafts.filter(ic => (TELEPORT_KINDS.has(ic.kind) || BOSS_KINDS.has(ic.kind)) && foundIds.has(ic.id) && (ic.floor == null || ic.floor === viewFloor)) : [];
+      ? iconDrafts.filter(ic => (TELEPORT_KINDS.has(ic.kind) || BOSS_KINDS.has(ic.kind)) && foundIds.has(ic.id) && onFloor(ic.floor)) : [];
     const withWarps = (r) => (routeTeleport ? { ...r, warps: teleportLegs(r.points, teleporters, TELEPORT_OVERHEAD_PX) } : r);
     if (routeLinked && groups.length > 1) {
       // One path through every group's icons; each leg is drawn in the style of the group its
@@ -996,7 +999,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     return groups
       .filter(g => g.pts.length + (start ? 1 : 0) >= 2)
       .map(g => withWarps({ key: g.key, color: g.color, line: g.line, points: order(g.pts) }));
-  }, [searchSelected, searchRouteOn, searchTags, searchIndex, iconDrafts, viewFloor, hideFound, foundIds, routeStart, routeLinked, routeTeleport, allZones]);
+  }, [searchSelected, searchRouteOn, searchTags, searchIndex, iconDrafts, hideFound, foundIds, routeStart, routeLinked, routeTeleport, allZones]);
+  const searchRoutes = useMemo(() => buildSearchRoutes(viewFloor), [buildSearchRoutes, viewFloor]);
   // Saves every route on the map as one PNG (routeImageRenderer.js).
   const [routeExporting, setRouteExporting] = useState(false);
   const handleExportRoutes = useCallback(async () => {
@@ -1004,6 +1008,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const labelOf = (key) => (key === 'selection' ? searchSelected?.label : searchTags.find(tg => tg.key === key)?.label) || '';
     setRouteExporting(true);
     try {
+      const routes = buildSearchRoutes(null);
       const iconUrlOf = (kind) => {
         const cat = kind && getIconCatalogEntry(kind);
         return cat ? (BASE + cat.imageUrl.split('/').map(encodeURIComponent).join('/')).replace(/([^:])\/\//g, '$1/') : null;
@@ -1017,14 +1022,16 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       const firstKindIn = (r, key) => (r.legs
         ? r.points.find((p, i) => !p.isStart && r.memberOf?.[i] === key)?.kind
         : r.points.find(p => !p.isStart)?.kind);
-      const legend = searchRoutes.flatMap(r => (r.key === 'linked'
+      const legend = routes.flatMap(r => (r.key === 'linked'
         ? r.members.map(m => ({ label: labelOf(m), iconUrl: iconUrlOf(firstKindIn(r, m)), ...r.memberStyles[m], stops: r.memberStops[m] }))
         : [{ label: labelOf(r.key), iconUrl: iconUrlOf(firstKindIn(r)), color: r.color, line: r.line, stops: r.points.filter(p => !p.isStart).length }]));
+      // Sub-maps drawn: the ground floor's, plus every one whose floor holds a stop.
+      const stopFloors = new Set(routes.flatMap(r => [...r.points, ...(r.warps || []).filter(Boolean)]).map(p => p.floor).filter(f => f != null));
       const blob = await renderRouteImage({
-        routes: searchRoutes.map(withIcons),
+        routes: routes.map(withIcons),
         legend,
         backdrop: appBackdrop(),
-        overlays: overlayDrafts.filter(ov => (ov.floor ?? 0) === viewFloor).flatMap((ov) => {
+        overlays: overlayDrafts.filter(ov => (ov.floor ?? 0) === 0 || stopFloors.has(ov.floor)).flatMap((ov) => {
           const cat = OVERLAY_CATALOG.find(c => c.id === ov.catalogId);
           if (!cat) return [];
           const dir = cat.imageUrl.replace(/\/[^/]+$/, '').split('/').map(encodeURIComponent).join('/');
@@ -1035,7 +1042,6 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
             tileUrl: (z, y, x) => (BASE + dir + (z == null ? `/lossless/${y}/${x}.png` : `/lossless/${z}/${y}/${x}.png`)).replace(/([^:])\/\//g, '$1/'),
           }];
         }),
-        floorMask: viewFloor !== 0,
         tileBase: BASE,
         title: t('map.search.exportTitle'),
         stopsLabel: (count) => t('map.search.exportStops', { count }),
@@ -1050,7 +1056,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     } finally {
       setRouteExporting(false);
     }
-  }, [searchRoutes, routeExporting, searchSelected, searchTags, t, showToast, overlayDrafts, viewFloor]);
+  }, [searchRoutes, buildSearchRoutes, routeExporting, searchSelected, searchTags, t, showToast, overlayDrafts]);
   // The route the stepper walks: the selection's own, or the linked route when the selection is part of it.
   const selectionRoute = searchRoutes.find(r => r.key === 'selection' || (r.key === 'linked' && r.members.includes('selection'))) || null;
   const routeStopCount = (r) => r.points.filter(p => !p.isStart).length;

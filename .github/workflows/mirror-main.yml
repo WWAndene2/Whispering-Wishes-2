@@ -5,6 +5,12 @@ on:
     branches:
       - main
 
+# One run at a time: a duplicate trigger queues behind the running push instead of
+# racing it to the mirror (two concurrent pushes made one of them fail).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   mirror:
     runs-on: ubuntu-latest

@@ -32,6 +32,13 @@ on:
       - '.github/workflows/purge-jsdelivr.yml'
   workflow_dispatch:
 
+# One run per commit: a second trigger for the same push (GitHub has delivered some
+# main pushes twice) cancels the first. Keyed on the commit, not the branch, because
+# each run purges only its own push's diff; a newer push must not cancel it.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.sha }}
+  cancel-in-progress: true
+
 jobs:
   purge:
     runs-on: ubuntu-latest

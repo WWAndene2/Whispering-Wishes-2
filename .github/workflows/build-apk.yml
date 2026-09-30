@@ -15,6 +15,12 @@ on:
 permissions:
   contents: write # needed to publish the GitHub Release the in-app updater reads
 
+# One run per workflow and branch: a second trigger for the same push (GitHub has
+# delivered some main pushes twice) or a newer push cancels the run in progress.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-apk:
     runs-on: ubuntu-latest

@@ -19,6 +19,12 @@ on:
       - '.github/workflows/sync-r2.yml'
   workflow_dispatch:
 
+# One run per workflow and branch: a second trigger for the same push (GitHub has
+# delivered some main pushes twice) or a newer push cancels the run in progress.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   sync-r2:
     runs-on: ubuntu-latest

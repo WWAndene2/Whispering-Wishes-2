@@ -1608,6 +1608,21 @@ const CONVENE_ANIMATIONS = {
 };
 const getConveneAnimation = (name) => CONVENE_ANIMATIONS[name] || null;
 
+// Animated profile assets per character, shown in the character detail modal's Assets section:
+// bannerSplashArt is the animated gacha-banner splash art ("Animated Banner SplashArt"), fullSprite
+// the animated full-body sprite (its poster is the collection sprite), bannerSplashArtPoster the splash
+// art's first frame shown before playback. The clips are transparent VP9 WebM loops cut out of user-supplied screen
+// recordings; they live under portraits/, which the APK excludes and the service worker serves from
+// jsDelivr.
+const ANIMATED_ASSETS = {
+  Hsin: {
+    bannerSplashArt: './portraits/hsin/Hsin_Animated_Banner_SplashArt.webm',
+    bannerSplashArtPoster: './portraits/hsin/Hsin_Animated_Banner_SplashArt.webp',
+    fullSprite: './portraits/hsin/Hsin_Animated_Fullsprite.webm',
+  },
+};
+const getAnimatedAssets = (name) => ANIMATED_ASSETS[name] || null;
+
 // ══════════════════════════════════════════════════════════════════════════════
 // EVENT HISTORY — Recurring event periods with verified dates
 // Sources: the reference (Pioneer Podcast/YYYY-MM-DD pages), the source, web research
@@ -1877,6 +1892,7 @@ export {
   ANIMATED_BACKGROUNDS,
   CONVENE_ANIMATIONS,
   getConveneAnimation,
+  getAnimatedAssets,
   getCharacterBannerArt,
   getWeaponBannerArt,
   preloadBannerHistoryArt,

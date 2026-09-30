@@ -1850,7 +1850,7 @@ const CHARACTER_DATA = {
   // baseHp/baseAtk/baseDef/maxEnergy, ascension and skillMaterials are left out: she is listed in
   // CHARACTERS_AWAITING_STATS below, which keeps her out of the damage calculators until they land.
   'Hsin': { rarity: 5, element: 'Electro', weapon: 'Rectifier', role: 'Main DPS',
-    desc: "The Moon Fox, one of Huanglong's seven Sentinels, who watches over Mengzhou and its ever-glowing lanterns. Electro Main DPS who moves from Answering Form into Illumining Form and Mechanism Dominion, commanding Xuanfang Mechanisms; in Electro Flare mode she banks surplus Flare as Heart of Thunder for a single detonation, and in Unison mode she earns a free extra Outro every rotation.",
+    desc: "The Moon Fox, one of Huanglong's seven Sentinels, who watches over Mengzhou and its ever-glowing lanterns. Electro Main DPS who moves from Answering Form into Illumining Form and Mechanism Dominion, commanding Xuanfang Mechanisms. In Electro Flare mode she banks surplus Flare as Heart of Thunder for a single detonation, and in Unison mode she earns a free extra Outro every rotation.",
     skills: ['Manifold Bloom', 'Heartward by Moon', 'Nexus Alight', 'Forms Turn, Heart Abides'],
     // bestEchoes: [mainEcho, set] — the guide's own "Best Echo Sets" (Heart of Sworn Vigil, 100%) and
     // its only Main Echo pick, Reminiscence: Suhsin the Inevitable (+20% Electro DMG in the main slot).

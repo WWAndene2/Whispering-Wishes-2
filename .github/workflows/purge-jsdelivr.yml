@@ -16,19 +16,15 @@ name: Purge jsDelivr cache
 # happened to Dimmr Plains's map tiles (some tiles individually confirmed
 # stale on the CDN while origin/main already had the fix).
 #
-# Fix: purge every changed file's jsDelivr URL immediately after it lands on
+# Fix: purge every changed map tile's jsDelivr URL immediately after it lands on
 # main, so every PoP is forced to refetch on next request instead of serving
-# whatever it happened to cache last.
+# whatever it happened to cache last. Limited to map tiles (user decision
+# 2026-09-30): the other CDN-routed directories are not purged on push.
 on:
   push:
     branches: [main]
     paths:
       - 'app/public/map-tiles/**'
-      - 'app/public/portraits/**'
-      - 'app/public/animated-bg/**'
-      - 'app/public/spine/**'
-      - 'app/public/convene-animations/**'
-      - 'app/public/audio/**'
       - '.github/workflows/purge-jsdelivr.yml'
   workflow_dispatch:
 
@@ -67,8 +63,7 @@ jobs:
 
           echo "Diffing ${RANGE}"
           mapfile -t CHANGED < <(git diff --name-only --diff-filter=ACMR "${RANGE}" -- \
-            app/public/map-tiles app/public/portraits app/public/animated-bg \
-            app/public/spine app/public/convene-animations app/public/audio)
+            app/public/map-tiles)
 
           if [ "${#CHANGED[@]}" -eq 0 ]; then
             echo "No matching files changed - nothing to purge."

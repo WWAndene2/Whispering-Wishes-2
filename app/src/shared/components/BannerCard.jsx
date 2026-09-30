@@ -166,7 +166,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
       {useLuckdraw && artBox && (
         <div className="absolute inset-0" style={{ ...IMG_LAYER_STYLE, opacity: pictureOpacity, maskImage: maskGradient, WebkitMaskImage: maskGradient }}>
           <div className="absolute" style={{ left: artBox.left, top: artBox.top, width: artBox.width, height: artBox.height }}>
-            <img src={imgUrl} alt={shownName} className="absolute inset-0 w-full h-full" loading="eager" onError={hideOnError} />
+            <img src={imgUrl} alt={shownName} className="absolute inset-0 w-full h-full" style={{ filter: 'blur(0.25px)' }} loading="eager" onError={hideOnError} />
             <SpinePlayer
               characterId={luckdrawId}
               viewport={luckdraw.bannerViewport}

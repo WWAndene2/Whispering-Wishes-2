@@ -104,7 +104,7 @@
     "foundNext": "Trouvé → suivant",
     "useTeleports": "Utiliser les téléporteurs",
     "exportRoute": "Enregistrer en image",
-    "exportTitle": "Whispering Wishes · Itinéraire",
+    "exportTitle": "Itinéraire",
     "exportStops": "{{count}} arrêts",
     "exportSaved": "Image de l’itinéraire enregistrée",
     "exportFailed": "Impossible d’enregistrer l’image de l’itinéraire"

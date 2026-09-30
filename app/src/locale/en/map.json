@@ -104,7 +104,7 @@
     "foundNext": "Found → next",
     "useTeleports": "Use teleports",
     "exportRoute": "Save as image",
-    "exportTitle": "Whispering Wishes · Route",
+    "exportTitle": "Route",
     "exportStops": "{{count}} stops",
     "exportSaved": "Route image saved",
     "exportFailed": "Couldn’t save the route image"

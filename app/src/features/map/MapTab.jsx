@@ -66,6 +66,8 @@ const SEARCH_ROUTE_COLORS = ['#edaf18', '#22d3ee', '#f472b6', '#a3e635', '#fb923
 // (teleporters sit a median ~124 px from their nearest neighbour).
 const TELEPORT_OVERHEAD_PX = 128;
 const TELEPORT_KINDS = new Set(['resonance-nexus', 'resonance-beacon']);
+// Boss spots (Overlord / Calamity) become fast-travel points once discovered — found, here.
+const BOSS_KINDS = new Set(MAP_ICON_CATALOG.filter(k => k.tags?.includes('boss')).map(k => k.id));
 const SEARCH_ROUTE_DASH = { solid: [], dashed: [12, 8], dotted: [2, 6], dashdot: [12, 6, 2, 6] };
 
 // Icon categories visible by default; every other category starts hidden the
@@ -920,7 +922,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const order = (pts) => (start ? optimizeRoute([start, ...pts], 0) : optimizeRoute(pts));
     // With teleports on, each route gets `warps`: per leg, the teleporter it warps to (or null).
     const teleporters = routeTeleport
-      ? iconDrafts.filter(ic => TELEPORT_KINDS.has(ic.kind) && (ic.floor == null || ic.floor === viewFloor)) : [];
+      ? iconDrafts.filter(ic => (TELEPORT_KINDS.has(ic.kind) || (BOSS_KINDS.has(ic.kind) && foundIds.has(ic.id))) && (ic.floor == null || ic.floor === viewFloor)) : [];
     const withWarps = (r) => (routeTeleport ? { ...r, warps: teleportLegs(r.points, teleporters, TELEPORT_OVERHEAD_PX) } : r);
     if (routeLinked && groups.length > 1) {
       // One path through every group's icons; each leg is drawn in the style of the group its

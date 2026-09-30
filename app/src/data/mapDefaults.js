@@ -113,6 +113,11 @@
 // been placed without a floor, so they showed on every level. Delivered to
 // existing players through ICON_SEED_ADDITIONS[8] and ICON_SEED_CHANGES[8].
 //
+// 2026-09-30T01:19:00Z export — purely additive (zones, overlays and the 739
+// existing icons unchanged, same order): 13 Sonance Casket: Ragunna icons
+// appended, all on floor 0. Delivered to existing players through
+// ICON_SEED_ADDITIONS[9].
+//
 // DEFAULT_PAINT_STROKES is empty - the 552 strokes from that export (3232
 // points across blur/200, fade/200, blur/113) were baked directly into
 // Solaris_3's master image and its tile pyramid was re-sliced from the
@@ -1410,6 +1415,19 @@ export const DEFAULT_ICON_DRAFTS = [
   { id: 'icon-mum0ijui-1y', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 8195, y: 10807, rotation: 0, scale: 1, opacity: 1, zoneId: 'hallowed-reach', floor: 0, locked: true, inTree: true },
   { id: 'icon-mum0jogp-525', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 8142, y: 10955, zoneId: 'hallowed-reach', floor: 0, locked: true, inTree: true },
   { id: 'icon-mum0jogt-lp', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 8142, y: 10955, rotation: 0, scale: 1, opacity: 1, zoneId: 'hallowed-reach', floor: 0, locked: true, inTree: true },
+  { id: 'icon-munesfer-6sh', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 7824, y: 10475, zoneId: 'whisperwind-haven', floor: 0, locked: true, rotation: 0, inTree: true },
+  { id: 'icon-munet76n-64n', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 7926, y: 10599, rotation: 0, scale: 1, opacity: 1, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
+  { id: 'icon-munetyzk-2bt', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 7870, y: 11027, rotation: 0, scale: 1, opacity: 1, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muneulpr-2nv', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 8094, y: 10879, rotation: 0, scale: 1, opacity: 1, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
+  { id: 'icon-munev261-3wo', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 8064, y: 10847, rotation: 0, scale: 1, opacity: 1, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
+  { id: 'icon-muney8cd-wn', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 8036, y: 10964, rotation: 0, scale: 1, opacity: 1, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
+  { id: 'icon-munez9b6-5x2', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 7947, y: 11138, rotation: 0, scale: 1, opacity: 1, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
+  { id: 'icon-munezfly-14q', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 7920, y: 11168, rotation: 0, scale: 1, opacity: 1, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
+  { id: 'icon-munezz7r-6oq', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 8013, y: 11210, rotation: 0, scale: 1, opacity: 1, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
+  { id: 'icon-munf0cdg-2u5', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 7988, y: 11339, rotation: 0, scale: 1, opacity: 1, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
+  { id: 'icon-munf0vho-4ra', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 8112, y: 11326, rotation: 0, scale: 1, opacity: 1, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
+  { id: 'icon-munf162f-5cz', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 8145, y: 11278, rotation: 0, scale: 1, opacity: 1, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
+  { id: 'icon-munf1i6e-280', kind: 'sonance-casket-ragunna', category: 'Collectible', subcategory: 'Sonance Casket: Ragunna', label: '', x: 8209, y: 11287, rotation: 0, scale: 1, opacity: 1, zoneId: 'whisperwind-haven', floor: 0, locked: true, inTree: true },
 ];
 
 export const DEFAULT_PAINT_STROKES = [];
@@ -1726,6 +1744,21 @@ export const ICON_SEED_ADDITIONS = {
     'icon-mum0jogp-525',
     'icon-mum0jogt-lp',
   ],
+  9: [
+    'icon-munesfer-6sh',
+    'icon-munet76n-64n',
+    'icon-munetyzk-2bt',
+    'icon-muneulpr-2nv',
+    'icon-munev261-3wo',
+    'icon-muney8cd-wn',
+    'icon-munez9b6-5x2',
+    'icon-munezfly-14q',
+    'icon-munezz7r-6oq',
+    'icon-munf0cdg-2u5',
+    'icon-munf0vho-4ra',
+    'icon-munf162f-5cz',
+    'icon-munf1i6e-280',
+  ],
 };
 // Changes to icons already seeded, per version: [id, field, from, to].
 // Applied to a player's saved icon only while it still has `from` (the player
@@ -1968,4 +2001,4 @@ export const ICON_SEED_CHANGES = {
     ['icon-mulnwpjy-5t2', 'floor', null, 0],
   ],
 };
-export const ICON_SEED_VERSION = 8;
+export const ICON_SEED_VERSION = 9;

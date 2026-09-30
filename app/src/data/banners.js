@@ -118,7 +118,7 @@ const BANNER_HISTORY = [
   // with no CHARACTER_DATA entry yet (Hsin is Main/Sub DPS; roles use CHARACTER_DATA's
   // 'Main DPS'/'Sub DPS' values, both shown as "DPS").
   { id: 'v3.7-p2', version: '3.7', phase: 2, characters: ['Suoming', 'Lucilla', 'Lynae'], weapons: ['Unspoken Rue', 'Freeze Frame', 'Spectrum Blaster'], startDate: '2026-10-22', endDate: '2026-11-11', startAt: '2026-10-22T09:00:00Z', endAt: '2026-11-11T11:00:00Z', bannerArt: './characters/suoming/Suoming_Banner.webp', characterInfo: { Suoming: { element: 'Electro', weapon: 'Sword', role: 'Main DPS' } }, titles: { Suoming: 'Nine Deaths, One Unbent Heart', Lucilla: 'Tomorrow in the Frame', Lynae: 'Undefined Spectrum' }, characterFeatured4Stars: ['Lumi', 'Danjin', 'Chixia'], weaponFeatured4Stars: ['Overture', 'Relativistic Jet', 'Amity Accord'], predicted: true },
-  { id: 'v3.7-p1', version: '3.7', phase: 1, characters: ['Hsin', 'Chisa', 'Iuno'], weapons: ['Blooming Jadehaven', 'Kumokiri', "Moongazer's Sigil"], startDate: '2026-09-30', endDate: '2026-10-22', startAt: '2026-09-30T03:00:00Z', endAt: '2026-10-22T09:00:00Z', bannerArt: './characters/hsin/Hsin_Banner.jpg', characterInfo: { Hsin: { element: 'Electro', weapon: 'Rectifier', role: 'Main DPS' } }, titles: { Hsin: 'As Full as Tonight, Forever', Chisa: 'Horizon of Danbreak', Iuno: "Across Time's Waxes and Wanes" }, characterFeatured4Stars: ['Buling', 'Taoqi', 'Youhu'], weaponFeatured4Stars: ['Fusion Accretion', 'Commando of Conviction', 'Dauntless Evernight'], predicted: true },
+  { id: 'v3.7-p1', version: '3.7', phase: 1, characters: ['Hsin', 'Chisa', 'Iuno'], weapons: ['Blooming Jadehaven', 'Kumokiri', "Moongazer's Sigil"], startDate: '2026-09-30', endDate: '2026-10-22', startAt: '2026-09-30T03:00:00Z', endAt: '2026-10-22T09:00:00Z', bannerArt: './characters/hsin/Hsin_Banner.jpg', weaponBannerArt: './banners/history/v3-7-p1/Blooming-Jadehaven-Banner.jpg', characterInfo: { Hsin: { element: 'Electro', weapon: 'Rectifier', role: 'Main DPS' } }, titles: { Hsin: 'As Full as Tonight, Forever', Chisa: 'Horizon of Danbreak', Iuno: "Across Time's Waxes and Wanes" }, characterFeatured4Stars: ['Buling', 'Taoqi', 'Youhu'], weaponFeatured4Stars: ['Fusion Accretion', 'Commando of Conviction', 'Dauntless Evernight'], predicted: true },
   // Version 3.6 (upcoming — dates are the source's own estimate: "based on the Version Update's confirmed
   // release date, and the usual 21-day cycle for Version halves." Characters/weapons confirmed via
   // the source archive 453303 (Aug 10 2026 update), kit data not final until release.)
@@ -1243,6 +1243,7 @@ const WEAPON_THEMES = [
   { id: 'stringmaster',          name: 'Stringmaster',          bannerArt: './banners/_shared/zhnR2MRT-stringmaster-banner.jpg' },
   { id: 'the-last-dance',        name: 'The Last Dance',        bannerArt: './banners/_shared/k20XT27x-the-last-dance-banner.jpg' },
   { id: 'thousandfold-deliverance', name: 'Thousandfold Deliverance', bannerArt: './banners/history/v3-6-p2/S7m6cfPC-Thousandfold-Delivrance.jpg' }, // Jingran
+  { id: 'blooming-jadehaven', name: 'Blooming Jadehaven', bannerArt: './banners/history/v3-7-p1/Blooming-Jadehaven-Banner.jpg' }, // Hsin
   { id: 'thunderflare-dominion', name: 'Thunderflare Dominion', bannerArt: './banners/_shared/8QxTXtL-thunderflare-dominion-banner.jpg' },
   { id: 'tragicomedy',           name: 'Tragicomedy',           bannerArt: './banners/_shared/xKwWBBBZ-tragicomedy-banner.jpg' },
   { id: 'unflickering-valor',    name: 'Unflickering Valor',    bannerArt: './banners/_shared/5XP6J2XM-unflickering-valor-banner.jpg' },
@@ -1452,7 +1453,7 @@ const ANIMATED_BACKGROUNDS = [
     name: 'v3.7 Live2D',
     art: './animated-bg/3.7-Prisms-Illusions-Hearts-Illumination-Live2D.mp4',
     poster: './Background/3.7-Prisms-Illusions-Hearts-Illumination-Background.webp',
-    pos: { header: '50% 30%', nav: '50% 32%', bg: '52% 50%' },
+    pos: { header: '50% 38%', nav: '50% 38%', bg: '74% 50%' },
   },
   {
     id: 'v3-6-live2d',
@@ -1587,6 +1588,8 @@ const CONVENE_ANIMATIONS = {
   'Forged Dwarf Star': './convene-animations/forged-dwarf-star-convene.mp4',
   Frostburn: './convene-animations/frostburn-convene.mp4',
   'Thousandfold Deliverance': './convene-animations/thousandfold-deliverance-convene.mp4',
+  // Player ID in the capture's bottom-right corner removed (delogo + feathered blur), re-encoded AV1 -> H.264.
+  'Blooming Jadehaven': './convene-animations/blooming-jadehaven-convene.mp4',
   'Azure Oath': './convene-animations/azure-oath-convene.mp4',
   "Firstlight's Herald": './convene-animations/firstlights-herald-convene.mp4',
   'Freeze Frame': './convene-animations/freeze-frame-convene.mp4',

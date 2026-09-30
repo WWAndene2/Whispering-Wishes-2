@@ -27,6 +27,7 @@ import { MapSearchPopover } from './MapSearchPopover.jsx';
 import { buildSearchIndex, resolveFilterKey } from './mapSearch.js';
 import { optimizeRoute, teleportLegs, progressionRoute } from './mapRoute.js';
 import { renderRouteImage, saveRouteImage } from './routeImageRenderer.js';
+import { ROUTE_LINE_DASH, drawArrowheads } from './routeLineStyle.js';
 import { DEFAULT_VISUAL_SETTINGS } from '../../hooks/useVisualSettings.js';
 import { VISUAL_SETTINGS_KEY } from '../../core/storageKeys.js';
 import { ANIMATED_BACKGROUNDS } from '../../data/banners.js';
@@ -99,7 +100,6 @@ const TELEPORT_KINDS = new Set(['resonance-nexus', 'resonance-beacon']);
 // Boss spots (Overlord / Calamity) are fast-travel points too. Like Nexuses and Beacons they
 // only work once discovered — found, here.
 const BOSS_KINDS = new Set(MAP_ICON_CATALOG.filter(k => k.tags?.includes('boss')).map(k => k.id));
-const SEARCH_ROUTE_DASH = { solid: [], dashed: [12, 8], dotted: [2, 6], dashdot: [12, 6, 2, 6] };
 
 // Icon categories visible by default; every other category starts hidden the
 // first time it appears (keeps the map light to open once thousands of
@@ -2568,11 +2568,12 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       const strokeLeg = (a, b, color, line) => {
         ctx.strokeStyle = color;
         ctx.lineCap = line === 'dotted' ? 'round' : 'butt';
-        ctx.setLineDash(SEARCH_ROUTE_DASH[line] || []);
+        ctx.setLineDash(ROUTE_LINE_DASH[line] || []);
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(b.x, b.y);
         ctx.stroke();
+        if (line === 'arrow') drawArrowheads(ctx, a, b, color);
       };
       searchRoutes.forEach((r) => {
         const pts = r.points.map(ic => map.latLngToContainerPoint(map.unproject([ic.x, ic.y], NATIVE_ZOOM)));
@@ -2599,10 +2600,11 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         } else {
           ctx.strokeStyle = r.color;
           ctx.lineCap = r.line === 'dotted' ? 'round' : 'butt';
-          ctx.setLineDash(SEARCH_ROUTE_DASH[r.line] || []);
+          ctx.setLineDash(ROUTE_LINE_DASH[r.line] || []);
           ctx.beginPath();
           pts.forEach((pt, i) => (i ? ctx.lineTo(pt.x, pt.y) : ctx.moveTo(pt.x, pt.y)));
           ctx.stroke();
+          if (r.line === 'arrow') for (let i = 1; i < pts.length; i++) drawArrowheads(ctx, pts[i - 1], pts[i], r.color);
         }
         // Start of the route: a filled dot, ringed white when it is the player's chosen start.
         ctx.setLineDash([]);

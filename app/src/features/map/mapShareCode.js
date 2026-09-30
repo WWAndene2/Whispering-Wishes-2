@@ -24,7 +24,7 @@ export const MAX_ROUTE_TAGS = 20;
 // styles are accepted.
 const TAG_KEY_RE = /^(?:kind|sub|cat|kz|cz|icon|zone):[^\u0000-\u001f\u007f]{1,160}$/;
 const COLOR_RE = /^#[0-9a-f]{6}$/i;
-const LINE_STYLES = new Set(['solid', 'dashed', 'dotted', 'dashdot']);
+const LINE_STYLES = new Set(['solid', 'dashed', 'dotted', 'dashdot', 'arrow']);
 
 const MARKER_IDS = new Set(MAP_PIN_MARKERS.map(m => m.id));
 const ICON_ID_RE = /^[A-Za-z0-9_-]{1,64}$/;

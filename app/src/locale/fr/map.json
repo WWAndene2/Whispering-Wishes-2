@@ -107,7 +107,8 @@
     "exportTitle": "Itinéraire",
     "exportStops": "{{count}} arrêts",
     "exportSaved": "Image de l’itinéraire enregistrée",
-    "exportFailed": "Impossible d’enregistrer l’image de l’itinéraire"
+    "exportFailed": "Impossible d’enregistrer l’image de l’itinéraire",
+    "lineArrow": "Flèches"
   },
   "card": {
     "markFound": "Marquer trouvé",

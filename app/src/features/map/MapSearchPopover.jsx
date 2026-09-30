@@ -53,13 +53,15 @@ const LINE_STYLES = [
   { id: 'dashed', key: 'lineDashed', dash: '6 4' },
   { id: 'dotted', key: 'lineDotted', dash: '1 3' },
   { id: 'dashdot', key: 'lineDashDot', dash: '6 3 1 3' },
+  { id: 'arrow', key: 'lineArrow', dash: '', arrow: true },
 ];
 
 // Small preview of a line style in a given colour.
-function LineSample({ dash, color }) {
+function LineSample({ dash, color, arrow = false }) {
   return (
     <svg width="24" height="8" viewBox="0 0 24 8" aria-hidden="true">
       <line x1="1" y1="4" x2="23" y2="4" stroke={color} strokeWidth="2" strokeDasharray={dash} strokeLinecap={dash === '1 3' ? 'round' : 'butt'} />
+      {arrow && <polygon points="17,1 23,4 17,7" fill={color} />}
     </svg>
   );
 }
@@ -317,7 +319,7 @@ export function MapSearchPopover({
                     className={`kuro-btn kuro-btn-sm map-search-line ${(styleTag.line || 'dashed') === ls.id ? 'active-gold' : ''}`}
                     onClick={() => onUpdateTag(styleTag.key, { line: ls.id })}
                   >
-                    <LineSample dash={ls.dash} color={tagColor(styleTag)} /> {t(`map.search.${ls.key}`)}
+                    <LineSample dash={ls.dash} arrow={ls.arrow} color={tagColor(styleTag)} /> {t(`map.search.${ls.key}`)}
                   </button>
                 ))}
               </div>

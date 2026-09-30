@@ -8,7 +8,8 @@
 // and framed on the routes whatever the view's zoom or rotation.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { TILE_SIZE, NATIVE_ZOOM } from './tileMath.js';
+import { TILE_SIZE, NATIVE_ZOOM, MAP_W, MAP_H } from './tileMath.js';
+import { ROUTE_LINE_DASH, drawArrowheads } from './routeLineStyle.js';
 
 const MAX_SIDE = 1536;      // longest side of the map area, in output px
 const MIN_SIDE = 768;       // small routes are drawn larger, up to 2× the tile scale
@@ -19,13 +20,14 @@ const HEADER = 96;
 const CHIP = 48;            // legend chip height
 const FOOTER = 48;
 const RADIUS = 16;
-const DASH = { solid: [], dashed: [12, 8], dotted: [2, 6], dashdot: [12, 6, 2, 6] };
 // Same look as the tile pane on screen (MapTab's tile-pane filter).
 const TILE_FILTER = 'contrast(1.06) brightness(1.04) saturate(1.05)';
 const APP_ICON = './app-title-icon/Abby_app_home_icon.png';
 // The app's palette and type (styles/kuro.css).
 const GOLD = '#edaf18';
 const BG = '#080810';
+// Open-sea colour of the base map tiles.
+const SEA = 'rgb(6, 38, 52)';
 const PANEL = 'rgba(15, 23, 42, 0.92)';
 const TEXT = '#f1f5f9';
 const MUTED = '#9ca3af';
@@ -189,16 +191,25 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
   const mx = MARGIN;
   ctx.save();
   roundRect(ctx, mx, mapY, w, h, RADIUS);
-  ctx.fillStyle = '#0b1220';
+  // Open sea everywhere the base map has no tiles (e.g. around Mengzhou, west of the map).
+  ctx.filter = TILE_FILTER;
+  ctx.fillStyle = SEA;
   ctx.fill();
   ctx.clip();
   const toOut = (p) => ({ x: mx + offX + (p.x - minX) * k, y: mapY + (p.y - minY) * k });
-  ctx.filter = TILE_FILTER;
+  // Base tiles, clipped to the map's own extent: tiles past it carry black padding.
+  const m0 = toOut({ x: 0, y: 0 });
+  const m1 = toOut({ x: MAP_W, y: MAP_H });
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(m0.x, m0.y, m1.x - m0.x, m1.y - m0.y);
+  ctx.clip();
   const tileOut = TILE_SIZE * up;
   for (const t of tileImgs) {
     if (!t.img) continue;
     ctx.drawImage(t.img, mx + offX + t.x * tileOut - minX * k, mapY + t.y * tileOut - minY * k, tileOut, tileOut);
   }
+  ctx.restore();
   ctx.filter = 'none';
   // Off the ground floor the base map is dimmed behind the sub-maps, as on screen.
   if (floorMask) {
@@ -254,7 +265,7 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
   // Routes: a dark casing under each coloured line keeps it readable on any tile.
   ctx.lineJoin = 'round';
   const stroke = (a, b, color, line) => {
-    ctx.setLineDash(DASH[line] || []);
+    ctx.setLineDash(ROUTE_LINE_DASH[line] || []);
     ctx.lineCap = line === 'dotted' ? 'round' : 'butt';
     ctx.strokeStyle = 'rgba(8, 8, 16, 0.7)';
     ctx.lineWidth = 6;
@@ -263,6 +274,7 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
     ctx.lineWidth = 3;
     ctx.stroke();
     ctx.setLineDash([]);
+    if (line === 'arrow') drawArrowheads(ctx, a, b, color);
   };
   for (const r of routes) {
     const pts = r.points.map(toOut);

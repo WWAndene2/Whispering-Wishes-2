@@ -107,7 +107,8 @@
     "exportTitle": "Route",
     "exportStops": "{{count}} stops",
     "exportSaved": "Route image saved",
-    "exportFailed": "Couldn’t save the route image"
+    "exportFailed": "Couldn’t save the route image",
+    "lineArrow": "Arrows"
   },
   "card": {
     "markFound": "Mark as found",

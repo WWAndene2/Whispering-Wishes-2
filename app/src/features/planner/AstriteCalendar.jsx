@@ -10,6 +10,7 @@ import { ASTRITE_PER_PULL } from '../../data/constants.js';
 import { getLocalizedEvents, BANNER_HISTORY, PIONEER_PODCAST_HISTORY, DOUBLED_PAWNS_MATRIX_HISTORY, TACTICAL_HOLOGRAM_HISTORY, VERSION_DATES } from '../../data/banners.js';
 import { t, formatNumber, formatDate, getLocale } from '../../utils/i18n.js';
 import { isNativePlatform } from '../../utils/pushNotifications.js';
+import { hideOnError } from '../../shared/utils/imageHelpers.js';
 import { scheduleEventReminder, cancelEventReminder, isEventReminderScheduled, getReminderLeadHours } from '../../utils/localNotifications.js';
 
 const EVENTS = getLocalizedEvents(getLocale());
@@ -108,6 +109,21 @@ const getActiveEvents = (date) => {
     }
   }
   return result;
+};
+
+// Event reset wording such as "28 days" / "Weekly (Monday)" reaches the calendar descriptions raw.
+const RESET_WORDS = { es: { days: 'días', Weekly: 'Semanal', Monday: 'lunes', Daily: 'Diaria', Permanent: 'Permanente', 'Version update': 'Actualización de versión', 'Multi-version': 'Varias versiones' }, fr: { days: 'jours', Weekly: 'Hebdomadaire', Monday: 'lundi', Daily: 'Quotidien', Permanent: 'Permanent', 'Version update': 'Mise à jour de version', 'Multi-version': 'Plusieurs versions' } };
+const localizeResetType = (text) => {
+  const words = RESET_WORDS[getLocale()];
+  if (!words || !text) return text;
+  return text.replace(/\b(days|Weekly|Monday|Daily|Permanent|Version update|Multi-version)\b/g, (w) => words[w] || w);
+};
+
+// Bar fill with the event art faded in from the right: the colour wash keeps the label readable on
+// the left, and the bar keeps its size because this is only a background.
+const barBackground = (color, image, fallback) => {
+  if (!image) return fallback;
+  return `linear-gradient(to right, ${color}66 0%, ${color}33 45%, ${color}00 100%), linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 100%), url("${encodeURI(image)}") center / cover no-repeat`;
 };
 
 function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planData, activeBanners, eventStatus, calendarNotes, onSetNote, deadlinePin, onSetDeadlinePin, toast }) {
@@ -251,7 +267,7 @@ function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planDat
         const daysLeft = Math.max(0, Math.ceil((bannerEnd - today) / 86400000));
         const endLabel = formatDate(bannerEnd, { month: 'short', day: 'numeric' });
         const startLabel = formatDate(bannerStart, { month: 'short', day: 'numeric' });
-        bars.push({ key: 'banner', label: `v${activeBanners?.version || '?'} P${activeBanners?.phase || '?'}`, color: BANNER_COLOR, start: bStart, end: bEnd, astrite: 0, daysLeft, endLabel, startLabel, endDate: bannerEnd, legendGroup: 'banner', description: t('planner.calendar.currentBannerPhase', { version: activeBanners?.version || '?', phase: activeBanners?.phase || '?' }) });
+        bars.push({ key: 'banner', image: activeBanners?.characterBannerImage || null, label: `v${activeBanners?.version || '?'} P${activeBanners?.phase || '?'}`, color: BANNER_COLOR, start: bStart, end: bEnd, astrite: 0, daysLeft, endLabel, startLabel, endDate: bannerEnd, legendGroup: 'banner', description: t('planner.calendar.currentBannerPhase', { version: activeBanners?.version || '?', phase: activeBanners?.phase || '?' }) });
       }
     }
 
@@ -270,10 +286,20 @@ function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planDat
         const label = `v${bh.version} P${bh.phase}`;
         const endLabel = formatDate(bhEnd, { month: 'short', day: 'numeric' });
         const charNames = bh.characters?.slice(0, 2).join(', ') || '';
-        bars.push({ key: bh.id, label: `${label}${charNames ? ` — ${charNames}` : ''}`, color: BANNER_COLOR, start: pStart, end: pEnd, astrite: 0, ended, endLabel, pastBanner: true, legendGroup: 'banner', description: t('planner.calendar.bannerPhaseDescription', { version: bh.version, phase: bh.phase, characters: bh.characters?.join(', ') || 'N/A' }) });
+        bars.push({ key: bh.id, image: bh.bannerArt || null, label: `${label}${charNames ? ` — ${charNames}` : ''}`, color: BANNER_COLOR, start: pStart, end: pEnd, astrite: 0, ended, endLabel, pastBanner: true, legendGroup: 'banner', description: t('planner.calendar.bannerPhaseDescription', { version: bh.version, phase: bh.phase, characters: bh.characters?.join(', ') || 'N/A' }) });
         pastBannerCount++;
       }
     }
+
+    // Event art for a bar: the event's own cover, or the cover of the event the history entry belongs to.
+    const imageFor = (key, group) => {
+      const own = EVENTS[group]?.imageUrl || EVENTS[key]?.imageUrl;
+      if (own) return own;
+      if (key.startsWith('pp-')) return EVENTS.pioneerPodcast?.imageUrl || null;
+      if (key.startsWith('dpm-')) return EVENTS.endstateMatrix?.imageUrl || null;
+      if (key.startsWith('th-')) return EVENTS.tacticalHologram?.imageUrl || null;
+      return null;
+    };
 
     // Helper: add a bar if it overlaps this month
     const addBar = (key, label, color, cStart, cEnd, astrite, extra = {}) => {
@@ -286,7 +312,7 @@ function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planDat
         const endLabel = formatDate(cEnd, { month: 'short', day: 'numeric' });
         const startLabel = formatDate(clampedStart, { month: 'short', day: 'numeric' });
         const daysLeft = ended ? undefined : Math.max(0, Math.ceil((cEnd - today) / 86400000));
-        bars.push({ key, label, color, start: eStart, end: eEnd, astrite, ended, endLabel, startLabel, daysLeft, endDate: cEnd, ...extra });
+        bars.push({ key, label, color, start: eStart, end: eEnd, astrite, ended, endLabel, startLabel, daysLeft, endDate: cEnd, image: imageFor(key, extra.legendGroup), ...extra });
       }
     };
 
@@ -316,7 +342,7 @@ function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planDat
         segments.push({ start: segStart, end: segEnd, isCurrent: todayIdx >= segStart && todayIdx <= segEnd });
       }
       if (mondays.length === 0) segments.push({ start: 0, end: cal.daysInMonth - 1 });
-      bars.push({ key, label: ev.name, color, astrite, weekly: true, segments, legendGroup: key, description: t('planner.calendar.eventDescription', { name: ev.name, desc: ev.description || ev.subtitle, rewards: ev.rewards }) });
+      bars.push({ key, image: imageFor(key, key), label: ev.name, color, astrite, weekly: true, segments, legendGroup: key, description: t('planner.calendar.eventDescription', { name: ev.name, desc: ev.description || ev.subtitle, rewards: ev.rewards }) });
     }
 
     // 28-day cycling events (ToA, Whimpering Wastes) — compute all cycles
@@ -332,7 +358,7 @@ function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planDat
         const cEnd = new Date(baseEnd.getTime() + c * cycleMs);
         const cStart = new Date(cEnd.getTime() - cycleMs);
         if (introduced && cStart < introduced) continue;
-        addBar(c === 0 ? key : `${key}-c${c}`, ev.name, color, cStart, cEnd, astrite, { legendGroup: key, description: t('planner.calendar.eventDescriptionCycle', { name: ev.name, desc: ev.description, resetType: ev.resetType, rewards: ev.rewards }) });
+        addBar(c === 0 ? key : `${key}-c${c}`, ev.name, color, cStart, cEnd, astrite, { legendGroup: key, description: t('planner.calendar.eventDescriptionCycle', { name: ev.name, desc: ev.description, resetType: localizeResetType(ev.resetType), rewards: ev.rewards }) });
       }
     }
 
@@ -571,7 +597,7 @@ function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planDat
                         <div key={si} style={{
                           position: 'absolute', left: `${segLeft}%`, width: `calc(${segWidth}% - 2px)`,
                           height: '100%', borderRadius: 'var(--radius-sm)',
-                          background: seg.isCurrent ? `linear-gradient(to right, ${bar.color}45, ${bar.color}28)` : `linear-gradient(to right, ${bar.color}30, ${bar.color}18)`,
+                          background: barBackground(bar.color, bar.image, seg.isCurrent ? `linear-gradient(to right, ${bar.color}45, ${bar.color}28)` : `linear-gradient(to right, ${bar.color}30, ${bar.color}18)`),
                           border: `1px solid ${bar.color}${seg.isCurrent ? '90' : '60'}`,
                           boxShadow: seg.isCurrent ? `0 0 6px ${bar.color}30` : 'none',
                           display: 'flex', alignItems: 'center', padding: '0 4px',
@@ -595,7 +621,7 @@ function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planDat
                   <div style={{
                     position: 'absolute', left: `${leftPct}%`, width: `${widthPct}%`,
                     height: '100%', borderRadius: 'var(--radius-sm)',
-                    background: bar.ended ? `${bar.color}15` : `linear-gradient(to right, ${bar.color}30, ${bar.color}18)`,
+                    background: barBackground(bar.color, bar.image, bar.ended ? `${bar.color}15` : `linear-gradient(to right, ${bar.color}30, ${bar.color}18)`),
                     border: `1px ${bar.pastBanner ? 'dashed' : 'solid'} ${bar.color}${bar.ended ? '40' : '60'}`,
                     boxShadow: bar.ended ? 'none' : `0 0 8px ${bar.color}20`,
                     display: 'flex', alignItems: 'center', padding: '0 6px',
@@ -620,6 +646,7 @@ function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planDat
           {selectedBar && (
             <div style={{ marginTop: '4px', padding: '8px 12px', borderRadius: 'var(--radius-md)', background: `${selectedBar.color}15`, border: `1px solid ${selectedBar.color}40` }}>
               <div onClick={() => setSelectedBar(null)} style={{ cursor: 'pointer' }}>
+                {selectedBar.image && <img src={selectedBar.image} alt="" loading="lazy" onError={hideOnError} style={{ width: '100%', height: '96px', objectFit: 'cover', borderRadius: 'var(--radius-sm)', marginBottom: '8px' }} />}
                 <div style={{ fontSize: 'var(--font-base)', fontWeight: 600, color: selectedBar.color }}>{selectedBar.label}</div>
                 {selectedBar.description && <div style={{ fontSize: 'var(--font-sm)', color: 'var(--text-secondary)', marginTop: '2px' }}>{selectedBar.description}</div>}
                 <div style={{ fontSize: 'var(--font-sm)', color: 'var(--text-disabled)', marginTop: '4px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>

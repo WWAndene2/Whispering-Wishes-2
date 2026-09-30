@@ -1209,7 +1209,7 @@ const VERSION_SPLASH_SCREENS = [
   // "summary_large_image" instead of "player", which was the false signal). None of the Live2D
   // links yielded real official splash art — only the Classic-style links below did.
   { id: 'v3.7', version: '3.7', name: "Prism's Illusions Heart's Illumination", art: './Background/3.7-Prisms-Illusions-Hearts-Illumination-Background.webp', pos: { header: '50% 30%', nav: '50% 30%', bg: '46% 50%' } },
-  { id: 'v3.6', version: '3.6', name: 'Version 3.6 (Classic)', art: './banner-history/v3.6.jpg', pos: { header: '50% 30%', nav: '50% 30%', bg: '46% 50%' } },
+  { id: 'v3.6', version: '3.6', name: 'Version 3.6 (Classic)', art: './banner-history/v3.6.jpg', pos: { header: '50% 30%', nav: '50% 30%', bg: '54% 50%' } },
   { id: 'v3.5', version: '3.5', name: 'Version 3.5 (Classic)', art: './banner-history/v3.5.jpg', pos: { header: '50% 30%', nav: '50% 30%', bg: '46% 50%' } },
   { id: 'v3.4-cyberpunk', version: '3.4', name: 'Version 3.4 Cyberpunk (Classic)', art: './banner-history/v3.4-cyberpunk.jpg', pos: { header: '50% 30%', nav: '50% 30%', bg: '46% 50%' } },
   { id: 'v3.4', version: '3.4', name: 'Version 3.4 (Classic)', art: './banner-history/v3.4.jpg', pos: { header: '50% 30%', nav: '50% 30%', bg: '46% 50%' } },
@@ -1405,7 +1405,7 @@ const ANIMATED_BACKGROUNDS = [
     name: 'v3.6 Live2D',
     art: './animated-bg/3.6-Lamplight-in-Mirage-Swords-Resolve-in-Heart-Live2D.mp4',
     poster: './Background/3.6-Lamplight-in-Mirage-Swords-Resolve-in-Heart-Background.jpg',
-    pos: { header: '50% 30%', nav: '50% 32%', bg: '52% 50%' },
+    pos: { header: '50% 30%', nav: '50% 32%', bg: '54% 50%' },
   },
   {
     id: 'v3-5-live2d',

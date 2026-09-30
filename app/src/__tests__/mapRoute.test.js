@@ -47,9 +47,16 @@ describe('progressionRoute', () => {
   const P = (x, r) => ({ x, y: 0, r });
   it('visits locked regions in progression order after the unlocked ones', () => {
     const pts = [P(0, 'c'), P(10, 'b'), P(20, 'a'), P(30, 'a'), P(40, 'b')];
+    const out = progressionRoute(pts, { regionOf, unlocked: new Set(['a']), progression });
+    expect(out.slice(0, 2).map(p => p.r)).toEqual(['a', 'a']);
+    expect(out.slice(2).map(p => p.r)).toEqual(['b', 'b', 'c']);
+  });
+  it('treats every region before the furthest unlocked one as unlocked', () => {
+    const pts = [P(0, 'c'), P(10, 'a'), P(20, 'b')];
     const out = progressionRoute(pts, { regionOf, unlocked: new Set(['b']), progression });
-    expect(out.slice(0, 2).map(p => p.r)).toEqual(['b', 'b']);
-    expect(out.slice(2).map(p => p.r)).toEqual(['a', 'a', 'c']);
+    // a and b are routed together (nearest-first from either end), c comes last.
+    expect(out[2].r).toBe('c');
+    expect(new Set(out.slice(0, 2).map(p => p.r))).toEqual(new Set(['a', 'b']));
   });
   it('keeps the pinned start first', () => {
     const start = { x: 100, y: 0, isStart: true };

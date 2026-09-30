@@ -128,7 +128,7 @@ export const EVENTS_FR = {
   backToSolaris: {
     name: 'Retour à Solaris',
     subtitle: 'Événement web',
-    description: 'Événement web à durée limitée de la v3.7.',
+    description: "Partagez votre code d'invitation avec jusqu'à 3 joueurs de retour sur votre serveur, accomplissez des tâches en jeu pour obtenir des Bâtons de fortune du renard et échangez-les contre des récompenses.",
   },
   dreamsInTheCapsuleArea: {
     name: 'Rêves dans la Capsule',

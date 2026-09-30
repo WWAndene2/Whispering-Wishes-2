@@ -578,13 +578,16 @@ const EVENTS = {
   backToSolaris: {
     name: 'Back to Solaris',
     subtitle: 'Web Event',
-    description: 'v3.7 limited-time web event.',
+    description: 'Share your invitation code with up to 3 Returning Players in your server, complete in-game tasks to obtain Fox Fortune Sticks, and exchange them for rewards.',
     resetType: 'Limited-time',
     color: 'cyan',
     currentStart: '2026-09-30T03:00:00Z',
-    currentEnd: '2026-11-11T22:59:59Z',
+    // Event page: ends 2026-11-11 23:59 (UTC+8).
+    currentEnd: '2026-11-11T15:59:59Z',
+    rewards: '480 Astrite',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-cyan-900/30',
     accentColor: 'cyan',
+    imageUrl: './banners/_shared/Back-To-Solaris.webp',
   },
   dreamsInTheCapsuleArea: {
     name: 'Dreams in the Capsule',

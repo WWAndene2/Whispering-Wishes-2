@@ -28,8 +28,9 @@ export async function shareCodeText(text, title) {
   try { await navigator.clipboard.writeText(text); return 'copied'; } catch { return 'failed'; }
 }
 
-export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, knownIconIds, presets, activePresetId, onImport, onActivatePreset, onDeletePreset, onRenamePreset, onClose }) {
+export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, routes, knownIconIds, presets, activePresetId, onImport, onActivatePreset, onDeletePreset, onRenamePreset, onClose }) {
   const [withFound, setWithFound] = useState(false);
+  const [withRoutes, setWithRoutes] = useState(false);
   const [code, setCode] = useState('');
   const [status, setStatus] = useState('');
   const [input, setInput] = useState('');
@@ -54,7 +55,7 @@ export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, know
   }, [input, knownIconIds]);
 
   const share = async () => {
-    const text = await encodeMapShare({ pins, foundIds: withFound ? [...foundIds] : [] });
+    const text = await encodeMapShare({ pins, foundIds: withFound ? [...foundIds] : [], routes: withRoutes ? routes : null });
     setCode(text);
     const r = await shareCodeText(text, t('map.share.title'));
     setStatus(r === 'failed' ? t('map.share.copyManually') : r === 'cancelled' ? '' : t(`map.share.${r}`));
@@ -62,13 +63,13 @@ export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, know
 
   const apply = (mode) => {
     if (!preview || preview.error) return;
-    onImport({ pins: preview.pins, foundIds: preview.foundIds.filter(id => knownIconIds.has(id)), mode, name: presetName });
+    onImport({ pins: preview.pins, foundIds: preview.foundIds.filter(id => knownIconIds.has(id)), routes: preview.routes, mode, name: presetName });
     setInput('');
     setPreview(null);
     setPresetName('');
   };
 
-  const empty = pins.length === 0 && !(withFound && foundIds.size);
+  const empty = pins.length === 0 && !(withFound && foundIds.size) && !(withRoutes && routes.tags.length);
 
   return (
     <div
@@ -96,6 +97,12 @@ export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, know
               <input type="checkbox" checked={withFound} onChange={(e) => setWithFound(e.target.checked)} />
               {t('map.share.includeFound', { count: foundIds.size })}
             </label>
+            {routes.tags.length > 0 && (
+              <label className="map-share-check">
+                <input type="checkbox" checked={withRoutes} onChange={(e) => setWithRoutes(e.target.checked)} />
+                {t('map.share.includeRoutes', { count: routes.tags.length })}
+              </label>
+            )}
             <button type="button" className="kuro-btn kuro-btn-sm map-downloads-all" onClick={share} disabled={empty}>
               <Share2 size={14} /> {t('map.share.shareButton', { count: pins.length })}
             </button>
@@ -120,6 +127,7 @@ export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, know
               <>
                 <div className="hint" role="status">
                   {t('map.share.preview', { pins: preview.pins.length, found: preview.foundIds.length - preview.unknown })}
+                  {preview.routes && ` · ${t('map.share.previewRoutes', { count: preview.routes.tags.length })}`}
                   {preview.unknown > 0 && ` · ${t('map.share.unknownIgnored', { count: preview.unknown })}`}
                   {preview.dropped > 0 && ` · ${t('map.share.invalidIgnored', { count: preview.dropped })}`}
                 </div>
@@ -138,7 +146,7 @@ export function MapSharePopover({ panelRef, top, maxHeight, pins, foundIds, know
                   <button type="button" className="kuro-btn kuro-btn-sm is-active" onClick={() => apply('preset')} disabled={containsLink(presetName)}>
                     <Layers size={14} /> {t('map.share.saveAsPreset')}
                   </button>
-                  <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => apply('add')} disabled={preview.pins.length === 0}>
+                  <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => apply('add')} disabled={preview.pins.length === 0 && !preview.routes}>
                     <Download size={14} /> {t('map.share.addPins')}
                   </button>
                 </div>

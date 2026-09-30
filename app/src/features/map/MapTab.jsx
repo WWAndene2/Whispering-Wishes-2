@@ -378,9 +378,15 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   // mode 'preset': saved as a new preset (own map untouched) and activated.
   // mode 'add': the pins (not the found list) are merged into the player's
   // own pins, skipping ones already there.
-  const importShare = useCallback(({ pins: incoming, foundIds: incomingFound, mode, name }) => {
+  const importShare = useCallback(({ pins: incoming, foundIds: incomingFound, routes: incomingRoutes, mode, name }) => {
     const fresh = incoming.map(p => ({ ...p, id: `pin-${generateUniqueId()}` }));
     if (containsLink(name)) return;
+    // Shared saved searches join the player's own (same key = already there), with their start and link.
+    if (incomingRoutes) {
+      setSearchTags(prev => [...prev, ...incomingRoutes.tags.filter(tg => !prev.some(p => p.key === tg.key))]);
+      if (incomingRoutes.start) setRouteStart(incomingRoutes.start);
+      if (incomingRoutes.linked) setRouteLinked(true);
+    }
     if (mode === 'add') {
       savePins(prev => {
         const seen = new Set(prev.map(p => `${p.marker}|${p.x}|${p.y}`));
@@ -1017,6 +1023,25 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     setSearchStep(next);
     handleFlyToIcon(searchStepList[next]);
   }, [searchStepList, searchStep, handleFlyToIcon]);
+
+  // Farming along a route: marks the icon reached with the stepper as found, then moves to the
+  // next stop. With "hide found" on, the found icon drops out of the list, so the next stop
+  // slides into the current position instead of the one after it.
+  const handleSearchFoundNext = useCallback(() => {
+    const n = searchStepList.length;
+    if (!n) return;
+    if (searchStep < 0) { setSearchStep(0); handleFlyToIcon(searchStepList[0]); return; }
+    const cur = searchStepList[searchStep];
+    const wasFound = foundIds.has(cur.id);
+    if (!wasFound && !activePreset) toggleFound(cur.id);
+    const shrinks = hideFound && !wasFound && !activePreset;
+    const remaining = shrinks ? n - 1 : n;
+    if (!remaining) { setSearchStep(-1); return; }
+    const nextIdx = shrinks ? searchStep % remaining : (searchStep + 1) % n;
+    const nextIcon = searchStepList.filter(ic => !shrinks || ic.id !== cur.id)[nextIdx];
+    setSearchStep(nextIdx);
+    handleFlyToIcon(nextIcon);
+  }, [searchStepList, searchStep, foundIds, hideFound, activePreset, toggleFound, handleFlyToIcon]);
 
   const handleSearchFrame = useCallback(() => {
     setSearchStep(-1);
@@ -5473,6 +5498,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                 maxHeight={popoverMaxHeight}
                 pins={myPins}
                 foundIds={myFoundIds}
+                routes={{ tags: searchTags, start: routeStart, linked: routeLinked }}
                 knownIconIds={knownIconIds}
                 presets={presets}
                 activePresetId={activePreset ? activePreset.id : null}
@@ -5633,6 +5659,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                 onClearSelection={handleSearchClearSelection}
                 focus={searchFocusSummary}
                 onStep={handleSearchStep}
+                onFoundNext={selectionRoute && !activePreset ? handleSearchFoundNext : null}
+                stepFound={searchStepIconId ? foundIds.has(searchStepIconId) : false}
                 onFrame={handleSearchFrame}
                 tags={searchTags}
                 tagCounts={searchTagCounts}

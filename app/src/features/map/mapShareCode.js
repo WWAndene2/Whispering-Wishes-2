@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 // WHISPERING WISHES — features/map/mapShareCode.js
 // Text share codes for a player's map state (personal pins, optionally the
-// found-icon list): "WWMAP1:" + base64url(deflate-raw(JSON)). No URL, no
+// found-icon list, optionally saved searches with their route styles): "WWMAP1:" + base64url(deflate-raw(JSON)). No URL, no
 // server, no HTML — a code is inert data. Decoding treats it as untrusted:
 // size-capped before and after decompression, strict whitelist of fields,
 // every value range-checked, notes stripped of control / bidi characters.
@@ -17,6 +17,14 @@ export const MAX_JSON_BYTES = 512 * 1024;
 export const MAX_PINS = 1000;
 export const MAX_FOUND = 20_000;
 export const MAX_NOTE_CHARS = 80;
+export const MAX_ROUTE_TAGS = 20;
+
+// Saved-search keys come from mapSearch.js ("kind:…", "sub:…/…", "kz:…@zone", "zone:…"…):
+// a known prefix, then printable text. Only colours from the route palette and the four line
+// styles are accepted.
+const TAG_KEY_RE = /^(?:kind|sub|cat|kz|cz|icon|zone):[^\u0000-\u001f\u007f]{1,160}$/;
+const COLOR_RE = /^#[0-9a-f]{6}$/i;
+const LINE_STYLES = new Set(['solid', 'dashed', 'dotted', 'dashdot']);
 
 const MARKER_IDS = new Set(MAP_PIN_MARKERS.map(m => m.id));
 const ICON_ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
@@ -100,19 +108,27 @@ async function inflateCapped(bytes, cap) {
 
 /**
  * Builds a share code. `pins` are { marker, x, y, floor, note }; `foundIds`
- * (optional) are placed-icon ids.
+ * (optional) are placed-icon ids; `routes` (optional) is { tags: [{ key, label,
+ * context, route, color, line }], start: { x, y, floor } | null, linked }.
  */
-export async function encodeMapShare({ pins = [], foundIds = [] }) {
+export async function encodeMapShare({ pins = [], foundIds = [], routes = null }) {
   // A note holding a link (from before links were blocked) is left out.
   const note = (n) => { const s = sanitizeNote(n); return containsLink(s) ? '' : s; };
   const payload = { p: pins.map(p => [p.marker, Math.round(p.x), Math.round(p.y), p.floor || 0, note(p.note)]) };
   if (foundIds.length) payload.f = [...foundIds];
+  if (routes && routes.tags.length) {
+    payload.r = {
+      t: routes.tags.slice(0, MAX_ROUTE_TAGS).map(tg => [tg.key, note(tg.label), note(tg.context), tg.route ? 1 : 0, tg.color || '', tg.line || 'dashed']),
+      s: routes.start ? [Math.round(routes.start.x), Math.round(routes.start.y), routes.start.floor || 0] : null,
+      l: routes.linked ? 1 : 0,
+    };
+  }
   const bytes = await deflate(new TextEncoder().encode(JSON.stringify(payload)));
   return SHARE_PREFIX + toBase64Url(bytes);
 }
 
 /**
- * Parses a share code. Resolves to { pins, foundIds, dropped } or rejects
+ * Parses a share code. Resolves to { pins, foundIds, routes, dropped } or rejects
  * with an Error whose message is one of: 'not-a-code', 'too-large',
  * 'corrupt', 'link-blocked' (any note holds a link — the whole code is refused). `dropped` counts entries discarded as invalid.
  */
@@ -150,5 +166,25 @@ export async function decodeMapShare(text) {
   for (const id of Array.isArray(data.f) ? data.f.slice(0, MAX_FOUND) : []) {
     if (typeof id === 'string' && ICON_ID_RE.test(id)) foundIds.push(id); else dropped++;
   }
-  return { pins, foundIds: [...new Set(foundIds)], dropped };
+  let routes = null;
+  const r = data.r;
+  if (r && typeof r === 'object' && !Array.isArray(r)) {
+    const tags = [];
+    for (const row of Array.isArray(r.t) ? r.t.slice(0, MAX_ROUTE_TAGS) : []) {
+      const [key, label, context, route, color, line] = Array.isArray(row) ? row : [];
+      const ok = typeof key === 'string' && TAG_KEY_RE.test(key) && typeof label === 'string'
+        && (color === '' || (typeof color === 'string' && COLOR_RE.test(color))) && LINE_STYLES.has(line);
+      if (!ok) { dropped++; continue; }
+      const cleanLabel = sanitizeNote(label);
+      const cleanContext = sanitizeNote(typeof context === 'string' ? context : '');
+      if (containsLink(cleanLabel) || containsLink(cleanContext) || containsLink(label)) throw new Error('link-blocked');
+      if (!cleanLabel) { dropped++; continue; }
+      tags.push({ key, label: cleanLabel, context: cleanContext, route: route === 1, color: color || null, line, active: true });
+    }
+    const [sx, sy, sf] = Array.isArray(r.s) ? r.s : [];
+    const start = Number.isFinite(sx) && Number.isFinite(sy) && inBounds(sx, sy) && Number.isInteger(sf) && sf >= -20 && sf <= 20
+      ? { x: Math.round(sx), y: Math.round(sy), floor: sf || null, label: '' } : null;
+    if (tags.length) routes = { tags, start, linked: r.l === 1 };
+  }
+  return { pins, foundIds: [...new Set(foundIds)], routes, dropped };
 }

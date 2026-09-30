@@ -98,7 +98,10 @@
     "startHere": "Start routes here",
     "startFromCard": "Or open a pin or an icon (e.g. a Nexus) and tap its route button.",
     "linkRoutes": "Link {{count}} routes into one",
-    "unlinkRoutes": "Unlink routes"
+    "unlinkRoutes": "Unlink routes",
+    "startRun": "Start the run",
+    "nextStop": "Next stop",
+    "foundNext": "Found → next"
   },
   "card": {
     "markFound": "Mark as found",
@@ -163,6 +166,8 @@
     "deletePreset": "Delete preset {{name}}",
     "viewingPreset": "Preset:",
     "backToMine": "My map",
-    "renamePreset": "Rename preset {{name}}"
+    "renamePreset": "Rename preset {{name}}",
+    "includeRoutes": "Include my searches and routes ({{count}})",
+    "previewRoutes": "Searches: {{count}}"
   }
 }

@@ -79,3 +79,33 @@ describe('map share codes', () => {
     expect(r.pins[0].note).toBe('');
   });
 });
+
+describe('share code: saved searches and routes', () => {
+  const routes = {
+    tags: [
+      { key: 'kind:sonance-casket-ragunna', label: 'Sonance Casket: Ragunna', context: '', route: true, color: '#22d3ee', line: 'dotted' },
+      { key: 'sub:Collectible/Windchimer', label: 'Windchimer', context: 'Mt-Firmament', route: false, color: null, line: 'dashed' },
+    ],
+    start: { x: 4000, y: 9000, floor: -3 },
+    linked: true,
+  };
+  it('round-trips tags, styles, start and link', async () => {
+    const r = await decodeMapShare(await encodeMapShare({ pins: [], routes }));
+    expect(r.routes.linked).toBe(true);
+    expect(r.routes.start).toEqual({ x: 4000, y: 9000, floor: -3, label: '' });
+    expect(r.routes.tags.map(t => [t.key, t.route, t.color, t.line])).toEqual([
+      ['kind:sonance-casket-ragunna', true, '#22d3ee', 'dotted'],
+      ['sub:Collectible/Windchimer', false, null, 'dashed'],
+    ]);
+  });
+  it('drops a tag with an unknown key prefix or style', async () => {
+    const bad = { ...routes, tags: [{ ...routes.tags[0], key: 'evil:x' }, { ...routes.tags[1], line: 'zigzag' }, routes.tags[0]] };
+    const r = await decodeMapShare(await encodeMapShare({ pins: [], routes: bad }));
+    expect(r.routes.tags).toHaveLength(1);
+    expect(r.dropped).toBe(2);
+  });
+  it('never sends a tag whose label holds a link', async () => {
+    const code = await encodeMapShare({ pins: [], routes: { ...routes, tags: [{ ...routes.tags[0], label: 'free www.scam.com' }] } });
+    expect((await decodeMapShare(code)).routes).toBeNull();
+  });
+});

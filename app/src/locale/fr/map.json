@@ -98,7 +98,10 @@
     "startHere": "Commencer les itinéraires ici",
     "startFromCard": "Ou ouvrez une épingle ou une icône (ex. un Nexus) et touchez son bouton d'itinéraire.",
     "linkRoutes": "Relier {{count}} itinéraires en un seul",
-    "unlinkRoutes": "Séparer les itinéraires"
+    "unlinkRoutes": "Séparer les itinéraires",
+    "startRun": "Lancer le parcours",
+    "nextStop": "Arrêt suivant",
+    "foundNext": "Trouvé → suivant"
   },
   "card": {
     "markFound": "Marquer trouvé",
@@ -163,6 +166,8 @@
     "deletePreset": "Supprimer le preset {{name}}",
     "viewingPreset": "Preset :",
     "backToMine": "Ma carte",
-    "renamePreset": "Renommer le preset {{name}}"
+    "renamePreset": "Renommer le preset {{name}}",
+    "includeRoutes": "Inclure mes recherches et itinéraires ({{count}})",
+    "previewRoutes": "Recherches : {{count}}"
   }
 }

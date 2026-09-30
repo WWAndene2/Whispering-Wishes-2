@@ -98,7 +98,10 @@
     "startHere": "Empezar las rutas aquí",
     "startFromCard": "O abre un pin o un icono (p. ej. un Nexo) y toca su botón de ruta.",
     "linkRoutes": "Unir {{count}} rutas en una",
-    "unlinkRoutes": "Separar las rutas"
+    "unlinkRoutes": "Separar las rutas",
+    "startRun": "Empezar el recorrido",
+    "nextStop": "Siguiente parada",
+    "foundNext": "Encontrado → siguiente"
   },
   "card": {
     "markFound": "Marcar como encontrado",
@@ -163,6 +166,8 @@
     "deletePreset": "Eliminar el preajuste {{name}}",
     "viewingPreset": "Preajuste:",
     "backToMine": "Mi mapa",
-    "renamePreset": "Renombrar el preajuste {{name}}"
+    "renamePreset": "Renombrar el preajuste {{name}}",
+    "includeRoutes": "Incluir mis búsquedas y rutas ({{count}})",
+    "previewRoutes": "Búsquedas: {{count}}"
   }
 }

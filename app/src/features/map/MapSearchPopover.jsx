@@ -18,7 +18,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Search, X, ChevronLeft, ChevronRight, Maximize2, BookmarkPlus, Map as MapIcon, History, SearchX, Spline, Link2, Crosshair } from 'lucide-react';
+import { Search, X, ChevronLeft, ChevronRight, Maximize2, BookmarkPlus, Map as MapIcon, History, SearchX, Spline, Link2, Crosshair, CheckCheck, Camera } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { searchMap, highlightRanges } from './mapSearch.js';
 import { getIconImageUrl } from './iconImageCache.js';
@@ -75,7 +75,9 @@ export function MapSearchPopover({
   onSelect,            // (doc) => void
   onClearSelection,
   focus,               // { total, visible, otherFloors, step } | null — for the selection bar
-  onStep,              // (+1 | -1) => void
+  onStep,
+  onFoundNext,         // () => void | null — mark the current stop found, go to the next
+  stepFound,           // the current stop is already found              // (+1 | -1) => void
   onFrame,             // () => void — re-frame all focused icons
   tags,                // [{ key, label, context, active, route, color, line }]
   tagCounts,           // Map<key, number>
@@ -354,6 +356,14 @@ export function MapSearchPopover({
           {selected && !showList && routeOn && routeStops > 1 && (
             <div className="map-search-route-note" role="status">
               {t('map.search.routeStops', { count: routeStops })} · {t('map.search.routeNote')}
+            </div>
+          )}
+          {selected && !showList && onFoundNext && (
+            <div className="map-search-style-row">
+              <button type="button" className="kuro-btn kuro-btn-sm map-search-line active-gold" onClick={onFoundNext}>
+                <CheckCheck size={12} aria-hidden="true" />
+                {focus && focus.step < 0 ? t('map.search.startRun') : stepFound ? t('map.search.nextStop') : t('map.search.foundNext')}
+              </button>
             </div>
           )}
 

@@ -84,10 +84,8 @@ const EventCard = memo(({ event, server, bannerImage, visualSettings, status, on
     : generateMaskGradient();
   const pictureOpacity = visualSettings ? visualSettings.shadowOpacity / 100 : 0.9;
   // Direct user request 2026-09-11: same "breath-zoom" slow scale-pulse every other banner
-  // gets in full-animation mode (BannerCard.jsx, StandardBannerSection.jsx, etc. — see
-  // kuro.css's `.animations-full .breath-zoom` rule), now applied to the Event tab's own
-  // event picture too.
-  const isFull = visualSettings?.animationsEnabled === 'full';
+  // gets (BannerCard.jsx, StandardBannerSection.jsx, etc. — see kuro.css's breath-zoom rule,
+  // active from the ON animation mode up), now applied to the Event tab's own event picture too.
 
   // Direct user request: Daily Reset is a single Done button, same as every other event, that
   // resets itself back to unchecked each server day but remembers and accumulates how many of
@@ -123,7 +121,7 @@ const EventCard = memo(({ event, server, bannerImage, visualSettings, status, on
         <img
           src={imgUrl}
           alt={event.name}
-          className={`absolute inset-0 w-full h-full object-cover ${isFull ? 'breath-zoom' : ''}`}
+          className={`absolute inset-0 w-full h-full object-cover breath-zoom`}
           style={{
             zIndex: 1,
             opacity: pictureOpacity,

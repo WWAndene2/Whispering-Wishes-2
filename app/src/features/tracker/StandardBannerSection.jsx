@@ -5,9 +5,9 @@
 
 // BUG FIX (direct user request 2026-09-11): full-animation mode used to show a bespoke
 // twinkling-star/dust-mote canvas overlay (StandardBannerOverlay) unique to this banner,
-// instead of the same "breath-zoom" slow scale-pulse every other banner's art gets in
-// full-animation mode (BannerCard.jsx, CharacterDetailModal.jsx, etc. — see kuro.css's
-// `.animations-full .breath-zoom` rule). Removed that overlay entirely and applied
+// instead of the same "breath-zoom" slow scale-pulse every other banner's art gets
+// (BannerCard.jsx, CharacterDetailModal.jsx, etc. — see kuro.css's breath-zoom rule,
+// active from the ON animation mode up). Removed that overlay entirely and applied
 // `breath-zoom` to this banner's own img instead, for the same look as everywhere else.
 
 import React, { useState, memo } from 'react';
@@ -119,7 +119,6 @@ StandardPoolPicker.displayName = 'StandardPoolPicker';
 const StandardBannerSection = memo(({ bannerImage, altText, title, subtitle, items, itemKey, profileData, visualSettings, imagePosition, kind, calc, setDetailModal }) => {
   const stdMask = generateMaskGradient(visualSettings.standardFadePosition ?? 50, visualSettings.standardFadeIntensity ?? 100);
   const stdOpacity = (visualSettings.standardOpacity ?? 100) / 100;
-  const isFull = visualSettings?.animationsEnabled === 'full';
   const [pullSim, setPullSim] = useState(null);
   const [pullSimId, setPullSimId] = useState(0);
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -146,7 +145,7 @@ const StandardBannerSection = memo(({ bannerImage, altText, title, subtitle, ite
         <img
           src={bannerImage}
           alt={altText}
-          className={`absolute inset-0 w-full h-full object-cover ${isFull ? 'breath-zoom' : ''}`}
+          className={`absolute inset-0 w-full h-full object-cover breath-zoom`}
           style={{ zIndex: 1, opacity: stdOpacity, maskImage: stdMask, WebkitMaskImage: stdMask, objectPosition: imagePosition ?? 'center top' }}
           loading="eager"
           onError={hideOnError}

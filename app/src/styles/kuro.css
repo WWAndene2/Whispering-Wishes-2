@@ -2288,15 +2288,17 @@
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* ── Breathing zoom — only active on FULL animation mode ── */
+    /* ── Breathing zoom — active from the ON animation mode up (OFF adds .no-animations).
+       In FULL, BannerCard drops it from featured Resonator banners, whose art the
+       Spine rig animates instead. ── */
     @keyframes breathZoom {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.03); }
     }
-    .animations-full .breath-zoom {
+    :root:not(.no-animations) .breath-zoom {
       animation: breathZoom 5s ease-in-out infinite !important;
     }
-    .animations-full .collection-card .collection-img-wrap {
+    :root:not(.no-animations) .collection-card .collection-img-wrap {
       animation: breathZoom 6s ease-in-out infinite !important;
     }
 

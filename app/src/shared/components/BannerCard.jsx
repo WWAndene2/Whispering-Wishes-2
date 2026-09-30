@@ -165,7 +165,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
     <div ref={cardRef} className="relative overflow-hidden rounded-xl border banner-card" style={{ minHeight: 'var(--height-banner)', isolation: 'isolate', borderColor: style.borderColor, boxShadow: isFull ? 'none' : BANNER_SUBTLE_SHADOW }}>
       {useLuckdraw && artBox && (
         <div className="absolute inset-0" style={{ ...IMG_LAYER_STYLE, opacity: pictureOpacity, maskImage: maskGradient, WebkitMaskImage: maskGradient }}>
-          <div className="absolute breath-zoom" style={{ left: artBox.left, top: artBox.top, width: artBox.width, height: artBox.height }}>
+          <div className="absolute" style={{ left: artBox.left, top: artBox.top, width: artBox.width, height: artBox.height }}>
             <img src={imgUrl} alt={shownName} className="absolute inset-0 w-full h-full" loading="eager" onError={hideOnError} />
             <SpinePlayer
               characterId={luckdrawId}
@@ -193,7 +193,7 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
           <img
             src={imgUrl}
             alt={shownName}
-            className={`w-full h-full object-cover ${useSpine ? '' : 'breath-zoom'}`}
+            className={`w-full h-full object-cover ${useSpine || (isChar && isFull) ? '' : 'breath-zoom'}`}
             style={{
               opacity: useSpine ? 1 : pictureOpacity,
               objectPosition: item.imagePosition || 'center 100%',

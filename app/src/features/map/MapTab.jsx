@@ -3350,7 +3350,9 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     };
   }, [multiPlaceFromId, mapReady, findEnclosingZone, resolveZoneFloor, placementBounds]);
 
-  // Stamp placement: every map click adds one icon of `stampKind`.
+  // Stamp placement: every map click adds one icon of `stampKind`. Stamp, "add many" and
+  // single placement each register their own map click listener, so the buttons that start one
+  // stop the others — two live modes would turn one click into two icons at the same spot.
   useEffect(() => {
     if (!stampKind || !mapReady) return;
     const map = mapRef.current;
@@ -6550,7 +6552,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                           type="button"
                           className={`kuro-btn kuro-btn-sm ${isPlacing ? 'is-active' : ''}`}
                           disabled={disabled || isMulti}
-                          onClick={() => setPlacingIconId(isPlacing ? null : ic.id)}
+                          onClick={() => { if (!isPlacing) { setStampKind(null); setMultiPlaceFromId(null); } setPlacingIconId(isPlacing ? null : ic.id); }}
                           title={isPlacing ? 'Cancel placement' : 'Click on map to place'}
                           style={{ flex: '1 1 auto' }}
                         >
@@ -6560,7 +6562,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                           type="button"
                           className={`kuro-btn kuro-btn-sm ${isMulti ? 'is-active' : ''}`}
                           disabled={disabled || isPlacing}
-                          onClick={() => setMultiPlaceFromId(isMulti ? null : ic.id)}
+                          onClick={() => { if (!isMulti) { setStampKind(null); setPlacingIconId(null); } setMultiPlaceFromId(isMulti ? null : ic.id); }}
                           title={isMulti ? 'Stop placing (Esc)' : 'Every map click places a clone of this icon'}
                           style={{ flex: '1 1 auto' }}
                         >

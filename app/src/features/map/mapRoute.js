@@ -104,3 +104,30 @@ export function teleportLegs(points, teleporters, overhead) {
   }
   return legs;
 }
+
+/**
+ * Route that respects region unlock order. Stops in an unlocked region (or with no region)
+ * are routed freely first; each locked region follows in `progression` order, entered at
+ * the stop nearest the previous leg's end. `regionOf(point)` returns a region id or null.
+ * `start`, when given, is the pinned first point of the whole route.
+ */
+export function progressionRoute(points, { regionOf, unlocked, progression, start = null }) {
+  const free = [];
+  const locked = new Map();
+  for (const p of points) {
+    const r = regionOf(p);
+    if (r == null || unlocked.has(r) || !progression.includes(r)) free.push(p);
+    else {
+      if (!locked.has(r)) locked.set(r, []);
+      locked.get(r).push(p);
+    }
+  }
+  let route = start ? optimizeRoute([start, ...free], 0) : optimizeRoute(free);
+  for (const r of progression) {
+    const pts = locked.get(r);
+    if (!pts) continue;
+    const from = route[route.length - 1];
+    route = from ? [...route, ...optimizeRoute([from, ...pts], 0).slice(1)] : optimizeRoute(pts);
+  }
+  return route;
+}

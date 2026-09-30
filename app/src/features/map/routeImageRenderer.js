@@ -68,7 +68,7 @@ const panel = (ctx, x, y, w, h, r = RADIUS) => {
  * legend: [{ label, iconUrl, color, line, stops }]. backdrop: { url, position } | null.
  * Returns a PNG Blob, or null when there is nothing to draw.
  */
-export async function renderRouteImage({ routes, legend, backdrop, tileBase, title, stopsLabel, footer }) {
+export async function renderRouteImage({ routes, legend, backdrop, overlays = [], floorMask = false, tileBase, title, stopsLabel, footer }) {
   const all = routes.flatMap(r => [...r.points, ...(r.warps || []).filter(Boolean)]);
   if (!all.length) return null;
   const rawMinX = Math.min(...all.map(p => p.x));
@@ -95,6 +95,9 @@ export async function renderRouteImage({ routes, legend, backdrop, tileBase, tit
   const showBadge = f >= 0.75;
   const w = Math.max(MIN_SIDE, Math.round((maxX - minX) * k));
   const h = Math.round((maxY - minY) * k);
+  // Icons are drawn bare, as on the map, and grow with the image: 32 px base, 48 px on large images.
+  const longSide = Math.max(w, h);
+  const iconPx = (longSide >= 1280 ? 48 : 32) * f;
   // Map area centred in its panel when the route is narrower than MIN_SIDE.
   const offX = (w - (maxX - minX) * k) / 2;
 
@@ -197,6 +200,50 @@ export async function renderRouteImage({ routes, legend, backdrop, tileBase, tit
     ctx.drawImage(t.img, mx + offX + t.x * tileOut - minX * k, mapY + t.y * tileOut - minY * k, tileOut, tileOut);
   }
   ctx.filter = 'none';
+  // Off the ground floor the base map is dimmed behind the sub-maps, as on screen.
+  if (floorMask) {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+    ctx.fillRect(mx, mapY, w, h);
+  }
+  // Sub-map overlays (Mengzhou, Lahai Roi…): each overlay's tiles at the pyramid level
+  // closest to 1:1 with the output, placed with its centre, scale and rotation.
+  for (const ov of overlays) {
+    const displayScale = ov.scale * k;
+    let oz = null;
+    let factor = 1;
+    if (ov.pyramid) {
+      oz = Math.min(ov.maxZoom, Math.max(ov.minZoom, Math.round(ov.maxZoom + Math.log2(displayScale))));
+      factor = 2 ** (ov.maxZoom - oz);
+    }
+    const tilePx = TILE_SIZE * factor;
+    const cols = Math.ceil(ov.naturalWidth / tilePx);
+    const rows = Math.ceil(ov.naturalHeight / tilePx);
+    const c = toOut({ x: ov.center[0], y: ov.center[1] });
+    const rot = (ov.rotation * Math.PI) / 180;
+    // Frame corners in overlay-local px, to fetch only the tiles inside the frame.
+    const local = [[mx, mapY], [mx + w, mapY], [mx + w, mapY + h], [mx, mapY + h]].map(([sx, sy]) => {
+      const dx = (sx - c.x) / displayScale;
+      const dy = (sy - c.y) / displayScale;
+      return [dx * Math.cos(-rot) - dy * Math.sin(-rot) + ov.naturalWidth / 2, dx * Math.sin(-rot) + dy * Math.cos(-rot) + ov.naturalHeight / 2];
+    });
+    const x0 = Math.max(0, Math.floor(Math.min(...local.map(q => q[0])) / tilePx));
+    const x1 = Math.min(cols - 1, Math.floor(Math.max(...local.map(q => q[0])) / tilePx));
+    const y0 = Math.max(0, Math.floor(Math.min(...local.map(q => q[1])) / tilePx));
+    const y1 = Math.min(rows - 1, Math.floor(Math.max(...local.map(q => q[1])) / tilePx));
+    if (x0 > x1 || y0 > y1) continue;
+    const jobs = [];
+    for (let ty = y0; ty <= y1; ty++) for (let tx = x0; tx <= x1; tx++) jobs.push(loadImage(ov.tileUrl(oz, ty, tx)).then(img => ({ img, tx, ty })));
+    const imgs = await Promise.all(jobs);
+    ctx.save();
+    ctx.globalAlpha = ov.opacity;
+    ctx.translate(c.x, c.y);
+    ctx.rotate(rot);
+    ctx.scale(displayScale, displayScale);
+    for (const { img, tx, ty } of imgs) {
+      if (img) ctx.drawImage(img, tx * tilePx - ov.naturalWidth / 2, ty * tilePx - ov.naturalHeight / 2, tilePx, tilePx);
+    }
+    ctx.restore();
+  }
   // Edge vignette so the tiles sink into the frame.
   const vig = ctx.createRadialGradient(mx + w / 2, mapY + h / 2, Math.min(w, h) * 0.4, mx + w / 2, mapY + h / 2, Math.max(w, h) * 0.75);
   vig.addColorStop(0, 'rgba(8, 8, 16, 0)');
@@ -226,19 +273,18 @@ export async function renderRouteImage({ routes, legend, backdrop, tileBase, tit
       stroke(from, pts[i], style.color, style.line);
       if (via) {
         // The teleporter warped to, as its own icon in a dashed ring.
-        ctx.fillStyle = 'rgba(11, 18, 32, 0.85)';
         ctx.strokeStyle = style.color;
         ctx.lineWidth = 2;
         ctx.setLineDash([4, 4]);
-        ctx.beginPath(); ctx.arc(from.x, from.y, 16 * f, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.arc(from.x, from.y, iconPx * 0.75, 0, Math.PI * 2); ctx.stroke();
         ctx.setLineDash([]);
         const ti = via.iconUrl && iconImgs.get(via.iconUrl);
-        if (ti) ctx.drawImage(ti, from.x - 12 * f, from.y - 12 * f, 24 * f, 24 * f);
+        if (ti) ctx.drawImage(ti, from.x - iconPx / 2, from.y - iconPx / 2, iconPx, iconPx);
       }
     }
   }
-  // Stops, drawn after every line so no route crosses an icon: the stop's map icon on a
-  // disc ringed in its route colour, with its order in a small badge.
+  // Stops, drawn after every line so no route crosses an icon: the stop's map icon, bare as
+  // on the map, with its order in a small badge in the route colour.
   for (const r of routes) {
     const pts = r.points.map(toOut);
     let n = 0;
@@ -252,17 +298,15 @@ export async function renderRouteImage({ routes, legend, backdrop, tileBase, tit
         return;
       }
       n++;
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
-      ctx.shadowBlur = 6;
-      ctx.fillStyle = 'rgba(11, 18, 32, 0.85)';
-      ctx.beginPath(); ctx.arc(o.x, o.y, 16 * f, 0, Math.PI * 2); ctx.fill();
-      ctx.shadowBlur = 0;
-      ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.stroke();
       const img = p.iconUrl && iconImgs.get(p.iconUrl);
-      if (img) ctx.drawImage(img, o.x - 12 * f, o.y - 12 * f, 24 * f, 24 * f);
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+      ctx.shadowBlur = 6;
+      if (img) ctx.drawImage(img, o.x - iconPx / 2, o.y - iconPx / 2, iconPx, iconPx);
+      else { ctx.fillStyle = color; ctx.beginPath(); ctx.arc(o.x, o.y, iconPx / 4, 0, Math.PI * 2); ctx.fill(); }
+      ctx.shadowBlur = 0;
       if (!showBadge) return;
-      const bx2 = o.x + 12 * f;
-      const by2 = o.y - 12 * f;
+      const bx2 = o.x + iconPx * 0.4;
+      const by2 = o.y - iconPx * 0.4;
       ctx.fillStyle = color;
       ctx.beginPath(); ctx.arc(bx2, by2, 8, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = BG;

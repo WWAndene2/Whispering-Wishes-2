@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { optimizeRoute, routeLength, teleportLegs } from '../features/map/mapRoute.js';
+import { optimizeRoute, routeLength, teleportLegs, progressionRoute } from '../features/map/mapRoute.js';
 
 const pts = (arr) => arr.map(([x, y], i) => ({ id: i, x, y }));
 
@@ -38,5 +38,23 @@ describe('teleportLegs', () => {
   it('walks when the warp would not save distance', () => {
     expect(teleportLegs([{ x: 0, y: 0 }, { x: 100, y: 0 }], tps, 128)).toEqual([null]);
     expect(teleportLegs([{ x: 0, y: 0 }, { x: 1010, y: 0 }], [], 128)).toEqual([null]);
+  });
+});
+
+describe('progressionRoute', () => {
+  const regionOf = (p) => p.r;
+  const progression = ['a', 'b', 'c'];
+  const P = (x, r) => ({ x, y: 0, r });
+  it('visits locked regions in progression order after the unlocked ones', () => {
+    const pts = [P(0, 'c'), P(10, 'b'), P(20, 'a'), P(30, 'a'), P(40, 'b')];
+    const out = progressionRoute(pts, { regionOf, unlocked: new Set(['b']), progression });
+    expect(out.slice(0, 2).map(p => p.r)).toEqual(['b', 'b']);
+    expect(out.slice(2).map(p => p.r)).toEqual(['a', 'a', 'c']);
+  });
+  it('keeps the pinned start first', () => {
+    const start = { x: 100, y: 0, isStart: true };
+    const out = progressionRoute([P(0, 'a'), P(50, 'b')], { regionOf, unlocked: new Set(), progression, start });
+    expect(out[0]).toBe(start);
+    expect(out.slice(1).map(p => p.r)).toEqual(['a', 'b']);
   });
 });

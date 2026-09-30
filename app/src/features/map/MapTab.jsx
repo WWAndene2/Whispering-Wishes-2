@@ -25,7 +25,7 @@ import { ReferenceImageLayer } from './ReferenceImageLayer.jsx';
 import { IconKindPicker } from './IconKindPicker.jsx';
 import { MapSearchPopover } from './MapSearchPopover.jsx';
 import { buildSearchIndex, resolveFilterKey } from './mapSearch.js';
-import { optimizeRoute, teleportLegs } from './mapRoute.js';
+import { optimizeRoute, teleportLegs, progressionRoute } from './mapRoute.js';
 import { renderRouteImage, saveRouteImage } from './routeImageRenderer.js';
 import { DEFAULT_VISUAL_SETTINGS } from '../../hooks/useVisualSettings.js';
 import { VISUAL_SETTINGS_KEY } from '../../core/storageKeys.js';
@@ -78,6 +78,23 @@ const appBackdrop = () => {
     : bg?.url;
   return url ? { url, position: typeof bg.objectPosition === 'string' ? bg.objectPosition : '50% 50%' } : null;
 };
+// Regions in the order a new account unlocks them, each as the zone ids it covers. A route
+// visits the regions the player has found nothing in yet (likely still locked) last, in this
+// order; an icon belongs to the first of these zones up its zone chain.
+const REGION_PROGRESSION = [
+  ['jinzhou', ['new-zone-2']],
+  ['mt-firmament', ['huanglong-sub-1']],
+  ['black-shores', ['the-black-shores', 'overlay-tethys-deep-mo6i9a2z']],
+  ['ragunna', ['ragunna']],
+  ['fabricatorium', ['overlay-fabricatorium-of-the-deep-mo8qn4se']],
+  ['septimont', ['septimont']],
+  ['chronorift', ['overlay-chronorift-metropolis-mobcexa9']],
+  ['lahai-roi', ['overlay-lahai-roi-mo6gpzuw']],
+  ['frostlands', ['roya-frostlands-sub-1']],
+  ['dimmr-plains', ['overlay-dimmr-plains-mu1p74j8']],
+  ['mengzhou', ['overlay-mengzhou-mplaceholder1']],
+];
+const REGION_OF_ZONE = new Map(REGION_PROGRESSION.flatMap(([r, zones]) => zones.map(z => [z, r])));
 const TELEPORT_KINDS = new Set(['resonance-nexus', 'resonance-beacon']);
 // Boss spots (Overlord / Calamity) are fast-travel points too. Like Nexuses and Beacons they
 // only work once discovered — found, here.
@@ -933,7 +950,31 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const start = routeStart && (routeStart.floor == null || routeStart.floor === viewFloor)
       ? { id: '__route-start', x: routeStart.x, y: routeStart.y, isStart: true } : null;
     // Returns the route through `pts`, prefixed with the chosen start when there is one.
-    const order = (pts) => (start ? optimizeRoute([start, ...pts], 0) : optimizeRoute(pts));
+    // Region of each icon (see REGION_PROGRESSION); a region is unlocked once any of its icons is found.
+    const zoneById = new Map(allZones.map(z => [z.id, z]));
+    const regionOfZone = new Map();
+    const regionOfZoneId = (zoneId) => {
+      if (!zoneId) return null;
+      if (regionOfZone.has(zoneId)) return regionOfZone.get(zoneId);
+      let z = zoneById.get(zoneId);
+      const seen = new Set();
+      let r = null;
+      while (z && !seen.has(z.id)) {
+        if (REGION_OF_ZONE.has(z.id)) { r = REGION_OF_ZONE.get(z.id); break; }
+        seen.add(z.id);
+        z = z.parentId ? zoneById.get(z.parentId) : null;
+      }
+      regionOfZone.set(zoneId, r);
+      return r;
+    };
+    const unlocked = new Set();
+    for (const ic of iconDrafts) if (foundIds.has(ic.id)) { const r = regionOfZoneId(ic.zoneId); if (r) unlocked.add(r); }
+    const order = (pts) => progressionRoute(pts, {
+      regionOf: (ic) => regionOfZoneId(ic.zoneId),
+      unlocked,
+      progression: REGION_PROGRESSION.map(([r]) => r),
+      start,
+    });
     // With teleports on, each route gets `warps`: per leg, the teleporter it warps to (or null).
     const teleporters = routeTeleport
       ? iconDrafts.filter(ic => (TELEPORT_KINDS.has(ic.kind) || BOSS_KINDS.has(ic.kind)) && foundIds.has(ic.id) && (ic.floor == null || ic.floor === viewFloor)) : [];
@@ -955,7 +996,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     return groups
       .filter(g => g.pts.length + (start ? 1 : 0) >= 2)
       .map(g => withWarps({ key: g.key, color: g.color, line: g.line, points: order(g.pts) }));
-  }, [searchSelected, searchRouteOn, searchTags, searchIndex, iconDrafts, viewFloor, hideFound, foundIds, routeStart, routeLinked, routeTeleport]);
+  }, [searchSelected, searchRouteOn, searchTags, searchIndex, iconDrafts, viewFloor, hideFound, foundIds, routeStart, routeLinked, routeTeleport, allZones]);
   // Saves every route on the map as one PNG (routeImageRenderer.js).
   const [routeExporting, setRouteExporting] = useState(false);
   const handleExportRoutes = useCallback(async () => {
@@ -983,6 +1024,18 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         routes: searchRoutes.map(withIcons),
         legend,
         backdrop: appBackdrop(),
+        overlays: overlayDrafts.filter(ov => (ov.floor ?? 0) === viewFloor).flatMap((ov) => {
+          const cat = OVERLAY_CATALOG.find(c => c.id === ov.catalogId);
+          if (!cat) return [];
+          const dir = cat.imageUrl.replace(/\/[^/]+$/, '').split('/').map(encodeURIComponent).join('/');
+          return [{
+            center: ov.center, scale: ov.scale ?? 1, rotation: ov.rotation || 0, opacity: ov.opacity ?? 1,
+            naturalWidth: cat.naturalWidth, naturalHeight: cat.naturalHeight,
+            pyramid: !!cat.pyramid, minZoom: cat.minZoom, maxZoom: cat.maxZoom,
+            tileUrl: (z, y, x) => (BASE + dir + (z == null ? `/lossless/${y}/${x}.png` : `/lossless/${z}/${y}/${x}.png`)).replace(/([^:])\/\//g, '$1/'),
+          }];
+        }),
+        floorMask: viewFloor !== 0,
         tileBase: BASE,
         title: t('map.search.exportTitle'),
         stopsLabel: (count) => t('map.search.exportStops', { count }),
@@ -997,7 +1050,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     } finally {
       setRouteExporting(false);
     }
-  }, [searchRoutes, routeExporting, searchSelected, searchTags, t, showToast]);
+  }, [searchRoutes, routeExporting, searchSelected, searchTags, t, showToast, overlayDrafts, viewFloor]);
   // The route the stepper walks: the selection's own, or the linked route when the selection is part of it.
   const selectionRoute = searchRoutes.find(r => r.key === 'selection' || (r.key === 'linked' && r.members.includes('selection'))) || null;
   const routeStopCount = (r) => r.points.filter(p => !p.isStart).length;

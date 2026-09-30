@@ -72,6 +72,18 @@ function EventsTab({
     }
   }, [entries, runIds, state.eventStatus, dispatch]);
 
+  // An event whose current run has ended is removed from the tab (and from the progress totals) —
+  // daily/weekly resets and recurring events never end.
+  const isEventExpired = useCallback((ev) => {
+    if (ev.dailyReset || ev.weeklyReset) return false;
+    const isRecurring = ev.resetType && /^~?\d+\s*(days?|d|h|m)?$/i.test(ev.resetType.trim());
+    if (isRecurring) return false;
+    if (!ev.currentEnd) return false;
+    const end = getServerAdjustedEnd(ev.currentEnd, state.server);
+    const endMs = new Date(end).getTime();
+    return !isNaN(endMs) && endMs <= now;
+  }, [state.server, now]);
+
   // L1-FIX: Memoize event progress stats (was 60+ array iterations per render)
   const progressStats = useMemo(() => {
     const { weekStartKey } = getServerWeekProgress(state.server);
@@ -84,7 +96,7 @@ function EventsTab({
     const checkedDailyDays = (dailyStatus && dailyStatus.weekStart === weekStartKey && Array.isArray(dailyStatus.days))
       ? Math.min(7, dailyStatus.days.length) : 0;
 
-    const startedEntries = entries.filter(([, ev]) => hasEventStarted(ev, state.server, now));
+    const startedEntries = entries.filter(([, ev]) => hasEventStarted(ev, state.server, now) && !isEventExpired(ev));
     // Weekly rewards: daily recurring (×7, the max across a full week) + weekly recurring sources
     const totalAstrite = entries.reduce((sum, [, ev]) => {
       const val = parseInt(ev.rewards, 10) || 0;
@@ -121,10 +133,10 @@ function EventsTab({
     const doneCount = doneKeys.length + (dailyFullyChecked ? 1 : 0);
     const pendingCount = startedEntries.length - doneCount - skippedKeys.length;
     return { totalAstrite, earnedAstrite, skippedAstrite, hasProgress, doneCount, skippedCount: skippedKeys.length, pendingCount, totalCount: startedEntries.length };
-  }, [state.eventStatus, state.server, entries, now, statusOf]);
+  }, [state.eventStatus, state.server, entries, now, statusOf, isEventExpired]);
 
-  // L1-FIX: Memoize active/expired event split
-  const { active, expired, eventImageMap } = useMemo(() => {
+  // L1-FIX: Memoize the list of active events
+  const { active, eventImageMap } = useMemo(() => {
     const imgMap = {
       tacticalHologram: activeBanners.tacticalHologramImage,
       whimperingWastes: activeBanners.whimperingWastesImage,
@@ -135,22 +147,12 @@ function EventsTab({
       weeklyBoss: activeBanners.weeklyBossImage,
       dailyReset: activeBanners.dailyResetImage,
     };
-    const isEventExpired = (ev) => {
-      if (ev.dailyReset || ev.weeklyReset) return false;
-      const isRecurring = ev.resetType && /^~?\d+\s*(days?|d|h|m)?$/i.test(ev.resetType.trim());
-      if (isRecurring) return false;
-      if (!ev.currentEnd) return false;
-      const end = getServerAdjustedEnd(ev.currentEnd, state.server);
-      const endMs = new Date(end).getTime();
-      return !isNaN(endMs) && endMs <= now;
-    };
     const started = entries.filter(([, ev]) => hasEventStarted(ev, state.server, now));
     return {
       active: started.filter(([, ev]) => !isEventExpired(ev)),
-      expired: started.filter(([, ev]) => isEventExpired(ev)),
       eventImageMap: imgMap,
     };
-  }, [activeBanners, state.server, entries, now]);
+  }, [activeBanners, state.server, entries, now, isEventExpired]);
 
   // L1-FIX: Stable renderCard callback (was recreated every render)
   const renderCard = useCallback(([key, ev], isExpired) => (
@@ -244,7 +246,6 @@ function EventsTab({
         ) : (
           <>
             {active.map((entry) => renderCard(entry, false))}
-            {expired.map((entry) => renderCard(entry, true))}
           </>
         )}
       </div>

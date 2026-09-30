@@ -71,7 +71,7 @@ const panel = (ctx, x, y, w, h, r = RADIUS) => {
 const floorOf = (p) => p.floor ?? 0;
 const SUB_LABEL = 32;       // label strip at the top of a sub-map card
 const INSET_MIN = 128;      // narrowest inset, room for its name
-const INSET_EDGE = 16;
+const INSET_EDGE = 8;
 const INSET_RADIUS = 12;
 const INSET_MARGIN = 12;    // inset to panel edge / to another inset
 
@@ -79,7 +79,8 @@ const INSET_MARGIN = 12;    // inset to panel edge / to another inset
 // the sub-map really is. Candidates on a 16 px grid are scored by the stops and anchor dots
 // they would hide, the land under them (from the drawn map's pixels) and their distance to the
 // sub-map's anchor; spots overlapping a placed inset lose to any other. Returns the worst
-// placement's score without the distance term (0 = every inset on clear sea).
+// placement's score without the distance term (0 = every inset on clear sea; retried at 10,
+// i.e. 0.5% of an inset over land).
 function placeInsets(insets, main, landAt, stopsOut, anchorOut) {
   const placed = [];
   const anchors = insets.map(v => anchorOut(v.anchor));
@@ -121,15 +122,69 @@ function markerScale(stops, k, longSide) {
   return { iconPx: (longSide >= 1280 ? 48 : 32) * f, showBadge: f >= 0.75 };
 }
 
-// Axis-aligned bounds of an overlay placed on the map (centre, scale, rotation).
-function overlayBounds(ov) {
+// Map-space corners of a rectangle in an overlay's own pixels, placed with its centre,
+// scale and rotation.
+function overlayCorners(ov, x0 = 0, y0 = 0, x1 = ov.naturalWidth, y1 = ov.naturalHeight) {
   const rot = (ov.rotation * Math.PI) / 180;
-  const hw = (ov.naturalWidth * ov.scale) / 2;
-  const hh = (ov.naturalHeight * ov.scale) / 2;
-  return [[-hw, -hh], [hw, -hh], [hw, hh], [-hw, hh]].map(([x, y]) => ({
-    x: ov.center[0] + x * Math.cos(rot) - y * Math.sin(rot),
-    y: ov.center[1] + x * Math.sin(rot) + y * Math.cos(rot),
-  }));
+  return [[x0, y0], [x1, y0], [x1, y1], [x0, y1]].map(([lx, ly]) => {
+    const x = (lx - ov.naturalWidth / 2) * ov.scale;
+    const y = (ly - ov.naturalHeight / 2) * ov.scale;
+    return { x: ov.center[0] + x * Math.cos(rot) - y * Math.sin(rot), y: ov.center[1] + x * Math.sin(rot) + y * Math.cos(rot) };
+  });
+}
+
+const OPAQUE_LEVEL = 2;     // pyramid level read to find where a sub-map's land is
+
+// Corners of the part of a sub-map that is actually drawn (its mostly opaque pixels, so not
+// the faint glow around its coast, minus stray islets at the edges; read
+// from a coarse pyramid level), so an inset is framed on the land rather than on the whole
+// image with its transparent margins. Falls back to the whole image.
+async function overlayLandCorners(ov) {
+  if (!ov.pyramid) return overlayCorners(ov);
+  const z = Math.min(ov.maxZoom, Math.max(ov.minZoom, OPAQUE_LEVEL));
+  const factor = 2 ** (ov.maxZoom - z);
+  const cols = Math.ceil(ov.naturalWidth / factor / TILE_SIZE);
+  const rows = Math.ceil(ov.naturalHeight / factor / TILE_SIZE);
+  const jobs = [];
+  for (let ty = 0; ty < rows; ty++) for (let tx = 0; tx < cols; tx++) jobs.push(loadImage(ov.tileUrl(z, ty, tx)).then(img => ({ img, tx, ty })));
+  const tiles = await Promise.all(jobs);
+  const c = document.createElement('canvas');
+  c.width = cols * TILE_SIZE;
+  c.height = rows * TILE_SIZE;
+  const g = c.getContext('2d');
+  for (const { img, tx, ty } of tiles) if (img) g.drawImage(img, tx * TILE_SIZE, ty * TILE_SIZE);
+  try {
+    const px = g.getImageData(0, 0, c.width, c.height).data;
+    // Land pixels placed on the map (centre, scale, rotation), so the frame fits the land
+    // itself rather than a rotated rectangle around it.
+    const rot = (ov.rotation * Math.PI) / 180;
+    const cos = Math.cos(rot);
+    const sin = Math.sin(rot);
+    const xs = [];
+    const ys = [];
+    for (let y = 0; y < c.height; y += 2) {
+      for (let x = 0; x < c.width; x += 2) {
+        if (px[(y * c.width + x) * 4 + 3] <= 96) continue;
+        const lx = (x * factor - ov.naturalWidth / 2) * ov.scale;
+        const ly = (y * factor - ov.naturalHeight / 2) * ov.scale;
+        xs.push(ov.center[0] + lx * cos - ly * sin);
+        ys.push(ov.center[1] + lx * sin + ly * cos);
+      }
+    }
+    if (!xs.length) return overlayCorners(ov);
+    // Trim the outermost 1% of land on each side: stray islets and debris near the image
+    // edges would otherwise stretch the frame to nearly the whole image.
+    xs.sort((m, n) => m - n);
+    ys.sort((m, n) => m - n);
+    const at = (arr, q) => arr[Math.min(arr.length - 1, Math.max(0, Math.round(q * (arr.length - 1))))];
+    const x0 = at(xs, 0.01);
+    const x1 = at(xs, 0.99);
+    const y0 = at(ys, 0.01);
+    const y1 = at(ys, 0.99);
+    return [{ x: x0, y: y0 }, { x: x1, y: y0 }, { x: x1, y: y1 }, { x: x0, y: y1 }];
+  } catch {
+    return overlayCorners(ov);
+  }
 }
 
 /**
@@ -186,16 +241,16 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
 
   // ── Sub-map cards: one per other floor holding a stop, framed on its whole sub-map.
   const subFloors = [...new Set(all.map(floorOf).filter(f => f !== 0))];
-  const subs = subFloors.map((floor) => {
+  const subs = await Promise.all(subFloors.map(async (floor) => {
     const ovs = overlays.filter(ov => ov.floor === floor);
-    const pts = [...all.filter(p => floorOf(p) === floor), ...ovs.flatMap(overlayBounds)];
+    const pts = [...all.filter(p => floorOf(p) === floor), ...(await Promise.all(ovs.map(overlayLandCorners))).flat()];
     const minX = Math.min(...pts.map(p => p.x));
     const minY = Math.min(...pts.map(p => p.y));
     return {
       floor, overlays: ovs, label: ovs.map(ov => ov.name).join(' · '),
       minX, minY, bw: Math.max(1, Math.max(...pts.map(p => p.x)) - minX), bh: Math.max(1, Math.max(...pts.map(p => p.y)) - minY),
     };
-  });
+  }));
   // With a main panel, sub-maps are insets placed on it (see placeInsets); without one
   // (every stop underground) they are cards in rows of two.
   const insetMode = !!main;
@@ -335,7 +390,7 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
       };
       const rel = viewOut(main);
       const worst = placeInsets([...subs].sort((a, b) => b.w * b.h - a.w * a.h), main, landAt, groundPts.map(rel), rel);
-      if (worst < 200 || attempt >= 5) break;
+      if (worst < 10 || attempt >= 5) break;
       main = attempt % 2 === 0 ? makeMain(main.extraE + step, main.extraS) : makeMain(main.extraE, main.extraS + step);
     }
     w = main.w;

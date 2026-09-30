@@ -83,6 +83,12 @@ const loadSpineRuntimes = () => {
       window.spine41 = window.spine;
       window.spine = window.__spine42;
       delete window.__spine42;
+      // Additive slots must not add to the canvas alpha: on our transparent canvas a dark,
+      // semi-transparent additive glow (e.g. Hsin's Luckdraw red light ray) otherwise turns
+      // into an opaque dark block, while in-game it lands on an opaque background and adds
+      // nothing visible. srcAlpha ZERO with the additive dstRgb (ONE) keeps alpha unchanged.
+      const additive = window.spine41?.PolygonBatcher?.blendModesGL?.[1];
+      if (additive) additive.srcAlpha = 0; // GL_ZERO
     })
     .catch((err) => console.error('[Spine] runtime load failed:', err));
 };

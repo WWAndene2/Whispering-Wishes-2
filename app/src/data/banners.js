@@ -1208,6 +1208,7 @@ const VERSION_SPLASH_SCREENS = [
   // meta serves a static video-thumbnail frame even for video posts (the card type stayed
   // "summary_large_image" instead of "player", which was the false signal). None of the Live2D
   // links yielded real official splash art — only the Classic-style links below did.
+  { id: 'v3.7', version: '3.7', name: 'Version 3.7', art: './Background/3.7-Background.webp', pos: { header: '50% 30%', nav: '50% 30%', bg: '46% 50%' } },
   { id: 'v3.6', version: '3.6', name: 'Version 3.6 (Classic)', art: './banner-history/v3.6.jpg', pos: { header: '50% 30%', nav: '50% 30%', bg: '46% 50%' } },
   { id: 'v3.5', version: '3.5', name: 'Version 3.5 (Classic)', art: './banner-history/v3.5.jpg', pos: { header: '50% 30%', nav: '50% 30%', bg: '46% 50%' } },
   { id: 'v3.4-cyberpunk', version: '3.4', name: 'Version 3.4 Cyberpunk (Classic)', art: './banner-history/v3.4-cyberpunk.jpg', pos: { header: '50% 30%', nav: '50% 30%', bg: '46% 50%' } },
@@ -1390,6 +1391,14 @@ const ANIMATED_BACKGROUNDS = [
   // Live2D-style version-update wallpapers (fan-cleaned 4K renders).
   // These are the actual animated MP4s the earlier "Live2D" splash-art request turned out to be;
   // wired here as animated backgrounds instead of static VERSION_SPLASH_SCREENS entries.
+  {
+    id: 'v3-7-live2d',
+    version: 3.7,
+    name: 'v3.7 Live2D',
+    art: './animated-bg/3.7-Live2D.mp4',
+    poster: './Background/3.7-Background.webp',
+    pos: { header: '50% 30%', nav: '50% 32%', bg: '52% 50%' },
+  },
   {
     id: 'v3-6-live2d',
     version: 3.6,

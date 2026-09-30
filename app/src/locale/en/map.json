@@ -74,7 +74,21 @@
       "icon": "Marker",
       "subcategory": "Class"
     },
-    "header": "Search"
+    "header": "Search",
+    "route": "Show optimized route",
+    "routeHide": "Hide route",
+    "routeStops": "Route: {{count}} stops on this floor",
+    "routeNote": "Straight-line order through the icons, shortest found — not in-game pathing.",
+    "tagStyle": "Style of {{name}}",
+    "tagRoute": "Route",
+    "tagColor": "Color",
+    "tagLine": "Line",
+    "lineSolid": "Solid",
+    "lineDashed": "Dashes",
+    "lineDotted": "Dots",
+    "lineDashDot": "Dash-dot",
+    "colorN": "Color {{n}}",
+    "styleDone": "Done"
   },
   "card": {
     "markFound": "Mark as found",

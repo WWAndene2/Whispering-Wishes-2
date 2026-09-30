@@ -74,7 +74,21 @@
       "icon": "Repère",
       "subcategory": "Classe"
     },
-    "header": "Recherche"
+    "header": "Recherche",
+    "route": "Afficher l'itinéraire optimisé",
+    "routeHide": "Masquer l'itinéraire",
+    "routeStops": "Itinéraire : {{count}} étapes sur cet étage",
+    "routeNote": "Ordre en ligne droite entre les icônes, le plus court trouvé — pas le chemin réel en jeu.",
+    "tagStyle": "Style de {{name}}",
+    "tagRoute": "Itinéraire",
+    "tagColor": "Couleur",
+    "tagLine": "Trait",
+    "lineSolid": "Continu",
+    "lineDashed": "Tirets",
+    "lineDotted": "Points",
+    "lineDashDot": "Tiret-point",
+    "colorN": "Couleur {{n}}",
+    "styleDone": "OK"
   },
   "card": {
     "markFound": "Marquer trouvé",

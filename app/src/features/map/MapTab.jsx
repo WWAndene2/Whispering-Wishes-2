@@ -25,6 +25,7 @@ import { ReferenceImageLayer } from './ReferenceImageLayer.jsx';
 import { IconKindPicker } from './IconKindPicker.jsx';
 import { MapSearchPopover } from './MapSearchPopover.jsx';
 import { buildSearchIndex, resolveFilterKey } from './mapSearch.js';
+import { optimizeRoute } from './mapRoute.js';
 import { t } from '../../utils/i18n.js';
 import { haptic } from '../../utils/haptics.js';
 
@@ -57,6 +58,10 @@ const SEARCH_FOCUS_SCALE = 1.25;
 // shadow keeps the white glyph readable on light terrain).
 const PIN_PX = 32;
 const SEARCH_BREATH_MS = 2400;
+// Optimized-route lines (search selection and saved tags): the colours a tag can pick
+// (the first is the selection's own) and each line style's canvas dash pattern.
+const SEARCH_ROUTE_COLORS = ['#edaf18', '#22d3ee', '#f472b6', '#a3e635', '#fb923c', '#a78bfa', '#f87171', '#ffffff'];
+const SEARCH_ROUTE_DASH = { solid: [], dashed: [12, 8], dotted: [2, 6], dashdot: [12, 6, 2, 6] };
 
 // Icon categories visible by default; every other category starts hidden the
 // first time it appears (keeps the map light to open once thousands of
@@ -210,6 +215,8 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchSelectedKey, setSearchSelectedKey] = useState(null);
   const [searchStep, setSearchStep] = useState(-1);
+  // Optimized-route line through the selected result's icons (search panel toggle).
+  const [searchRouteOn, setSearchRouteOn] = useState(false);
   // Saved searches, shown as tags under the search bar and applied to the map
   // while active (even with the panel closed). Persisted as result keys, so a
   // tag keeps following its icons when the map data is edited.
@@ -865,6 +872,26 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     for (const tg of searchTags) if (tg.active) resolveFilterKey(searchIndex, tg.key).forEach(id => ids.add(id));
     return ids.size ? ids : null;
   }, [searchSelected, searchTags, searchIndex]);
+  // Optimized routes drawn on the map: one through the selected result (when its route toggle
+  // is on) and one per active saved tag with its route on, each in its own colour and line
+  // style. Only icons on the floor in view are routed; found icons are left out while
+  // "hide found" is on.
+  const searchRoutes = useMemo(() => {
+    const out = [];
+    const build = (key, ids, color, line) => {
+      const wanted = new Set(ids);
+      const pts = iconDrafts.filter(ic => wanted.has(ic.id)
+        && (ic.floor == null || ic.floor === viewFloor)
+        && !(hideFound && foundIds.has(ic.id)));
+      if (pts.length >= 2) out.push({ key, color, line, points: optimizeRoute(pts) });
+    };
+    if (searchSelected && searchRouteOn) build('selection', searchSelected.iconIds, SEARCH_ROUTE_COLORS[0], 'solid');
+    searchTags.forEach((tg, i) => {
+      if (tg.active && tg.route) build(tg.key, resolveFilterKey(searchIndex, tg.key), tg.color || SEARCH_ROUTE_COLORS[i % SEARCH_ROUTE_COLORS.length], tg.line || 'dashed');
+    });
+    return out;
+  }, [searchSelected, searchRouteOn, searchTags, searchIndex, iconDrafts, viewFloor, hideFound, foundIds]);
+  const selectionRoute = searchRoutes.find(r => r.key === 'selection') || null;
   // Order for stepping through results one by one (1, 2, 3…): the same order
   // icons appear in the Regions tree — zones in tree pre-order, each zone's
   // icons in their stored order; icons outside any tree zone come last.
@@ -883,8 +910,13 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       if (icons) { out.push(...icons); byZone.delete(node.id); }
     }
     for (const icons of byZone.values()) out.push(...icons);
+    // With the selection's route on, the stepper walks the route first, then the rest.
+    if (selectionRoute) {
+      const onRoute = new Set(selectionRoute.points.map(ic => ic.id));
+      return [...selectionRoute.points, ...out.filter(ic => !onRoute.has(ic.id))];
+    }
     return out;
-  }, [searchSelected, searchFocusIds, iconDrafts, draftTree]);
+  }, [searchSelected, searchFocusIds, iconDrafts, draftTree, selectionRoute]);
   const searchStepIconId = searchStep >= 0 ? (searchStepList[searchStep]?.id ?? null) : null;
   const searchFocusSummary = useMemo(() => {
     if (!searchStepList.length) return null;
@@ -962,7 +994,10 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     const scoped = doc.type === 'kindZone' || doc.type === 'catZone' || doc.type === 'icon';
     setSearchTags(prev => prev.some(tg => tg.key === doc.key)
       ? prev
-      : [...prev, { key: doc.key, label: doc.label, context: scoped && doc.context ? doc.context.split(' · ')[0] : '', active: true }]);
+      : [...prev, { key: doc.key, label: doc.label, context: scoped && doc.context ? doc.context.split(' · ')[0] : '', active: true, route: searchRouteOn, color: SEARCH_ROUTE_COLORS[prev.length % SEARCH_ROUTE_COLORS.length], line: 'dashed' }]);
+  }, [searchRouteOn]);
+  const handleSearchUpdateTag = useCallback((key, patch) => {
+    setSearchTags(prev => prev.map(tg => tg.key === key ? { ...tg, ...patch } : tg));
   }, []);
   const handleSearchToggleTag = useCallback((key) => {
     setSearchStep(-1);
@@ -973,6 +1008,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
     setSearchTags(prev => prev.filter(tg => tg.key !== key));
   }, []);
   const handleSearchClearSelection = useCallback(() => {
+    setSearchRouteOn(false);
     setSearchSelectedKey(null);
     setSearchStep(-1);
     setSearchQuery('');
@@ -2344,6 +2380,29 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       // scale. Icons whose floor is set and doesn't match viewFloor
       // are hidden (icons with floor==null are "all floors"). Categories
       // toggled off in the Hexagon filter are skipped.
+      // ── Optimized search routes, under the icons they link.
+      searchRoutes.forEach((r) => {
+        const pts = r.points.map(ic => map.latLngToContainerPoint(map.unproject([ic.x, ic.y], NATIVE_ZOOM)));
+        ctx.save();
+        ctx.strokeStyle = r.color;
+        ctx.lineWidth = 3;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = r.line === 'dotted' ? 'round' : 'butt';
+        ctx.setLineDash(SEARCH_ROUTE_DASH[r.line] || []);
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+        ctx.shadowBlur = 4;
+        ctx.beginPath();
+        pts.forEach((pt, i) => (i ? ctx.lineTo(pt.x, pt.y) : ctx.moveTo(pt.x, pt.y)));
+        ctx.stroke();
+        // Start of the route: a filled dot under the first icon.
+        ctx.setLineDash([]);
+        ctx.fillStyle = r.color;
+        ctx.beginPath();
+        ctx.arc(pts[0].x, pts[0].y, 6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+
       const ICON_BASE_PX = 28;
       const trigger = () => overlayRedrawRef.current();
       // Search focus (MapSearchPopover): focused icons are drawn last (on
@@ -2426,7 +2485,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
       map.off('move zoom viewreset zoomend resize', draw);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [overlayDrafts, viewFloor, mapReady, iconDrafts, iconFiltersOff, searchFocusIds, searchStepIconId, foundIds, hideFound, pins, pinCardId]);
+  }, [overlayDrafts, viewFloor, mapReady, iconDrafts, iconFiltersOff, searchFocusIds, searchStepIconId, foundIds, hideFound, pins, pinCardId, searchRoutes]);
 
   // Cleanup shared canvas + any pending zone-arm timer on unmount.
   useEffect(() => {
@@ -4505,6 +4564,34 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
           background: none; border: 0; color: inherit; cursor: pointer; opacity: 0.7;
         }
         .map-search-tag-remove:hover { opacity: 1; }
+        .map-search-tag-style {
+          display: inline-flex; align-items: center; justify-content: center;
+          width: 24px; height: 24px; padding: 0;
+          background: none; border: 0; cursor: pointer;
+        }
+        .map-search-tag-swatch { width: 12px; height: 3px; border-radius: 1px; }
+        .map-search-tag-swatch.is-off { opacity: 0.35; }
+        .map-search-style {
+          display: flex; flex-direction: column; gap: var(--space-sm, 8px);
+          padding: var(--space-sm, 8px);
+          border-radius: 8px;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(0, 0, 0, 0.24);
+        }
+        .map-search-style-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm, 8px); font-size: 12px; color: var(--text-muted, #8892a4); }
+        .map-search-style-row { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-xs, 4px); }
+        .map-search-style-label { width: 100%; font-size: 12px; color: var(--text-muted, #8892a4); }
+        /* 32×48 px tap area (48 px tall, the app's touch-target minimum) around a 24 px colour dot,
+           so all eight colours fit on one row at phone width. */
+        .map-search-color {
+          flex: 0 0 32px; width: 32px; height: 48px; padding: 0; cursor: pointer;
+          display: inline-flex; align-items: center; justify-content: center;
+          background: none; border: 0;
+        }
+        .map-search-color-dot { width: 24px; height: 24px; border-radius: 12px; border: 2px solid transparent; }
+        .map-search-color.is-active .map-search-color-dot { border-color: #fff; }
+        .map-search-line { display: inline-flex; align-items: center; gap: var(--space-xs, 4px); white-space: nowrap; }
+        .map-search-route-note { font-size: 12px; color: var(--text-muted, #8892a4); }
         .map-search-link {
           background: none; border: 0; padding: 0 var(--space-xs, 4px);
           min-height: 24px;
@@ -4745,6 +4832,7 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
         .map-pin-editor-note { width: 100%; height: 32px; padding: 0 8px; border-radius: 8px; border: 1px solid var(--border-primary, #334); background: rgba(0,0,0,0.3); color: var(--text-primary, #fff); font-size: 14px; }
         .map-pin-editor-actions { display: flex; gap: 8px; width: 100%; align-items: center; }
         .map-pin-editor-spacer { flex: 1 1 auto; }
+        .map-pin-editor-actions .kuro-btn { display: inline-flex; flex-direction: row; align-items: center; gap: 4px; white-space: nowrap; flex: 0 0 auto; }
 
         /* ── Left-handed mode (Settings > Display, html.left-handed) ──────
            Thumb-reach controls move to the left edge: header buttons come
@@ -5484,6 +5572,11 @@ export default function MapTab({ navPadding = 80, headerPadding = 88 }) {
                 tagCounts={searchTagCounts}
                 onSaveTag={handleSearchSaveTag}
                 onToggleTag={handleSearchToggleTag}
+                onUpdateTag={handleSearchUpdateTag}
+                routeOn={searchRouteOn}
+                onToggleRoute={() => { setSearchStep(-1); setSearchRouteOn(v => !v); }}
+                routeStops={selectionRoute ? selectionRoute.points.length : 0}
+                routeColors={SEARCH_ROUTE_COLORS}
                 onRemoveTag={handleSearchRemoveTag}
                 onClearTags={() => { setSearchStep(-1); setSearchTags([]); }}
                 recent={searchRecent}

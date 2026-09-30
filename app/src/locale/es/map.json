@@ -74,7 +74,21 @@
       "icon": "Marcador",
       "subcategory": "Clase"
     },
-    "header": "Buscar"
+    "header": "Buscar",
+    "route": "Mostrar la ruta optimizada",
+    "routeHide": "Ocultar la ruta",
+    "routeStops": "Ruta: {{count}} paradas en esta planta",
+    "routeNote": "Orden en línea recta entre los iconos, el más corto encontrado — no el camino real del juego.",
+    "tagStyle": "Estilo de {{name}}",
+    "tagRoute": "Ruta",
+    "tagColor": "Color",
+    "tagLine": "Línea",
+    "lineSolid": "Continua",
+    "lineDashed": "Guiones",
+    "lineDotted": "Puntos",
+    "lineDashDot": "Guion-punto",
+    "colorN": "Color {{n}}",
+    "styleDone": "Listo"
   },
   "card": {
     "markFound": "Marcar como encontrado",

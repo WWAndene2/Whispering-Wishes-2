@@ -11,10 +11,12 @@
 //   • save a result as a tag under the search bar; tags stay applied after the
 //     panel closes and can be toggled on/off or removed individually
 //   • empty query → recent searches + quick suggestions
+//   • optimized route through the selection's icons (toggle), and per saved tag a
+//     route on/off, a colour and a line style (solid, dashes, dots, dash-dot)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Search, X, ChevronLeft, ChevronRight, Maximize2, BookmarkPlus, Map as MapIcon, History, SearchX } from 'lucide-react';
+import { Search, X, ChevronLeft, ChevronRight, Maximize2, BookmarkPlus, Map as MapIcon, History, SearchX, Spline } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { searchMap, highlightRanges } from './mapSearch.js';
 import { getIconImageUrl } from './iconImageCache.js';
@@ -44,6 +46,22 @@ function ResultThumb({ doc }) {
 
 const typeLabel = (doc) => t(`map.search.type.${doc.type}`);
 
+const LINE_STYLES = [
+  { id: 'solid', key: 'lineSolid', dash: '' },
+  { id: 'dashed', key: 'lineDashed', dash: '6 4' },
+  { id: 'dotted', key: 'lineDotted', dash: '1 3' },
+  { id: 'dashdot', key: 'lineDashDot', dash: '6 3 1 3' },
+];
+
+// Small preview of a line style in a given colour.
+function LineSample({ dash, color }) {
+  return (
+    <svg width="24" height="8" viewBox="0 0 24 8" aria-hidden="true">
+      <line x1="1" y1="4" x2="23" y2="4" stroke={color} strokeWidth="2" strokeDasharray={dash} strokeLinecap={dash === '1 3' ? 'round' : 'butt'} />
+    </svg>
+  );
+}
+
 export function MapSearchPopover({
   panelRef,
   top,
@@ -57,10 +75,15 @@ export function MapSearchPopover({
   focus,               // { total, visible, otherFloors, step } | null — for the selection bar
   onStep,              // (+1 | -1) => void
   onFrame,             // () => void — re-frame all focused icons
-  tags,                // [{ key, label, context, active }]
+  tags,                // [{ key, label, context, active, route, color, line }]
   tagCounts,           // Map<key, number>
   onSaveTag,           // (doc) => void
-  onToggleTag,         // (key) => void
+  onToggleTag,
+  onUpdateTag,         // (key, { route?, color?, line? }) => void
+  routeOn,             // route line through the selection's icons
+  onToggleRoute,
+  routeStops,          // stops on the selection's route (current floor)
+  routeColors,         // colours a tag's route can use         // (key) => void
   onRemoveTag,         // (key) => void
   onClearTags,
   recent,              // [key]
@@ -96,6 +119,9 @@ export function MapSearchPopover({
     }
   };
 
+  const [styleKey, setStyleKey] = useState(null);
+  const styleTag = styleKey ? tags.find(tg => tg.key === styleKey) : null;
+  const tagColor = (tg) => tg.color || routeColors[tags.indexOf(tg) % routeColors.length];
   const showList = listOpen && query.trim().length > 0;
   const savedKeys = new Set(tags.map(tg => tg.key));
   const recentDocs = recent.map(k => index.byKey.get(k)).filter(Boolean);
@@ -160,6 +186,16 @@ export function MapSearchPopover({
                       <span className="map-search-tag-name">{tg.label}{tg.context ? <span className="map-search-tag-ctx"> · {tg.context}</span> : null}</span>
                       {n > 1 && <span className="map-search-tag-count">{n}</span>}
                     </button>
+                    <button
+                      type="button"
+                      className="map-search-tag-style"
+                      onClick={() => setStyleKey(k => (k === tg.key ? null : tg.key))}
+                      aria-expanded={styleKey === tg.key}
+                      aria-label={t('map.search.tagStyle', { name: tg.label })}
+                      title={t('map.search.tagStyle', { name: tg.label })}
+                    >
+                      <span className={`map-search-tag-swatch ${tg.route ? '' : 'is-off'}`} style={{ background: tagColor(tg) }} />
+                    </button>
                     <button type="button" className="map-search-tag-remove" onClick={() => onRemoveTag(tg.key)} aria-label={t('map.search.removeTag', { name: tg.label })}>
                       <X size={12} />
                     </button>
@@ -169,6 +205,58 @@ export function MapSearchPopover({
               {tags.length > 1 && (
                 <button type="button" className="map-search-link" onClick={onClearTags}>{t('map.search.clearTags')}</button>
               )}
+            </div>
+          )}
+
+          {/* ── Style of one saved tag: route on/off, colour, line style ── */}
+          {styleTag && (
+            <div className="map-search-style" role="group" aria-label={t('map.search.tagStyle', { name: styleTag.label })}>
+              <div className="map-search-style-head">
+                <span>{t('map.search.tagStyle', { name: styleTag.label })}</span>
+                <button type="button" className="kuro-btn kuro-btn-sm" onClick={() => setStyleKey(null)}>{t('map.search.styleDone')}</button>
+              </div>
+              <div className="map-search-style-row">
+                <span className="map-search-style-label">{t('map.search.tagRoute')}</span>
+                <button
+                  type="button"
+                  className={`kuro-btn kuro-btn-sm map-search-line ${styleTag.route ? 'active-gold' : ''}`}
+                  aria-pressed={!!styleTag.route}
+                  onClick={() => onUpdateTag(styleTag.key, { route: !styleTag.route, active: true })}
+                >
+                  <Spline size={12} aria-hidden="true" /> {styleTag.route ? t('map.search.routeHide') : t('map.search.route')}
+                </button>
+              </div>
+              <div className="map-search-style-row" role="radiogroup" aria-label={t('map.search.tagColor')}>
+                <span className="map-search-style-label">{t('map.search.tagColor')}</span>
+                {routeColors.map((c, i) => (
+                  <button
+                    key={c}
+                    type="button"
+                    role="radio"
+                    aria-checked={tagColor(styleTag) === c}
+                    aria-label={t('map.search.colorN', { n: i + 1 })}
+                    className={`map-search-color ${tagColor(styleTag) === c ? 'is-active' : ''}`}
+                    onClick={() => onUpdateTag(styleTag.key, { color: c })}
+                  >
+                    <span className="map-search-color-dot" style={{ background: c }} />
+                  </button>
+                ))}
+              </div>
+              <div className="map-search-style-row" role="radiogroup" aria-label={t('map.search.tagLine')}>
+                <span className="map-search-style-label">{t('map.search.tagLine')}</span>
+                {LINE_STYLES.map(ls => (
+                  <button
+                    key={ls.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={(styleTag.line || 'dashed') === ls.id}
+                    className={`kuro-btn kuro-btn-sm map-search-line ${(styleTag.line || 'dashed') === ls.id ? 'active-gold' : ''}`}
+                    onClick={() => onUpdateTag(styleTag.key, { line: ls.id })}
+                  >
+                    <LineSample dash={ls.dash} color={tagColor(styleTag)} /> {t(`map.search.${ls.key}`)}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
@@ -194,6 +282,18 @@ export function MapSearchPopover({
               {focus && focus.total > 0 && (
                 <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={onFrame} aria-label={t('map.search.frameAll')} title={t('map.search.frameAll')}><Maximize2 size={14} /></button>
               )}
+              {focus && focus.total > 1 && (
+                <button
+                  type="button"
+                  className={`kuro-btn kuro-btn-sm kuro-btn-icon ${routeOn ? 'active-gold' : ''}`}
+                  onClick={onToggleRoute}
+                  aria-pressed={routeOn}
+                  aria-label={routeOn ? t('map.search.routeHide') : t('map.search.route')}
+                  title={routeOn ? t('map.search.routeHide') : t('map.search.route')}
+                >
+                  <Spline size={14} />
+                </button>
+              )}
               <button
                 type="button"
                 className="kuro-btn kuro-btn-sm kuro-btn-icon"
@@ -206,6 +306,11 @@ export function MapSearchPopover({
               </button>
               <button type="button" className="kuro-btn kuro-btn-sm kuro-btn-icon" onClick={onClearSelection} aria-label={t('map.search.clearSelection')} title={t('map.search.clearSelection')}><X size={14} /></button>
               </div>
+            </div>
+          )}
+          {selected && !showList && routeOn && routeStops > 1 && (
+            <div className="map-search-route-note" role="status">
+              {t('map.search.routeStops', { count: routeStops })} · {t('map.search.routeNote')}
             </div>
           )}
 

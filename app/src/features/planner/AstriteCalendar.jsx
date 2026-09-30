@@ -123,9 +123,10 @@ const localizeResetType = (text) => {
 
 // Bar fill with the event art faded in from the right: the colour wash keeps the label readable on
 // the left, and the bar keeps its size because this is only a background.
-const barBackground = (color, image, fallback) => {
+// `fit` overrides the default centred cover crop for art whose subject sits inside a wider frame.
+const barBackground = (color, image, fallback, fit = 'center / cover') => {
   if (!image) return fallback;
-  return `linear-gradient(to right, ${color}66 0%, ${color}33 45%, ${color}00 100%), linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 100%), url("${encodeURI(image)}") center / cover no-repeat`;
+  return `linear-gradient(to right, ${color}66 0%, ${color}33 45%, ${color}00 100%), linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 100%), url("${encodeURI(image)}") ${fit} no-repeat`;
 };
 
 function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planData, activeBanners, eventStatus, calendarNotes, onSetNote, deadlinePin, onSetDeadlinePin, toast }) {
@@ -323,7 +324,7 @@ function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planDat
     const dailyEv = EVENTS.dailyReset;
     if (dailyEv) {
       addBar('dailyReset', dailyEv.name, EVENT_COLORS.dailyReset, monthStart, monthEnd, parseInt(dailyEv.rewards, 10) || 0, {
-        legendGroup: 'dailyReset', description: `${dailyEv.subtitle} — ${dailyEv.description}`, startLabel: null, endLabel: null, daysLeft: null, endDate: null,
+        legendGroup: 'dailyReset', imageFit: '52% 44% / 119% auto', description: `${dailyEv.subtitle} — ${dailyEv.description}`, startLabel: null, endLabel: null, daysLeft: null, endDate: null,
       });
     }
 
@@ -632,7 +633,7 @@ function AstriteCalendar({ dailyIncome, cumulativeIncome, bannerEndDate, planDat
                   <div style={{
                     position: 'absolute', left: `${leftPct}%`, width: `${widthPct}%`,
                     height: '100%', borderRadius: 'var(--radius-sm)',
-                    background: barBackground(bar.color, bar.image, bar.ended ? `${bar.color}15` : `linear-gradient(to right, ${bar.color}30, ${bar.color}18)`),
+                    background: barBackground(bar.color, bar.image, bar.ended ? `${bar.color}15` : `linear-gradient(to right, ${bar.color}30, ${bar.color}18)`, bar.imageFit),
                     border: `1px ${bar.pastBanner ? 'dashed' : 'solid'} ${bar.color}${bar.ended ? '40' : '60'}`,
                     boxShadow: bar.ended ? 'none' : `0 0 8px ${bar.color}20`,
                     display: 'flex', alignItems: 'center', padding: '0 6px',

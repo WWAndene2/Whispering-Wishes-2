@@ -19,6 +19,7 @@
 
 /** @type {Record<string, string>} */
 export const CHARACTER_DESC_FR = {
+  'Hsin': "Le Renard Lunaire, l'une des sept Sentinelles de Huanglong, qui veille sur Mengzhou et ses lanternes toujours allumées. DPS principale Electro qui passe de la Forme Réponse à la Forme Illumination puis à la Domination Mécanique, en commandant les Mécanismes de Xuanfang ; en mode Électromagnétisme, elle stocke l'excédent en Cœur du Tonnerre pour une seule détonation, et en mode Unisson, elle obtient une Outro supplémentaire gratuite à chaque rotation.",
   'Rover: Spectro': "Un vagabond qui s'est réveillé sans mémoire sur les rives de Solaris. Attunement Spectro : une debuffeuse de Lumière Spectro à changement rapide — la Rotation Résonnante du Circuit Forte applique Lumière Spectro (avec Chatoiement pour stopper sa dégradation) et la Libération Orchestre en Écho en ajoute davantage, puis change de personnage pour laisser place au DPS principal.",
   'Rover: Havoc': "Un vagabond qui s'est réveillé sans mémoire sur les rives de Solaris. Attunement Havoc : un DPS principal sur le terrain — maintenez l'Attaque Lourde à Umbra plein pour lancer Dévastation et entrer en Poussée Sombre, un combo à état amélioré qui se termine par le nuke de Libération à 1520 % ATQ, Abysse qui S'éteint.",
   'Rover: Aero': "Un vagabond qui s'est réveillé sans mémoire sur les rives de Solaris. Attunement Aero : un soigneur/soutien dont Rupture Céleste retire les cumuls de Lumière Spectro, Ravage Havoc, Explosion Fusion, Givre Glaçant et Électromagnétisme d'une cible et convertit chacun en un cumul d'Érosion Aéronautique, tandis que le Forte et la Libération soignent tous deux l'équipe.",
@@ -86,6 +87,7 @@ export const CHARACTER_DESC_FR = {
 // untranslated, same policy as element/echo/weapon names.
 /** @type {Record<string, string>} */
 export const CHARACTER_TITLE_FR = {
+  'Hsin': 'Le Renard Lunaire',
   'Jiyan': 'Cavalier du Vent',
   'Yinlin': 'Foudre du Châtiment',
   'Calcharo': 'Chasseur Fantôme',
@@ -150,6 +152,7 @@ export const CHARACTER_TITLE_FR = {
 // (no entry to translate).
 /** @type {Record<string, string>} */
 export const CHAR_BUFF_NOTE_FR = {
+  'Hsin': "Mode Électromagnétisme : son Outro amplifie de 20 % les DGT Electro du reste de l'équipe pendant 20 s, et elle gagne jusqu'à +50 % DGT Electro quand ses coéquipiers infligent Électromagnétisme (+20 % de plus pour elle et Rover: Electro quand l'Intro de Rover se déclenche). Mode Unisson : son Outro confère aux alliés d'Unisson 20 % d'Amplification de tous les DGT pendant 30 s, chaque cumul de Bénédiction d'Unisson augmente de 3 % les DGT des alliés d'Unisson (jusqu'à 2 cumuls, 3 avec Glaner les Joies Simples) et ses Intros d'Unisson Multiple lui donnent +50 % ATQ pendant 8 s. La Chaîne de Résonance 4 confère à toute l'équipe +20 % de Bonus de DGT tous attributs pendant 30 s.",
   'Lingyang': "DPS principal Glacio sur le terrain. L'état Lion Bondissant du Circuit Forte (activé via l'Attaque Lourde Plongeon Glorieux à Esprit du Lion plein) débloque des attaques aériennes améliorées. L'Outro Marque Glacée est un pur proc de DGT de zone, pas un buff d'équipe, bien que la Chaîne de Résonance S4 confère à l'équipe +20 % DGT Glacio/30 s à son déclenchement.",
   'Rover: Aero': "Soigneuse/soutien. La Compétence aérienne Rupture Céleste retire les cumuls de Lumière Spectro, Havoc Fléau, Explosion Fusion, Givre Glaçant et Electro Éclair de la cible touchée et convertit chacun en un cumul d'Érosion Aéronautique. Le Forte Danse de l'Averse et la Libération Tempête Oméga soignent tous deux l'équipe.",
   'Verina': 'Outro Éclosion : soigne le personnage entrant + Amplification de tous les DGT +15 % (30 s) pour l\'équipe à proximité. Don Inhérent de la Nature : ATQ d\'équipe +20 %/20 s au déclenchement du Forte/de la Libération/de l\'Outro.',
@@ -218,6 +221,20 @@ export const CHAR_BUFF_NOTE_FR = {
 // keyed, since some skill names repeat within one rotation).
 /** @type {Record<string, string[]>} */
 export const CHARACTER_ROTATION_NOTE_FR = {
+  'Hsin': [
+    "Entrez en jeu — l'Intro confère 60 Cœur de Réponse et enchaîne directement sur la Phase 4 de l'Attaque Basique en mode Électromagnétisme.",
+    "Seulement la Phase 4 ici, juste après l'Intro — elle remplit le Cœur de Réponse à 100.",
+    "Maintenez l'Attaque Normale à 100 Cœur de Réponse — l'Errante du Royaume renforcée, considérée comme DGT de Compétence de Résonance. Débloque Changement de Forme.",
+    "Entre en Forme Illumination et Manifestation du Cœur, confère 21 cumuls d'Édit (Attaques Coordonnées du Pilier Ascendant) et inflige 5 cumuls d'Électromagnétisme autour.",
+    "Commande un Mécanisme Colossal de Xuanfang et accumule du Cœur Illuminé.",
+    "Phases 1 et 2 seulement — la Phase 2 effondre le Verrou du Cœur Modulaire pour 150 Cœur Illuminé ; annulez sa fin avec la Compétence suivante.",
+    "À 300 Cœur Illuminé — entre en Domination Mécanique et inflige 5 cumuls d'Électromagnétisme.",
+    "Les quatre phases — chaque coup consomme du Cœur Illuminé et inflige Électromagnétisme.",
+    "Maintenez l'Attaque Normale à 0 Cœur Illuminé — met fin à la Domination Mécanique et débloque Piliers à Travers les Cieux.",
+    "Fait s'effondrer le Sanctuaire Multiple (considéré comme DGT de Compétence de Résonance) et la ramène en Forme Réponse.",
+    "À lancer en sortant — sa dernière phase fait détoner le Cœur du Tonnerre accumulé en DGT d'Électromagnétisme.",
+    "Sortez pour la déclencher — 100 % ATQ en DGT Electro, et le reste de l'équipe inflige des DGT Electro amplifiés de 20 % pendant 20 s.",
+  ],
   'Cantarella': [
     'Changez pour elle — se déclenche automatiquement. Cette variante spécifique (« Ondulation ») fait passer sa prochaine Attaque Basique directement à l\'Étape 3 au lieu de recommencer à l\'Étape 1, et confère 1 Transe (0→1/5).',
     'Appuyez UNE FOIS sur Attaque Basique — puisque l\'Intro l\'a préparée à démarrer à l\'Étape 3, ce seul appui déclenche l\'Étape 3 et confère 1 Transe de plus (1→2/5).',
@@ -805,6 +822,7 @@ export const CHARACTER_ROTATION_NOTE_FR = {
 // documented in the header above).
 /** @type {Record<string, string[]>} */
 export const CHAIN_NODE_NAMES_FR = {
+  'Hsin': { s1: 'Une Barque pour Franchir la Marée Montante', s2: 'S\'éveiller, c\'est se Demander qui je Suis', s3: 'Un Rêve de Retour parmi les Collines', s4: 'Une Rivière de Lanternes, une Rivière de Vœux', s5: 'Les Formes Changent au Gré du Cœur', s6: 'La Lune Doit sa Lumière aux Vivants' },
   'Aalto': { s1: 'Numéro d\'Ouverture du Filou', s2: 'Débuts de la Tisseuse de Brume', s3: 'Transition Brumeuse', s4: 'Éclosion de Blake pour le Final', s5: 'Applaudissements du Perdu', s6: 'Secrets du Courtier' },
   'Baizhi': { s1: 'Simplicité Complexe', s2: 'Toundra Silencieuse', s3: 'Veritas Lux Mea', s4: 'Vérité Éternelle', s5: 'Un Vœu Exaucé', s6: 'Dévotion de la Chercheuse' },
   'Chixia': { s1: 'Éventail de l\'Héroïne N°1', s2: 'Étincelles Bondissantes', s3: 'Flammes Éternelles', s4: 'Ultime Mouvement de l\'Héroïne', s5: 'Explosions Triomphantes', s6: 'Numéro Bonus' },
@@ -895,6 +913,30 @@ export const SKILL_TYPE_FR = {
 // display-only overlay consumed at render time in CharacterDetailModal.jsx.
 /** @type {Record<string, Record<string, string>>} */
 export const SKILL_NAME_FR = {
+  'Hsin': {
+    'Answering Form Stage 1-4': 'Forme Réponse Phase 1-4',
+    'Answering Form': 'Forme Réponse',
+    'Reign at Ease': 'Règne Serein',
+    'Illumining Form Stage 1-3': 'Forme Illumination Phase 1-3',
+    'Modular Heartlock': 'Verrou du Cœur Modulaire',
+    'Illumining Form': 'Forme Illumination',
+    'Upward Cut - Illumining Form': 'Coupe Ascendante - Forme Illumination',
+    'Pillars Aligned Stage 1-4': 'Piliers Alignés Phase 1-4',
+    'Pillars Aligned': 'Piliers Alignés',
+    'Heartward by Moon - Answering Form': 'Vers le Cœur par la Lune - Forme Réponse',
+    'Heartward by Moon - Illumining Form': 'Vers le Cœur par la Lune - Forme Illumination',
+    'Formshift': 'Changement de Forme',
+    'Soaring Pillar': 'Pilier Ascendant',
+    'Pillars Across Heaven': 'Piliers à Travers les Cieux',
+    'Realm Wanderer': 'Errante du Royaume',
+    'Realm Protector': 'Protectrice du Royaume',
+    'Resonance Skill - Pillars Aligned': 'Compétence de Résonance - Piliers Alignés',
+    'Beholding All Horizons': 'Contempler Tous les Horizons',
+    'Stilling All Horizons': 'Apaiser Tous les Horizons',
+    'Answering Form: Manifold Unison': 'Forme Réponse : Unisson Multiple',
+    'Illumining Form: Manifold Unison': 'Forme Illumination : Unisson Multiple',
+    'Herself a Thousand Lanterns': 'Elle-même, Mille Lanternes',
+  },
   'Suisui': {
     'Zephyr Stance Stage 1-4': 'Posture du Zéphyr Étape 1-4',
     'Zephyr Stance': 'Posture du Zéphyr',
@@ -1849,6 +1891,7 @@ export const SKILL_NAME_FR = {
 // used throughout weapons.fr.js ("DGT Glacio", "Amplification DGT Havoc", etc.).
 /** @type {Record<string, string>} */
 export const CHARACTER_TAG_FR = {
+  'Sentinels': 'Sentinelles',
   // NOTE (exception to this project's general birthplace/region/organization-stays-untranslated
   // policy, documented at the top of this file): the user explicitly requested these be
   // translated, and confirmed each term below against the game's actual French client — these are
@@ -2203,6 +2246,12 @@ export function applyGenericDescPhrases(desc) {
 // line with applyGenericDescPhrases as a substring-level fallback when no entry exists here.
 /** @type {Record<string, Record<string, string>>} */
 export const MULT_DESC_FR = {
+  'Hsin': {
+    'Formshift': 'Aucun DGT direct — entre en Forme Illumination et Manifestation du Cœur, confère 21 cumuls d\'Édit (45 s)',
+    'Answering Form': '7,88 %×2+7,88 %×2+126,02 % (Électromagnétisme) / 10,28 %+20,55 %+10,28 %+20,55 %×3 (Unisson)',
+    'Illumining Form': '11,42 %×4+11,42 %×2+39,97 %×4 (Électromagnétisme) / 56,59 %×4+5,66 %+11,32 %×2+14,15 %×2 (Unisson)',
+    'Herself a Thousand Lanterns': '100 % ATQ + Amplification des DGT de l\'équipe',
+  },
   'Lucy': {
     'Multi-threading': '59,65 %+59,65 %×3 (+270 % bonus SQL)',
     'Hack Response - Data Crash': '1094,19 %+68,39 %×4 (DGT de Piratage)',
@@ -2414,6 +2463,29 @@ export const MULT_DESC_FR = {
 };
 
 export const SKILL_DESC_FR = {
+  'Hsin': {
+    'Answering Form Stage 1-4': 'Combo de la Forme Réponse ; les coups accumulent du Cœur de Réponse.',
+    'Answering Form': 'Coûte 20 END.',
+    'Reign at Ease': 'Maintenez l\'Attaque Normale en l\'air ; consomme 5 END par seconde.',
+    'Illumining Form Stage 1-3': 'Combo des Mécanismes de Xuanfang ; la Phase 1 place un Verrou du Cœur Modulaire.',
+    'Modular Heartlock': 'Le Verrou s\'effondre sur la Phase 2 d\'Illumination, l\'Attaque Lourde, la Contre-attaque d\'Esquive ou la Compétence.',
+    'Illumining Form': 'Coûte 20 END.',
+    'Upward Cut - Illumining Form': 'Appuyez sur Saut au sol en Forme Illumination.',
+    'Pillars Aligned Stage 1-4': 'Combo de la Domination Mécanique ; les coups consomment du Cœur Illuminé.',
+    'Heartward by Moon - Answering Form': 'Lançable en l\'air ; 12 s de recharge. Se déplacer juste après la transforme en Renard Lunaire.',
+    'Heartward by Moon - Illumining Form': 'Commande un Mécanisme Colossal de Xuanfang ; 20 s de recharge.',
+    'Formshift': 'Débloqué par Errante/Protectrice du Royaume ; 25 s de recharge.',
+    'Soaring Pillar': 'Attaque Coordonnée ; un cumul d\'Édit par seconde tant que le Résonateur actif inflige des DGT.',
+    'Pillars Across Heaven': 'Considéré comme DGT de Compétence de Résonance ; coûte 125 Énergie de Résonance et la ramène en Forme Réponse.',
+    'Realm Wanderer': 'Attaque Lourde à 100 Cœur de Réponse ; considérée comme DGT de Compétence de Résonance.',
+    'Realm Protector': 'Errante du Royaume renforcée (Résolution des Vœux, une fois toutes les 24 s) ; considérée comme DGT de Compétence de Résonance.',
+    'Resonance Skill - Pillars Aligned': 'À 300 Cœur Illuminé ; entre en Domination Mécanique (13 s). Considérée comme DGT de Compétence de Résonance ; 12 s de recharge.',
+    'Beholding All Horizons': 'Attaque Lourde à 0 Cœur Illuminé en Domination Mécanique ; considérée comme DGT de Compétence de Résonance.',
+    'Stilling All Horizons': 'Contempler Tous les Horizons renforcé (Loi du Ciel, une fois toutes les 24 s) ; considéré comme DGT de Compétence de Résonance.',
+    'Answering Form: Manifold Unison': 'Mode Unisson ; considéré comme DGT de Compétence de Résonance.',
+    'Illumining Form: Manifold Unison': 'Mode Unisson ; considéré comme DGT de Compétence de Résonance.',
+    'Herself a Thousand Lanterns': 'Mode Électromagnétisme : DGT Electro de l\'équipe amplifiés de 20 % (20 s). Mode Unisson : les alliés d\'Unisson gagnent 20 % d\'Amplification de tous les DGT (30 s).',
+  },
   'Lucy': {
     'Locked Thread Stage 2-4': 'Accumule le dernier TCP vers 100.',
     'Heavy Attack Stage 1': 'Attaque Lourde de base (hors Forte) ; confirmée inutilisée dans sa vraie rotation.',
@@ -3051,6 +3123,10 @@ export const SKILL_DESC_FR = {
 // WEAPON_VERDICT_REASON_FR — CHARACTER_DATA[name].weaponVerdictReason.need/.signatureNote,
 // rendered in PlannerTab.jsx's weapon-recommendation card.
 export const WEAPON_VERDICT_REASON_FR = {
+  'Hsin': {
+    need: 'Hsin inflige l\'essentiel de ses DGT en DGT de Compétence de Résonance et s\'appuie sur les déclenchements d\'Électromagnétisme ou d\'Unisson.',
+    signatureNote: 'Blooming Jadehaven amplifie exactement cela (36 % d\'Amplification des DGT de Compétence de Résonance, 10 % de RÉS Electro ignorée, 30 % d\'Amplification des DGT d\'Électromagnétisme sur les cibles proches) ; sa meilleure alternative, Élégie de Léthé, n\'atteint qu\'environ 80 % de ses performances.',
+  },
   'Mornye': {
     need: 'Le kit de Mornye scale principalement sur la DÉF, et son vrai besoin est 260 % de Régén. d\'Énergie pour maximiser ses auto-buffs de Libération et les buffs d\'équipe — facilement atteignable même avec des armes 4★ F2P.',
     signatureNote: 'Le Calibrateur Stellaire n\'ajoute qu\'un buff permanent de +20 % Dégâts Critiques d\'équipe et de l\'Énergie de Concerto supplémentaire — selon ses propres notes de build, le gain de dégâts personnel est négligeable et le retour sur investissement du buff est faible, ce qui explique pourquoi elle peut s\'en passer.',

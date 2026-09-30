@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { BookmarkPlus, ChevronDown, Crown, Download, FolderOpen, Plus, Share2, Shuffle, Target, Trash2, Upload, Users, X } from 'lucide-react';
-import { CHARACTER_DATA, RELEASE_ORDER, ALL_5STAR_RESONATORS, ALL_4STAR_RESONATORS } from '../../data/characters.js';
+import { CHARACTER_DATA, RELEASE_ORDER, ALL_5STAR_RESONATORS, ALL_4STAR_RESONATORS, CHARACTERS_AWAITING_STATS } from '../../data/characters.js';
 import { scoreTeamComposition, isHealerRole, isSupportRole } from './calcEngine.js';
 import { getEnemyResMap } from './calcTeamStats.js';
 import { haptic } from '../../utils/haptics.js';
@@ -135,7 +135,7 @@ function TeamsTab({
 
     // ═══ SECTION 1: Build custom teams from YOUR owned characters ═══
     const customTeams = [];
-    const ownedArr = [...ownedNames].filter(n => CHARACTER_DATA[n]);
+    const ownedArr = [...ownedNames].filter(n => CHARACTER_DATA[n] && !CHARACTERS_AWAITING_STATS.has(n));
     const ownedMainDps = ownedArr.filter(n => CHARACTER_DATA[n].role === 'Main DPS');
     const ownedSub = ownedArr.filter(n => CHARACTER_DATA[n].role === 'Sub DPS');
     // Realistic/overused hypercarry pool: any Sub DPS with real damage output (totalMult > 0) can
@@ -192,6 +192,7 @@ function TeamsTab({
       if (!d?.teams) continue;
       for (const t of d.teams) {
         const members = t.split('+').map(m => m.trim());
+        if (members.some(m => CHARACTERS_AWAITING_STATS.has(m))) continue;
         const dedupeKey = [...members].sort().join('|');
         if (metaSeen.has(dedupeKey) || customSeen.has(dedupeKey)) continue;
         metaSeen.add(dedupeKey);
@@ -315,7 +316,7 @@ function TeamsTab({
               };
 
               // All available characters for selection
-              const allCharNames = [...ALL_5STAR_RESONATORS, ...ALL_4STAR_RESONATORS];
+              const allCharNames = [...ALL_5STAR_RESONATORS, ...ALL_4STAR_RESONATORS].filter(n => !CHARACTERS_AWAITING_STATS.has(n));
 
               // Characters already in this team (excluding current slot)
               const usedInTeam = new Set(teamSlots.filter((s, i) => s && i !== teamSelectorSlot));

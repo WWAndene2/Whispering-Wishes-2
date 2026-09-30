@@ -236,5 +236,12 @@
       "Daño de liberación de resonancia"
     ],
     "recommendedFor": "Recomendado para"
+  },
+  "upcomingDetail": {
+    "detailsAria": "{{name}} (próximamente)",
+    "closeAria": "Cerrar",
+    "signatureOf": "Arma exclusiva de {{name}}",
+    "characterPending": "Aún no ha salido. Kit, estadísticas, build y equipos se añadirán cuando se publiquen.",
+    "weaponPending": "Aún no ha salido. Estadísticas y pasiva se añadirán cuando se publiquen."
   }
 }

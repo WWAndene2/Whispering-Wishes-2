@@ -185,5 +185,12 @@
     "possibleSubstats": "Possible Substats",
     "substatsList": ["ATK", "ATK%", "HP", "HP%", "DEF", "DEF%", "Crit Rate", "Crit DMG", "Energy Regen", "Basic ATK DMG", "Heavy ATK DMG", "Resonance Skill DMG", "Resonance Liberation DMG"],
     "recommendedFor": "Recommended For"
+  },
+  "upcomingDetail": {
+    "detailsAria": "{{name}} (coming soon)",
+    "closeAria": "Close",
+    "signatureOf": "{{name}}'s signature weapon",
+    "characterPending": "Not released yet. Kit, stats, build and teams will be added once they are published.",
+    "weaponPending": "Not released yet. Stats and passive will be added once they are published."
   }
 }

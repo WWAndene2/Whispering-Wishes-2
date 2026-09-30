@@ -44,7 +44,7 @@ function useLongPress(onLongPress, onClick, { delay = 500 } = {}) {
 }
 
 // Internal: CollectionGridCard
-const CollectionGridCard = memo(({ name, label, count, imgUrl, framing, isSelected, owned, collMask, collOpacity, glowClass, ownedBg, ownedBorder, countLabel, countColor, onClickCard, framingMode, setEditingImage, imageKey, isNew, isProfilePic, onSetProfilePic, isCharOwned, onToggleOwned, isEcho, noBgProcess, onLongPress, isCharacter, isFullAnim }) => {
+const CollectionGridCard = memo(({ name, label, count, imgUrl, framing, isSelected, owned, collMask, collOpacity, glowClass, ownedBg, ownedBorder, countLabel, countColor, onClickCard, framingMode, setEditingImage, imageKey, isNew, isUpcoming, isProfilePic, onSetProfilePic, isCharOwned, onToggleOwned, isEcho, noBgProcess, onLongPress, isCharacter, isFullAnim }) => {
   const displayLabel = label || name;
   // Pixel-level background removal for echo images (skip if pre-processed)
   const processedUrl = imgUrl;
@@ -75,7 +75,7 @@ const CollectionGridCard = memo(({ name, label, count, imgUrl, framing, isSelect
     type="button"
     className={cardClassName}
     style={{ height: 'var(--height-card-sm)', contain: 'paint', textAlign: 'center', ...(isProfilePic && !isSelected ? { borderColor: 'rgba(251,146,60,0.7)', boxShadow: '0 0 16px rgba(251,146,60,0.25), inset 0 0 12px rgba(251,146,60,0.06)' } : {}) }}
-    aria-label={`${displayLabel}${owned ? `${t('collection.grid.ownedSuffix')}${count > 1 ? ` ×${count}` : ''}` : t('collection.grid.notOwnedLabel')}${isProfilePic ? t('collection.grid.currentProfilePic') : ''}${isNew ? t('collection.grid.newLabel') : ''}`}
+    aria-label={isUpcoming ? `${displayLabel}${t('collection.grid.upcomingLabel')}` : `${displayLabel}${owned ? `${t('collection.grid.ownedSuffix')}${count > 1 ? ` ×${count}` : ''}` : t('collection.grid.notOwnedLabel')}${isProfilePic ? t('collection.grid.currentProfilePic') : ''}${isNew ? t('collection.grid.newLabel') : ''}`}
     {...longPressHandlers}
   >
     {/* P15-FIX: NIT-4 — Skeleton placeholder while image loads, prevents layout shift */}
@@ -126,6 +126,9 @@ const CollectionGridCard = memo(({ name, label, count, imgUrl, framing, isSelect
     {isNew && (
       <div className="absolute top-1.5 left-1.5 z-20 px-1.5 py-0.5 rounded-full text-sm font-bold tracking-wider uppercase bg-yellow-500 text-black kuro-shadow-glow-gold" style={{textShadow: 'none'}}>{t('collection.grid.newBadge')}</div>
     )}
+    {isUpcoming && (
+      <div className="absolute top-1.5 left-1.5 z-20 px-1.5 py-0.5 rounded-full text-sm font-bold tracking-wider uppercase bg-cyan-400 text-black" style={{textShadow: 'none'}}>{t('collection.grid.upcomingBadge')}</div>
+    )}
     {/* Profile pic setter — top-right corner */}
     {!framingMode && onSetProfilePic && (
       <button
@@ -158,17 +161,21 @@ const CollectionGridCard = memo(({ name, label, count, imgUrl, framing, isSelect
 }, (prev, next) =>
   prev.name === next.name && prev.label === next.label && prev.count === next.count && prev.imgUrl === next.imgUrl &&
   prev.isSelected === next.isSelected && prev.owned === next.owned && prev.collMask === next.collMask &&
-  prev.collOpacity === next.collOpacity && prev.framingMode === next.framingMode && prev.isNew === next.isNew &&
+  prev.collOpacity === next.collOpacity && prev.framingMode === next.framingMode && prev.isNew === next.isNew && prev.isUpcoming === next.isUpcoming &&
   prev.isProfilePic === next.isProfilePic && prev.isFullAnim === next.isFullAnim &&
   prev.framing.zoom === next.framing.zoom && prev.framing.x === next.framing.x && prev.framing.y === next.framing.y
 );
 CollectionGridCard.displayName = 'CollectionGridCard';
 
 // Collection grid section — eliminates ~170 lines of copy-paste across 5 grids
-const CollectionGridSection = memo(({ title, starColor, items, collMask, collOpacity, glowClass, ownedBg, ownedBorder, countColor, countPrefix, totalCount, hasActiveFilters, onClearFilters, collectionImages, withCacheBuster, activeBanners, setDetailModal, dataLookup, dataType, isCharacter, profilePic, onSetProfilePic, ownedChars, toggleOwned, onLongPress, collapsible = false, isFullAnim = false }) => {
+const CollectionGridSection = memo(({ title, starColor, items, collMask, collOpacity, glowClass, ownedBg, ownedBorder, countColor, countPrefix, totalCount, hasActiveFilters, onClearFilters, collectionImages, withCacheBuster, activeBanners, setDetailModal, dataLookup, dataType, isCharacter, profilePic, onSetProfilePic, ownedChars, toggleOwned, onLongPress, collapsible = false, isFullAnim = false, upcoming = null }) => {
   const { getImageFraming, framingMode, editingImage, setEditingImage } = useImageFramingContext();
   const [expanded, setExpanded] = useState(false);
-  if (items.length === 0) return (
+  // Announced-but-unreleased items (UPCOMING_RESONATORS / UPCOMING_WEAPONS): shown first as
+  // "coming soon" cards, left out of the owned/shown counts, and hidden while filters are
+  // active since they carry no ownership or full stat data to filter on.
+  const upcomingNames = upcoming && !hasActiveFilters ? Object.keys(upcoming) : [];
+  if (items.length === 0 && upcomingNames.length === 0) return (
     <div className="text-center py-8">
       <div className="text-gray-400 text-md mb-2">{t('collection.grid.noneFound', { type: dataType === 'echo' ? t('collection.grid.typeEchoes') : dataType === 'weapon' ? t('collection.grid.typeWeapons') : t('collection.grid.typeCharacters') })}</div>
       <p className="text-gray-600 text-sm mb-3">{t('collection.grid.tryAdjusting')}</p>
@@ -187,6 +194,24 @@ const CollectionGridSection = memo(({ title, starColor, items, collMask, collOpa
     <>
       <div className="text-sm text-gray-400 mb-2 text-right">{t('collection.grid.shownCount', { owned: ownedCount, shown: items.length })}{hasActiveFilters ? t('collection.grid.totalSuffix', { total: totalCount }) : ''}</div>
       <div className="grid grid-cols-3 gap-2">
+        {upcomingNames.map(name => {
+          const imgUrl = collectionImages[name];
+          const imageKey = `collection-${name}`;
+          return (
+            <CollectionGridCard
+              key={`upcoming-${name}`} name={name} label={name} count={0}
+              imgUrl={withCacheBuster(imgUrl)} framing={getImageFraming(imageKey)}
+              isSelected={framingMode && editingImage === imageKey}
+              owned={false} collMask={collMask} collOpacity={collOpacity}
+              glowClass={glowClass} ownedBg={ownedBg} ownedBorder={ownedBorder}
+              countLabel="" countColor={countColor}
+              framingMode={framingMode} setEditingImage={setEditingImage} imageKey={imageKey}
+              onClickCard={() => setDetailModal({ show: true, type: 'upcoming', kind: dataType, name, imageUrl: imgUrl })}
+              isUpcoming
+              isCharacter={isCharacter}
+            />
+          );
+        })}
         {showItems.map(([name, count]) => {
           const imgUrl = collectionImages[name];
           const imageKey = `collection-${name}`;

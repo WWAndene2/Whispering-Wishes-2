@@ -1,11 +1,12 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 // WHISPERING WISHES — shared/components/DetailModalHost.jsx (extracted from App.jsx)
-// Renders the character/weapon/echo detail modal matching detailModal.type.
+// Renders the character/weapon/echo/upcoming detail modal matching detailModal.type.
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import { CharacterDetailModal } from '../modals/CharacterDetailModal.jsx';
 import { WeaponDetailModal } from '../modals/WeaponDetailModal.jsx';
 import { EchoDetailModal } from '../modals/EchoDetailModal.jsx';
+import { UpcomingDetailModal } from '../modals/UpcomingDetailModal.jsx';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
 
 export function DetailModalHost({ detailModal, setDetailModal, visualSettings, setActiveTab, collectionData }) {
@@ -57,6 +58,17 @@ export function DetailModalHost({ detailModal, setDetailModal, visualSettings, s
         visualSettings={visualSettings}
         onClose={() => setDetailModal({ show: false, type: null, name: null, imageUrl: null })}
         collectionData={collectionData}
+      />
+    );
+  }
+
+  if (detailModal.type === 'upcoming') {
+    return (
+      <UpcomingDetailModal
+        name={detailModal.name}
+        kind={detailModal.kind}
+        imageUrl={detailModal.imageUrl}
+        onClose={() => setDetailModal({ show: false, type: null, name: null, imageUrl: null })}
       />
     );
   }

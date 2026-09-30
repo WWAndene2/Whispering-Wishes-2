@@ -3,7 +3,7 @@
 // Auto-equip echo/weapon selection logic for a team member.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { CHARACTER_DATA } from '../../data/characters.js';
+import { CHARACTER_DATA, CHARACTERS_AWAITING_STATS } from '../../data/characters.js';
 import { WEAPON_DATA } from '../../data/weapons.js';
 import { ECHO_SETS, ALL_4COST_ECHOES, ALL_3COST_ECHOES, ALL_1COST_ECHOES, ECHO_DATA } from '../../data/echoes.js';
 import { isHealerRole, isSupportRole, scoreTeamComposition } from './calcEngine.js';
@@ -333,7 +333,7 @@ function computeAutoEquipEntryOptimized(memberName, teamEquipmentSnapshot, activ
 // owned-roster suggestion logic (top-3 sub-partner x top-2 healer/support per DPS candidate) so
 // the two stay consistent, just parameterized by pool instead of hardcoded to ownedNames.
 function generateCandidateTeams(pool, ownedWeaps) {
-  const validPool = pool.filter(n => CHARACTER_DATA[n]);
+  const validPool = pool.filter(n => CHARACTER_DATA[n] && !CHARACTERS_AWAITING_STATS.has(n));
   const dpsPool = validPool.filter(n => CHARACTER_DATA[n].role === 'Main DPS');
   const hypercarryPool = validPool.filter(n => CHARACTER_DATA[n].role === 'Sub DPS' && (CHARACTER_DATA[n].totalMult || 0) > 0);
   const dpsCandidates = [...dpsPool, ...hypercarryPool];

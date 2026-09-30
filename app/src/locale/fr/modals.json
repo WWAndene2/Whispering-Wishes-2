@@ -185,5 +185,12 @@
     "possibleSubstats": "Statistiques secondaires possibles",
     "substatsList": ["ATQ", "ATQ%", "PV", "PV%", "DÉF", "DÉF%", "Taux Critique", "Dégâts Critiques", "Régén. d'Énergie", "DGT Attaque Basique", "DGT Attaque Lourde", "DGT Compétence de Résonance", "DGT Libération de Résonance"],
     "recommendedFor": "Recommandé pour"
+  },
+  "upcomingDetail": {
+    "detailsAria": "{{name}} (bientôt disponible)",
+    "closeAria": "Fermer",
+    "signatureOf": "Arme signature de {{name}}",
+    "characterPending": "Pas encore sorti. Kit, stats, build et équipes seront ajoutés dès leur publication.",
+    "weaponPending": "Pas encore sortie. Stats et passif seront ajoutés dès leur publication."
   }
 }

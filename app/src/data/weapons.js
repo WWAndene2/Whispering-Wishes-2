@@ -48,6 +48,13 @@ const WEAPON_DATA = {
     passive: 'All-Attribute DMG +12%. Intro Skill or gaining a Shield: self Crit DMG +4% (up to 6 stacks/24%; at 6 stacks, Heavy ATK Crit Rate +12%). Casting Heavy Attack consumes up to 2 stacks for Heavy ATK DEF Ignore +15% each (up to 30%, 2s).',
     pv: { allDmg: 12, critDmg: 24, defIgnore: 30 }, bestFor: ['Jingran'],
     ascensionMaterials: { forgery: 'Carved Crystal', common: 'Exoswarm Pendant' } },
+  // v3.7 — Lv.90 ATK/substat and passive from the prydwen.gg Hsin guide snapshot
+  // (Data dump/Hsin/Hsin.md, 30/September/2026). Its passive amplifications are folded into
+  // the matching DMG buckets, same convention as Frostburn's.
+  'Blooming Jadehaven': { rarity: 5, type: 'Rectifier', stat: 'Crit Rate', baseAtk: 588, subStatValue: '+24.3%',
+    desc: 'Hsin signature. Inflicting Electro Flare or triggering Unison Response amplifies her Resonance Skill DMG and ignores Electro RES, while an on-field aura amplifies the Electro Flare DMG nearby targets take.',
+    passive: 'All-Attribute DMG +12%. After inflicting Electro Flare or triggering Unison Response: self Resonance Skill DMG Amplified by 36% and ignores 10% Electro RES. While on-field: Electro Flare DMG taken by nearby targets Amplified by 30% (30s, up to 1x/0.1s). Strongest same-name effect applies.',
+    pv: { allDmg: 12, skillDmg: 36, resShred: 10 }, bestFor: ['Hsin'] },
   'Glint of Clouds': { rarity: 5, type: 'Sword', stat: 'Crit Rate', baseAtk: 500, subStatValue: '+36.0%',
     desc: "Qingxiao signature. Jade blade wreathed in mist and cloud. Stacking Aero DMG Bonus on inflicting Tune Strain - Shifting, ignoring DEF at max stacks.",
     passive: 'ATK +12%. Inflicting Tune Strain - Shifting grants 11.2% Aero DMG Bonus (2s, stacks ×5, 0.5s ICD); at max stacks, duration extends to 30s and Aero DMG ignores 10% DEF',
@@ -672,4 +679,11 @@ export function getLocalizedWeaponData(locale) {
   return out;
 }
 
-export { WEAPON_DATA };
+// Announced but unreleased weapons, shown in the Collection as "coming soon" cards and
+// kept out of WEAPON_DATA (which feeds the damage calculators) until their stats are
+// published. Unspoken Rue is Suoming's v3.7-p2 featured weapon (BANNER_HISTORY).
+const UPCOMING_WEAPONS = {
+  'Unspoken Rue': { rarity: 5, type: 'Sword', forCharacter: 'Suoming' },
+};
+
+export { WEAPON_DATA, UPCOMING_WEAPONS };

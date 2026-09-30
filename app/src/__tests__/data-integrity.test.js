@@ -3,7 +3,7 @@
  * Verifies all game data is complete, consistent, and correctly structured.
  */
 import { describe, it, expect } from 'vitest';
-import { CHARACTER_DATA, CHAR_BUFF_TABLE, RESONANCE_CHAIN_DATA, SKILL_MULTIPLIERS, CHARACTER_ROTATIONS, ALL_CHARACTERS, findSkillMultiplierRow } from '../data/characters.js';
+import { CHARACTER_DATA, CHAR_BUFF_TABLE, RESONANCE_CHAIN_DATA, SKILL_MULTIPLIERS, CHARACTER_ROTATIONS, ALL_CHARACTERS, findSkillMultiplierRow, CHARACTERS_AWAITING_STATS } from '../data/characters.js';
 import { WEAPON_DATA } from '../data/weapons.js';
 import { ECHO_DATA, ECHO_SETS, ALL_4COST_ECHOES, ALL_3COST_ECHOES, ALL_1COST_ECHOES } from '../data/echoes.js';
 import { CURRENT_BANNERS } from '../data/banners.js';
@@ -31,12 +31,17 @@ describe('CHARACTER_DATA integrity', () => {
     });
   });
 
+  // CHARACTERS_AWAITING_STATS: released resonators whose Lv.90 base stats and ascension materials
+  // no source publishes yet (Hsin: her guide snapshot says "Stats data not available" and "upgrade
+  // material information aren't available yet"). The app keeps them out of the Teams builder and the
+  // Planner, the only consumers of these fields, so these two checks skip them rather than accept
+  // placeholder numbers. Every other check below still applies to them.
   it('every character has base stats', () => {
     // Jingran (v3.6) is a genuine exception: his kit passive "Nether to Light" fixes his combat DEF
     // to 0 outright (confirmed via the source/the reference) — 0 is his real value, not
     // a missing-data placeholder, so he's excluded from the baseDef > 0 assertion below.
     const ZERO_DEF_BY_KIT = new Set(['Jingran']);
-    chars.forEach(([name, data]) => {
+    chars.filter(([name]) => !CHARACTERS_AWAITING_STATS.has(name)).forEach(([name, data]) => {
       expect(data.baseHp, `${name} missing baseHp`).toBeGreaterThan(0);
       expect(data.baseAtk, `${name} missing baseAtk`).toBeGreaterThan(0);
       if (!ZERO_DEF_BY_KIT.has(name)) {
@@ -58,7 +63,7 @@ describe('CHARACTER_DATA integrity', () => {
   });
 
   it('every character has ascension materials', () => {
-    chars.forEach(([name, data]) => {
+    chars.filter(([name]) => !CHARACTERS_AWAITING_STATS.has(name)).forEach(([name, data]) => {
       expect(data.ascension, `${name} missing ascension`).toBeDefined();
       expect(data.ascension.boss, `${name} missing boss material`).toBeTruthy();
       expect(data.ascension.specialty, `${name} missing specialty`).toBeTruthy();

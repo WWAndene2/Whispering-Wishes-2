@@ -1843,6 +1843,39 @@ const CHARACTER_DATA = {
     // Jingran.md) — his Standard (S0-S1) and S2+ rotations are now published (see CHARACTER_ROTATIONS
     // below, added below this entry) and his Build/Gameplay-and-Teams sections are fully populated,
     // superseding the 2026-09-07 "no guide content yet" note.
+  // v3.7 — Hsin. Kit, build, teams and rotation from the prydwen.gg build-guide snapshot the user
+  // supplied (Data dump/Hsin/Hsin.md, 30/September/2026, reviewed for Patch 3.7); lore from the
+  // reference infobox/intro (one of Huanglong's seven Sentinels, "The Moon Fox", Mengzhou).
+  // Her Lv.90 base stats and ascension/skill materials are not published by either source yet, so
+  // baseHp/baseAtk/baseDef/maxEnergy, ascension and skillMaterials are left out: she is listed in
+  // CHARACTERS_AWAITING_STATS below, which keeps her out of the damage calculators until they land.
+  'Hsin': { rarity: 5, element: 'Electro', weapon: 'Rectifier', role: 'Main DPS',
+    desc: "The Moon Fox, one of Huanglong's seven Sentinels, who watches over Mengzhou and its ever-glowing lanterns. Electro Main DPS who moves from Answering Form into Illumining Form and Mechanism Dominion, commanding Xuanfang Mechanisms; in Electro Flare mode she banks surplus Flare as Heart of Thunder for a single detonation, and in Unison mode she earns a free extra Outro every rotation.",
+    skills: ['Manifold Bloom', 'Heartward by Moon', 'Nexus Alight', 'Forms Turn, Heart Abides'],
+    // bestEchoes: [mainEcho, set] — the guide's own "Best Echo Sets" (Heart of Sworn Vigil, 100%) and
+    // its only Main Echo pick, Reminiscence: Suhsin the Inevitable (+20% Electro DMG in the main slot).
+    bestEchoes: ['Reminiscence: Suhsin the Inevitable', 'Heart of Sworn Vigil 5pc'], bestWeapon: 'Blooming Jadehaven',
+    // weaponAlts in the guide's Best Weapons order (Electro Flare figure first): Lethean Elegy 79.7%,
+    // Stringmaster 76.2%, Whispers of Sirens 72.8%, Freeze Frame 71.0%, Luminous Hymn/Forged Dwarf Star
+    // 69.8%, Cosmic Ripples 66.0% (best permanent pick); 4★: Augment 64.6%, Fusion Accretion 58.7%,
+    // Radiant Dawn 57.6%, Jinzhou Keeper 56.7% (best permanent pick for Unison Hsin).
+    weaponAlts: { alt5: ['Lethean Elegy', 'Stringmaster', 'Whispers of Sirens', 'Freeze Frame', 'Luminous Hymn', 'Forged Dwarf Star', 'Cosmic Ripples'], alt4: ['Augment', 'Fusion Accretion', 'Radiant Dawn', 'Jinzhou Keeper'] },
+    // The guide's Cons: "Permanent banner weapon options are underwhelming; generally try to go for her
+    // Signature if you're pulling her" — every alternative sits at 80% or less of it.
+    signatureReliant: true,
+    weaponVerdictReason: {
+      need: "Hsin deals most of her damage as Resonance Skill DMG and leans on Electro Flare or Unison triggers.",
+      signatureNote: "Blooming Jadehaven amplifies exactly that (36% Resonance Skill DMG Amplification, 10% Electro RES ignore, 30% Electro Flare DMG Amplification on nearby targets); her best alternative, Lethean Elegy, reaches only about 80% of it.",
+    },
+    // teams from the guide's Synergies/Example Teams: Best Team (Flare) is Rover: Electro + Suisui,
+    // with Chisa as the Quickswap alternative and Buling as the F2P 3rd slot; Best Team (Unison) is
+    // Jinhsi + Shorekeeper.
+    teams: [
+      'Hsin + Rover: Electro + Suisui',
+      'Hsin + Rover: Electro + Chisa',
+      'Hsin + Rover: Electro + Buling',
+      'Hsin + Jinhsi + Shorekeeper',
+    ] },
   // 4★ Resonators
   'Aalto': { rarity: 4, element: 'Aero', weapon: 'Pistols', role: 'Sub DPS',
     desc: 'Suave information broker who slips through the mist. Aero sub-DPS who summons a mist clone via his Skill, dealing off-field Aero DMG whenever it triggers a Coordinated Attack alongside the active Resonator.',
@@ -2404,6 +2437,10 @@ const CHARACTER_DATA = {
   // Outro DMG Bonus buffs — same fix class as Lynae/Mornye/Phoebe's missing-category bugs).
   ['Qingxiao',      ['Heavy ATK', 'Liberation', 'Basic ATK', 'Outro'], [],                        ['Tune Strain - Interfered']],
   ['Jingran',       ['Heavy ATK', 'Liberation'],     [],                                      []],
+  // Hsin: the guide's damage profile is Skill 892,301 (83%, Pillars Across Heaven and her Forte heavies
+  // are all "considered Resonance Skill DMG") and Basic 97,277 (9%); Liberation 2.6% and Outro 2.1%
+  // stay under the include threshold.
+  ['Hsin',          ['Skill', 'Basic ATK'],          ['Electro DMG Amplification'],           ['Electro Flare']],
   ['Yangyang: Xuanling', ['Heavy ATK', 'Basic ATK'], [],                                      ['Havoc Bane']],
   // dmgFocus corrected 2026-09-04 (Phase A audit, REMAINING_WORK.md 1c) against the fresh dump's own
   // Damage-Type Breakdown table: Basic ATK is a genuine 0% share (every nominal Basic/Heavy/Intro cast
@@ -2933,6 +2970,12 @@ const CHARACTER_DATA = {
   // 15s) — the dump gives an exact SOLO rotation time (13.37s) but not a full-team-rotation figure this
   // table's own convention expects, so not swapped in as a guess.
   ['Jingran',       3875, 24, 15],  // ATK-scaling (HP→ATK conversion) Heavy ATK bursts, Yinghuo empowerment
+  // Hsin: totalMult is the sum of her Lv.10 multipliers over the guide's Electro Flare rotation (Intro
+  // 157.54 + Basic Stage 4 198.59 + Realm Protector 1241.45 + Skill: Illumining 207.09 + Illumining
+  // Basic 1/2 + Heartlock 174.19 + Skill: Pillars Aligned 897.17 + Pillars Basic 1-4 474.40 + Stilling
+  // All Horizons 1081.69 + Pillars Across Heaven 2012.67 + Skill: Answering 155.32 + Outro 100 ≈ 6700).
+  // The guide gives no full-team rotation time, so rotTime/onField use the same 24s/15s as Jingran.
+  ['Hsin',          6700, 24, 15],  // Answering → Illumining → Mechanism Dominion, Resonance Skill DMG nukes
   ["Yangyang: Xuanling", 3600, 23, 18],  // Azure/Feather stance swap, Havoc Bane self-buff — T0/T0 ceiling
   ['Hiyuki',        3400, 23, 17],  // Present/Foreclaimed Self, Iai burst finisher — best Glacio DPS
   ['Lucy',          2000, 23, 12],  // TCP/Root Access into enhanced Heavy + Ultimate
@@ -3032,6 +3075,7 @@ const CHARACTER_DATA = {
   // above for the full quote): was 'HP' — Jingran is HP-CONVERTING (HP feeds an ATK-conversion
   // passive, like Brant below), not HP-scaling like Cartethyia. His damage multipliers apply to ATK.
   ['Jingran',        'ATK'],
+  ['Hsin',           'ATK'],
   ['Yangyang: Xuanling', 'ATK'],
   ['Hiyuki',         'ATK'],
   ['Lucy',           'ATK'],
@@ -3212,6 +3256,9 @@ const CHARACTER_DATA = {
   // his own Review section states "Tier: DPS T0 (Tower of Adversity), T1 (Whimpering Wastes) — same
   // split on the Value Tier List" explicitly (both lists agree, unlike some other characters above).
   ['Jingran',       'T0',   'T1'],
+  // Hsin: the guide's Ratings list DPS [S0] T0.5 (Tower of Adversity) and T1 (Whimpering Wastes), the
+  // same on the Value Tier List.
+  ['Hsin',          'T0.5', 'T1'],
 ].forEach(([name, toa, ww]) => {
   if (CHARACTER_DATA[name]) Object.assign(CHARACTER_DATA[name], { tier: { toa, ww } });
 });
@@ -3228,7 +3275,7 @@ const CHARACTER_DATA = {
   ['Verina',       'Huanglong'], ['Yinlin',       'Huanglong'], ['Jinhsi',       'Huanglong'],
   ['Changli',      'Huanglong'], ['Zhezhi',       'Huanglong'], ['Xiangli Yao',  'Huanglong'],
   ['Qiuyuan',      'Huanglong'], ['Yangyang: Xuanling', 'Huanglong'], ['Suisui', 'Huanglong'],
-  ['Qingxiao',     'Huanglong'], ['Jingran',      'Huanglong'],
+  ['Qingxiao',     'Huanglong'], ['Jingran',      'Huanglong'], ['Hsin',         'Huanglong'],
   // Huanglong 4★
   ['Baizhi',       'Huanglong'], ['Chixia',       'Huanglong'],
   ['Danjin',       'Huanglong'], ['Yangyang',     'Huanglong'], ['Sanhua',       'Huanglong'],
@@ -3497,6 +3544,10 @@ const CHARACTER_DATA = {
   // pre-release (Kawanishi Kengo); EN/CN/KR are blank on the infobox, left unset rather than guessed.
   // Birthday: blank, omitted from BIRTHDAY_DATA per the established convention.
   ['Jingran', 'Nether Qi Art', 'Huanglong', 'Abyssomancer', { jp: 'Kawanishi Kengo' }],
+  // Hsin: reference infobox — title "The Moon Fox", birthplace "Unknown" (left unset), nation
+  // Huanglong, affiliation Sentinels (affiliation2 Mengzhou), VAs EN Suzie Yeung, CN Ju Huahua (菊花花),
+  // JP Noto Mamiko (能登麻美子), KR So Yeon (소연). Birthday blank, so not in BIRTHDAY_DATA.
+  ['Hsin', 'The Moon Fox', undefined, 'Sentinels', { en: 'Suzie Yeung', cn: 'Ju Huahua', jp: 'Noto Mamiko', kr: 'So Yeon' }],
   // 4★ Resonators — sourced via the reference API (action=parse&page=X&prop=page source&section=0).
   // Aalto: birthplace New Federation, nation 'The Black Shores' (REGION_DATA above, corrected from the
   // prior Huanglong bug), organization 'Black Shores' (affiliation).
@@ -3806,6 +3857,18 @@ const CHAR_BUFF_TABLE = {
     selfBuffs: [],
     debuffs: [],
     note: 'Pure HP-scaling DPS, no team buffs. Resonance Chain 4 grants team +20% All-Attribute DMG Bonus (30s) when any Resonator gains a Shield — conditional, not modeled as a base kit buff.',
+  },
+  // Hsin: Outro "Herself a Thousand Lanterns" and Inherent "Tides of Succession", modeled for her
+  // Electro Flare mode (the guide's best and most flexible mode); the Unison-mode variants are in
+  // the note. Her Outro's Electro DMG Amplification skips Hsin herself.
+  'Hsin': {
+    outroBuffs: [{ stat: 'amplify', value: 20, target: 'team', duration: 20, condition: 'Electro Flare mode: Electro DMG dealt by Resonators other than Hsin' }],
+    libBuffs: [],
+    selfBuffs: [
+      { stat: 'elemDmg', value: 50, target: 'self', duration: 999, condition: 'Electro Flare mode: +25% Electro DMG per other Resonator that inflicts Electro Flare, up to 2 stacks (Tides of Succession)' },
+    ],
+    debuffs: [],
+    note: "Electro Flare mode: her Outro Amplifies the Electro DMG of the rest of the team by 20% for 20s, and she gains up to +50% Electro DMG when teammates inflict Electro Flare (+20% more for both her and Rover: Electro when Rover's Intro fires). Unison mode: her Outro instead grants Unison allies 20% All DMG Amplification for 30s, each Unison Boon stack raises Unison allies' DMG by 3% (up to 2 stacks, 3 with Gleaning Simple Joys), and her Manifold Unison Intros give her +50% ATK for 8s. Resonance Chain 4 grants the whole team +20% All-Attribute DMG Bonus for 30s.",
   },
   'Yangyang: Xuanling': {
     outroBuffs: [{ stat: 'elemDmg', value: 20, target: 'team', duration: 20, condition: 'Havoc Bane appliers only, via As the Wind Wills' }],
@@ -4860,6 +4923,40 @@ const SKILL_MULTIPLIERS = {
     ['Forte', 'Chimei Wangliang', '83.51% (summon proc on Heavy ATK)'],
     ['Intro', 'Question the Tombs', '198.81%'],
     ['Outro', 'Rising Fortune and Ebbing Evil', '795% ATK'],
+  ],
+  // Hsin: Lv.10 multipliers from the guide's Kit tab (Data dump/Hsin/Hsin.md). Her Forte heavies,
+  // Pillars Aligned Skill, Manifold Unison Intros and Pillars Across Heaven are all "considered
+  // Resonance Skill DMG" in their own kit text.
+  'Hsin': [
+    ['Basic ATK', 'Answering Form Stage 1-4', '27.84%+41.76% → 15.15%×2+68.14%+53.00% → 31.51%×2+23.63%×2+47.26% → 39.72%+39.72%+119.15%', 'Answering Form combo; hits build Answering Heart.'],
+    ['Heavy ATK', 'Answering Form', '10.28%+20.55%+10.28%+20.55%×3', 'Costs 20 STA.'],
+    ['Heavy ATK', 'Reign at Ease', '27.84%×25', 'Hold Normal Attack in mid-air; drains 5 STA per second.'],
+    ['Mid-air', 'Answering Form', '22.44%', 'Costs 30 STA.'],
+    ['Mid-air', 'Reign at Ease', '22.44%', 'Plunge on releasing Reign at Ease; she turns into the Moon Fox on landing.'],
+    ['Dodge Counter', 'Answering Form', '44.98%×2+67.47%+67.47%'],
+    ['Basic ATK', 'Illumining Form Stage 1-3', '12.55%×2+37.65% → 34.80%×2 → 9.11%×4+18.21%×2+27.31%×4', 'Xuanfang Mechanisms combo; Stage 1 places a Modular Heartlock.'],
+    ['Basic ATK', 'Modular Heartlock', '20.92%×2', 'The Heartlock collapses on Illumining Stage 2, Heavy Attack, Dodge Counter or Skill.'],
+    ['Heavy ATK', 'Illumining Form', '53.93%×2', 'Costs 20 STA.'],
+    ['Basic ATK', 'Upward Cut - Illumining Form', '35.03%+52.54%', 'Press Jump on the ground in Illumining Form.'],
+    ['Mid-air', 'Illumining Form', '13.47%+8.98%', 'Costs 30 STA.'],
+    ['Dodge Counter', 'Illumining Form', '95.68%×2'],
+    ['Basic ATK', 'Pillars Aligned Stage 1-4', '28.86%×3 → 38.23%×3 → 21.35%×5 → 16.64%×7+49.90%', 'Mechanism Dominion combo; hits consume Illumining Heart.'],
+    ['Dodge Counter', 'Pillars Aligned', '66.07%×3'],
+    ['Skill', 'Heartward by Moon - Answering Form', '23.30%+23.30%+23.30%+15.53%×2+54.36%', 'Castable in mid-air; 12s cooldown. Moving right after turns her into the Moon Fox.'],
+    ['Skill', 'Heartward by Moon - Illumining Form', '10.36%×4+165.65%', 'Commands a Colossal Xuanfang Mechanism; 20s cooldown.'],
+    ['Liberation', 'Formshift', 'No direct DMG — enters Illumining Form and Heart Manifest, grants 21 Edict stacks (45s)', 'Unlocked by Realm Wanderer/Realm Protector; 25s cooldown.'],
+    ['Liberation', 'Soaring Pillar', '11.37%', 'Coordinated Attack, one Edict stack per second while the active Resonator deals DMG.'],
+    ['Liberation', 'Pillars Across Heaven', '80.51%+90.57%+60.38%+100.64%+70.45%+1610.12%', 'Considered Resonance Skill DMG; costs 125 Resonance Energy and returns her to Answering Form.'],
+    ['Forte', 'Realm Wanderer', '45.65%+11.42%×6+456.45%', 'Heavy Attack at 100 Answering Heart; considered Resonance Skill DMG.'],
+    ['Forte', 'Realm Protector', '99.32%+24.83%×6+993.15%', 'Empowered Realm Wanderer (Resolution of Wishes, once every 24s); considered Resonance Skill DMG.'],
+    ['Forte', 'Resonance Skill - Pillars Aligned', '179.43%×4+17.95%+35.89%×2+44.86%×2', 'At 300 Illumining Heart; enters Mechanism Dominion (13s). Considered Resonance Skill DMG; 12s cooldown.'],
+    ['Forte', 'Beholding All Horizons', '10.27%×4+369.70%', 'Heavy Attack at 0 Illumining Heart in Mechanism Dominion; considered Resonance Skill DMG.'],
+    ['Forte', 'Stilling All Horizons', '27.05%×4+973.49%', 'Empowered Beholding All Horizons (Law of Heaven, once every 24s); considered Resonance Skill DMG.'],
+    ['Intro', 'Answering Form', '7.88%×2+7.88%×2+126.02% (Electro Flare) / 10.28%+20.55%+10.28%+20.55%×3 (Unison)', 'Grants 60 Answering Heart.'],
+    ['Intro', 'Answering Form: Manifold Unison', '60.59%+121.18%+60.59%+121.18%×3', 'Unison mode; considered Resonance Skill DMG.'],
+    ['Intro', 'Illumining Form', '11.42%×4+11.42%×2+39.97%×4 (Electro Flare) / 56.59%×4+5.66%+11.32%×2+14.15%×2 (Unison)'],
+    ['Intro', 'Illumining Form: Manifold Unison', '157.22%×4+15.73%+31.45%×2+39.31%×2', 'Unison mode; considered Resonance Skill DMG.'],
+    ['Outro', 'Herself a Thousand Lanterns', '100% ATK + team DMG Amplification', 'Electro Flare mode: team Electro DMG Amplified by 20% (20s). Unison mode: Unison allies gain 20% All DMG Amplification (30s).'],
   ],
   // Two real zero-damage rotation-step bugs fixed 2026-09-02 against a fresh the source dump: 'Mid-air:
   // Feather Fall' and 'Basic ATK:Havoc in Bloom Stage 1-3' — both real CHARACTER_ROTATIONS steps used
@@ -7459,6 +7556,23 @@ const CHARACTER_ROTATIONS = {
     { type: 'Heavy ATK', skill: 'Soul Raid', note: 'Second cast of the rotation — same effect as above, switches back to Yang Font.' },
     { type: 'Outro', skill: 'Rising Fortune and Ebbing Evil', duration: 0, note: 'Swap out to trigger this automatically — deals Fusion DMG equal to 795% of his ATK, with no team-buff component (pure damage, safe to Quickswap).' },
   ],
+  // Hsin: the guide's Electro Flare rotation (Data dump/Hsin/Hsin.md, "Electro Flare Rotation"), her
+  // standard 1-2-3 team rotation. Its Unison rotation (two Manifold Unison Intros, skipping Illumining
+  // Form) is described in the guide too but not stored here.
+  'Hsin': [
+    { type: 'Intro', skill: 'Answering Form', note: 'Swap in — the Intro grants 60 Answering Heart and chains straight into Basic Attack Stage 4 in Electro Flare mode.' },
+    { type: 'Basic ATK', skill: 'Answering Form Stage 1-4', note: 'Only Stage 4 here, right after the Intro — it fills Answering Heart to 100.' },
+    { type: 'Forte', skill: 'Realm Protector', note: 'Hold Normal Attack at 100 Answering Heart — the empowered Realm Wanderer, considered Resonance Skill DMG. Unlocks Formshift.' },
+    { type: 'Liberation', skill: 'Formshift', note: 'Enters Illumining Form and Heart Manifest, grants 21 Edict stacks (Soaring Pillar Coordinated Attacks) and inflicts 5 Electro Flare stacks nearby.' },
+    { type: 'Skill', skill: 'Heartward by Moon - Illumining Form', note: 'Commands a Colossal Xuanfang Mechanism and builds Illumining Heart.' },
+    { type: 'Basic ATK', skill: 'Illumining Form Stage 1-3', note: 'Stage 1 then Stage 2 only — Stage 2 collapses the Modular Heartlock for 150 Illumining Heart; cancel its end lag with the next Skill.' },
+    { type: 'Forte', skill: 'Resonance Skill - Pillars Aligned', note: 'At 300 Illumining Heart — enters Mechanism Dominion and inflicts 5 Electro Flare stacks.' },
+    { type: 'Basic ATK', skill: 'Pillars Aligned Stage 1-4', note: 'All four stages — each hit consumes Illumining Heart and inflicts Electro Flare.' },
+    { type: 'Forte', skill: 'Stilling All Horizons', note: 'Hold Normal Attack at 0 Illumining Heart — ends Mechanism Dominion and unlocks Pillars Across Heaven.' },
+    { type: 'Liberation', skill: 'Pillars Across Heaven', note: 'Brings the Manifold Sanctum crashing down (considered Resonance Skill DMG) and returns her to Answering Form.' },
+    { type: 'Skill', skill: 'Heartward by Moon - Answering Form', note: 'Cast as you swap out — its last stage detonates the stored Heart of Thunder as Electro Flare DMG.' },
+    { type: 'Outro', skill: 'Herself a Thousand Lanterns', duration: 0, note: 'Swap out to trigger — 100% ATK Electro DMG, and the rest of the team deals 20% Amplified Electro DMG for 20s.' },
+  ],
 };
 
 // [SECTION:RESONANCE_CHAINS] — Per-character S1-S6 stat contributions for damage calculator
@@ -7525,6 +7639,13 @@ const RESONANCE_CHAIN_DATA = {
   //   +80%, Parade of Thousand Souls proc mechanic) — both added as real blocks in jingran.blocks.js,
   //   not representable in this flat table's single-stat-per-node shape.
   'Jingran':      { s1: {}, s2: { heavyDmg: 46 }, s3: {}, s4: {}, s5: {}, s6: { heavyDmg: 40 } },
+  // Hsin (Data dump/Hsin/Hsin.md, Resonance Chain). S1/S5 are defensive or mode-specific utility, {}.
+  // S2 (+60% multipliers on Realm Wanderer/Protector and Beholding/Stilling All Horizons) and S3 (+70%
+  // on Pillars Across Heaven) are stored as the multiplier they add to her Electro Flare rotation
+  // (0.60 × (1241.45 + 1081.69) ≈ 1394; 0.70 × 2012.67 ≈ 1409, see her ROTATION_DATA row). S4 is the
+  // team-wide +20% All-Attribute DMG Bonus. S6's 40% more Resonance Skill DMG taken and 20% DEF
+  // ignore apply to her Resonance Skill DMG only, which is 83% of her damage in the guide's profile.
+  'Hsin':         { s1: {}, s2: { totalMult: 1394 }, s3: { totalMult: 1409 }, s4: { allDmg: 20 }, s5: {}, s6: { amplify: 40, defIgnore: 20 } },
   // Yangyang: Xuanling S2: Heavy/Mid-air/Havoc-in-Bloom DMG+100% (confirmed exact). S3: Hush of a Thousand Voices
   // Liberation DMG+175% (confirmed exact via the source 2026-08-16 cross-check; was 80, didn't match comment or kit)
   // S1 re-audited 2026-09-02 against a fresh the source dump (user-provided): was totalMult:10, an
@@ -10653,6 +10774,7 @@ const CHAIN_NODE_NAMES = {
   // the reference page still has no Sequence Node table populated ("Jingran doesn't have any Sequence
   // Nodes yet"), so the source is the sole source here, same as Qingxiao's pre-release pass.
   'Jingran': { s1: 'Yin and Yang in Harmony, the Ultimate Law of Being', s2: 'A Solitary Lantern, Across Lands Shade-Trodden', s3: "World's Course Shifts, Each to Their Rightful Paths", s4: 'Where Reality Meets Illusion, Where Living Meet Dead', s5: 'Ends Return to Beginnings, Truth of Life Laid Bare', s6: 'As Favors and Feuds Fade, New Stories Await' },
+  'Hsin': { s1: 'A Boat to Cross the Rising Tide', s2: 'To Wake Is to Wonder What I Am', s3: 'A Dream of Return Among the Hills', s4: 'A River of Lanterns, a River of Wishes', s5: 'Forms Turn as the Heart Wills', s6: 'The Moon Owes Its Light to the Living' },
 };
 
 // Release order for sorting (based on first banner appearance)
@@ -10700,6 +10822,8 @@ const RELEASE_ORDER = [
   'Yangyang: Xuanling', 'Suisui',
   // 3.6
   'Qingxiao', 'Jingran',
+  // 3.7
+  'Hsin',
 ];
 
 // Derived character lists — single source of truth from CHARACTER_DATA
@@ -10707,6 +10831,18 @@ const RELEASE_ORDER = [
 const ALL_5STAR_RESONATORS = RELEASE_ORDER.filter(name => CHARACTER_DATA[name]?.rarity === 5);
 const ALL_4STAR_RESONATORS = Object.keys(CHARACTER_DATA).filter(name => CHARACTER_DATA[name].rarity === 4);
 const ALL_CHARACTERS = new Set([...ALL_5STAR_RESONATORS, ...ALL_4STAR_RESONATORS]);
+
+// Released resonators whose Lv.90 base stats and ascension materials are not published yet: their
+// profile is complete, but the Teams builder and the Planner leave them out until those numbers are
+// filled in (both need baseHp/baseAtk/baseDef and ascension). Remove a name once its data lands.
+const CHARACTERS_AWAITING_STATS = new Set(['Hsin']);
+
+// Announced but unreleased resonators, shown in the Collection as "coming soon" cards
+// and kept out of CHARACTER_DATA (which feeds the damage calculators) until their kit
+// and stats are published. Fields come from their banner entry in BANNER_HISTORY.
+const UPCOMING_RESONATORS = {
+  'Suoming': { rarity: 5, element: 'Electro', weapon: 'Sword', role: 'Main DPS' },
+};
 
 // Standard 5★ characters (Tidal Chorus / 50-50 loss pool) — update when new standard chars are added
 const STANDARD_5STAR_CHARACTERS = new Set(['Calcharo', 'Encore', 'Jianxin', 'Lingyang', 'Verina']);
@@ -10823,6 +10959,8 @@ export {
   STANDARD_5STAR_CHARACTERS,
   ALL_5STAR_RESONATORS,
   ALL_4STAR_RESONATORS,
+  UPCOMING_RESONATORS,
+  CHARACTERS_AWAITING_STATS,
 };
 
 // Per-locale skill text. A locale with no entry here returns the English source text.

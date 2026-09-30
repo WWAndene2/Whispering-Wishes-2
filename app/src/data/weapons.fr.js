@@ -54,6 +54,10 @@ export const WEAPON_DATA_FR = {
     desc: "Arme signature de Jingran (« Écoutez, Esprits et Étoiles »). Lancer la Compétence d'Intro ou obtenir un Bouclier accumule Dégâts Critiques et Ignore DÉF d'Attaque Lourde personnels, adapté à son kit centré sur le Bouclier et le scaling PV.",
     passive: "DGT tous éléments +12 %. Compétence d'Intro ou obtenir un Bouclier : Dégâts Critiques personnels +4 % (jusqu'à 6 cumuls/24 % ; à 6 cumuls, Taux Critique d'Attaque Lourde +12 %). Lancer une Attaque Lourde consomme jusqu'à 2 cumuls pour Ignore DÉF d'Attaque Lourde +15 % chacun (jusqu'à 30 %, 2 s).",
   },
+  'Blooming Jadehaven': {
+    desc: "Arme signature de Hsin. Infliger Électromagnétisme ou déclencher une Réponse d'Unisson amplifie ses DGT de Compétence de Résonance et ignore la RÉS Électro, tandis qu'une aura sur le terrain amplifie les DGT d'Électromagnétisme subis par les cibles proches.",
+    passive: "DGT tous attributs +12 %. Après avoir infligé Électromagnétisme ou déclenché une Réponse d'Unisson : DGT de Compétence de Résonance personnels amplifiés de 36 % et 10 % de RÉS Électro ignorés. Sur le terrain : DGT d'Électromagnétisme subis par les cibles proches amplifiés de 30 % (30 s, au plus 1x/0,1 s). Seul l'effet de même nom le plus fort s'applique.",
+  },
   'Glint of Clouds': {
     name: 'Lueur des Nuages',
     desc: "Arme signature de Qingxiao. Lame de jade enveloppée de brume et de nuages. Bonus DGT Aero cumulable en infligeant Tension de Tonalité - Changeant, ignorant la DÉF au maximum de cumuls.",

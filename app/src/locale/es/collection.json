@@ -101,7 +101,9 @@
     "newBadge": "Nuevo",
     "currentProfilePicTitle": "Foto de perfil actual",
     "setProfilePic": "Usar como foto de perfil",
-    "setProfilePicAria": "Usar a {{name}} como foto de perfil"
+    "setProfilePicAria": "Usar a {{name}} como foto de perfil",
+    "upcomingBadge": "Pronto",
+    "upcomingLabel": ", próximamente"
   },
   "widget": {
     "removeOne": "Quitar 1 copia",

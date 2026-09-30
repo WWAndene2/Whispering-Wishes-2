@@ -21,7 +21,7 @@ import { hideOnError } from '../../shared/utils/imageHelpers.js';
 import { usePersistedState } from '../../hooks/usePersistedState.js';
 import { generateUniqueId } from '../../utils/generateId.js';
 import { getElementColor, getElementShape, getRoleIcon } from '../../shared/utils/elementVisuals.js';
-import { CHARACTER_DATA, ALL_5STAR_RESONATORS, ALL_4STAR_RESONATORS } from '../../data/characters.js';
+import { CHARACTER_DATA, ALL_5STAR_RESONATORS, ALL_4STAR_RESONATORS, CHARACTERS_AWAITING_STATS } from '../../data/characters.js';
 import { WEAPON_DATA, getLocalizedWeaponData, getLocalizedWeaponName } from '../../data/weapons.js';
 import { Card, CardHeader, CardBody } from '../../shared/components/Card.jsx';
 import { TabBackground } from '../../shared/backgrounds/TabBackground.jsx';
@@ -1123,6 +1123,7 @@ function PlannerTab({
                         regardless of real width). Always 4 columns now. */}
                     <div className="grid grid-cols-4 gap-2">
                       {[...ALL_5STAR_RESONATORS, ...ALL_4STAR_RESONATORS].reverse()
+                        .filter(n => !CHARACTERS_AWAITING_STATS.has(n))
                         .filter(n => !farmTargetsState.some(t => t.name === n))
                         .filter(n => !farmSearch || n.toLowerCase().includes(farmSearch.toLowerCase()))
                         .map(name => {

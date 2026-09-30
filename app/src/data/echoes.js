@@ -74,6 +74,11 @@ const ECHO_SETS = {
     p5val: { critRate: 20, heavyDmg: 35, atkPct: 25 } },
   "Heart of Evil's Purge": { element: 'Aero', p2: '+10% Aero DMG', p2val: { aeroDmg: 10 },
     p5: 'Tune Strain - Shifting → +20% Crit DMG, +30% Aero DMG for 15s', p5val: { critDmg: 20, aeroDmg: 30 } },
+  // v3.7 — Hsin's signature set, from the prydwen.gg Hsin guide snapshot (Data dump/Hsin/Hsin.md).
+  // p5val includes the 2-piece Electro DMG, same as the other elemental sets above.
+  'Heart of Sworn Vigil': { element: 'Electro', p2: '+10% Electro DMG', p2val: { electroDmg: 10 },
+    p5: 'Inflicting Electro Flare, obtaining Unison or triggering Unison Response → +15% Crit Rate, +22.5% Electro DMG for 30s',
+    p5val: { critRate: 15, electroDmg: 32.5 } },
   'Lamp of Nether Road':  { element: 'Shield', p2: '+10% HP', p2val: { hpPct: 10 },
     p5: 'Gaining a Shield → +5% Crit Rate for 5s (max x4, 0.5s CD); at max stacks → +15% Fusion DMG', p5val: { critRate: 20, fusionDmg: 15 } },
 };
@@ -86,6 +91,8 @@ const ALL_4COST_ECHOES = [
   // source (one source blocked by Cloudflare/403, the reference 402, the other guides
   // pages didn't carry the specific numbers) — left out of ECHO_SKILL_BUFFS and desc has no fabricated %s.
   'Calamity Effigy',
+  // v3.7 — Hsin's signature echo (prydwen.gg Hsin guide snapshot, Data dump/Hsin/Hsin.md).
+  'Reminiscence: Suhsin the Inevitable',
   // v3.5 — Land of Xuanfang
   'Thousand-Puppet Pavilion', 'Myriad Snare: Rustfire Chassis', 'Reminiscence: Denia',
   'Reminiscence: Threnodian - Voidborne Construct', 'Reminiscence - Nightmare: Adam Smasher',
@@ -238,6 +245,7 @@ const ECHO_DATA = {
   // v3.5 — Land of Xuanfang echoes, confirmed via the source live echo pages (2026-08-14)
   'Thousand-Puppet Pavilion':        { sets: ['Song of Feathered Trace'], buff: 'Havoc DMG', desc: "A Calamity-class puppet-master construct from Land of Xuanfang. Skill attacks nearby enemies for 109.44% Havoc DMG and summons 4 Blades of Thousand Memories (15s); inflicting Havoc Bane consumes a Blade to deal 41.04% Havoc DMG (once per 1s). Main slot grants +12% Havoc DMG and +12% Heavy ATK DMG.", iconUrl: './echoes/thousand-puppet-pavilion/23cVrFbk-Thousand-Puppet-Pavilion.webp' , monsterIconUrl: './echoes/thousand-puppet-pavilion/static.nanoka.cc-assets-ww-UIResources-Common-Image-IconMonsterHead-T_IconMonsterHead_34031_UI.webp', rank: 'Calamity' },
   'Myriad Snare: Rustfire Chassis':  { sets: ["Heart of Evil's Purge", 'Lamp of Nether Road'], buff: 'Fusion DMG', desc: "An Overlord-class mechanical hazard from Land of Xuanfang. Skill summons a crushing chassis dealing 10.20% Max HP Fusion DMG on impact, then up to 19 more hits of 0.37% Max HP Fusion DMG each. Main slot grants +12% Fusion DMG and +12% Heavy ATK DMG.", iconUrl: './echoes/myriad-snare-rustfire-chassis/KzxLH0wS-Myriad-Snare-Rustfire-Chassis.webp' , monsterIconUrl: './echoes/myriad-snare-rustfire-chassis/static.nanoka.cc-assets-ww-UIResources-Common-Image-IconMonsterHead-T_IconMonsterHead_34030_UI.webp', rank: 'Overlord' },
+  'Reminiscence: Suhsin the Inevitable': { sets: ['Heart of Sworn Vigil'], buff: 'Electro DMG', desc: "Hsin's signature Echo. Skill deals 4 hits of 27.36% Electro DMG and 1 hit of 164.16% Electro DMG; equipped by Hsin, it instead deals 5 hits of 8.20% and 1 hit of 232.56% Electro DMG in a larger area. Main slot grants +10% Electro DMG, plus +10% Electro DMG for 30s after inflicting Electro Flare, gaining Unison or triggering Unison Response. CD 20s.", iconUrl: './echoes/reminiscence-suhsin-the-inevitable/Reminiscence-Suhsin-the-Inevitable.webp' },
   'Reminiscence: Denia':             { sets: ['Chromatic Foam'], buff: 'Fusion DMG', desc: "Denia's Calamity-class signature Echo. Skill summons \"Trickster\" for 273.60% Fusion DMG; within 15s, casting Outro Skill grants the incoming Resonator +12% Fusion DMG Bonus for 15s.", iconUrl: './echoes/reminiscence-denia/qYy1Y7Ck-Reminiscence-Denia.webp' , monsterIconUrl: './echoes/reminiscence-denia/static.nanoka.cc-assets-ww-UIResources-Common-Image-IconMonsterHead-T_IconMonsterHead_34028_1_UI.webp', rank: 'Calamity' },
   'Reminiscence: Threnodian - Voidborne Construct': { sets: ['Wishes of Quiet Snowfall'], buff: 'Glacio DMG', desc: "Calamity-class Echo from Land of Xuanfang. Skill summons Aleph-1's Creation for 5 hits of 21.88% Glacio DMG plus one hit of 164.16% Glacio DMG. Main slot grants +12% Glacio DMG and +12% Resonance Liberation DMG.", iconUrl: './echoes/reminiscence-threnodian-voidborne-construct/gZdFc1CG-Reminiscence-Threnodian-Voidborne-Construct.webp' , monsterIconUrl: './echoes/reminiscence-threnodian-voidborne-construct/static.nanoka.cc-assets-ww-UIResources-Common-Image-IconMonsterHead-T_IconMonsterHead_34027_UI.webp', rank: 'Calamity' },
   'Reminiscence - Nightmare: Adam Smasher': { sets: ['Shadow of Shattered Dreams'], buff: 'Physical DMG', desc: "Overlord-class Echo from the Cyberpunk: Edgerunners collab. Skill deals 16 hits of 10.26% ATK Physical DMG. When equipped by Lucy or Rebecca in the main slot, grants +15% Crit Rate and unlocks a character-specific enhanced Echo Skill (Lucy: Spectro burst; Rebecca: Electro missile barrage).", iconUrl: './echoes/reminiscence-nightmare-adam-smasher/twCtsS1D-Reminiscence-Nightmare-Adam-Smasher.webp' , monsterIconUrl: './echoes/reminiscence-nightmare-adam-smasher/static.nanoka.cc-assets-ww-UIResources-Common-Image-IconMonsterHead-T_IconMonsterHead_34029_1_UI.webp', rank: 'Overlord' },
@@ -464,6 +472,9 @@ const ECHO_SKILL_BUFFS = {
   'Thousand-Puppet Pavilion':      { buffs: [{ stat: 'havocDmg', value: 12 }, { stat: 'heavyDmg', value: 12 }], passive: true },
   'Myriad Snare: Rustfire Chassis':{ buffs: [{ stat: 'fusionDmg', value: 12 }, { stat: 'heavyDmg', value: 12 }], passive: true },
   'Reminiscence: Denia':           { buffs: [{ stat: 'fusionDmg', value: 12 }], duration: 15, target: 'next' },
+  // +10% Electro DMG in the main slot, +10% more for 30s after inflicting Electro Flare / gaining
+  // Unison / triggering Unison Response — which Hsin's own kit does every rotation.
+  'Reminiscence: Suhsin the Inevitable': { buffs: [{ stat: 'electroDmg', value: 20 }], passive: true },
   'Reminiscence: Threnodian - Voidborne Construct': { buffs: [{ stat: 'glacioDmg', value: 12 }, { stat: 'libDmg', value: 12 }], passive: true },
   'Reminiscence - Nightmare: Adam Smasher': { buffs: [{ stat: 'critRate', value: 15 }], passive: true, condition: 'Lucy or Rebecca' },
 };

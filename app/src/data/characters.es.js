@@ -90,6 +90,7 @@ export const ROLE_ES = {
 
 /** @type {Record<string, string>} */
 export const CHARACTER_TITLE_ES = {
+  "Hsin": "El Zorro lunar",
   "Jiyan": "Jinete del viento",
   "Calcharo": "Cazadores fantasma",
   "Encore": "Juego de contar ovejas",
@@ -148,6 +149,7 @@ export const CHARACTER_TITLE_ES = {
 
 /** @type {Record<string, string>} */
 export const CHARACTER_TAG_ES = {
+  "Sentinels": "Centinelas",
   "Spectro Frazzle": "Espectro estridente",
   "Frazzle": "Espectro estridente",
   "Electro Flare": "Llamarada eléctrica",
@@ -363,6 +365,30 @@ export function applyGenericDescPhrasesEs(desc) {
 // English name stays the internal key for icon and rotation lookups.
 /** @type {Record<string, Record<string, string>>} */
 export const SKILL_NAME_ES = {
+  "Hsin": {
+    "Answering Form Stage 1-4": "Forma Respuesta Fase 1-4",
+    "Answering Form": "Forma Respuesta",
+    "Reign at Ease": "Reinar con soltura",
+    "Illumining Form Stage 1-3": "Forma Iluminación Fase 1-3",
+    "Modular Heartlock": "Cerrojo cardíaco modular",
+    "Illumining Form": "Forma Iluminación",
+    "Upward Cut - Illumining Form": "Tajo ascendente - Forma Iluminación",
+    "Pillars Aligned Stage 1-4": "Pilares alineados Fase 1-4",
+    "Pillars Aligned": "Pilares alineados",
+    "Heartward by Moon - Answering Form": "Hacia el corazón por la luna - Forma Respuesta",
+    "Heartward by Moon - Illumining Form": "Hacia el corazón por la luna - Forma Iluminación",
+    "Formshift": "Cambio de forma",
+    "Soaring Pillar": "Pilar ascendente",
+    "Pillars Across Heaven": "Pilares a través del cielo",
+    "Realm Wanderer": "Errante del reino",
+    "Realm Protector": "Protectora del reino",
+    "Resonance Skill - Pillars Aligned": "Habilidad de resonancia - Pilares alineados",
+    "Beholding All Horizons": "Contemplar todos los horizontes",
+    "Stilling All Horizons": "Aquietar todos los horizontes",
+    "Answering Form: Manifold Unison": "Forma Respuesta: Unísono múltiple",
+    "Illumining Form: Manifold Unison": "Forma Iluminación: Unísono múltiple",
+    "Herself a Thousand Lanterns": "Ella misma, mil faroles",
+  },
   "Suisui": {
     "Zephyr Stance Stage 1-4": "Postura Céfiro Fase 1-4",
     "Zephyr Stance": "Postura Céfiro",
@@ -1285,6 +1311,7 @@ export const SKILL_NAME_ES = {
 // Resonance Chain node titles (s1-s6) per character, display-only.
 /** @type {Record<string, Record<string, string>>} */
 export const CHAIN_NODE_NAMES_ES = {
+  "Hsin": { s1: "Un barco para cruzar la marea creciente", s2: "Despertar es preguntarse qué soy", s3: "Un sueño de regreso entre las colinas", s4: "Un río de faroles, un río de deseos", s5: "Las formas cambian como quiere el corazón", s6: "La luna debe su luz a los vivos" },
   "Aalto": { s1: "Espectáculo de apertura del embaucador", s2: "Debut de Mistweaver", s3: "Transición nebulosa", s4: "Flor negra para el final", s5: "Aplausos de los perdidos", s6: "Los secretos del intermediario" },
   "Baizhi": { s1: "Simplicidad compleja", s2: "Tundra silenciosa", s3: "Luz de la verdad", s4: "Verdad eterna", s5: "Un deseo respondido", s6: "La devoción del buscador" },
   "Chixia": { s1: "Fanático N.º 1 del Drama de Héroe", s2: "Destellos saltadores", s3: "Llamas eternas", s4: "Ulti del héroe", s5: "Explosiones triunfantes", s6: "Escena extra" },
@@ -1344,6 +1371,7 @@ export const CHAIN_NODE_NAMES_ES = {
 // CHAR_BUFF_TABLE[name].note — display-only prose (stat/target/duration/condition are never translated).
 /** @type {Record<string, string>} */
 export const CHAR_BUFF_NOTE_ES = {
+  "Hsin": "Modo Llamarada eléctrica: su Outro amplifica un 20 % el daño Electro del resto del equipo durante 20 s, y gana hasta +50 % de daño Electro cuando sus compañeros infligen Llamarada eléctrica (+20 % más para ella y para Rover: Electro cuando se activa la Intro de Rover). Modo Unísono: su Outro otorga a los aliados de Unísono un 20 % de amplificación de todo el daño durante 30 s, cada acumulación de Bendición de Unísono aumenta un 3 % el daño de los aliados de Unísono (hasta 2 acumulaciones, 3 con Cosechar alegrías sencillas) y sus Intros de Unísono múltiple le dan +50 % de ATQ durante 8 s. La Cadena de resonancia 4 otorga a todo el equipo +20 % de bonificación de daño de todos los atributos durante 30 s.",
   "Verina": "Outro Flor: cura al Resonador entrante + amplificación de todo el daño +15 % (30 s) para el equipo cercano. Don inherente de la naturaleza: ATQ del equipo +20 %/20 s al activar el Forte/la liberación/el Outro.",
   "Shorekeeper": "Outro: amplificación de todo el daño del 15 %, para todo el equipo, 30 s (persiste tras los cambios). Liberación Stellarealm: +12.5 % de tasa crítica y +25 % de daño crítico (30 s), para todo el equipo. Recuperación tras derribo.",
   "Jianxin": "Apoyo con escudo/DPS secundario en postura de parada. El Forte (Espiral de chi primordial) otorga un gran escudo escalado con PV y curación periódica mientras se canaliza. El Campo de fuerza de purificación de la liberación agrupa a los enemigos antes de explotar. Outro Trascendencia: amplificación de daño de liberación +38 % (14 s) para el Resonador entrante.",
@@ -1407,6 +1435,7 @@ export const CHAR_BUFF_NOTE_ES = {
 // Character biography + playstyle blurb (CHARACTER_DATA[name].desc).
 /** @type {Record<string, string>} */
 export const CHARACTER_DESC_ES = {
+  "Hsin": "El Zorro lunar, una de los siete Centinelas de Huanglong, que vela por Mengzhou y sus faroles siempre encendidos. DPS principal Electro que pasa de la Forma Respuesta a la Forma Iluminación y al Dominio de mecanismos, dirigiendo los Mecanismos de Xuanfang; en modo Llamarada eléctrica acumula el excedente como Corazón del trueno para una sola detonación, y en modo Unísono obtiene un Outro adicional gratuito en cada rotación.",
   "Rover: Spectro": "Un errante que despertó sin memoria en las costas de Solaris. Sintonía Espectro: un debilitador de Espectro estridente de cambio rápido: el Giro resonante del Circuito de Forte aplica Espectro estridente (con Shimmer para detener la disminución) y la liberación Orquesta resonante acumula más, y luego cede el puesto al DPS principal.",
   "Rover: Havoc": "Un errante que despertó sin memoria en las costas de Solaris. Sintonía Destrucción: un DPS principal en campo; mantén el ataque pesado con Umbra completa para lanzar Devastación y entrar en Oleada oscura, un combo de estado mejorado que termina en Abismo adormecedor, la liberación del 1520 % de ATQ.",
   "Rover: Aero": "Un errante que despertó sin memoria en las costas de Solaris. Sintonía Aero: una sanadora/apoyo cuyo Corte de la caída del cielo retira las acumulaciones de debilitadores elementales de un objetivo y las convierte en Erosión eólica, mientras su Forte y su liberación curan al equipo.",
@@ -1471,6 +1500,20 @@ export const CHARACTER_DESC_ES = {
 // step.type/skill are never translated: they are matched against SKILL_MULTIPLIERS at render time.
 /** @type {Record<string, (string|null)[]>} */
 export const CHARACTER_ROTATION_NOTE_ES = {
+  "Hsin": [
+    "Entra en campo: la Intro otorga 60 de Corazón de respuesta y, en modo Llamarada eléctrica, enlaza directamente con la Fase 4 del ataque básico.",
+    "Solo la Fase 4 aquí, justo después de la Intro: llena el Corazón de respuesta hasta 100.",
+    "Mantén el ataque normal con 100 de Corazón de respuesta: el Errante del reino potenciado, que se considera daño de habilidad de resonancia. Desbloquea Cambio de forma.",
+    "Entra en Forma Iluminación y Manifestación del corazón, otorga 21 acumulaciones de Edicto (ataques coordinados de Pilar ascendente) e inflige 5 acumulaciones de Llamarada eléctrica cerca.",
+    "Dirige un Mecanismo colosal de Xuanfang y acumula Corazón iluminado.",
+    "Solo las Fases 1 y 2: la Fase 2 derrumba el Cerrojo cardíaco modular a cambio de 150 de Corazón iluminado; cancela su final con la siguiente habilidad.",
+    "Con 300 de Corazón iluminado: entra en Dominio de mecanismos e inflige 5 acumulaciones de Llamarada eléctrica.",
+    "Las cuatro fases: cada golpe consume Corazón iluminado e inflige Llamarada eléctrica.",
+    "Mantén el ataque normal con 0 de Corazón iluminado: termina el Dominio de mecanismos y desbloquea Pilares a través del cielo.",
+    "Hace caer el Santuario múltiple (se considera daño de habilidad de resonancia) y la devuelve a la Forma Respuesta.",
+    "Lánzala al salir: su última fase detona el Corazón del trueno acumulado como daño de Llamarada eléctrica.",
+    "Sal del campo para activarla: 100 % de ATQ en daño Electro, y el resto del equipo inflige un 20 % de daño Electro amplificado durante 20 s.",
+  ],
   "Cantarella": [
     "Entra en campo: se activa automáticamente. Esta variante concreta («Onda») hace que su siguiente ataque básico salte directamente a la Fase 3 en lugar de empezar de nuevo en la Fase 1, y otorga 1 de Trance (0→1/5).",
     "Pulsa el ataque básico UNA vez: como la Intro la preparó para empezar en la Fase 3, este único toque ejecuta la Fase 3 (72.57 %×2) y otorga 1 más de Trance (1→2/5).",
@@ -2107,6 +2150,10 @@ export const CHARACTER_ROTATION_NOTE_ES = {
 // Weapon recommendation reasons shown in the planner's recommendation card
 // (CHARACTER_DATA[name].weaponVerdictReason / weaponAltReason).
 export const WEAPON_VERDICT_REASON_ES = {
+  'Hsin': {
+    need: 'Hsin inflige la mayor parte de su daño como daño de habilidad de resonancia y depende de activar Llamarada eléctrica o Unísono.',
+    signatureNote: 'Blooming Jadehaven amplifica justo eso (36 % de amplificación del daño de habilidad de resonancia, ignora un 10 % de RES Electro y amplifica un 30 % el daño de Llamarada eléctrica en los objetivos cercanos); su mejor alternativa, Elegía letea, solo alcanza alrededor del 80 % de su rendimiento.',
+  },
   'Mornye': {
     need: 'El kit de Mornye escala sobre todo con la DEF, y su necesidad real es un 260 % de regeneración de energía para llevar al máximo las automejoras de su liberación y las mejoras de todo el equipo: se alcanza fácilmente incluso con armas de 4★ gratuitas.',
     signatureNote: 'Calibrador estelar solo añade una mejora permanente del 20 % de daño crítico para el equipo y energía de Concierto extra: según sus propias notas de montaje, la ganancia de daño personal es despreciable y el retorno de la mejora es bajo, que es justo por lo que se puede omitir.',
@@ -2128,6 +2175,29 @@ export const WEAPON_ALT_REASON_ES = {
 // Internal review notes present in the source strings are left out, as in the French overlay.
 /** @type {Record<string, Record<string, string>>} */
 export const SKILL_DESC_ES = {
+  "Hsin": {
+    "Answering Form Stage 1-4": "Combo de Forma Respuesta; los golpes acumulan Corazón de respuesta.",
+    "Answering Form": "Cuesta 20 de AGU.",
+    "Reign at Ease": "Mantén el ataque normal en el aire; consume 5 de AGU por segundo.",
+    "Illumining Form Stage 1-3": "Combo de los Mecanismos de Xuanfang; la Fase 1 coloca un Cerrojo cardíaco modular.",
+    "Modular Heartlock": "El Cerrojo se derrumba con la Fase 2 de Iluminación, el ataque pesado, el contraataque de esquiva o la habilidad.",
+    "Illumining Form": "Cuesta 20 de AGU.",
+    "Upward Cut - Illumining Form": "Pulsa Saltar en el suelo en Forma Iluminación.",
+    "Pillars Aligned Stage 1-4": "Combo de Dominio de mecanismos; los golpes consumen Corazón iluminado.",
+    "Heartward by Moon - Answering Form": "Se puede lanzar en el aire; 12 s de reutilización. Moverse justo después la convierte en el Zorro lunar.",
+    "Heartward by Moon - Illumining Form": "Dirige un Mecanismo colosal de Xuanfang; 20 s de reutilización.",
+    "Formshift": "Se desbloquea con Errante/Protectora del reino; 25 s de reutilización.",
+    "Soaring Pillar": "Ataque coordinado; una acumulación de Edicto por segundo mientras el Resonador activo inflige daño.",
+    "Pillars Across Heaven": "Se considera daño de habilidad de resonancia; cuesta 125 de energía de resonancia y la devuelve a la Forma Respuesta.",
+    "Realm Wanderer": "Ataque pesado con 100 de Corazón de respuesta; se considera daño de habilidad de resonancia.",
+    "Realm Protector": "Errante del reino potenciado (Resolución de deseos, una vez cada 24 s); se considera daño de habilidad de resonancia.",
+    "Resonance Skill - Pillars Aligned": "Con 300 de Corazón iluminado; entra en Dominio de mecanismos (13 s). Se considera daño de habilidad de resonancia; 12 s de reutilización.",
+    "Beholding All Horizons": "Ataque pesado con 0 de Corazón iluminado en Dominio de mecanismos; se considera daño de habilidad de resonancia.",
+    "Stilling All Horizons": "Contemplar todos los horizontes potenciado (Ley del cielo, una vez cada 24 s); se considera daño de habilidad de resonancia.",
+    "Answering Form: Manifold Unison": "Modo Unísono; se considera daño de habilidad de resonancia.",
+    "Illumining Form: Manifold Unison": "Modo Unísono; se considera daño de habilidad de resonancia.",
+    "Herself a Thousand Lanterns": "Modo Llamarada eléctrica: el daño Electro del equipo se amplifica un 20 % (20 s). Modo Unísono: los aliados de Unísono obtienen un 20 % de amplificación de todo el daño (30 s).",
+  },
   "Suisui": {
     "Zephyr Stance Stage 1-4": "Combo de Céfiro (postura curativa); acumula Aliento de nube.",
     "Zephyr Stance": "Picado aéreo en Postura Céfiro.",
@@ -2798,6 +2868,12 @@ export const SKILL_DESC_ES = {
 // "12 %" spacing follow Spanish number formatting.
 /** @type {Record<string, Record<string, string>>} */
 export const MULT_DESC_ES = {
+  "Hsin": {
+    "Formshift": "Sin daño directo: entra en Forma Iluminación y Manifestación del corazón, otorga 21 acumulaciones de Edicto (45 s)",
+    "Answering Form": "7.88 %×2+7.88 %×2+126.02 % (Llamarada eléctrica) / 10.28 %+20.55 %+10.28 %+20.55 %×3 (Unísono)",
+    "Illumining Form": "11.42 %×4+11.42 %×2+39.97 %×4 (Llamarada eléctrica) / 56.59 %×4+5.66 %+11.32 %×2+14.15 %×2 (Unísono)",
+    "Herself a Thousand Lanterns": "100 % de ATQ + amplificación de daño del equipo",
+  },
   "Suisui": {
     "Song of Thoroughfare": "Efecto de campo: sin daño directo, límite de acumulaciones de estados negativos del equipo +3",
     "Rippling Waters": "25 % de amplificación de todo el daño (30 s) + mejoras de equipo por consumo de postura",

@@ -101,7 +101,9 @@
     "newBadge": "Nouveau",
     "currentProfilePicTitle": "Photo de profil actuelle",
     "setProfilePic": "Définir comme photo de profil",
-    "setProfilePicAria": "Définir {{name}} comme photo de profil"
+    "setProfilePicAria": "Définir {{name}} comme photo de profil",
+    "upcomingBadge": "Bientôt",
+    "upcomingLabel": ", bientôt disponible"
   },
   "widget": {
     "removeOne": "Retirer 1 exemplaire",

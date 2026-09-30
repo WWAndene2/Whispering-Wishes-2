@@ -774,6 +774,10 @@ const DEFAULT_COLLECTION_IMAGES = {
   // Jingran sourced 2026-08-18 from the reference File:Jingran_Full_Sprite.png (uploaded 2026-08-17,
   // ahead of his 3.6-p2 release, via the reference API — bypasses the site's Cloudflare challenge).
   'Jingran': './banners/characters/jingran/yB024Z5G-jingran-sprite.webp',
+  // v3.7 — Hsin: still from the user-supplied animated full sprite, backdrop removed.
+  'Hsin': './banners/characters/hsin/Hsin-Full-Sprite.webp',
+  // Suoming (unreleased, "coming soon" card): no full sprite yet, her banner art stands in.
+  'Suoming': './characters/suoming/Suoming_Banner.webp',
   // 4★ Resonators
   'Aalto': './banners/characters/aalto/v81v3Hq-Aalto-Full-Sprite.webp',
   'Baizhi': './banners/characters/baizhi/4Ztm8DCG-Baizhi-Full-Sprite.webp',
@@ -834,6 +838,9 @@ const DEFAULT_COLLECTION_IMAGES = {
   // uploaded to imgbb 2026-08-20.
   'Glint of Clouds': './banners/characters/glint-of-clouds/Q3CfgYv8-glint-of-clouds.webp',
   'Thousandfold Deliverance': './banners/characters/thousandfold-deliverance/ccHCPYHF-thousandfold-deliverance.webp',
+  // v3.7 weapons — user-supplied icons (2026-09-30), trimmed and fitted to 256x256.
+  'Blooming Jadehaven': './banners/characters/blooming-jadehaven/Blooming-Jadehaven.webp',
+  'Unspoken Rue': './banners/characters/unspoken-rue/Unspoken-Rue.webp',
   // 4★ Weapons
   'Overture': './banners/characters/overture/nMXdhNTW-Overture.png',
   "Ocean's Gift": './banners/_shared/rfk6Fgwx-Oceans-Gift.png',

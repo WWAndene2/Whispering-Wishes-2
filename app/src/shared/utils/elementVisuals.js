@@ -146,6 +146,7 @@ const SET_ICONS = {
   'Reel of Spliced Memories':    './ui-icons/i.ibb.co-qYKQ4Vx9-Icon-Reel-of-Spliced-Memories.webp',
   'Wishes of Quiet Snowfall':    './ui-icons/i.ibb.co-q3k4jgDX-Icon-Wishes-of-Quiet-Snowfall.webp',
   'Shadow of Shattered Dreams':  './ui-icons/i.ibb.co-XZvbg138-Icon-Shadow-of-Shattered-Dreams.webp',
+  'Heart of Sworn Vigil':        './ui-icons/Icon-Heart-of-Sworn-Vigil.webp',
 };
 const getSetIcon = (setName) => SET_ICONS[setName] || null;
 // In-game faction emblem/logo icons, re-hosted on ibb.co.

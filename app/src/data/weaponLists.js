@@ -14,7 +14,7 @@ const ALL_5STAR_WEAPONS = [
   'Everbright Polestar', "Daybreaker's Spine", "Firstlight's Herald",
   'Radiance Cleaver', 'Laser Shearer', 'Phasic Homogenizer', 'Pulsation Bracer', 'Boson Astrolabe',
   'Skull Thrasher', 'Freeze Frame', 'Spectral Trigger', 'Azure Oath', 'Frostburn', 'Forged Dwarf Star',
-  'Thousandfold Deliverance', 'Glint of Clouds',
+  'Thousandfold Deliverance', 'Glint of Clouds', 'Blooming Jadehaven',
 ];
 
 const ALL_4STAR_WEAPONS = [
@@ -96,6 +96,8 @@ const WEAPON_RELEASE_ORDER = [
   'Azure Oath', "Firstlight's Herald",
   // 3.6
   'Glint of Clouds', 'Thousandfold Deliverance',
+  // 3.7
+  'Blooming Jadehaven',
 ];
 
 export {

@@ -14,7 +14,7 @@ import { CHARACTER_DATA } from '../../data/characters.js';
 import { hideOnError } from '../utils/imageHelpers.js';
 import { CountdownTimer } from './CountdownTimer.jsx';
 import { useImageFramingContext } from '../../providers/ImageFramingProvider.jsx';
-import { SpinePlayer, getSpineId } from './SpinePlayer.jsx';
+import { SpinePlayer, getSpineId, SPINE_CHARACTERS } from './SpinePlayer.jsx';
 import { FullSpineViewerButton } from './FullSpineViewerButton.jsx';
 import { ConveneVideo } from './ConveneVideoLayer.jsx';
 import { ConvenePullPills } from './ConvenePullPills.jsx';
@@ -54,6 +54,30 @@ const TEXT_SHADOW_STYLE = Object.freeze({ textShadow: '0 2px 8px rgba(0,0,0,0.9)
 const SPINE_BANNERS_ENABLED = false;
 
 const IMG_LAYER_STYLE = Object.freeze({ zIndex: 1 });
+
+// Box an image of natural size [iw, ih] occupies inside a container under
+// `object-fit: cover` with the given `object-position` ("X% Y%", keywords
+// allowed) — lets a second layer (the Luckdraw rig) sit exactly on the art.
+const POS_KEYWORDS = { left: 0, top: 0, center: 50, right: 100, bottom: 100 };
+const parsePos = (v) => (v in POS_KEYWORDS ? POS_KEYWORDS[v] : parseFloat(v)) / 100;
+function coverBox(cw, ch, iw, ih, objectPosition) {
+  const k = Math.max(cw / iw, ch / ih);
+  const w = iw * k, h = ih * k;
+  const [px = '50%', py = '50%'] = (objectPosition || '50% 50%').trim().split(/\s+/);
+  return { left: (cw - w) * parsePos(px), top: (ch - h) * parsePos(py), width: w, height: h };
+}
+function useElementSize() {
+  const ref = useRef(null);
+  const [size, setSize] = useState(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof ResizeObserver === 'undefined') return undefined;
+    const ro = new ResizeObserver(([e]) => setSize({ w: e.contentRect.width, h: e.contentRect.height }));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  return [ref, size];
+}
 const BANNER_SUBTLE_SHADOW = '0 0 40px rgba(237,175,24,0.06), 0 4px 16px rgba(0,0,0,0.3)';
 
 const _maskCache = new Map();
@@ -126,11 +150,37 @@ const BannerCard = memo(({ item, type, bannerImage, visualSettings, endDate, tim
   const { getImageFraming, framingMode, editingImage, setEditingImage } = useImageFramingContext();
   // Spine banners disabled app-wide (kept encapsulated here, not removed, for easy re-enable).
   const useSpine = SPINE_BANNERS_ENABLED && isFull && spineId && !spineFailed;
+  // Luckdraw overlay: a character whose Luckdraw rig carries a bannerViewport gets the rig laid
+  // exactly over its own banner art (same cover box, same zoom/mask/opacity), animating it in
+  // place instead of replacing it. Needs the art on file to be the one that viewport was measured on.
+  const luckdrawId = isChar ? getSpineId(item.name, { surface: 'luckdraw' }) : null;
+  const luckdraw = luckdrawId ? SPINE_CHARACTERS[luckdrawId] : null;
+  const [luckdrawFailed, setLuckdrawFailed] = useState(false);
+  const useLuckdraw = isFull && !useSpine && !!luckdraw?.bannerViewport && !luckdrawFailed && !!imgUrl;
+  const [cardRef, cardSize] = useElementSize();
+  const artBox = useLuckdraw && cardSize ? coverBox(cardSize.w, cardSize.h, luckdraw.bannerArtSize[0], luckdraw.bannerArtSize[1], item.imagePosition || 'center 100%') : null;
 
   return (
     <div className={isFull ? 'banner-card-glow rounded-xl' : ''} style={isFull ? { '--glow-color': style.glow, zIndex: 5 } : { zIndex: 5 }}>
-    <div className="relative overflow-hidden rounded-xl border banner-card" style={{ minHeight: 'var(--height-banner)', isolation: 'isolate', borderColor: style.borderColor, boxShadow: isFull ? 'none' : BANNER_SUBTLE_SHADOW }}>
-      {imgUrl && (
+    <div ref={cardRef} className="relative overflow-hidden rounded-xl border banner-card" style={{ minHeight: 'var(--height-banner)', isolation: 'isolate', borderColor: style.borderColor, boxShadow: isFull ? 'none' : BANNER_SUBTLE_SHADOW }}>
+      {useLuckdraw && artBox && (
+        <div className="absolute inset-0" style={{ ...IMG_LAYER_STYLE, opacity: pictureOpacity, maskImage: maskGradient, WebkitMaskImage: maskGradient }}>
+          <div className="absolute breath-zoom" style={{ left: artBox.left, top: artBox.top, width: artBox.width, height: artBox.height }}>
+            <img src={imgUrl} alt={shownName} className="absolute inset-0 w-full h-full" loading="eager" onError={hideOnError} />
+            <SpinePlayer
+              characterId={luckdrawId}
+              viewport={luckdraw.bannerViewport}
+              scaleOverride={1}
+              txOverride={0}
+              tyOverride={0}
+              className="absolute inset-0"
+              backgroundColor="#00000000"
+              onError={() => setLuckdrawFailed(true)}
+            />
+          </div>
+        </div>
+      )}
+      {imgUrl && !useLuckdraw && (
         <div
           className="absolute inset-0"
           style={{

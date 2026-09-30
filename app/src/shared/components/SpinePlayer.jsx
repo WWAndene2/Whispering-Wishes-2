@@ -261,7 +261,16 @@ export const SPRITE_SPINE_CHARACTERS = {
 // Luckdraw spine — the game's UiLuckdraw/Spine/Character/C_<Id>_01 rig,
 // sourced from encore.moe's character API (Hsin: character 1311).
 export const LUCKDRAW_SPINE_CHARACTERS = {
-  xin: { name: 'Hsin', element: 'Electro', skelUrl: 'spine/role_xin/c_xin_01.skel', atlasUrl: 'spine/role_xin/c_xin_01.atlas' },
+  // bannerViewport: the world-space rectangle her 1920x1080 banner art (characters/hsin/
+  // Hsin_Banner.jpg) covers, so BannerCard can lay the rig exactly over the art. Measured by
+  // SIFT-matching the big Hsin face in the art against the rig's idle frame 0 (26 inliers,
+  // scale+translation fit, mean residual 1.04 px / max 1.92 px at the art's 1920 px width);
+  // the rectangle's aspect (1.7779) matches the art's 16:9.
+  xin: {
+    name: 'Hsin', element: 'Electro', skelUrl: 'spine/role_xin/c_xin_01.skel', atlasUrl: 'spine/role_xin/c_xin_01.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -11935.70, y: -4706.75, width: 19621.63, height: 11036.39 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two
@@ -328,6 +337,10 @@ function SpinePlayerComponent({
   fallbackImgUrl = null,
   fallbackImgStyle = null,
   context = 'card',
+  // Fixed world-space camera {x, y, width, height} (no padding) instead of
+  // spine-player's auto-fit to the skeleton bounds — used to register a rig
+  // exactly onto a same-aspect image behind it.
+  viewport = null,
 }) {
   const containerRef = useRef(null);
   const playerRef = useRef(null);
@@ -414,6 +427,7 @@ function SpinePlayerComponent({
         alpha: true,
         premultipliedAlpha: false,
         showLoading: true,
+        ...(viewport ? { viewport: { ...viewport, padLeft: 0, padRight: 0, padTop: 0, padBottom: 0, transitionTime: 0 } } : {}),
         success: (player) => {
           if (paused && player && player.animationState) {
             try { player.animationState.timeScale = 0; } catch (_) {}
@@ -438,7 +452,7 @@ function SpinePlayerComponent({
       }
       if (containerRef.current) containerRef.current.innerHTML = '';
     };
-  }, [characterId, animation, loop, showControls, backgroundColor, failed, paused, useWebGL]);
+  }, [characterId, animation, loop, showControls, backgroundColor, failed, paused, useWebGL, viewport]);
 
   const charData = SPINE_CHARACTERS[characterId] || {};
   // Tuning is stored per (characterId, context) pair so the grid card, the

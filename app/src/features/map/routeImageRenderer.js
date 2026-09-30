@@ -70,8 +70,7 @@ const panel = (ctx, x, y, w, h, r = RADIUS) => {
 // floor gets its own card beside it.
 const floorOf = (p) => p.floor ?? 0;
 const SUB_LABEL = 32;       // label strip at the top of a sub-map card
-const INSET_MIN = 192;      // sub-map inset width range on the main map
-const INSET_MAX = 384;
+const INSET_MIN = 128;      // narrowest inset, room for its name
 const INSET_EDGE = 16;
 const INSET_RADIUS = 12;
 const INSET_MARGIN = 12;    // inset to panel edge / to another inset
@@ -143,6 +142,9 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
   const all = routes.flatMap(r => [...r.points, ...(r.warps || []).filter(Boolean)]);
   if (!all.length) return null;
 
+  await Promise.all(['700 32px Rajdhani', '600 16px Rajdhani', '700 24px Cinzel', '700 12px "JetBrains Mono"']
+    .map(f => document.fonts?.load(f).catch(() => null)));
+
   // Stop numbers run through the whole route, across panels.
   const numberOf = new Map();
   for (const r of routes) {
@@ -198,14 +200,19 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
   // (every stop underground) they are cards in rows of two.
   const insetMode = !!main;
   const cols = subs.length > 1 ? 2 : 1;
-  const cellW = insetMode ? Math.min(INSET_MAX, Math.max(INSET_MIN, Math.round(w * 0.3))) : (w - GAP * (cols - 1)) / cols;
+  const cellW = (w - GAP * (cols - 1)) / cols;
   const edge = insetMode ? INSET_EDGE : EDGE;
+  const labelMeasure = document.createElement('canvas').getContext('2d');
   for (const v of subs) {
+    // An inset keeps the main map's scale, so a sub-map shows at its real size beside the
+    // ground; a card (no main map) is fitted to its cell.
     const inner = cellW - edge * 2;
-    v.k = Math.min(inner / v.bw, inner / v.bh); // at most square
-    v.w = cellW;
+    v.k = insetMode ? main.k : Math.min(inner / v.bw, inner / v.bh);
+    labelMeasure.font = `600 16px ${DISPLAY}`;
+    const labelW = Math.ceil(labelMeasure.measureText(v.label).width) + 32;
+    v.w = insetMode ? Math.max(INSET_MIN, labelW, Math.round(v.bw * v.k + edge * 2)) : cellW;
     v.h = Math.round(v.bh * v.k + edge * 2 + SUB_LABEL);
-    v.offX = (cellW - v.bw * v.k) / 2;
+    v.offX = (v.w - v.bw * v.k) / 2;
     v.offY = SUB_LABEL + edge;
     v.radius = insetMode ? INSET_RADIUS : RADIUS;
     // Where the sub-map really is: the centre of its overlays.
@@ -216,8 +223,6 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
   const subRows = [];
   if (!insetMode) for (let i = 0; i < subs.length; i += cols) subRows.push(subs.slice(i, i + cols));
 
-  await Promise.all(['700 32px Rajdhani', '600 16px Rajdhani', '700 24px Cinzel', '700 12px "JetBrains Mono"']
-    .map(f => document.fonts?.load(f).catch(() => null)));
   const [appIco, bgImg] = await Promise.all([loadImage(APP_ICON), backdrop ? loadImage(backdrop.url) : null]);
   const iconUrls = [...new Set([...all.map(p => p.iconUrl), ...legend.map(l => l.iconUrl)].filter(Boolean))];
   const iconImgs = new Map((await Promise.all(iconUrls.map(u => loadImage(u).then(img => [u, img])))).filter(([, img]) => img));
@@ -298,7 +303,7 @@ export async function renderRouteImage({ routes, legend, backdrop, overlays = []
   // Insets on the main panel: placed on an offscreen copy of it; while one would hide stops,
   // land or another inset, the panel takes in more of the map (east, then south) and retries.
   if (main && subs.length) {
-    const step = subs[0].w + INSET_MARGIN * 2;
+    const step = Math.max(...subs.map(v => v.w)) + INSET_MARGIN * 2;
     for (let attempt = 0; ; attempt++) {
       main.x = 0;
       main.y = 0;

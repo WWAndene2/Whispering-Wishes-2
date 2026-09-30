@@ -658,7 +658,7 @@ const EVENTS = {
     resetType: 'Limited-time',
     color: 'red',
     currentStart: '2026-10-08T03:00:00Z',
-    currentEnd: '2026-11-26T02:59:59Z',
+    currentEnd: '2026-10-26T02:59:59Z', // official event page: 2026-10-08 04:00 - 10-26 03:59 server time
     rewards: '500 Astrite',
     gradient: 'from-neutral-900/30 via-neutral-900/20 to-red-900/30',
     accentColor: 'red',

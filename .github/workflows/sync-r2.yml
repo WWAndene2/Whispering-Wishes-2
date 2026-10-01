@@ -22,6 +22,10 @@ concurrency:
 
 jobs:
   sync-r2:
+    # The R2 secrets live only on WW-Andene/Whispering-Wishes; copies of this
+    # main (e.g. the Whispering-Wishes-2 build mirror) skip the job instead of
+    # failing on an empty endpoint.
+    if: github.repository == 'WW-Andene/Whispering-Wishes'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:

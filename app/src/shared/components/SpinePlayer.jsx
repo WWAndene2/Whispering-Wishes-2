@@ -411,6 +411,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -3046.31, y: -1589.77, width: 6029.02, height: 3391.32 },
   },
+  // Camellya (character 1603): bannerViewport against banners/_shared/20xFP1B1-camellya-banner.png (1920x1080): 896 inliers,
+  // mean residual 1.31 px / max 3.00 px at the art's 1920 px width, rotation -0.02 deg; aspect 1.7778.
+  chun: {
+    name: 'Camellya', element: 'Havoc', skelUrl: 'spine/role_chun/c_chun_1_luckdraw.skel', atlasUrl: 'spine/role_chun/c_chun_1_luckdraw.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -2353.38, y: -1200.58, width: 4905.33, height: 2759.25 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

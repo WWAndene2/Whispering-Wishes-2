@@ -538,6 +538,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -7776.02, y: -2627.45, width: 13336.08, height: 7501.54 },
   },
+  // Suisui (character 1110): bannerViewport against banners/_shared/wFwmhvLP-Suisui-banner.jpg (1200x675): 85 inliers,
+  // mean residual 0.29 px / max 1.19 px at the art's 1200 px width, rotation 0.00 deg; aspect 1.7778.
+  suisui: {
+    name: 'Suisui', element: 'Glacio', skelUrl: 'spine/role_suisui/c_suisui_01.skel', atlasUrl: 'spine/role_suisui/c_suisui_01.atlas',
+    bannerArtSize: [1200, 675],
+    bannerViewport: { x: -7891.27, y: -3676.79, width: 12564.78, height: 7067.69 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

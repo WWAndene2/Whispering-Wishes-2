@@ -499,6 +499,15 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     // tileViewport: default framing left the frame-0 art at 63% x 54% of the tile; this square fills 83%.
     tileViewport: { x: -9782.39, y: -9703.84, width: 19508.59, height: 19508.59 },
   },
+  // Rebecca (character 1308): bannerViewport against banners/_shared/Ps7MZMhB-Rebecca-banner.jpg (1200x675): 612 inliers,
+  // mean residual 0.24 px / max 1.92 px at the art's 1200 px width, rotation 0.00 deg; aspect 1.7778.
+  rebecca: {
+    name: 'Rebecca', element: 'Electro', skelUrl: 'spine/role_rebecca/c_rebecca_1.skel', atlasUrl: 'spine/role_rebecca/c_rebecca_1.atlas',
+    bannerArtSize: [1200, 675],
+    bannerViewport: { x: -5755.90, y: -3148.84, width: 9524.90, height: 5357.75 },
+    // tileViewport: default framing left the frame-0 art at 60% x 53% of the tile; this square fills 83%.
+    tileViewport: { x: -5190.01, y: -4657.96, width: 10366.66, height: 10366.66 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

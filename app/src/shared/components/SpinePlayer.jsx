@@ -397,6 +397,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -8748.50, y: -557.41, width: 14682.74, height: 8259.04 },
   },
+  // Xiangli Yao (character 1305): bannerViewport against banners/_shared/CphXJs9L-xiangli-yao-banner.jpg (1920x1080): 93 inliers,
+  // mean residual 2.10 px / max 4.38 px at the art's 1920 px width, rotation -0.58 deg; aspect 1.7778.
+  xiangliyao: {
+    name: 'Xiangli Yao', element: 'Electro', skelUrl: 'spine/role_xiangliyao/c_xiangliyao_1_luckdraw.skel', atlasUrl: 'spine/role_xiangliyao/c_xiangliyao_1_luckdraw.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -3145.04, y: -1613.76, width: 5666.64, height: 3187.48 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

@@ -60,7 +60,9 @@ export const BANNER_SPINE_CHARACTERS = {
   feibi:       { name: 'Phoebe',       element: 'Spectro', scale: 2.0, tx: 5.5,  ty: -10 },
   linnai:      { name: 'Lynae',        element: 'Spectro', scale: 2.0, tx: 9.5,  ty: -10.5 },
   jinxi:       { name: 'Jinhsi',       element: 'Spectro', scale: 2.3, tx: 1.5,  ty: 2.5 },
-  luokeke:     { name: 'Lumi',         element: 'Glacio',  scale: 2.3, tx: 1,    ty: 2.5 },
+  // luokeke is Roccia's convene-banner rig (encore.moe character 1606, C_LuoKeKe_01; its Luckdraw copy
+  // matches her banner art), not Lumi's — Lumi's codename is Dengdeng.
+  luokeke:     { name: 'Roccia',       element: 'Havoc',   scale: 2.3, tx: 1,    ty: 2.5 },
   yinlin:      { name: 'Yinlin',       element: 'Electro', scale: 2.3, tx: 2,    ty: 2.5 },
   bulante:     { name: 'Brant',        element: 'Fusion',  scale: 2.3, tx: 2.5,  ty: 2.5 },
   jiyan:       { name: 'Jiyan',        element: 'Aero',    scale: 2.3, tx: 3,    ty: 2.5 },
@@ -317,6 +319,69 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     name: 'Lucilla', element: 'Glacio', skelUrl: 'spine/role_luosela/c_luosela_01.skel', atlasUrl: 'spine/role_luosela/c_luosela_01.atlas',
     bannerArtSize: [2048, 1152],
     bannerViewport: { x: -7441.08, y: -3925.82, width: 12066.28, height: 6787.28 },
+  },
+  // Sigrika (character 1412): bannerViewport against banners/_shared/DHJ2YMTM-sigrika-banner.jpg (2560x1440): 1219 inliers,
+  // mean residual 0.92 px / max 3.32 px at the art's 2560 px width, rotation 0.02 deg; aspect 1.7778.
+  xigelika: {
+    name: 'Sigrika', element: 'Aero', skelUrl: 'spine/role_xigelika/c_xigelika_1_luckdraw.skel', atlasUrl: 'spine/role_xigelika/c_xigelika_1_luckdraw.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -4199.61, y: -2046.10, width: 6750.59, height: 3797.21 },
+  },
+  // Qiuyuan (character 1411): bannerViewport against banners/_shared/fd3D6QRx-qiuyuan-banner.jpg (2560x1440): 557 inliers,
+  // mean residual 1.23 px / max 4.65 px at the art's 2560 px width, rotation 0.01 deg; aspect 1.7778.
+  qiuyuan: {
+    name: 'Qiuyuan', element: 'Aero', skelUrl: 'spine/role_qiuyuan/c_qiuyuan_1_luckdraw.skel', atlasUrl: 'spine/role_qiuyuan/c_qiuyuan_1_luckdraw.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -2931.89, y: -1544.44, width: 5199.74, height: 2924.85 },
+  },
+  // Zani (character 1507): bannerViewport against banners/_shared/tMVkd4dg-zani-banner.jpg (2560x1440): 493 inliers,
+  // mean residual 1.40 px / max 3.82 px at the art's 2560 px width, rotation 0.03 deg; aspect 1.7778.
+  zanni: {
+    name: 'Zani', element: 'Spectro', skelUrl: 'spine/role_zanni/c_zanni_1_luckdraw.skel', atlasUrl: 'spine/role_zanni/c_zanni_1_luckdraw.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -3012.25, y: -1106.97, width: 6028.16, height: 3390.84 },
+  },
+  // Phoebe (character 1506): bannerViewport against banners/_shared/Tq7pFMgp-phoebe-banner.jpg (1920x1080): 1105 inliers,
+  // mean residual 1.06 px / max 3.31 px at the art's 1920 px width, rotation 0.03 deg; aspect 1.7778.
+  feibi: {
+    name: 'Phoebe', element: 'Spectro', skelUrl: 'spine/role_feibi/c_feibi_1_luckdraw.skel', atlasUrl: 'spine/role_feibi/c_feibi_1_luckdraw.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -3694.64, y: -678.46, width: 6278.60, height: 3531.71 },
+  },
+  // Jinhsi (character 1304): bannerViewport against banners/_shared/7xBSVRbQ-jinhsi-banner.jpg (1920x1080): 136 inliers,
+  // mean residual 1.09 px / max 4.53 px at the art's 1920 px width, rotation 0.52 deg; aspect 1.7778.
+  jinxi: {
+    name: 'Jinhsi', element: 'Spectro', skelUrl: 'spine/role_jinxi/c_jinxi_1_luckdraw.skel', atlasUrl: 'spine/role_jinxi/c_jinxi_1_luckdraw.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -6198.45, y: 276.77, width: 12381.34, height: 6964.51 },
+  },
+  // Roccia (character 1606): bannerViewport against banners/_shared/YYWVfxt-roccia-banner.jpg (1920x1080): 259 inliers,
+  // mean residual 0.77 px / max 1.96 px at the art's 1920 px width, rotation -0.02 deg; aspect 1.7778.
+  luokeke: {
+    name: 'Roccia', element: 'Havoc', skelUrl: 'spine/role_luokeke/c_luokeke_1_luckdraw.skel', atlasUrl: 'spine/role_luokeke/c_luokeke_1_luckdraw.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -4315.86, y: -1902.31, width: 7401.43, height: 4163.30 },
+  },
+  // Yinlin (character 1302): bannerViewport against banners/_shared/Y4SDqwg2-yinlin-banner.jpg (1920x1080): 654 inliers,
+  // mean residual 0.60 px / max 2.33 px at the art's 1920 px width, rotation -0.01 deg; aspect 1.7778.
+  yinlin: {
+    name: 'Yinlin', element: 'Electro', skelUrl: 'spine/role_yinlin/c_yinlin_1_luckdraw.skel', atlasUrl: 'spine/role_yinlin/c_yinlin_1_luckdraw.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -3081.22, y: -1367.27, width: 6134.14, height: 3450.45 },
+  },
+  // Brant (character 1206): bannerViewport against banners/_shared/vx8KGHcj-brant-banner.jpg (1920x1080): 584 inliers,
+  // mean residual 0.82 px / max 2.49 px at the art's 1920 px width, rotation -0.02 deg; aspect 1.7778.
+  bulante: {
+    name: 'Brant', element: 'Fusion', skelUrl: 'spine/role_bulante/c_bulante_1_luckdraw.skel', atlasUrl: 'spine/role_bulante/c_bulante_1_luckdraw.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -4288.59, y: -1785.02, width: 6929.24, height: 3897.70 },
+  },
+  // Jiyan (character 1404): bannerViewport against banners/_shared/hFM8STLQ-jiyan-banner.jpg (1920x1080): 358 inliers,
+  // mean residual 1.38 px / max 3.05 px at the art's 1920 px width, rotation -0.10 deg; aspect 1.7778.
+  jiyan: {
+    name: 'Jiyan', element: 'Aero', skelUrl: 'spine/role_jiyan/c_jiyan_1_luckdraw.skel', atlasUrl: 'spine/role_jiyan/c_jiyan_1_luckdraw.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -3378.79, y: -1334.88, width: 5396.09, height: 3035.30 },
   },
 };
 

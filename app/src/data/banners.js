@@ -1616,6 +1616,15 @@ const LUCKDRAW_STILLS = {
   Lynae: './banners/characters/lynae/Lynae-Luckdraw-Still.webp',
   Lucilla: './banners/characters/lucilla/Lucilla-Luckdraw-Still.webp',
   Chisa: './banners/characters/chisa/Chisa-Luckdraw-Still.webp',
+  Sigrika: './banners/characters/sigrika/Sigrika-Luckdraw-Still.webp',
+  Qiuyuan: './banners/characters/qiuyuan/Qiuyuan-Luckdraw-Still.webp',
+  Zani: './banners/characters/zani/Zani-Luckdraw-Still.webp',
+  Phoebe: './banners/characters/phoebe/Phoebe-Luckdraw-Still.webp',
+  Jinhsi: './banners/characters/jinhsi/Jinhsi-Luckdraw-Still.webp',
+  Roccia: './banners/characters/roccia/Roccia-Luckdraw-Still.webp',
+  Yinlin: './banners/characters/yinlin/Yinlin-Luckdraw-Still.webp',
+  Brant: './banners/characters/brant/Brant-Luckdraw-Still.webp',
+  Jiyan: './banners/characters/jiyan/Jiyan-Luckdraw-Still.webp',
 };
 const getLuckdrawStill = (name) => LUCKDRAW_STILLS[name] || null;
 

@@ -397,6 +397,168 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -8748.50, y: -557.41, width: 14682.74, height: 8259.04 },
   },
+  // Xiangli Yao (character 1305): bannerViewport against banners/_shared/CphXJs9L-xiangli-yao-banner.jpg (1920x1080): 93 inliers,
+  // mean residual 2.10 px / max 4.38 px at the art's 1920 px width, rotation -0.58 deg; aspect 1.7778.
+  xiangliyao: {
+    name: 'Xiangli Yao', element: 'Electro', skelUrl: 'spine/role_xiangliyao/c_xiangliyao_1_luckdraw.skel', atlasUrl: 'spine/role_xiangliyao/c_xiangliyao_1_luckdraw.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -3145.04, y: -1613.76, width: 5666.64, height: 3187.48 },
+  },
+  // Shorekeeper (character 1505): bannerViewport against banners/_shared/cKTnnDWB-shore-keeper-banner.jpg (1920x1080): 416 inliers,
+  // mean residual 0.88 px / max 3.41 px at the art's 1920 px width, rotation -0.04 deg; aspect 1.7778.
+  shouanren: {
+    name: 'Shorekeeper', element: 'Spectro', skelUrl: 'spine/role_shouanren/c_shouanren_1.skel', atlasUrl: 'spine/role_shouanren/c_shouanren_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -3046.31, y: -1589.77, width: 6029.02, height: 3391.32 },
+  },
+  // Camellya (character 1603): bannerViewport against banners/_shared/20xFP1B1-camellya-banner.png (1920x1080): 896 inliers,
+  // mean residual 1.31 px / max 3.00 px at the art's 1920 px width, rotation -0.02 deg; aspect 1.7778.
+  chun: {
+    name: 'Camellya', element: 'Havoc', skelUrl: 'spine/role_chun/c_chun_1_luckdraw.skel', atlasUrl: 'spine/role_chun/c_chun_1_luckdraw.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -2353.38, y: -1200.58, width: 4905.33, height: 2759.25 },
+  },
+  // Carlotta (character 1107): bannerViewport against banners/_shared/67r6NbMf-carlotta-banner.png (1920x1080): 1281 inliers,
+  // mean residual 0.42 px / max 2.29 px at the art's 1920 px width, rotation -0.00 deg; aspect 1.7778.
+  kelaita: {
+    name: 'Carlotta', element: 'Glacio', skelUrl: 'spine/role_kelaita/c_kelaita_1.skel', atlasUrl: 'spine/role_kelaita/c_kelaita_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -3798.20, y: -686.06, width: 6066.76, height: 3412.55 },
+  },
+  // Cantarella (character 1607): bannerViewport against banners/_shared/wZ85YQzF-cantarella-banner.jpg (2560x1440): 314 inliers,
+  // mean residual 1.27 px / max 3.74 px at the art's 2560 px width, rotation -0.00 deg; aspect 1.7778.
+  kanteleila: {
+    name: 'Cantarella', element: 'Havoc', skelUrl: 'spine/role_kanteleila/c_kanteleila_1.skel', atlasUrl: 'spine/role_kanteleila/c_kanteleila_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -3662.51, y: -1497.79, width: 5920.75, height: 3330.42 },
+  },
+  // Ciaccona (character 1407): bannerViewport against banners/_shared/prXLxMyw-ciaconna-banner.jpg (2560x1440): 415 inliers,
+  // mean residual 0.84 px / max 3.33 px at the art's 2560 px width, rotation -0.01 deg; aspect 1.7778.
+  xiakong: {
+    name: 'Ciaccona', element: 'Aero', skelUrl: 'spine/role_xiakong/c_xiakong_1.skel', atlasUrl: 'spine/role_xiakong/c_xiakong_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -1721.60, y: -750.43, width: 2919.42, height: 1642.17 },
+  },
+  // Cartethyia (character 1409): bannerViewport against banners/_shared/Ppt1BXc-carthetya-banner.jpg (2560x1440): 396 inliers,
+  // mean residual 1.66 px / max 4.67 px at the art's 2560 px width, rotation 0.01 deg; aspect 1.7778.
+  katixiya: {
+    name: 'Cartethyia', element: 'Aero', skelUrl: 'spine/role_katixiya/c_katixiya_1.skel', atlasUrl: 'spine/role_katixiya/c_katixiya_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -4144.40, y: -1743.84, width: 6744.91, height: 3794.01 },
+  },
+  // Lupa (character 1207): bannerViewport against banners/_shared/9HBRhrjq-lupa-banner.jpg (1920x1080): 191 inliers,
+  // mean residual 0.78 px / max 3.32 px at the art's 1920 px width, rotation 0.01 deg; aspect 1.7778.
+  lupa: {
+    name: 'Lupa', element: 'Fusion', skelUrl: 'spine/role_lupa/c_lupa_1.skel', atlasUrl: 'spine/role_lupa/c_lupa_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -3454.51, y: -1136.44, width: 5573.67, height: 3135.19 },
+  },
+  // Phrolova (character 1608): bannerViewport against banners/_shared/QvHKLCgt-phrolova-banner.jpg (2560x1440): 798 inliers,
+  // mean residual 0.88 px / max 5.08 px at the art's 2560 px width, rotation 0.00 deg; aspect 1.7778.
+  fuluoluo: {
+    name: 'Phrolova', element: 'Havoc', skelUrl: 'spine/role_fuluoluo/c_fuluoluo_1.skel', atlasUrl: 'spine/role_fuluoluo/c_fuluoluo_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -2972.79, y: -1043.96, width: 5626.73, height: 3165.04 },
+  },
+  // Augusta (character 1306): bannerViewport against banners/_shared/4wbJgQGj-augusta-banner.jpg (2560x1440): 885 inliers,
+  // mean residual 0.90 px / max 3.82 px at the art's 2560 px width, rotation 0.00 deg; aspect 1.7778.
+  augusta: {
+    name: 'Augusta', element: 'Electro', skelUrl: 'spine/role_augusta/c_augusta_1.skel', atlasUrl: 'spine/role_augusta/c_augusta_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -3606.84, y: -1645.00, width: 5604.16, height: 3152.34 },
+  },
+  // Galbrena (character 1208): bannerViewport against banners/_shared/MxSTSBX7-galbrena-banner.jpg (2560x1440): 409 inliers,
+  // mean residual 4.67 px / max 11.07 px at the art's 2560 px width, rotation 0.64 deg; aspect 1.7778.
+  jiabeilina: {
+    name: 'Galbrena', element: 'Fusion', skelUrl: 'spine/role_jiabeilina/c_jiabeilina_1.skel', atlasUrl: 'spine/role_jiabeilina/c_jiabeilina_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -4314.91, y: -1372.94, width: 7413.20, height: 4169.93 },
+  },
+  // Mornye (character 1209): bannerViewport against banners/_shared/9mGJpYvb-morny-banner.jpg (1920x1080): 814 inliers,
+  // mean residual 0.75 px / max 4.02 px at the art's 1920 px width, rotation -0.01 deg; aspect 1.7778.
+  moning: {
+    name: 'Mornye', element: 'Fusion', skelUrl: 'spine/role_moning/c_moning_1.skel', atlasUrl: 'spine/role_moning/c_moning_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -4259.83, y: -1880.93, width: 6399.51, height: 3599.72 },
+  },
+  // Luuk Herssen (character 1510): bannerViewport against banners/_shared/ZzqY6F9R-luuk-banner.jpg (2560x1440): 1068 inliers,
+  // mean residual 0.76 px / max 3.01 px at the art's 2560 px width, rotation 0.00 deg; aspect 1.7778.
+  luhesi: {
+    name: 'Luuk Herssen', element: 'Spectro', skelUrl: 'spine/role_luhesi/c_luhesi_1.skel', atlasUrl: 'spine/role_luhesi/c_luhesi_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -4064.83, y: -1484.37, width: 6665.12, height: 3749.13 },
+    // tileViewport: default framing left the frame-0 art at 50% x 53% of the tile; this square fills 83%.
+    tileViewport: { x: -2964.35, y: -2487.31, width: 5886.57, height: 5886.57 },
+  },
+  // Aemeath (character 1210): bannerViewport against banners/_shared/Y4SzJSxL-Aemeath-banner.jpg (1920x1080): 895 inliers,
+  // mean residual 0.40 px / max 4.06 px at the art's 1920 px width, rotation 0.01 deg; aspect 1.7778.
+  aimisi: {
+    name: 'Aemeath', element: 'Fusion', skelUrl: 'spine/role_aimisi/c_aimisi_1.skel', atlasUrl: 'spine/role_aimisi/c_aimisi_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -8307.64, y: -2408.06, width: 12842.31, height: 7223.80 },
+    // tileViewport: default framing left the frame-0 art at 63% x 54% of the tile; this square fills 83%.
+    tileViewport: { x: -9782.39, y: -9703.84, width: 19508.59, height: 19508.59 },
+  },
+  // Rebecca (character 1308): bannerViewport against banners/_shared/Ps7MZMhB-Rebecca-banner.jpg (1200x675): 612 inliers,
+  // mean residual 0.24 px / max 1.92 px at the art's 1200 px width, rotation 0.00 deg; aspect 1.7778.
+  rebecca: {
+    name: 'Rebecca', element: 'Electro', skelUrl: 'spine/role_rebecca/c_rebecca_1.skel', atlasUrl: 'spine/role_rebecca/c_rebecca_1.atlas',
+    bannerArtSize: [1200, 675],
+    bannerViewport: { x: -5755.90, y: -3148.84, width: 9524.90, height: 5357.75 },
+    // tileViewport: default framing left the frame-0 art at 60% x 53% of the tile; this square fills 83%.
+    tileViewport: { x: -5190.01, y: -4657.96, width: 10366.66, height: 10366.66 },
+  },
+  // Lucy (character 1511): bannerViewport against banners/_shared/mC4xmBYY-Lucy-Banner.jpg (900x506): 531 inliers,
+  // mean residual 0.28 px / max 1.33 px at the art's 900 px width, rotation 0.00 deg; aspect 1.7787.
+  lucy: {
+    name: 'Lucy', element: 'Spectro', skelUrl: 'spine/role_lucy/c_lucy_1.skel', atlasUrl: 'spine/role_lucy/c_lucy_1.atlas',
+    bannerArtSize: [900, 506],
+    bannerViewport: { x: -6721.78, y: -3098.78, width: 9964.64, height: 5602.34 },
+    // tileViewport: default framing left the frame-0 art at 46% x 47% of the tile; this square fills 83%.
+    tileViewport: { x: -5299.99, y: -5071.87, width: 10481.92, height: 10481.92 },
+  },
+  // Yangyang: Xuanling (character 1610): bannerViewport against banners/_shared/QFHC5Y4h-Yangyang-Xuanling-banner.jpg (1200x675): 93 inliers,
+  // mean residual 1.08 px / max 2.10 px at the art's 1200 px width, rotation -0.37 deg; aspect 1.7778.
+  xuanling: {
+    name: 'Yangyang: Xuanling', element: 'Havoc', skelUrl: 'spine/role_xuanling/c_xuanling_1.skel', atlasUrl: 'spine/role_xuanling/c_xuanling_1.atlas',
+    bannerArtSize: [1200, 675],
+    bannerViewport: { x: -9131.98, y: -4293.55, width: 15039.66, height: 8459.81 },
+  },
+  // Denia (character 1211): bannerViewport against banners/_shared/DPnPVGVF-denia-banner.jpg (1920x1080): 576 inliers,
+  // mean residual 1.09 px / max 3.83 px at the art's 1920 px width, rotation 0.05 deg; aspect 1.7778.
+  daniya: {
+    name: 'Denia', element: 'Fusion', skelUrl: 'spine/role_daniya/c_daniya_1.skel', atlasUrl: 'spine/role_daniya/c_daniya_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -5712.78, y: -2871.35, width: 9993.73, height: 5621.47 },
+  },
+  // Hiyuki (character 1108): bannerViewport against banners/_shared/Gf7F9h12-hiyuki-banner.jpg (1920x1080): 585 inliers,
+  // mean residual 0.83 px / max 2.61 px at the art's 1920 px width, rotation -0.04 deg; aspect 1.7778.
+  feixue: {
+    name: 'Hiyuki', element: 'Glacio', skelUrl: 'spine/role_feixue/c_feixue_1.skel', atlasUrl: 'spine/role_feixue/c_feixue_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -7776.02, y: -2627.45, width: 13336.08, height: 7501.54 },
+  },
+  // Suisui (character 1110): bannerViewport against banners/_shared/wFwmhvLP-Suisui-banner.jpg (1200x675): 85 inliers,
+  // mean residual 0.29 px / max 1.19 px at the art's 1200 px width, rotation 0.00 deg; aspect 1.7778.
+  suisui: {
+    name: 'Suisui', element: 'Glacio', skelUrl: 'spine/role_suisui/c_suisui_01.skel', atlasUrl: 'spine/role_suisui/c_suisui_01.atlas',
+    bannerArtSize: [1200, 675],
+    bannerViewport: { x: -7891.27, y: -3676.79, width: 12564.78, height: 7067.69 },
+  },
+  // Qingxiao (character 1413): bannerViewport against banners/_shared/8nvgqZKC-e7478-17840855867105-1920.jpg (640x360): 70 inliers,
+  // mean residual 0.35 px / max 0.90 px at the art's 640 px width, rotation 0.01 deg; aspect 1.7778.
+  qingxiao: {
+    name: 'Qingxiao', element: 'Aero', skelUrl: 'spine/role_qingxiao/c_qingxiao_1.skel', atlasUrl: 'spine/role_qingxiao/c_qingxiao_1.atlas',
+    bannerArtSize: [640, 360],
+    bannerViewport: { x: -8210.12, y: -3656.01, width: 13920.19, height: 7830.11 },
+  },
+  // Jingran (character 1212): bannerViewport against banners/_shared/Banner_Jingran.webp (1200x675): 250 inliers,
+  // mean residual 0.39 px / max 1.34 px at the art's 1200 px width, rotation -0.01 deg; aspect 1.7778.
+  jingran: {
+    name: 'Jingran', element: 'Fusion', skelUrl: 'spine/role_jingran/c_jingran_1.skel', atlasUrl: 'spine/role_jingran/c_jingran_1.atlas',
+    bannerArtSize: [1200, 675],
+    bannerViewport: { x: -6854.62, y: -3039.02, width: 11545.11, height: 6494.13 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

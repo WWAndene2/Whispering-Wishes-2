@@ -517,6 +517,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     // tileViewport: default framing left the frame-0 art at 46% x 47% of the tile; this square fills 83%.
     tileViewport: { x: -5299.99, y: -5071.87, width: 10481.92, height: 10481.92 },
   },
+  // Yangyang: Xuanling (character 1610): bannerViewport against banners/_shared/QFHC5Y4h-Yangyang-Xuanling-banner.jpg (1200x675): 93 inliers,
+  // mean residual 1.08 px / max 2.10 px at the art's 1200 px width, rotation -0.37 deg; aspect 1.7778.
+  xuanling: {
+    name: 'Yangyang: Xuanling', element: 'Havoc', skelUrl: 'spine/role_xuanling/c_xuanling_1.skel', atlasUrl: 'spine/role_xuanling/c_xuanling_1.atlas',
+    bannerArtSize: [1200, 675],
+    bannerViewport: { x: -9131.98, y: -4293.55, width: 15039.66, height: 8459.81 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

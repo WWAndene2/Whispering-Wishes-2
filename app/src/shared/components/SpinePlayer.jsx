@@ -531,6 +531,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -5712.78, y: -2871.35, width: 9993.73, height: 5621.47 },
   },
+  // Hiyuki (character 1108): bannerViewport against banners/_shared/Gf7F9h12-hiyuki-banner.jpg (1920x1080): 585 inliers,
+  // mean residual 0.83 px / max 2.61 px at the art's 1920 px width, rotation -0.04 deg; aspect 1.7778.
+  feixue: {
+    name: 'Hiyuki', element: 'Glacio', skelUrl: 'spine/role_feixue/c_feixue_1.skel', atlasUrl: 'spine/role_feixue/c_feixue_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -7776.02, y: -2627.45, width: 13336.08, height: 7501.54 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

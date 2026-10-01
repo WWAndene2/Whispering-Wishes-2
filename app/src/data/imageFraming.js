@@ -70,7 +70,7 @@ export const DEFAULT_IMAGE_FRAMING = Object.freeze({
   'collection-Baizhi': { x: -2, y: -14, zoom: 300 },
   'collection-Chixia': { x: -4, y: -26, zoom: 190 },
   'collection-Danjin': { x: -4, y: -26, zoom: 220 },
-  'collection-Yangyang': { x: -4, y: -24, zoom: 300 },
+  'collection-Yangyang': { x: -4, y: -18, zoom: 300 },
   'collection-Sanhua': { x: 12, y: -30, zoom: 230 },
   'collection-Taoqi': { x: 4, y: -28, zoom: 200 },
   'collection-Yuanwu': { x: 2, y: -26, zoom: 230 },

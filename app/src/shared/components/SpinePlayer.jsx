@@ -425,6 +425,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -3798.20, y: -686.06, width: 6066.76, height: 3412.55 },
   },
+  // Cantarella (character 1607): bannerViewport against banners/_shared/wZ85YQzF-cantarella-banner.jpg (2560x1440): 314 inliers,
+  // mean residual 1.27 px / max 3.74 px at the art's 2560 px width, rotation -0.00 deg; aspect 1.7778.
+  kanteleila: {
+    name: 'Cantarella', element: 'Havoc', skelUrl: 'spine/role_kanteleila/c_kanteleila_1.skel', atlasUrl: 'spine/role_kanteleila/c_kanteleila_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -3662.51, y: -1497.79, width: 5920.75, height: 3330.42 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

@@ -446,6 +446,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [2560, 1440],
     bannerViewport: { x: -4144.40, y: -1743.84, width: 6744.91, height: 3794.01 },
   },
+  // Lupa (character 1207): bannerViewport against banners/_shared/9HBRhrjq-lupa-banner.jpg (1920x1080): 191 inliers,
+  // mean residual 0.78 px / max 3.32 px at the art's 1920 px width, rotation 0.01 deg; aspect 1.7778.
+  lupa: {
+    name: 'Lupa', element: 'Fusion', skelUrl: 'spine/role_lupa/c_lupa_1.skel', atlasUrl: 'spine/role_lupa/c_lupa_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -3454.51, y: -1136.44, width: 5573.67, height: 3135.19 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

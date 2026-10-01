@@ -474,6 +474,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [2560, 1440],
     bannerViewport: { x: -4314.91, y: -1372.94, width: 7413.20, height: 4169.93 },
   },
+  // Mornye (character 1209): bannerViewport against banners/_shared/9mGJpYvb-morny-banner.jpg (1920x1080): 814 inliers,
+  // mean residual 0.75 px / max 4.02 px at the art's 1920 px width, rotation -0.01 deg; aspect 1.7778.
+  moning: {
+    name: 'Mornye', element: 'Fusion', skelUrl: 'spine/role_moning/c_moning_1.skel', atlasUrl: 'spine/role_moning/c_moning_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -4259.83, y: -1880.93, width: 6399.51, height: 3599.72 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

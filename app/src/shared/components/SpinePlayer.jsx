@@ -490,6 +490,15 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     // tileViewport: default framing left the frame-0 art at 50% x 53% of the tile; this square fills 83%.
     tileViewport: { x: -2964.35, y: -2487.31, width: 5886.57, height: 5886.57 },
   },
+  // Aemeath (character 1210): bannerViewport against banners/_shared/Y4SzJSxL-Aemeath-banner.jpg (1920x1080): 895 inliers,
+  // mean residual 0.40 px / max 4.06 px at the art's 1920 px width, rotation 0.01 deg; aspect 1.7778.
+  aimisi: {
+    name: 'Aemeath', element: 'Fusion', skelUrl: 'spine/role_aimisi/c_aimisi_1.skel', atlasUrl: 'spine/role_aimisi/c_aimisi_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -8307.64, y: -2408.06, width: 12842.31, height: 7223.80 },
+    // tileViewport: default framing left the frame-0 art at 63% x 54% of the tile; this square fills 83%.
+    tileViewport: { x: -9782.39, y: -9703.84, width: 19508.59, height: 19508.59 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

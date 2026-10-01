@@ -1648,6 +1648,7 @@ const LUCKDRAW_STILLS = {
   Hiyuki: './banners/characters/hiyuki/Hiyuki-Luckdraw-Still.webp',
   Suisui: './banners/characters/suisui/Suisui-Luckdraw-Still.webp',
   Qingxiao: './banners/characters/qingxiao/Qingxiao-Luckdraw-Still.webp',
+  Jingran: './banners/characters/jingran/Jingran-Luckdraw-Still.webp',
 };
 const getLuckdrawStill = (name) => LUCKDRAW_STILLS[name] || null;
 

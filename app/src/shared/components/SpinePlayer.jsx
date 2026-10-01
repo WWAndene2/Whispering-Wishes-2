@@ -552,6 +552,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [640, 360],
     bannerViewport: { x: -8210.12, y: -3656.01, width: 13920.19, height: 7830.11 },
   },
+  // Jingran (character 1212): bannerViewport against banners/_shared/Banner_Jingran.webp (1200x675): 250 inliers,
+  // mean residual 0.39 px / max 1.34 px at the art's 1200 px width, rotation -0.01 deg; aspect 1.7778.
+  jingran: {
+    name: 'Jingran', element: 'Fusion', skelUrl: 'spine/role_jingran/c_jingran_1.skel', atlasUrl: 'spine/role_jingran/c_jingran_1.atlas',
+    bannerArtSize: [1200, 675],
+    bannerViewport: { x: -6854.62, y: -3039.02, width: 11545.11, height: 6494.13 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

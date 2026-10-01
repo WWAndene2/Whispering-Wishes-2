@@ -1632,6 +1632,7 @@ const LUCKDRAW_STILLS = {
   Camellya: './banners/characters/camellya/Camellya-Luckdraw-Still.webp',
   Carlotta: './banners/characters/carlotta/Carlotta-Luckdraw-Still.webp',
   Cantarella: './banners/characters/cantarella/Cantarella-Luckdraw-Still.webp',
+  Ciaccona: './banners/characters/ciaccona/Ciaccona-Luckdraw-Still.webp',
 };
 const getLuckdrawStill = (name) => LUCKDRAW_STILLS[name] || null;
 

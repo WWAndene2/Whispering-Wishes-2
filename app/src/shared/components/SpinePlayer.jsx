@@ -432,6 +432,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [2560, 1440],
     bannerViewport: { x: -3662.51, y: -1497.79, width: 5920.75, height: 3330.42 },
   },
+  // Ciaccona (character 1407): bannerViewport against banners/_shared/prXLxMyw-ciaconna-banner.jpg (2560x1440): 415 inliers,
+  // mean residual 0.84 px / max 3.33 px at the art's 2560 px width, rotation -0.01 deg; aspect 1.7778.
+  xiakong: {
+    name: 'Ciaccona', element: 'Aero', skelUrl: 'spine/role_xiakong/c_xiakong_1.skel', atlasUrl: 'spine/role_xiakong/c_xiakong_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -1721.60, y: -750.43, width: 2919.42, height: 1642.17 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

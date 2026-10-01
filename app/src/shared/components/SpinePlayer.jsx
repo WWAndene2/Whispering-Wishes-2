@@ -524,6 +524,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1200, 675],
     bannerViewport: { x: -9131.98, y: -4293.55, width: 15039.66, height: 8459.81 },
   },
+  // Denia (character 1211): bannerViewport against banners/_shared/DPnPVGVF-denia-banner.jpg (1920x1080): 576 inliers,
+  // mean residual 1.09 px / max 3.83 px at the art's 1920 px width, rotation 0.05 deg; aspect 1.7778.
+  daniya: {
+    name: 'Denia', element: 'Fusion', skelUrl: 'spine/role_daniya/c_daniya_1.skel', atlasUrl: 'spine/role_daniya/c_daniya_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -5712.78, y: -2871.35, width: 9993.73, height: 5621.47 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

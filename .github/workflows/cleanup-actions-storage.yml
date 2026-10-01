@@ -1,0 +1,72 @@
+name: Clean up old workflow runs and APK artifacts
+
+# The repo's Actions artifact storage quota fills up with Build APK uploads
+# (~292 MB each), and once it is full the build's upload step fails even though
+# the APK itself compiled. This workflow:
+#   1. keeps the newest `keep_apks` APK artifacts (backups) and deletes the rest;
+#   2. keeps the newest `keep_runs` workflow runs (all workflows) and deletes the
+#      rest, which also removes their logs and any artifacts they still hold.
+# Run it once from the Actions tab ("Run workflow"); it then repeats daily.
+# Deleted runs and artifacts cannot be restored.
+on:
+  workflow_dispatch:
+    inputs:
+      keep_apks:
+        description: Number of newest APK artifacts to keep
+        default: '10'
+      keep_runs:
+        description: Number of newest workflow runs to keep
+        default: '100'
+  schedule:
+    - cron: '17 3 * * *'
+
+permissions:
+  actions: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/github-script@v7
+        env:
+          KEEP_APKS: ${{ github.event.inputs.keep_apks || '10' }}
+          KEEP_RUNS: ${{ github.event.inputs.keep_runs || '100' }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const keepApks = parseInt(process.env.KEEP_APKS, 10);
+            const keepRuns = parseInt(process.env.KEEP_RUNS, 10);
+            if (!Number.isInteger(keepApks) || keepApks < 0 || !Number.isInteger(keepRuns) || keepRuns < 1) {
+              core.setFailed(`Invalid inputs: keep_apks=${process.env.KEEP_APKS}, keep_runs=${process.env.KEEP_RUNS}`);
+              return;
+            }
+            const byNewest = (a, b) => new Date(b.created_at) - new Date(a.created_at);
+
+            // 1. APK artifacts (Build APK uploads them as "whispering-wishes-debug").
+            const artifacts = await github.paginate(github.rest.actions.listArtifactsForRepo, { owner, repo, per_page: 100 });
+            const apks = artifacts.filter(a => a.name === 'whispering-wishes-debug' && !a.expired).sort(byNewest);
+            let freed = 0;
+            for (const a of apks.slice(keepApks)) {
+              await github.rest.actions.deleteArtifact({ owner, repo, artifact_id: a.id });
+              freed += a.size_in_bytes;
+            }
+            core.info(`APK artifacts: ${apks.length} found, kept ${Math.min(keepApks, apks.length)}, deleted ${Math.max(0, apks.length - keepApks)} (${(freed / 1e9).toFixed(2)} GB freed).`);
+
+            // 2. Workflow runs, all workflows. Never touch this run or runs still in progress.
+            const runs = await github.paginate(github.rest.actions.listWorkflowRunsForRepo, { owner, repo, per_page: 100 });
+            const finished = runs.filter(r => r.status === 'completed' && r.id !== context.runId).sort(byNewest);
+            let deleted = 0;
+            for (const r of finished.slice(keepRuns)) {
+              try {
+                await github.rest.actions.deleteWorkflowRun({ owner, repo, run_id: r.id });
+                deleted++;
+              } catch (e) {
+                core.warning(`Could not delete run ${r.id}: ${e.message}`);
+              }
+            }
+            core.info(`Workflow runs: ${finished.length} finished, kept ${Math.min(keepRuns, finished.length)}, deleted ${deleted}.`);

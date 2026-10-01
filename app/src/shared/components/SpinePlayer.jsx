@@ -259,7 +259,7 @@ export const SPRITE_SPINE_CHARACTERS = {
 };
 
 // Luckdraw spine — the game's UiLuckdraw/Spine/Character/C_<Id>_01 rig,
-// sourced from encore.moe's character API (Hsin: character 1311).
+// sourced from encore.moe's character API (Hsin: character 1311, Iuno: character 1410).
 export const LUCKDRAW_SPINE_CHARACTERS = {
   // bannerViewport: the world-space rectangle her 1920x1080 banner art (characters/hsin/
   // Hsin_Banner.jpg) covers, so BannerCard can lay the rig exactly over the art. Measured by
@@ -271,6 +271,7 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -11935.70, y: -4706.75, width: 19621.63, height: 11036.39 },
   },
+  younuo: { name: 'Iuno', element: 'Aero', skelUrl: 'spine/role_younuo/c_younuo_1.skel', atlasUrl: 'spine/role_younuo/c_younuo_1.atlas' },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

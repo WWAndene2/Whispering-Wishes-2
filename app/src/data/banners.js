@@ -1612,6 +1612,7 @@ const getConveneAnimation = (name) => CONVENE_ANIMATIONS[name] || null;
 // shown on the Animated Banner SplashArt tile until it plays. Rendered from the rig itself.
 const LUCKDRAW_STILLS = {
   Hsin: './banners/characters/hsin/Hsin-Luckdraw-Still.webp',
+  Iuno: './banners/characters/iuno/Iuno-Luckdraw-Still.webp',
 };
 const getLuckdrawStill = (name) => LUCKDRAW_STILLS[name] || null;
 

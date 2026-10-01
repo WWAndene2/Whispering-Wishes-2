@@ -2,13 +2,13 @@
 
 **The all-in-one Wuthering Waves companion app.** Track your pity, plan your pulls, build your teams, and explore the map — all in one place, no account required.
 
-Live at **[whispering-wishes.vercel.app](https://whispering-wishes.vercel.app)**
+Available as a native Android app (APK built by GitHub Actions) or as a self-hosted web app — see `NATIVE_APP.md` and `SELF_HOSTING.md`.
 
 ---
 
 ## What is Whispering Wishes?
 
-Whispering Wishes is a web app for Wuthering Waves players. It runs entirely in your browser with no sign-up and no ads. Everything is stored locally on your device by default, with optional cloud backup for cross-device sync.
+Whispering Wishes is an app for Wuthering Waves players. It runs entirely on your device with no sign-up and no ads. Everything is stored locally on your device by default, with optional cloud backup for cross-device sync.
 
 **Pull Tracker** — Import your convene history and see exactly where you stand. Pity counters, guarantee status, 50/50 tracking, and banner history at a glance.
 
@@ -29,15 +29,15 @@ Whispering Wishes is a web app for Wuthering Waves players. It runs entirely in 
 ## Features
 
 - 9 sections: Tracker, Events, Map, Planner, Calculator, Stats, Teams, Collection, Profile
-- 58 Resonators, 122 weapons, 181 echoes — kept in sync with the current game patch
+- 60 Resonators, 124 weapons, 182 echoes — kept in sync with the current game patch
 - 5 server regions with timezone-aware countdowns
 - Convene history import (URL paste or QR scan)
 - ID card and build card generators for sharing your profile/team
 - Optional cloud backup & cross-device sync, plus push notifications
 - PWA — installable on mobile, works offline
 - Native Android app (Capacitor wrapper) for fully offline use
-- Self-hostable — run your own instance instead of/alongside the hosted deployment (see `SELF_HOSTING.md`)
-- English and French localization
+- Self-hostable — run your own instance (see `SELF_HOSTING.md`)
+- English, French and Spanish localization
 - Dark theme with customizable accent colors and banner art backgrounds
 - Colorblind mode and accessibility features
 - No tracking, no ads
@@ -56,7 +56,7 @@ Whispering Wishes is a web app for Wuthering Waves players. It runs entirely in 
 | Animation | Spine Player |
 | Native wrapper | Capacitor (Android) |
 | Testing | Vitest + Testing Library |
-| Hosting | Vercel |
+| Distribution | Android APK (GitHub Actions) + self-hosting |
 
 ---
 
@@ -65,13 +65,16 @@ Whispering Wishes is a web app for Wuthering Waves players. It runs entirely in 
 ```
 Whispering-Wishes/
   app/                          # Main web application
-    api/                        # Serverless functions (gacha record, push notifications)
+    api/                        # API handlers (gacha record, push, background removal), served by self-host/
     android/                    # Capacitor native Android project
-    self-host/                  # Self-hosting config/scripts
+    capacitor-build/            # Native bundle build (dist-native/)
+    self-host/                  # Self-hosting server and config
+    docs/                       # Architecture, design system, brand and voice docs
     public/
       map-tiles/                # Tiled game map (webp, 7 zoom levels)
     src/
       core/                     # State management, reducers
+      engine/                   # Damage engine (math, schema, resolver, per-character blocks)
       data/                     # Game data (characters, weapons, echoes, banners)
       features/
         tracker/                # Pull/pity tracker
@@ -89,9 +92,13 @@ Whispering-Wishes/
         utils/                  # Helpers
       hooks/                    # Custom React hooks
       providers/                # Context providers (toast, PWA, etc.)
+      locale/                   # UI translations (en, fr, es)
+      utils/                    # Framework-agnostic helpers
       styles/                   # Global CSS
-  spine-rigger/                 # Character animation tooling
-  scripts/                      # Build & data scripts
+      __tests__/                # All automated tests
+  tools/                        # Asset manifests, Luckdraw Spine rig pipeline, migrations
+  scripts/                      # Data scripts
+  Data dump/                    # Sourced reference material per character
 ```
 
 ---

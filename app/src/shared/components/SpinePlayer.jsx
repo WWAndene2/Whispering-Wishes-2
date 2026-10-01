@@ -439,6 +439,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [2560, 1440],
     bannerViewport: { x: -1721.60, y: -750.43, width: 2919.42, height: 1642.17 },
   },
+  // Cartethyia (character 1409): bannerViewport against banners/_shared/Ppt1BXc-carthetya-banner.jpg (2560x1440): 396 inliers,
+  // mean residual 1.66 px / max 4.67 px at the art's 2560 px width, rotation 0.01 deg; aspect 1.7778.
+  katixiya: {
+    name: 'Cartethyia', element: 'Aero', skelUrl: 'spine/role_katixiya/c_katixiya_1.skel', atlasUrl: 'spine/role_katixiya/c_katixiya_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -4144.40, y: -1743.84, width: 6744.91, height: 3794.01 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

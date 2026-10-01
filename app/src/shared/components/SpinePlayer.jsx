@@ -508,6 +508,15 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     // tileViewport: default framing left the frame-0 art at 60% x 53% of the tile; this square fills 83%.
     tileViewport: { x: -5190.01, y: -4657.96, width: 10366.66, height: 10366.66 },
   },
+  // Lucy (character 1511): bannerViewport against banners/_shared/mC4xmBYY-Lucy-Banner.jpg (900x506): 531 inliers,
+  // mean residual 0.28 px / max 1.33 px at the art's 900 px width, rotation 0.00 deg; aspect 1.7787.
+  lucy: {
+    name: 'Lucy', element: 'Spectro', skelUrl: 'spine/role_lucy/c_lucy_1.skel', atlasUrl: 'spine/role_lucy/c_lucy_1.atlas',
+    bannerArtSize: [900, 506],
+    bannerViewport: { x: -6721.78, y: -3098.78, width: 9964.64, height: 5602.34 },
+    // tileViewport: default framing left the frame-0 art at 46% x 47% of the tile; this square fills 83%.
+    tileViewport: { x: -5299.99, y: -5071.87, width: 10481.92, height: 10481.92 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

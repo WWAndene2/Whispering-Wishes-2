@@ -460,6 +460,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [2560, 1440],
     bannerViewport: { x: -2972.79, y: -1043.96, width: 5626.73, height: 3165.04 },
   },
+  // Augusta (character 1306): bannerViewport against banners/_shared/4wbJgQGj-augusta-banner.jpg (2560x1440): 885 inliers,
+  // mean residual 0.90 px / max 3.82 px at the art's 2560 px width, rotation 0.00 deg; aspect 1.7778.
+  augusta: {
+    name: 'Augusta', element: 'Electro', skelUrl: 'spine/role_augusta/c_augusta_1.skel', atlasUrl: 'spine/role_augusta/c_augusta_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -3606.84, y: -1645.00, width: 5604.16, height: 3152.34 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

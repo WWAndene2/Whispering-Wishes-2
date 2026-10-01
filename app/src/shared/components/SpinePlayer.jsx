@@ -481,6 +481,15 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -4259.83, y: -1880.93, width: 6399.51, height: 3599.72 },
   },
+  // Luuk Herssen (character 1510): bannerViewport against banners/_shared/ZzqY6F9R-luuk-banner.jpg (2560x1440): 1068 inliers,
+  // mean residual 0.76 px / max 3.01 px at the art's 2560 px width, rotation 0.00 deg; aspect 1.7778.
+  luhesi: {
+    name: 'Luuk Herssen', element: 'Spectro', skelUrl: 'spine/role_luhesi/c_luhesi_1.skel', atlasUrl: 'spine/role_luhesi/c_luhesi_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -4064.83, y: -1484.37, width: 6665.12, height: 3749.13 },
+    // tileViewport: default framing left the frame-0 art at 50% x 53% of the tile; this square fills 83%.
+    tileViewport: { x: -2964.35, y: -2487.31, width: 5886.57, height: 5886.57 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

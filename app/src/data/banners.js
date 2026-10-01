@@ -1639,6 +1639,7 @@ const LUCKDRAW_STILLS = {
   Augusta: './banners/characters/augusta/Augusta-Luckdraw-Still.webp',
   Galbrena: './banners/characters/galbrena/Galbrena-Luckdraw-Still.webp',
   Mornye: './banners/characters/mornye/Mornye-Luckdraw-Still.webp',
+  'Luuk Herssen': './banners/characters/luuk-herssen/Luuk-Herssen-Luckdraw-Still.webp',
 };
 const getLuckdrawStill = (name) => LUCKDRAW_STILLS[name] || null;
 

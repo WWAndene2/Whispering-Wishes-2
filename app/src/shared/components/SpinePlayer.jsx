@@ -404,6 +404,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -3145.04, y: -1613.76, width: 5666.64, height: 3187.48 },
   },
+  // Shorekeeper (character 1505): bannerViewport against banners/_shared/cKTnnDWB-shore-keeper-banner.jpg (1920x1080): 416 inliers,
+  // mean residual 0.88 px / max 3.41 px at the art's 1920 px width, rotation -0.04 deg; aspect 1.7778.
+  shouanren: {
+    name: 'Shorekeeper', element: 'Spectro', skelUrl: 'spine/role_shouanren/c_shouanren_1.skel', atlasUrl: 'spine/role_shouanren/c_shouanren_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -3046.31, y: -1589.77, width: 6029.02, height: 3391.32 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

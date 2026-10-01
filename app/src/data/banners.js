@@ -1628,6 +1628,7 @@ const LUCKDRAW_STILLS = {
   Changli: './banners/characters/changli/Changli-Luckdraw-Still.webp',
   Zhezhi: './banners/characters/zhezhi/Zhezhi-Luckdraw-Still.webp',
   'Xiangli Yao': './banners/characters/xiangli-yao/Xiangli-Yao-Luckdraw-Still.webp',
+  Shorekeeper: './banners/characters/shorekeeper/Shorekeeper-Luckdraw-Still.webp',
 };
 const getLuckdrawStill = (name) => LUCKDRAW_STILLS[name] || null;
 

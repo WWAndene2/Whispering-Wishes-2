@@ -453,6 +453,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -3454.51, y: -1136.44, width: 5573.67, height: 3135.19 },
   },
+  // Phrolova (character 1608): bannerViewport against banners/_shared/QvHKLCgt-phrolova-banner.jpg (2560x1440): 798 inliers,
+  // mean residual 0.88 px / max 5.08 px at the art's 2560 px width, rotation 0.00 deg; aspect 1.7778.
+  fuluoluo: {
+    name: 'Phrolova', element: 'Havoc', skelUrl: 'spine/role_fuluoluo/c_fuluoluo_1.skel', atlasUrl: 'spine/role_fuluoluo/c_fuluoluo_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -2972.79, y: -1043.96, width: 5626.73, height: 3165.04 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

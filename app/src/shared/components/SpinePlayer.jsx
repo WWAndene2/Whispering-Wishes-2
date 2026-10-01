@@ -545,6 +545,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1200, 675],
     bannerViewport: { x: -7891.27, y: -3676.79, width: 12564.78, height: 7067.69 },
   },
+  // Qingxiao (character 1413): bannerViewport against banners/_shared/8nvgqZKC-e7478-17840855867105-1920.jpg (640x360): 70 inliers,
+  // mean residual 0.35 px / max 0.90 px at the art's 640 px width, rotation 0.01 deg; aspect 1.7778.
+  qingxiao: {
+    name: 'Qingxiao', element: 'Aero', skelUrl: 'spine/role_qingxiao/c_qingxiao_1.skel', atlasUrl: 'spine/role_qingxiao/c_qingxiao_1.atlas',
+    bannerArtSize: [640, 360],
+    bannerViewport: { x: -8210.12, y: -3656.01, width: 13920.19, height: 7830.11 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

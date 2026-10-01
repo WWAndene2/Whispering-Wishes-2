@@ -418,6 +418,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -2353.38, y: -1200.58, width: 4905.33, height: 2759.25 },
   },
+  // Carlotta (character 1107): bannerViewport against banners/_shared/67r6NbMf-carlotta-banner.png (1920x1080): 1281 inliers,
+  // mean residual 0.42 px / max 2.29 px at the art's 1920 px width, rotation -0.00 deg; aspect 1.7778.
+  kelaita: {
+    name: 'Carlotta', element: 'Glacio', skelUrl: 'spine/role_kelaita/c_kelaita_1.skel', atlasUrl: 'spine/role_kelaita/c_kelaita_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -3798.20, y: -686.06, width: 6066.76, height: 3412.55 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

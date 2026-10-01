@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { Sparkles, Swords, User, Users, TrendingUp, Target, Zap, X, LayoutGrid, RotateCw, Play } from 'lucide-react';
-import { CHARACTER_DATA, CHAR_BUFF_TABLE, SKILL_MULTIPLIERS, CHARACTER_ROTATIONS, RESONANCE_CHAIN_DATA, getSkillIcon, CHAIN_NODE_ICONS, getLocalizedCharacterData, getLocalizedCharBuffTable, getLocalizedCharacterRotations, getLocalizedChainNodeNames, findSkillMultiplierRow, localizeSkillName, localizeSkillDesc, localizeSkillMult } from '../../data/characters.js';
+import { CHARACTER_DATA, CHAR_BUFF_TABLE, SKILL_MULTIPLIERS, CHARACTER_ROTATIONS, RESONANCE_CHAIN_DATA, getSkillIcon, CHAIN_NODE_ICONS, getLocalizedCharacterData, getLocalizedCharBuffTable, getLocalizedCharacterRotations, getLocalizedChainNodeNames, findSkillMultiplierRow, localizeSkillName, localizeSkillDesc, localizeSkillMult, CHARACTERS_AWAITING_GUIDE } from '../../data/characters.js';
 import { WEAPON_DATA, getLocalizedWeaponData } from '../../data/weapons.js';
 import { getSonataLoadouts } from '../../data/echoes.js';
 import { DEFAULT_COLLECTION_IMAGES, getConveneAnimation, getCharacterBannerArt, getLuckdrawStill } from '../../data/banners.js';
@@ -411,8 +411,8 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
             )}
           </div>
 
-          {/* Quick action — view in teams */}
-          {onViewInTeams && (
+          {/* Quick action — view in teams (hidden for CHARACTERS_AWAITING_GUIDE, whom the Teams builder leaves out) */}
+          {onViewInTeams && !CHARACTERS_AWAITING_GUIDE.has(name) && (
             <button onClick={onViewInTeams} className="kuro-btn w-full flex items-center justify-center gap-1.5">
               <Users size={12} /> {t('modals.characterDetail.viewInTeamBuilder')}
             </button>
@@ -793,8 +793,8 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
             );
           })()}
 
-          {/* Team Suggestions - with avatars */}
-          <div>
+          {/* Team Suggestions - with avatars (no section when no teams are on file) */}
+          {data.teams?.length > 0 && (<div>
             <h3 className="text-white font-semibold text-xl mb-2 flex items-center gap-2">
               <Swords size={14} className="text-pink-400" /> {t('modals.characterDetail.teamComps')}
             </h3>
@@ -816,7 +816,14 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                               {memberImg ? (
                                 <div className={`w-14 h-14 rounded-lg bg-neutral-800 border border-[var(--border-medium)] overflow-hidden${memberOwned && is5Star ? ' holo-5star' : ''}`} style={{ contain: 'paint', position: 'relative', filter: memberOwned ? 'none' : 'grayscale(100%)' }}>
                                   <div className="absolute inset-0 breath-zoom">
-                                    <img src={memberImg} alt={member} className="absolute inset-0 w-full h-full object-cover object-top" onError={hideOnError} style={{ transform: `scale(${mf.zoom / 100}) translate(${-mf.x}%, ${-mf.y}%)` }} />
+                                    {/* Replica of the member's Collection card (object-contain in the card's own
+                                        width/height ratio, 0.867 — the grid card measures 118.83 x 137.04 px at a
+                                        430 px viewport and keeps that ratio at every width), so their collection-
+                                        crop lands the same way here. Shown at 1.5x the avatar's width and centred on
+                                        the card point (50%, 30%), where the collection crops put the face. */}
+                                    <div className="absolute" style={{ width: '150%', aspectRatio: '0.867', left: '-25%', top: `${50 - 30 * 1.5 / 0.867}%` }}>
+                                      <img src={memberImg} alt={member} className="absolute inset-0 w-full h-full object-contain" onError={hideOnError} style={{ transform: `scale(${mf.zoom / 100}) translate(${-mf.x}%, ${-mf.y}%)` }} />
+                                    </div>
                                   </div>
                                 </div>
                               ) : (
@@ -837,7 +844,7 @@ const CharacterDetailModal = ({ name, onClose, imageUrl, framing, infoFraming, o
                 );
               })}
             </div>
-          </div>
+          </div>)}
 
           {/* Ascension Materials (Lv 1→90) */}
           <div>

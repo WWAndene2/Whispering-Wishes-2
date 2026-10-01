@@ -58,6 +58,16 @@ const WEAPON_DATA = {
     // String forgery + Exoswarm Core common, from the nanoka.cc game-data snapshot
     // (ww.nanoka.cc/weapon/21050116, 30 September 2026).
     ascensionMaterials: { forgery: 'String', common: 'Exoswarm Core' } },
+  // v3.7 — Suoming's signature (her v3.7-p2 banner). Lv.90 ATK/substat, passive and ascension materials
+  // from encore.moe's game data (weapon 21020107, 1 October 2026). pv folds in the R1 ATK +12% and the
+  // Electro DMG Bonus she holds with Unison before her Outro: 30% from the passive plus 24% from
+  // Binding Mind. Yearning Mind (+40% for 14s after she consumes Concerto Energy, replacing Binding
+  // Mind) is described in the passive but not folded in.
+  'Unspoken Rue': { rarity: 5, type: 'Sword', stat: 'Crit Rate', baseAtk: 588, subStatValue: '+24.3%',
+    desc: 'Suoming signature. Gaining Unison grants the wielder Electro DMG Bonus and the whole team Binding Mind; consuming Concerto Energy trades Binding Mind for a larger personal Electro DMG Bonus.',
+    passive: 'ATK +12%. Upon gaining Unison: self Electro DMG Bonus +30% (30s), and the wielder removes Yearning Mind and grants all team Resonators Binding Mind: Electro DMG Bonus +24% (30s). When the wielder consumes Concerto Energy: Binding Mind is removed from the team and the wielder gains Yearning Mind: an additional +40% Electro DMG Bonus (14s, ends on switching out). Effects of the same name cannot stack.',
+    pv: { atkPct: 12, elemDmg: 54 }, bestFor: ['Suoming'],
+    ascensionMaterials: { forgery: 'Polarizer', common: 'Mech Core' } },
   'Glint of Clouds': { rarity: 5, type: 'Sword', stat: 'Crit Rate', baseAtk: 500, subStatValue: '+36.0%',
     desc: "Qingxiao signature. Jade blade wreathed in mist and cloud. Stacking Aero DMG Bonus on inflicting Tune Strain - Shifting, ignoring DEF at max stacks.",
     passive: 'ATK +12%. Inflicting Tune Strain - Shifting grants 11.2% Aero DMG Bonus (2s, stacks ×5, 0.5s ICD); at max stacks, duration extends to 30s and Aero DMG ignores 10% DEF',
@@ -684,9 +694,7 @@ export function getLocalizedWeaponData(locale) {
 
 // Announced but unreleased weapons, shown in the Collection as "coming soon" cards and
 // kept out of WEAPON_DATA (which feeds the damage calculators) until their stats are
-// published. Unspoken Rue is Suoming's v3.7-p2 featured weapon (BANNER_HISTORY).
-const UPCOMING_WEAPONS = {
-  'Unspoken Rue': { rarity: 5, type: 'Sword', forCharacter: 'Suoming' },
-};
+// published.
+const UPCOMING_WEAPONS = {};
 
 export { WEAPON_DATA, UPCOMING_WEAPONS };

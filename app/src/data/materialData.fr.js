@@ -155,6 +155,7 @@ export const MATERIAL_NAME_FR = {
   'Redbell': 'Clochette Rouge',
   'Skyward Glazed Heart': 'Cœur Émaillé Céleste',
   'Bloom of Hearkening': "Fleur de l'Écoute",
+  'Miasmic Branch': 'Branche de Miasmes',
   'Remnant of the Wheel': 'Vestige de la Roue',
   'We Who Question': 'Nous Qui Questionnons',
   "Loong's Pearl": 'Perle du Loong',

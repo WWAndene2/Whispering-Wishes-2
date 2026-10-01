@@ -19,6 +19,7 @@
 
 /** @type {Record<string, string>} */
 export const CHARACTER_DESC_FR = {
+  'Suoming': 'Fondatrice et Maîtresse des Sceaux du Pacte des Dix Sceaux, née à Huating, à Mengzhou, devenue ensuite Intendante du Ministère des Affaires de la Sentinelle. Manieuse de Sabre Electro qui accumule de l\'Illusion pour passer de l\'Esprit Éveillé à l\'Esprit Profond, où ses attaques Ombrelle Déployée, Esprit Inébranlable et Cœur Gravé infligent des DGT d\'Attaque Normale. En équipe Unisson, son Outro invoque des Attaques Coordonnées Blason du Tonnerre et confère au Résonateur entrant un Bonus de DGT Electro. Lancer sa Compétence avec l\'Unisson lui confère plutôt Maîtresse des Sceaux, qui augmente ses multiplicateurs d\'Ombrelle Déployée et ses DGT Critiques.',
   'Hsin': "Le Renard Lunaire, l'une des sept Sentinelles de Huanglong, qui veille sur Mengzhou et ses lanternes toujours allumées. DPS principale Electro qui passe de la Forme Réponse à la Forme Illumination puis à la Domination Mécanique, en commandant les Mécanismes de Xuanfang. En mode Électromagnétisme, elle stocke l'excédent en Cœur du Tonnerre pour une seule détonation, et en mode Unisson, elle obtient une Outro supplémentaire gratuite à chaque rotation.",
   'Rover: Spectro': "Un vagabond qui s'est réveillé sans mémoire sur les rives de Solaris. Attunement Spectro : une debuffeuse de Lumière Spectro à changement rapide — la Rotation Résonnante du Circuit Forte applique Lumière Spectro (avec Chatoiement pour stopper sa dégradation) et la Libération Orchestre en Écho en ajoute davantage, puis change de personnage pour laisser place au DPS principal.",
   'Rover: Havoc': "Un vagabond qui s'est réveillé sans mémoire sur les rives de Solaris. Attunement Havoc : un DPS principal sur le terrain — maintenez l'Attaque Lourde à Umbra plein pour lancer Dévastation et entrer en Poussée Sombre, un combo à état amélioré qui se termine par le nuke de Libération à 1520 % ATQ, Abysse qui S'éteint.",
@@ -152,6 +153,7 @@ export const CHARACTER_TITLE_FR = {
 // (no entry to translate).
 /** @type {Record<string, string>} */
 export const CHAR_BUFF_NOTE_FR = {
+  'Suoming': 'Son Outro confère au Résonateur entrant 20 % d\'Amplification des DGT Electro pendant 8 s, plus 25 % d\'Amplification des DGT de Compétence de Résonance s\'il a la Faveur de l\'Unisson. Avec l\'Unisson, son Outro invoque aussi jusqu\'à 6 Attaques Coordonnées Blason du Tonnerre et lui confère Sceaux Alignés : dans les 8 s suivant sa Libération ou Cœur Gravé, l\'Outro confère au Résonateur entrant 30 % de Bonus de DGT Electro, +20 % par cumul de Faveur de l\'Unisson (jusqu\'à 40 % de plus). Lancer Fendeur de Faille avec l\'Unisson confère plutôt Maîtresse des Sceaux (12 s) : multiplicateurs d\'Ombrelle Déployée et de Foudre Tournoyante +100 % et ses DGT Critiques +100 %. Chaque cumul de Faveur de l\'Unisson qu\'elle confère augmente les DGT totaux des alliés d\'Unisson de 3 % (jusqu\'à 2 cumuls). La Chaîne de Résonance 2 confère au Résonateur entrant 10 % de DGT Critiques (+6 % par cumul de Faveur de l\'Unisson, jusqu\'à 24 %) pendant 30 s.',
   'Hsin': "Mode Électromagnétisme : son Outro amplifie de 20 % les DGT Electro du reste de l'équipe pendant 20 s, et elle gagne jusqu'à +50 % DGT Electro quand ses coéquipiers infligent Électromagnétisme (+20 % de plus pour elle et Rover: Electro quand l'Intro de Rover se déclenche). Mode Unisson : son Outro confère aux alliés d'Unisson 20 % d'Amplification de tous les DGT pendant 30 s, chaque cumul de Bénédiction d'Unisson augmente de 3 % les DGT des alliés d'Unisson (jusqu'à 2 cumuls, 3 avec Glaner les Joies Simples) et ses Intros d'Unisson Multiple lui donnent +50 % ATQ pendant 8 s. La Chaîne de Résonance 4 confère à toute l'équipe +20 % de Bonus de DGT tous attributs pendant 30 s.",
   'Lingyang': "DPS principal Glacio sur le terrain. L'état Lion Bondissant du Circuit Forte (activé via l'Attaque Lourde Plongeon Glorieux à Esprit du Lion plein) débloque des attaques aériennes améliorées. L'Outro Marque Glacée est un pur proc de DGT de zone, pas un buff d'équipe, bien que la Chaîne de Résonance S4 confère à l'équipe +20 % DGT Glacio/30 s à son déclenchement.",
   'Rover: Aero': "Soigneuse/soutien. La Compétence aérienne Rupture Céleste retire les cumuls de Lumière Spectro, Havoc Fléau, Explosion Fusion, Givre Glaçant et Electro Éclair de la cible touchée et convertit chacun en un cumul d'Érosion Aéronautique. Le Forte Danse de l'Averse et la Libération Tempête Oméga soignent tous deux l'équipe.",
@@ -822,6 +824,7 @@ export const CHARACTER_ROTATION_NOTE_FR = {
 // documented in the header above).
 /** @type {Record<string, string[]>} */
 export const CHAIN_NODE_NAMES_FR = {
+  'Suoming': { s1: 'Au Cœur de la Pluie Corrompue', s2: 'Tonnerre Foudroyant, Mal Terrassé', s3: 'Ombrelle Solitaire, Voie Isolée', s4: 'Pacte Gravé dans le Cœur', s5: 'Sceau Ancré, Jamais Oublié', s6: 'Neuf Ombres à ses Côtés' },
   'Hsin': { s1: 'Une Barque pour Franchir la Marée Montante', s2: 'S\'éveiller, c\'est se Demander qui je Suis', s3: 'Un Rêve de Retour parmi les Collines', s4: 'Une Rivière de Lanternes, une Rivière de Vœux', s5: 'Les Formes Changent au Gré du Cœur', s6: 'La Lune Doit sa Lumière aux Vivants' },
   'Aalto': { s1: 'Numéro d\'Ouverture du Filou', s2: 'Débuts de la Tisseuse de Brume', s3: 'Transition Brumeuse', s4: 'Éclosion de Blake pour le Final', s5: 'Applaudissements du Perdu', s6: 'Secrets du Courtier' },
   'Baizhi': { s1: 'Simplicité Complexe', s2: 'Toundra Silencieuse', s3: 'Veritas Lux Mea', s4: 'Vérité Éternelle', s5: 'Un Vœu Exaucé', s6: 'Dévotion de la Chercheuse' },
@@ -913,6 +916,28 @@ export const SKILL_TYPE_FR = {
 // display-only overlay consumed at render time in CharacterDetailModal.jsx.
 /** @type {Record<string, Record<string, string>>} */
 export const SKILL_NAME_FR = {
+  'Suoming': {
+    'Furled Canopy Stage 1-3': 'Ombrelle Repliée Phase 1-3',
+    'Unfurled Canopy Stage 1-4': 'Ombrelle Déployée Phase 1-4',
+    'Unfurled Canopy: Whirling Thunder Stage 1': 'Ombrelle Déployée : Foudre Tournoyante Phase 1',
+    'Unfurled Canopy: Whirling Thunder Stage 2': 'Ombrelle Déployée : Foudre Tournoyante Phase 2',
+    'Plunging Attack': 'Attaque Plongeante',
+    'Furled Canopy': 'Ombrelle Repliée',
+    'Unfurled Canopy': 'Ombrelle Déployée',
+    'Furled Canopy: Rift Cleaver': 'Ombrelle Repliée : Fendeur de Faille',
+    'Unfurled Canopy: Crimson Gleam': 'Ombrelle Déployée : Éclat Carmin',
+    'Umbral Canopy: Miasma Lock': 'Ombrelle Ténébreuse : Verrou de Miasmes',
+    'Blight Rain, Miasmic Thunder': 'Pluie du Fléau, Tonnerre Miasmatique',
+    'Resonance Skill - Furled Canopy: Sealed Delusion': 'Compétence de Résonance - Ombrelle Repliée : Illusion Scellée',
+    'Resonance Skill - Unfurled Canopy: Unforsaken Mind': 'Compétence de Résonance - Ombrelle Déployée : Esprit Inébranlable',
+    'Umbral Canopy: Engraved Heart': 'Ombrelle Ténébreuse : Cœur Gravé',
+    'Umbral Canopy: Engraved Heart (Hold)': 'Ombrelle Ténébreuse : Cœur Gravé (Maintenu)',
+    'Intro Skill - Furled Canopy: Flash Rift': 'Compétence d\'Intro - Ombrelle Repliée : Faille Éclaire',
+    'Intro Skill - Unfurled Canopy: Thunder Rending': 'Compétence d\'Intro - Ombrelle Déployée : Foudre Déchirante',
+    'Intro Skill - Furled Canopy: Sealed Delusion (Unison)': 'Compétence d\'Intro - Ombrelle Repliée : Illusion Scellée (Unisson)',
+    'Intro Skill - Unfurled Canopy: Whirling Thunder (Unison)': 'Compétence d\'Intro - Ombrelle Déployée : Foudre Tournoyante (Unisson)',
+    'Canopy Rumble': 'Grondement de l\'Ombrelle',
+  },
   'Hsin': {
     'Answering Form Stage 1-4': 'Forme Réponse Phase 1-4',
     'Answering Form': 'Forme Réponse',
@@ -1893,6 +1918,7 @@ export const SKILL_NAME_FR = {
 // used throughout weapons.fr.js ("DGT Glacio", "Amplification DGT Havoc", etc.).
 /** @type {Record<string, string>} */
 export const CHARACTER_TAG_FR = {
+  'Ten Seals Covenant': 'Pacte des Dix Sceaux',
   'Sentinels': 'Sentinelles',
   // NOTE (exception to this project's general birthplace/region/organization-stays-untranslated
   // policy, documented at the top of this file): the user explicitly requested these be
@@ -2249,6 +2275,9 @@ export function applyGenericDescPhrases(desc) {
 // line with applyGenericDescPhrases as a substring-level fallback when no entry exists here.
 /** @type {Record<string, Record<string, string>>} */
 export const MULT_DESC_FR = {
+  'Suoming': {
+    'Canopy Rumble': 'Aucun DGT direct — le Résonateur entrant gagne 20 % d\'Amplification des DGT Electro',
+  },
   'Hsin': {
     'Formshift': 'Aucun DGT direct — entre en Forme Illumination et Manifestation du Cœur, confère 21 cumuls d\'Édit (45 s)',
     'Intro Skill - Answering Form': '7,88 %×2+7,88 %×2+126,02 % (Électromagnétisme) / 10,28 %+20,55 %+10,28 %+20,55 %×3 (Unisson)',
@@ -2466,6 +2495,25 @@ export const MULT_DESC_FR = {
 };
 
 export const SKILL_DESC_FR = {
+  'Suoming': {
+    'Furled Canopy Stage 1-3': 'Combo de l\'Esprit Éveillé ; les coups accumulent de l\'Illusion.',
+    'Unfurled Canopy Stage 1-4': 'Combo de l\'Esprit Profond ; les coups accumulent de l\'Illusion.',
+    'Unfurled Canopy: Whirling Thunder Stage 1': 'Maintenez l\'Attaque Normale peu après Ombrelle Déployée Phase 2.',
+    'Plunging Attack': 'Consomme de l\'END.',
+    'Unfurled Canopy': 'Remplace la Contre-attaque d\'Esquive en Esprit Profond.',
+    'Furled Canopy: Rift Cleaver': '8 s de recharge, réinitialisée en entrant en Esprit Profond. Touchée pendant la ruée, elle est immunisée contre ce coup et lance Éclat Carmin.',
+    'Umbral Canopy: Miasma Lock': 'Esprit Profond uniquement ; coûte 125 Énergie de Résonance, 25 s de recharge. Confère l\'Unisson (5 s) et 200 Illusion.',
+    'Blight Rain, Miasmic Thunder': 'Attaque Coordonnée Blason du Tonnerre pendant son Outro lancée avec l\'Unisson ; au plus 1 par seconde, 6 au total (8 s).',
+    'Resonance Skill - Furled Canopy: Sealed Delusion': 'À 800 Illusion en Esprit Éveillé ; considérée comme DGT d\'Attaque Normale. La fait passer en Esprit Profond.',
+    'Resonance Skill - Unfurled Canopy: Unforsaken Mind': 'À 800 Illusion en Esprit Profond ; attire les cibles proches. Considérée comme DGT d\'Attaque Normale.',
+    'Umbral Canopy: Engraved Heart': 'Après Esprit Inébranlable ; considéré comme DGT d\'Attaque Normale. Immunisée contre les DGT et l\'interruption pendant le lancement ; se termine en Esprit Éveillé.',
+    'Umbral Canopy: Engraved Heart (Hold)': 'Maintenez l\'Attaque Normale ou la Compétence de Résonance pour continuer d\'attaquer ; considéré comme DGT d\'Attaque Normale.',
+    'Intro Skill - Furled Canopy: Flash Rift': 'Considérée comme DGT d\'Attaque Normale ; la fait passer en Esprit Profond.',
+    'Intro Skill - Unfurled Canopy: Thunder Rending': 'Esprit Profond ; considérée comme DGT d\'Attaque Normale. Confère 200 Illusion.',
+    'Intro Skill - Furled Canopy: Sealed Delusion (Unison)': 'Réponse d\'Unisson ; considérée comme DGT d\'Attaque Normale. La fait passer en Esprit Profond.',
+    'Intro Skill - Unfurled Canopy: Whirling Thunder (Unison)': 'Réponse d\'Unisson en Esprit Profond ; considérée comme DGT d\'Attaque Normale. Confère 200 Illusion.',
+    'Canopy Rumble': '8 s ; avec la Faveur de l\'Unisson, il gagne aussi 25 % d\'Amplification des DGT de Compétence de Résonance.',
+  },
   'Hsin': {
     'Answering Form Stage 1-4': 'Combo de la Forme Réponse ; les coups accumulent du Cœur de Réponse.',
     'Answering Form': 'Coûte 20 END.',

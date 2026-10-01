@@ -1879,6 +1879,17 @@ const CHARACTER_DATA = {
       'Hsin + Rover: Electro + Buling',
       'Hsin + Jinhsi + Shorekeeper',
     ] },
+  // v3.7 — Suoming. Game data from encore.moe (character 1312, 1 October 2026): kit, Lv.90 base
+  // stats, ascension/skill materials, Resonance Chain, Combat Role tags and archive lore. Element,
+  // weapon and role from her v3.7-p2 banner entry; Unspoken Rue is that banner's featured weapon.
+  // No build guide exists for her yet, so bestEchoes, weaponAlts, teams, tier and rotation are left
+  // out and she is listed in CHARACTERS_AWAITING_GUIDE below (kept out of the Teams builder).
+  'Suoming': { rarity: 5, element: 'Electro', weapon: 'Sword', role: 'Main DPS',
+    desc: "Founder and Seal Master of the Ten Seals Covenant, born in Huating, Mengzhou, who later served as Intendant of the Ministry of Sentinel Affairs. Electro Sword user who builds Delusion to move from Awakened Mind into Deep Mind, where her Unfurled Canopy attacks, Unforsaken Mind and Engraved Heart deal Basic Attack DMG. In Unison teams her Outro summons Thunder Crest Coordinated Attacks and grants the incoming Resonator Electro DMG Bonus. Casting her Skill with Unison instead grants her Seal Master, boosting her Unfurled Canopy multipliers and Crit DMG.",
+    skills: ['Furled Canopy', 'Furled Canopy: Rift Cleaver', 'Umbral Canopy: Miasma Lock', 'Bound Obsession, Forged Mind'],
+    ascension: { boss: "Forged Empyrean's Sigh", common: 'Howler Core', specialty: 'Miasmic Branch' },
+    skillMaterials: { weeklyDrop: 'Remnant of the Wheel', forgery: 'Polarizer' },
+    bestWeapon: 'Unspoken Rue' },
   // 4★ Resonators
   'Aalto': { rarity: 4, element: 'Aero', weapon: 'Pistols', role: 'Sub DPS',
     desc: 'Suave information broker who slips through the mist. Aero sub-DPS who summons a mist clone via his Skill, dealing off-field Aero DMG whenever it triggers a Coordinated Attack alongside the active Resonator.',
@@ -2444,6 +2455,9 @@ const CHARACTER_DATA = {
   // are all "considered Resonance Skill DMG") and Basic 97,277 (9%); Liberation 2.6% and Outro 2.1%
   // stay under the include threshold.
   ['Hsin',          ['Skill', 'Basic ATK'],          ['Electro DMG Amplification'],           ['Electro Flare']],
+  // Suoming: every damaging Forte move and all four Intros are "considered Basic Attack DMG" in her
+  // kit text, on top of her Basic Attack combos; her Outro amplifies Electro DMG.
+  ['Suoming',       ['Basic ATK'],                   ['Electro DMG Amplification'],           []],
   ['Yangyang: Xuanling', ['Heavy ATK', 'Basic ATK'], [],                                      ['Havoc Bane']],
   // dmgFocus corrected 2026-09-04 (Phase A audit, REMAINING_WORK.md 1c) against the fresh dump's own
   // Damage-Type Breakdown table: Basic ATK is a genuine 0% share (every nominal Basic/Heavy/Intro cast
@@ -2852,6 +2866,9 @@ const CHARACTER_DATA = {
   // Hsin: nanoka.cc game data (Base HP 10 300 / ATK 463 / DEF 1 112); maxEnergy 125 is Pillars
   // Across Heaven's own Resonance Cost in her kit.
   ['Hsin',          10300, 463, 1112, 125],
+  // Suoming: encore.moe game data (Lv.90 HP 10 300 / ATK 462.5 / DEF 1 112.2); maxEnergy 125 is
+  // Umbral Canopy: Miasma Lock's Resonance Cost.
+  ['Suoming',       10300, 463, 1112, 125],
   // 4★
   ['Aalto',         9850,  263, 1076, 150],
   ['Baizhi',        12813, 213, 1002, 175],
@@ -3082,6 +3099,7 @@ const CHARACTER_DATA = {
   // passive, like Brant below), not HP-scaling like Cartethyia. His damage multipliers apply to ATK.
   ['Jingran',        'ATK'],
   ['Hsin',           'ATK'],
+  ['Suoming',        'ATK'],
   ['Yangyang: Xuanling', 'ATK'],
   ['Hiyuki',         'ATK'],
   ['Lucy',           'ATK'],
@@ -3282,6 +3300,7 @@ const CHARACTER_DATA = {
   ['Changli',      'Huanglong'], ['Zhezhi',       'Huanglong'], ['Xiangli Yao',  'Huanglong'],
   ['Qiuyuan',      'Huanglong'], ['Yangyang: Xuanling', 'Huanglong'], ['Suisui', 'Huanglong'],
   ['Qingxiao',     'Huanglong'], ['Jingran',      'Huanglong'], ['Hsin',         'Huanglong'],
+  ['Suoming',      'Huanglong'],
   // Huanglong 4★
   ['Baizhi',       'Huanglong'], ['Chixia',       'Huanglong'],
   ['Danjin',       'Huanglong'], ['Yangyang',     'Huanglong'], ['Sanhua',       'Huanglong'],
@@ -3554,6 +3573,10 @@ const CHARACTER_DATA = {
   // Huanglong, affiliation Sentinels (affiliation2 Mengzhou), VAs EN Suzie Yeung, CN Ju Huahua (菊花花),
   // JP Noto Mamiko (能登麻美子), KR So Yeon (소연). Birthday blank, so not in BIRTHDAY_DATA.
   ['Hsin', 'The Moon Fox', undefined, 'Sentinels', { en: 'Suzie Yeung', cn: 'Ju Huahua', jp: 'Noto Mamiko', kr: 'So Yeon' }],
+  // Suoming: encore.moe archive — no title; born in Huating, Mengzhou; affiliation Ten Seals Covenant
+  // (and Mengzhou's Ministry of Sentinel Affairs); VAs EN Miracle Chance, CN Ge Zirui, JP Okubo Rumi,
+  // KR Son Jeong Min. Birthday "Unknown", so not in BIRTHDAY_DATA.
+  ['Suoming', undefined, 'Mengzhou', 'Ten Seals Covenant', { en: 'Miracle Chance', cn: 'Ge Zirui', jp: 'Okubo Rumi', kr: 'Son Jeong Min' }],
   // 4★ Resonators — sourced via the reference API (action=parse&page=X&prop=page source&section=0).
   // Aalto: birthplace New Federation, nation 'The Black Shores' (REGION_DATA above, corrected from the
   // prior Huanglong bug), organization 'Black Shores' (affiliation).
@@ -3737,6 +3760,9 @@ const CHARACTER_DATA = {
   ['Qingxiao', ['Main Damage Dealer', 'Tune Strain Response']],
   // Hsin: her in-game Combat Role tags as listed by nanoka.cc and encore.moe (same order in both).
   ['Hsin', ['Main Damage Dealer', 'Resonance Skill Damage', 'Coordinated Attack', 'Electro Flare', 'Unison']],
+  // Suoming: her in-game Combat Role tags on encore.moe, in order ("Basic Attack DMG" is the
+  // Basic Attack Damage icon).
+  ['Suoming', ['Concerto Efficiency', 'Basic Attack Damage', 'Electro DMG Amplification', 'Resonance Skill DMG Amplification', 'Unison']],
   // Jingran intentionally omitted: unreleased (3.6, Aug 20 2026) — the reference infobox has an empty
   // `role` field since Kuro hasn't published her kit yet, matching the "Unconfirmed" placeholder already
   // used for her bestEchoes/weapon data elsewhere in this file rather than guessing.
@@ -3877,6 +3903,19 @@ const CHAR_BUFF_TABLE = {
     ],
     debuffs: [],
     note: "Electro Flare mode: her Outro Amplifies the Electro DMG of the rest of the team by 20% for 20s, and she gains up to +50% Electro DMG when teammates inflict Electro Flare (+20% more for both her and Rover: Electro when Rover's Intro fires). Unison mode: her Outro instead grants Unison allies 20% All DMG Amplification for 30s, each Unison Boon stack raises Unison allies' DMG by 3% (up to 2 stacks, 3 with Gleaning Simple Joys), and her Manifold Unison Intros give her +50% ATK for 8s. Resonance Chain 4 grants the whole team +20% All-Attribute DMG Bonus for 30s.",
+  },
+  // Suoming: Outro "Canopy Rumble", Inherents "Rain-Soaked Covenant" and "Sunken Seal, Forged Lock"
+  // (encore.moe kit text). Her Outro's Resonance Skill DMG Amplification needs Unison Boon on the
+  // incoming Resonator, so only the unconditional Electro part is a buff entry; the rest is in the note.
+  'Suoming': {
+    outroBuffs: [{ stat: 'amplify', value: 20, target: 'next', duration: 8, condition: 'Electro DMG Amplification for the incoming Resonator' }],
+    libBuffs: [],
+    selfBuffs: [
+      { stat: 'elemDmg', value: 50, target: 'self', duration: 15, condition: 'After any of her Intro Skills (Rain-Soaked Covenant); ends when she is switched out' },
+      { stat: 'critDmg', value: 100, target: 'self', duration: 12, condition: 'Seal Master: casting Furled Canopy: Rift Cleaver with Unison (Sunken Seal, Forged Lock)' },
+    ],
+    debuffs: [],
+    note: "Her Outro grants the incoming Resonator 20% Electro DMG Amplification for 8s, plus 25% Resonance Skill DMG Amplification if they have Unison Boon. With Unison, her Outro also summons up to 6 Thunder Crest Coordinated Attacks and gives her Aligned Seals: within 8s of her Liberation or Engraved Heart, the Outro grants the incoming Resonator 30% Electro DMG Bonus, +20% per Unison Boon stack (up to 40% more). Casting Rift Cleaver with Unison instead grants Seal Master (12s): Unfurled Canopy and Whirling Thunder multipliers +100% and her Crit DMG +100%. Each Unison Boon stack she grants raises Unison allies' total DMG by 3% (up to 2 stacks). Resonance Chain 2 gives the incoming Resonator 10% Crit DMG (+6% per Unison Boon stack, up to 24%) for 30s.",
   },
   'Yangyang: Xuanling': {
     outroBuffs: [{ stat: 'elemDmg', value: 20, target: 'team', duration: 20, condition: 'Havoc Bane appliers only, via As the Wind Wills' }],
@@ -4965,6 +5004,30 @@ const SKILL_MULTIPLIERS = {
     ['Intro', 'Intro Skill - Illumining Form', '11.42%×4+11.42%×2+39.97%×4 (Electro Flare) / 56.59%×4+5.66%+11.32%×2+14.15%×2 (Unison)'],
     ['Intro', 'Intro Skill - Illumining Form: Manifold Unison', '157.22%×4+15.73%+31.45%×2+39.31%×2', 'Unison mode; considered Resonance Skill DMG.'],
     ['Outro', 'Herself a Thousand Lanterns', '100% ATK + team DMG Amplification', 'Electro Flare mode: team Electro DMG Amplified by 20% (20s). Unison mode: Unison allies gain 20% All DMG Amplification (30s).'],
+  ],
+  // Suoming: Lv.10 multipliers from encore.moe's game data (character 1312). Her Forte moves and all
+  // four Intros are "considered Basic Attack DMG" in their own kit text.
+  'Suoming': [
+    ['Basic ATK', 'Furled Canopy Stage 1-3', '31.55% → 15.73%×2+31.46% → 22.01%×3+44.02%', 'Awakened Mind combo; hits build Delusion.'],
+    ['Basic ATK', 'Unfurled Canopy Stage 1-4', '65.42%+32.71%×2 → 114.40%+38.14%×3 → 58.64%×2+58.64%×2 → 107.25%+107.25%+47.67%×3', 'Deep Mind combo; hits build Delusion.'],
+    ['Basic ATK', 'Unfurled Canopy: Whirling Thunder Stage 1', '73.32%+36.66%×2+73.32%+73.32%', 'Hold Normal Attack shortly after Unfurled Canopy Stage 2.'],
+    ['Basic ATK', 'Unfurled Canopy: Whirling Thunder Stage 2', '56.69%×5'],
+    ['Mid-air', 'Plunging Attack', '84.20%', 'Consumes STA.'],
+    ['Dodge Counter', 'Furled Canopy', '27.66%×2+55.32%'],
+    ['Dodge Counter', 'Unfurled Canopy', '174.04%+58.02%×3', 'Replaces Dodge Counter in Deep Mind.'],
+    ['Skill', 'Furled Canopy: Rift Cleaver', '106.61%', '8s cooldown, reset on entering Deep Mind. Being hit during the dash makes her immune to that hit and casts Crimson Gleam.'],
+    ['Skill', 'Unfurled Canopy: Crimson Gleam', '47.25%+23.63%×2+63.00%'],
+    ['Liberation', 'Umbral Canopy: Miasma Lock', '60.89%×8+208.76%', 'Deep Mind only; costs 125 Resonance Energy, 25s cooldown. Grants Unison (5s) and 200 Delusion.'],
+    ['Liberation', 'Blight Rain, Miasmic Thunder', '59.65%', 'Thunder Crest Coordinated Attack while her Outro is cast with Unison; up to 1 per second, 6 in total (8s).'],
+    ['Forte', 'Resonance Skill - Furled Canopy: Sealed Delusion', '62.78%×2+31.39%×4', 'At 800 Delusion in Awakened Mind; considered Basic Attack DMG. Sends her into Deep Mind.'],
+    ['Forte', 'Resonance Skill - Unfurled Canopy: Unforsaken Mind', '152.67%', 'At 800 Delusion in Deep Mind; pulls nearby targets in. Considered Basic Attack DMG.'],
+    ['Forte', 'Umbral Canopy: Engraved Heart', '1551.41%', 'After Unforsaken Mind; considered Basic Attack DMG. Immune to DMG and interruption while casting; ends in Awakened Mind.'],
+    ['Forte', 'Umbral Canopy: Engraved Heart (Hold)', '19.40%×10+24.24%×8', 'Hold Normal Attack or Resonance Skill to keep attacking; considered Basic Attack DMG.'],
+    ['Intro', 'Intro Skill - Furled Canopy: Flash Rift', '110.89%×2+36.97%×4', 'Considered Basic Attack DMG; sends her into Deep Mind.'],
+    ['Intro', 'Intro Skill - Unfurled Canopy: Thunder Rending', '131.43%+65.72%×2+131.43%+131.43%', 'Deep Mind; considered Basic Attack DMG. Grants 200 Delusion.'],
+    ['Intro', 'Intro Skill - Furled Canopy: Sealed Delusion (Unison)', '110.89%×2+36.97%×4', 'Unison Response; considered Basic Attack DMG. Sends her into Deep Mind.'],
+    ['Intro', 'Intro Skill - Unfurled Canopy: Whirling Thunder (Unison)', '131.43%+65.72%×2+131.43%+131.43%', 'Unison Response in Deep Mind; considered Basic Attack DMG. Grants 200 Delusion.'],
+    ['Outro', 'Canopy Rumble', 'No direct DMG — incoming Resonator gains 20% Electro DMG Amplification', '8s; with Unison Boon they also gain 25% Resonance Skill DMG Amplification.'],
   ],
   // Two real zero-damage rotation-step bugs fixed 2026-09-02 against a fresh the source dump: 'Mid-air:
   // Feather Fall' and 'Basic ATK:Havoc in Bloom Stage 1-3' — both real CHARACTER_ROTATIONS steps used
@@ -7654,6 +7717,12 @@ const RESONANCE_CHAIN_DATA = {
   // team-wide +20% All-Attribute DMG Bonus. S6's 40% more Resonance Skill DMG taken and 20% DEF
   // ignore apply to her Resonance Skill DMG only, which is 83% of her damage in the guide's profile.
   'Hsin':         { s1: {}, s2: { totalMult: 1394 }, s3: { totalMult: 1409 }, s4: { allDmg: 20 }, s5: {}, s6: { amplify: 40, defIgnore: 20 } },
+  // Suoming (encore.moe Resonance Chain). S1 (+60% Intro multipliers), S5 (+40% Miasma Lock) and
+  // S6's +50% Engraved Heart multiplier are stored as {} rather than as a totalMult: that figure is
+  // the extra multiplier over a rotation, and no rotation is published for her yet. S2 is her own
+  // +40% Crit DMG; S3's 30% Basic Attack DMG Amplification after her Liberation is stored as amplify
+  // (her kit's damage is all Basic Attack DMG); S4 is +20% ATK; S6 adds 200% Crit DMG under Seal Master.
+  'Suoming':      { s1: {}, s2: { critDmg: 40 }, s3: { amplify: 30 }, s4: { atkPct: 20 }, s5: {}, s6: { critDmg: 200 } },
   // Yangyang: Xuanling S2: Heavy/Mid-air/Havoc-in-Bloom DMG+100% (confirmed exact). S3: Hush of a Thousand Voices
   // Liberation DMG+175% (confirmed exact via the source 2026-08-16 cross-check; was 80, didn't match comment or kit)
   // S1 re-audited 2026-09-02 against a fresh the source dump (user-provided): was totalMult:10, an
@@ -9053,6 +9122,30 @@ const RESONANCE_CHAIN_DATA = {
 // Source: the reference per-character Skill_* image assets, re-hosted on ibb.co.
 // Only characters that have been audited so far are populated.
 const SKILL_ICONS = {
+  // Suoming: her own skill atlas (SkillIconSuoming) via encore.moe, and the generic Sword Normal
+  // Attack icon. Keys are exact SKILL_MULTIPLIERS row names.
+  'Suoming': {
+    'Furled Canopy Stage 1-3': './characters/_shared/4w6tSxmb-Skill-Sword.webp',
+    'Unfurled Canopy Stage 1-4': './characters/_shared/4w6tSxmb-Skill-Sword.webp',
+    'Unfurled Canopy: Whirling Thunder Stage 1': './characters/_shared/4w6tSxmb-Skill-Sword.webp',
+    'Unfurled Canopy: Whirling Thunder Stage 2': './characters/_shared/4w6tSxmb-Skill-Sword.webp',
+    'Plunging Attack': './characters/_shared/4w6tSxmb-Skill-Sword.webp',
+    'Furled Canopy': './characters/_shared/4w6tSxmb-Skill-Sword.webp',
+    'Unfurled Canopy': './characters/_shared/4w6tSxmb-Skill-Sword.webp',
+    'Furled Canopy: Rift Cleaver': './characters/suoming/SP_IconSuomingB1.webp',
+    'Unfurled Canopy: Crimson Gleam': './characters/suoming/SP_IconSuomingB1.webp',
+    'Umbral Canopy: Miasma Lock': './characters/suoming/SP_IconSuomingC1.webp',
+    'Blight Rain, Miasmic Thunder': './characters/suoming/SP_IconSuomingC1.webp',
+    'Resonance Skill - Furled Canopy: Sealed Delusion': './characters/suoming/SP_IconSuomingY.webp',
+    'Resonance Skill - Unfurled Canopy: Unforsaken Mind': './characters/suoming/SP_IconSuomingY.webp',
+    'Umbral Canopy: Engraved Heart': './characters/suoming/SP_IconSuomingY.webp',
+    'Umbral Canopy: Engraved Heart (Hold)': './characters/suoming/SP_IconSuomingY.webp',
+    'Intro Skill - Furled Canopy: Flash Rift': './characters/suoming/SP_IconSuomingQTE.webp',
+    'Intro Skill - Unfurled Canopy: Thunder Rending': './characters/suoming/SP_IconSuomingQTE.webp',
+    'Intro Skill - Furled Canopy: Sealed Delusion (Unison)': './characters/suoming/SP_IconSuomingQTE.webp',
+    'Intro Skill - Unfurled Canopy: Whirling Thunder (Unison)': './characters/suoming/SP_IconSuomingQTE.webp',
+    'Canopy Rumble': './characters/suoming/SP_IconSuomingT.webp',
+  },
   // Hsin: her own skill atlas (SkillIconXin) and generic Rectifier Normal Attack icon, as labelled on
   // the nanoka.cc game-data page: B1 Resonance Skill, C1 Liberation, Y Forte Circuit, QTE Intro, T Outro.
   // Keys are exact SKILL_MULTIPLIERS row names.
@@ -10148,6 +10241,15 @@ const getSkillIcon = (name, skillName, type) => {
 // Combat page infobox gallery, which lists nodes S1→S6 top to bottom), re-hosted on ibb.co.
 // Only characters that have been audited so far are populated.
 const CHAIN_NODE_ICONS = {
+  // Suoming: game icons T_IconDevice_SuomingM1-6 via encore.moe.
+  'Suoming': {
+    s1: './characters/suoming/T_IconDevice_SuomingM1_UI.webp',
+    s2: './characters/suoming/T_IconDevice_SuomingM2_UI.webp',
+    s3: './characters/suoming/T_IconDevice_SuomingM3_UI.webp',
+    s4: './characters/suoming/T_IconDevice_SuomingM4_UI.webp',
+    s5: './characters/suoming/T_IconDevice_SuomingM5_UI.webp',
+    s6: './characters/suoming/T_IconDevice_SuomingM6_UI.webp',
+  },
   // Hsin: game icons T_IconDevice_XinM1-6 via nanoka.cc, labelled with each node's name there.
   'Hsin': {
     s1: './characters/hsin/T_IconDevice_XinM1_UI.webp',
@@ -10820,6 +10922,7 @@ const CHAIN_NODE_NAMES = {
   // Nodes yet"), so the source is the sole source here, same as Qingxiao's pre-release pass.
   'Jingran': { s1: 'Yin and Yang in Harmony, the Ultimate Law of Being', s2: 'A Solitary Lantern, Across Lands Shade-Trodden', s3: "World's Course Shifts, Each to Their Rightful Paths", s4: 'Where Reality Meets Illusion, Where Living Meet Dead', s5: 'Ends Return to Beginnings, Truth of Life Laid Bare', s6: 'As Favors and Feuds Fade, New Stories Await' },
   'Hsin': { s1: 'A Boat to Cross the Rising Tide', s2: 'To Wake Is to Wonder What I Am', s3: 'A Dream of Return Among the Hills', s4: 'A River of Lanterns, a River of Wishes', s5: 'Forms Turn as the Heart Wills', s6: 'The Moon Owes Its Light to the Living' },
+  'Suoming': { s1: 'Into the Blight Rain', s2: 'Breaking Thunder, Slaying Evil', s3: 'Lone Canopy, Solitary Road', s4: 'Covenant Borne Upon the Heart', s5: 'Seal Deep, Never Forgotten', s6: 'Nine Shadows at Her Side' },
 };
 
 // Release order for sorting (based on first banner appearance)
@@ -10868,7 +10971,7 @@ const RELEASE_ORDER = [
   // 3.6
   'Qingxiao', 'Jingran',
   // 3.7
-  'Hsin',
+  'Hsin', 'Suoming',
 ];
 
 // Derived character lists — single source of truth from CHARACTER_DATA
@@ -10880,9 +10983,12 @@ const ALL_CHARACTERS = new Set([...ALL_5STAR_RESONATORS, ...ALL_4STAR_RESONATORS
 // Announced but unreleased resonators, shown in the Collection as "coming soon" cards
 // and kept out of CHARACTER_DATA (which feeds the damage calculators) until their kit
 // and stats are published. Fields come from their banner entry in BANNER_HISTORY.
-const UPCOMING_RESONATORS = {
-  'Suoming': { rarity: 5, element: 'Electro', weapon: 'Sword', role: 'Main DPS' },
-};
+const UPCOMING_RESONATORS = {};
+
+// Resonators with a game-data profile but no published build guide yet: no bestEchoes, teams or
+// rotation (totalMult/rotTime/onField) to compute with, so the Teams builder (picker, owned-roster
+// and curated suggestions, auto team) leaves them out. Remove a name once its guide data is in.
+const CHARACTERS_AWAITING_GUIDE = new Set(['Suoming']);
 
 // Standard 5★ characters (Tidal Chorus / 50-50 loss pool) — update when new standard chars are added
 const STANDARD_5STAR_CHARACTERS = new Set(['Calcharo', 'Encore', 'Jianxin', 'Lingyang', 'Verina']);
@@ -11000,6 +11106,7 @@ export {
   ALL_5STAR_RESONATORS,
   ALL_4STAR_RESONATORS,
   UPCOMING_RESONATORS,
+  CHARACTERS_AWAITING_GUIDE,
 };
 
 // Per-locale skill text. A locale with no entry here returns the English source text.

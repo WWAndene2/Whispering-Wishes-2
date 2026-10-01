@@ -204,6 +204,8 @@ const MATERIAL_IMAGES = {
   // v3.7 — Hsin's specialty and weekly-boss drop, game icons supplied by the user (2026-09-30).
   'Bloom of Hearkening': './materials/ascension-specialty/Bloom-of-Hearkening.webp',
   'Remnant of the Wheel': './materials/skill-boss-drops/Remnant-of-the-Wheel.webp',
+  // v3.7 — Suoming's specialty, game icon T_IconC_089 via encore.moe (item 42601640).
+  'Miasmic Branch': './materials/ascension-specialty/Miasmic-Branch.webp',
   // === Echo Leveling Materials (Sealed Tubes — EXP — and Tuners — substat unlocks) ===
   // See Data dump/Echoes/Echo Leveling.md for the EXP-per-tier table these back
   // (EchoFarmPlanner.jsx's Sealed Tube breakdown). No "Basic Tuner" tier exists in-game

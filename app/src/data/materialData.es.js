@@ -154,6 +154,7 @@ export const MATERIAL_NAME_ES = {
   "Redbell": "Campanilla roja",
   "Skyward Glazed Heart": "Corazón vidriado celeste",
   "Bloom of Hearkening": "Flor de la escucha",
+  "Miasmic Branch": "Rama miasmática",
   "Remnant of the Wheel": "Vestigio de la rueda",
   "We Who Question": "Nosotros que preguntamos",
   "Loong's Pearl": "Perla del Loong",

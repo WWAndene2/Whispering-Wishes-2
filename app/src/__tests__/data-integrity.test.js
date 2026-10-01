@@ -3,7 +3,7 @@
  * Verifies all game data is complete, consistent, and correctly structured.
  */
 import { describe, it, expect } from 'vitest';
-import { CHARACTER_DATA, CHAR_BUFF_TABLE, RESONANCE_CHAIN_DATA, SKILL_MULTIPLIERS, CHARACTER_ROTATIONS, ALL_CHARACTERS, findSkillMultiplierRow } from '../data/characters.js';
+import { CHARACTER_DATA, CHAR_BUFF_TABLE, RESONANCE_CHAIN_DATA, SKILL_MULTIPLIERS, CHARACTER_ROTATIONS, ALL_CHARACTERS, findSkillMultiplierRow, CHARACTERS_AWAITING_GUIDE } from '../data/characters.js';
 import { WEAPON_DATA } from '../data/weapons.js';
 import { ECHO_DATA, ECHO_SETS, ALL_4COST_ECHOES, ALL_3COST_ECHOES, ALL_1COST_ECHOES } from '../data/echoes.js';
 import { CURRENT_BANNERS } from '../data/banners.js';
@@ -48,8 +48,12 @@ describe('CHARACTER_DATA integrity', () => {
     });
   });
 
+  // CHARACTERS_AWAITING_GUIDE: resonators whose game data is in but whose rotation no guide publishes
+  // yet (Suoming: encore.moe game data only). totalMult/rotTime/onField come from a guide rotation,
+  // so this check skips them rather than accept placeholder numbers; the Teams builder, the only
+  // consumer, leaves them out too.
   it('every character has rotation data', () => {
-    chars.forEach(([name, data]) => {
+    chars.filter(([name]) => !CHARACTERS_AWAITING_GUIDE.has(name)).forEach(([name, data]) => {
       expect(data.totalMult, `${name} missing totalMult`).toBeGreaterThan(0);
       expect(data.rotTime, `${name} missing rotTime`).toBeGreaterThan(0);
       expect(data.onField, `${name} missing onField`).toBeGreaterThan(0);

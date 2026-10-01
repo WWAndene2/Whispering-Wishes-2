@@ -54,6 +54,10 @@ export const WEAPON_DATA_FR = {
     desc: "Arme signature de Jingran (« Écoutez, Esprits et Étoiles »). Lancer la Compétence d'Intro ou obtenir un Bouclier accumule Dégâts Critiques et Ignore DÉF d'Attaque Lourde personnels, adapté à son kit centré sur le Bouclier et le scaling PV.",
     passive: "DGT tous éléments +12 %. Compétence d'Intro ou obtenir un Bouclier : Dégâts Critiques personnels +4 % (jusqu'à 6 cumuls/24 % ; à 6 cumuls, Taux Critique d'Attaque Lourde +12 %). Lancer une Attaque Lourde consomme jusqu'à 2 cumuls pour Ignore DÉF d'Attaque Lourde +15 % chacun (jusqu'à 30 %, 2 s).",
   },
+  'Unspoken Rue': {
+    desc: "Arme signature de Suoming. Obtenir l'Unisson confère au porteur un Bonus de DGT Electro et à toute l'équipe le Lien Spirituel ; consommer de l'Énergie Concertante échange le Lien Spirituel contre un Bonus de DGT Electro personnel plus élevé.",
+    passive: "ATQ +12 %. En obtenant l'Unisson : Bonus de DGT Electro personnel +30 % (30 s), et le porteur retire l'Envie Profonde et confère à tous les Résonateurs de l'équipe le Lien Spirituel : Bonus de DGT Electro +24 % (30 s). Lorsque le porteur consomme de l'Énergie Concertante : le Lien Spirituel est retiré de l'équipe et le porteur obtient l'Envie Profonde : Bonus de DGT Electro supplémentaire de +40 % (14 s, prend fin en changeant de personnage). Les effets de même nom ne se cumulent pas.",
+  },
   'Blooming Jadehaven': {
     desc: "Arme signature de Hsin. Infliger Électromagnétisme ou déclencher une Réponse d'Unisson amplifie ses DGT de Compétence de Résonance et ignore la RÉS Électro, tandis qu'une aura sur le terrain amplifie les DGT d'Électromagnétisme subis par les cibles proches.",
     passive: "DGT tous attributs +12 %. Après avoir infligé Électromagnétisme ou déclenché une Réponse d'Unisson : DGT de Compétence de Résonance personnels amplifiés de 36 % et 10 % de RÉS Électro ignorés. Sur le terrain : DGT d'Électromagnétisme subis par les cibles proches amplifiés de 30 % (30 s, au plus 1x/0,1 s). Seul l'effet de même nom le plus fort s'applique.",
@@ -610,6 +614,7 @@ export const WEAPON_NAME_FR = {
   "Firstlight's Herald": "Héraut de l'aube",
   "Thousandfold Deliverance": "D'innombrables délivrances",
   "Glint of Clouds": "Nuages scintillants",
+  "Unspoken Rue": "Remords inexprimé",
   "Autumntrace": "Trace d'automne",
   "Lumingloss": "Lumineux",
   "Thunderbolt": "Tonnerre",

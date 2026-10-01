@@ -100,7 +100,7 @@ describe('character label overlays (data/characters.*.js)', () => {
   it('Spanish tags cover every tag or say deliberately to keep it', async () => {
     const { CHARACTER_DATA } = await import('../data/characters.js');
     const { CHARACTER_TAG_ES } = await import('../data/characters.es.js');
-    const keep = new Set(['Ashinohara', 'Chongzhou', 'Mingting', 'Ragunna', 'Septimont', 'Rinascita', 'Huanglong', 'Jinzhou', 'Lahai-Roi', 'Fractsidus', 'Night City', 'Frazzle', 'Spectro Frazzle', 'Glacio Chafe', 'Havoc Bane', 'Fusion Burst', 'Electro Flare', 'Hack - Shifting', 'Hack Response', 'Off-Tune', 'Tune Break Boost', 'Tune Rupture Response', 'Tune Strain - Interfered', 'Tune Strain - Shifting', 'Tune Strain Response']);
+    const keep = new Set(['Ashinohara', 'Chongzhou', 'Mengzhou', 'Mingting', 'Ragunna', 'Septimont', 'Rinascita', 'Huanglong', 'Jinzhou', 'Lahai-Roi', 'Fractsidus', 'Night City', 'Frazzle', 'Spectro Frazzle', 'Glacio Chafe', 'Havoc Bane', 'Fusion Burst', 'Electro Flare', 'Hack - Shifting', 'Hack Response', 'Off-Tune', 'Tune Break Boost', 'Tune Rupture Response', 'Tune Strain - Interfered', 'Tune Strain - Shifting', 'Tune Strain Response']);
     const used = new Set();
     for (const d of Object.values(CHARACTER_DATA)) {
       for (const f of ['birthplace', 'region', 'organization']) if (d[f]) used.add(d[f]);

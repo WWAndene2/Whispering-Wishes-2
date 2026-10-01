@@ -149,6 +149,7 @@ export const CHARACTER_TITLE_ES = {
 
 /** @type {Record<string, string>} */
 export const CHARACTER_TAG_ES = {
+  "Ten Seals Covenant": "Pacto de los Diez Sellos",
   "Sentinels": "Centinelas",
   "Spectro Frazzle": "Espectro estridente",
   "Frazzle": "Espectro estridente",
@@ -366,6 +367,28 @@ export function applyGenericDescPhrasesEs(desc) {
 // English name stays the internal key for icon and rotation lookups.
 /** @type {Record<string, Record<string, string>>} */
 export const SKILL_NAME_ES = {
+  "Suoming": {
+    "Furled Canopy Stage 1-3": "Dosel plegado Fase 1-3",
+    "Unfurled Canopy Stage 1-4": "Dosel desplegado Fase 1-4",
+    "Unfurled Canopy: Whirling Thunder Stage 1": "Dosel desplegado: Trueno giratorio Fase 1",
+    "Unfurled Canopy: Whirling Thunder Stage 2": "Dosel desplegado: Trueno giratorio Fase 2",
+    "Plunging Attack": "Ataque descendente",
+    "Furled Canopy": "Dosel plegado",
+    "Unfurled Canopy": "Dosel desplegado",
+    "Furled Canopy: Rift Cleaver": "Dosel plegado: Tajo de la fisura",
+    "Unfurled Canopy: Crimson Gleam": "Dosel desplegado: Destello carmesí",
+    "Umbral Canopy: Miasma Lock": "Dosel umbrío: Bloqueo miasmático",
+    "Blight Rain, Miasmic Thunder": "Lluvia de Plaga, Trueno Miasmático",
+    "Resonance Skill - Furled Canopy: Sealed Delusion": "Habilidad de resonancia: Dosel plegado: Delirio sellado",
+    "Resonance Skill - Unfurled Canopy: Unforsaken Mind": "Habilidad de resonancia: Dosel desplegado: Mente inquebrantable",
+    "Umbral Canopy: Engraved Heart": "Dosel umbrío: Corazón grabado",
+    "Umbral Canopy: Engraved Heart (Hold)": "Dosel umbrío: Corazón grabado (Mantén)",
+    "Intro Skill - Furled Canopy: Flash Rift": "Habilidad Intro: Dosel plegado: Fisura relámpago",
+    "Intro Skill - Unfurled Canopy: Thunder Rending": "Habilidad Intro: Dosel desplegado: Desgarro del trueno",
+    "Intro Skill - Furled Canopy: Sealed Delusion (Unison)": "Habilidad Intro: Dosel plegado: Delirio sellado: Unísono",
+    "Intro Skill - Unfurled Canopy: Whirling Thunder (Unison)": "Habilidad Intro: Dosel desplegado: Trueno giratorio: Unísono",
+    "Canopy Rumble": "Estruendo del dosel",
+  },
   "Hsin": {
     "Answering Form Stage 1-4": "Forma Respuesta Fase 1-4",
     "Answering Form": "Forma Respuesta",
@@ -1314,6 +1337,7 @@ export const SKILL_NAME_ES = {
 // Resonance Chain node titles (s1-s6) per character, display-only.
 /** @type {Record<string, Record<string, string>>} */
 export const CHAIN_NODE_NAMES_ES = {
+  "Suoming": { s1: "Bajo la lluvia ominosa", s2: "Rompetruenos, eliminación del mal", s3: "Parasol solitario, camino solitario", s4: "Pacto del corazón", s5: "Sellado dentro, inolvidable", s6: "Compañía de nueve sombras" },
   "Hsin": { s1: "Un barco para cruzar la marea creciente", s2: "Despertar es preguntarse qué soy", s3: "Un sueño de regreso entre las colinas", s4: "Un río de faroles, un río de deseos", s5: "Las formas cambian como quiere el corazón", s6: "La luna debe su luz a los vivos" },
   "Aalto": { s1: "Espectáculo de apertura del embaucador", s2: "Debut de Mistweaver", s3: "Transición nebulosa", s4: "Flor negra para el final", s5: "Aplausos de los perdidos", s6: "Los secretos del intermediario" },
   "Baizhi": { s1: "Simplicidad compleja", s2: "Tundra silenciosa", s3: "Luz de la verdad", s4: "Verdad eterna", s5: "Un deseo respondido", s6: "La devoción del buscador" },
@@ -1374,6 +1398,7 @@ export const CHAIN_NODE_NAMES_ES = {
 // CHAR_BUFF_TABLE[name].note — display-only prose (stat/target/duration/condition are never translated).
 /** @type {Record<string, string>} */
 export const CHAR_BUFF_NOTE_ES = {
+  "Suoming": "Su Outro otorga al Resonador entrante un 20 % de amplificación del daño Electro durante 8 s, más un 25 % de amplificación del daño de habilidad de resonancia si tiene Bendición de Unísono. Con Unísono, su Outro también invoca hasta 6 ataques coordinados de Cresta del trueno y le otorga Sellos alineados: en los 8 s siguientes a su liberación o a Corazón grabado, el Outro otorga al Resonador entrante un 30 % de bonificación de daño Electro, +20 % por acumulación de Bendición de Unísono (hasta un 40 % más). Si lanza Tajo de la fisura con Unísono, obtiene en su lugar Maestra del Sello (12 s): multiplicadores de Dosel desplegado y Trueno giratorio +100 % y su daño crítico +100 %. Cada acumulación de Bendición de Unísono que otorga aumenta un 3 % el daño total de los aliados de Unísono (hasta 2 acumulaciones). La Cadena de resonancia 2 otorga al Resonador entrante un 10 % de daño crítico (+6 % por acumulación de Bendición de Unísono, hasta un 24 %) durante 30 s.",
   "Hsin": "Modo Llamarada eléctrica: su Outro amplifica un 20 % el daño Electro del resto del equipo durante 20 s, y gana hasta +50 % de daño Electro cuando sus compañeros infligen Llamarada eléctrica (+20 % más para ella y para Rover: Electro cuando se activa la Intro de Rover). Modo Unísono: su Outro otorga a los aliados de Unísono un 20 % de amplificación de todo el daño durante 30 s, cada acumulación de Bendición de Unísono aumenta un 3 % el daño de los aliados de Unísono (hasta 2 acumulaciones, 3 con Cosechar alegrías sencillas) y sus Intros de Unísono múltiple le dan +50 % de ATQ durante 8 s. La Cadena de resonancia 4 otorga a todo el equipo +20 % de bonificación de daño de todos los atributos durante 30 s.",
   "Verina": "Outro Flor: cura al Resonador entrante + amplificación de todo el daño +15 % (30 s) para el equipo cercano. Don inherente de la naturaleza: ATQ del equipo +20 %/20 s al activar el Forte/la liberación/el Outro.",
   "Shorekeeper": "Outro: amplificación de todo el daño del 15 %, para todo el equipo, 30 s (persiste tras los cambios). Liberación Stellarealm: +12.5 % de tasa crítica y +25 % de daño crítico (30 s), para todo el equipo. Recuperación tras derribo.",
@@ -1438,6 +1463,7 @@ export const CHAR_BUFF_NOTE_ES = {
 // Character biography + playstyle blurb (CHARACTER_DATA[name].desc).
 /** @type {Record<string, string>} */
 export const CHARACTER_DESC_ES = {
+  "Suoming": "Fundadora y Maestra del Sello del Pacto de los Diez Sellos, nacida en Huating, Mengzhou, que después sirvió como Intendente del Ministerio de Asuntos de los Centinelas. Usuaria de espada Electro que acumula Delirio para pasar de Mente despierta a Mente profunda, donde sus ataques de Dosel desplegado, Mente inquebrantable y Corazón grabado infligen daño de ataque básico. En equipos de Unísono, su Outro invoca ataques coordinados de Cresta del trueno y otorga al Resonador entrante bonificación de daño Electro. Si lanza su habilidad con Unísono, obtiene en su lugar Maestra del Sello, que aumenta sus multiplicadores de Dosel desplegado y su daño crítico.",
   "Hsin": "El Zorro lunar, una de los siete Centinelas de Huanglong, que vela por Mengzhou y sus faroles siempre encendidos. DPS principal Electro que pasa de la Forma Respuesta a la Forma Iluminación y al Dominio de mecanismos, dirigiendo los Mecanismos de Xuanfang. En modo Llamarada eléctrica acumula el excedente como Corazón del trueno para una sola detonación, y en modo Unísono obtiene un Outro adicional gratuito en cada rotación.",
   "Rover: Spectro": "Un errante que despertó sin memoria en las costas de Solaris. Sintonía Espectro: un debilitador de Espectro estridente de cambio rápido: el Giro resonante del Circuito de Forte aplica Espectro estridente (con Shimmer para detener la disminución) y la liberación Orquesta resonante acumula más, y luego cede el puesto al DPS principal.",
   "Rover: Havoc": "Un errante que despertó sin memoria en las costas de Solaris. Sintonía Destrucción: un DPS principal en campo; mantén el ataque pesado con Umbra completa para lanzar Devastación y entrar en Oleada oscura, un combo de estado mejorado que termina en Abismo adormecedor, la liberación del 1520 % de ATQ.",
@@ -2178,6 +2204,25 @@ export const WEAPON_ALT_REASON_ES = {
 // Internal review notes present in the source strings are left out, as in the French overlay.
 /** @type {Record<string, Record<string, string>>} */
 export const SKILL_DESC_ES = {
+  "Suoming": {
+    "Furled Canopy Stage 1-3": "Combo de Mente despierta; los golpes acumulan Delirio.",
+    "Unfurled Canopy Stage 1-4": "Combo de Mente profunda; los golpes acumulan Delirio.",
+    "Unfurled Canopy: Whirling Thunder Stage 1": "Mantén Ataque básico poco después de la Fase 2 de Dosel desplegado.",
+    "Plunging Attack": "Consume AGU.",
+    "Unfurled Canopy": "Sustituye al contraataque de esquiva en Mente profunda.",
+    "Furled Canopy: Rift Cleaver": "8 s de reutilización, que se reinicia al entrar en Mente profunda. Si la golpean durante la embestida, es inmune a ese golpe y lanza Destello carmesí.",
+    "Umbral Canopy: Miasma Lock": "Solo en Mente profunda; cuesta 125 de Energía de resonancia, 25 s de reutilización. Otorga Unísono (5 s) y 200 de Delirio.",
+    "Blight Rain, Miasmic Thunder": "Ataque coordinado de Cresta del trueno mientras su Outro se lanza con Unísono; como máximo 1 por segundo, 6 en total (8 s).",
+    "Resonance Skill - Furled Canopy: Sealed Delusion": "Con 800 de Delirio en Mente despierta; se considera daño de ataque básico. La lleva a Mente profunda.",
+    "Resonance Skill - Unfurled Canopy: Unforsaken Mind": "Con 800 de Delirio en Mente profunda; atrae a los objetivos cercanos. Se considera daño de ataque básico.",
+    "Umbral Canopy: Engraved Heart": "Tras Mente inquebrantable; se considera daño de ataque básico. Inmune al daño y a interrupciones durante el lanzamiento; termina en Mente despierta.",
+    "Umbral Canopy: Engraved Heart (Hold)": "Mantén Ataque básico o Habilidad de resonancia para seguir atacando; se considera daño de ataque básico.",
+    "Intro Skill - Furled Canopy: Flash Rift": "Se considera daño de ataque básico; la lleva a Mente profunda.",
+    "Intro Skill - Unfurled Canopy: Thunder Rending": "Mente profunda; se considera daño de ataque básico. Otorga 200 de Delirio.",
+    "Intro Skill - Furled Canopy: Sealed Delusion (Unison)": "Respuesta de Unísono; se considera daño de ataque básico. La lleva a Mente profunda.",
+    "Intro Skill - Unfurled Canopy: Whirling Thunder (Unison)": "Respuesta de Unísono en Mente profunda; se considera daño de ataque básico. Otorga 200 de Delirio.",
+    "Canopy Rumble": "8 s; con Bendición de Unísono también obtiene un 25 % de amplificación del daño de habilidad de resonancia.",
+  },
   "Hsin": {
     "Answering Form Stage 1-4": "Combo de Forma Respuesta; los golpes acumulan Corazón de respuesta.",
     "Answering Form": "Cuesta 20 de AGU.",
@@ -2872,6 +2917,9 @@ export const SKILL_DESC_ES = {
 // "12 %" spacing follow Spanish number formatting.
 /** @type {Record<string, Record<string, string>>} */
 export const MULT_DESC_ES = {
+  "Suoming": {
+    "Canopy Rumble": "Sin daño directo: el Resonador entrante obtiene un 20 % de amplificación del daño Electro",
+  },
   "Hsin": {
     "Formshift": "Sin daño directo: entra en Forma Iluminación y Manifestación del corazón, otorga 21 acumulaciones de Edicto (45 s)",
     "Intro Skill - Answering Form": "7.88 %×2+7.88 %×2+126.02 % (Llamarada eléctrica) / 10.28 %+20.55 %+10.28 %+20.55 %×3 (Unísono)",

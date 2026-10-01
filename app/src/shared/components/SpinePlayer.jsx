@@ -256,10 +256,12 @@ export const SPRITE_SPINE_CHARACTERS = {
   jingran:         spriteEntry('Jingran',           'Fusion',  'Jingran'),
   xuanling:        spriteEntry('Yangyang: Xuanling','Havoc',   'Xuanling'),
   xin:             spriteEntry('Hsin',              'Electro', 'Xin'),
+  suoming:         spriteEntry('Suoming',           'Electro', 'Suoming'),
 };
 
 // Luckdraw spine — the game's UiLuckdraw/Spine/Character/C_<Id>_01 rig,
-// sourced from encore.moe's character API (Hsin: character 1311, Iuno: character 1410).
+// sourced from encore.moe's character API (Hsin: character 1311, Iuno: character 1410,
+// Chisa: character 1508, Suoming: character 1312).
 export const LUCKDRAW_SPINE_CHARACTERS = {
   // bannerViewport: the world-space rectangle her 1920x1080 banner art (characters/hsin/
   // Hsin_Banner.jpg) covers, so BannerCard can lay the rig exactly over the art. Measured by
@@ -278,6 +280,22 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     name: 'Iuno', element: 'Aero', skelUrl: 'spine/role_younuo/c_younuo_1.skel', atlasUrl: 'spine/role_younuo/c_younuo_1.atlas',
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -3483.49, y: -1247.44, width: 5742.48, height: 3230.26 },
+  },
+  // bannerViewport as for Hsin, here against banners/_shared/RTZ06knw-chisa-banner.jpg: SIFT-matched
+  // the rig's idle frame 0 to the art (760 inliers, scale+translation fit, mean residual 1.78 px /
+  // max 5.57 px at the art's 1920 px width, rotation -0.07 deg; rectangle aspect 1.7778 vs 16:9).
+  qianxiao: {
+    name: 'Chisa', element: 'Havoc', skelUrl: 'spine/role_qianxiao/c_qianxiao_1.skel', atlasUrl: 'spine/role_qianxiao/c_qianxiao_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -6535.70, y: -3815.38, width: 10500.47, height: 5906.51 },
+  },
+  // bannerViewport as for Hsin, here against characters/suoming/Suoming_Banner.webp: SIFT-matched
+  // the rig's idle frame 0 to the art (709 inliers, scale+translation fit, mean residual 0.65 px /
+  // max 2.76 px at the art's 1920 px width, rotation 0.00 deg; rectangle aspect 1.7778 vs 16:9).
+  suoming: {
+    name: 'Suoming', element: 'Electro', skelUrl: 'spine/role_suoming/c_suoming_01.skel', atlasUrl: 'spine/role_suoming/c_suoming_01.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -3444.29, y: -1068.60, width: 5540.17, height: 3116.35 },
   },
 };
 

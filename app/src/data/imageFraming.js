@@ -63,6 +63,9 @@ export const DEFAULT_IMAGE_FRAMING = Object.freeze({
   // than everyone else — bumped zoom and shifted the crop up toward his torso/face.
   'collection-Jingran': { x: -2, y: -22, zoom: 250 },
   'collection-Hsin': { x: 17, y: -25, zoom: 240 },
+  // Suoming: solved so her face lands where Hsin's does on the card, at the same on-screen size
+  // (face centre measured at 625,400 px of Suoming-Full-Sprite.webp, 150 px wide; Hsin's at 655,220, 110 px).
+  'collection-Suoming': { x: 4, y: -9, zoom: 176 },
   'collection-Solsworn Ciphers': { x: 2, y: -2, zoom: 100 },
   'collection-Blazing Justice': { x: 0, y: 0, zoom: 100 },
   // 4-star Resonators
@@ -205,6 +208,8 @@ export const DEFAULT_IMAGE_FRAMING = Object.freeze({
   'info-Qingxiao': { x: -10, y: -57, zoom: 283 },
   'info-Jingran': { x: -16, y: -56, zoom: 300 },
   'info-Hsin': { x: 3, y: -62, zoom: 300 },
+  // Suoming: same face-matching against info-Hsin as her collection crop above.
+  'info-Suoming': { x: -12, y: -41, zoom: 220 },
   // Weapon info-panel framing (WeaponDetailModal header image)
   "info-Firstlight's Herald": { x: 10, y: 0, zoom: 140 },
   'info-Azure Oath': { x: 6, y: 0, zoom: 130 },

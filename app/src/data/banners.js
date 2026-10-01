@@ -776,8 +776,8 @@ const DEFAULT_COLLECTION_IMAGES = {
   'Jingran': './banners/characters/jingran/yB024Z5G-jingran-sprite.webp',
   // v3.7 — Hsin: one frame of her own Spine sprite rig (portraits/xin/), rendered transparent.
   'Hsin': './banners/characters/hsin/Hsin-Full-Sprite.webp',
-  // Suoming (unreleased, "coming soon" card): no full sprite yet, her banner art stands in.
-  'Suoming': './characters/suoming/Suoming_Banner.webp',
+  // v3.7 — Suoming: one frame of her own Spine sprite rig (portraits/suoming/), rendered transparent.
+  'Suoming': './banners/characters/suoming/Suoming-Full-Sprite.webp',
   // 4★ Resonators
   'Aalto': './banners/characters/aalto/v81v3Hq-Aalto-Full-Sprite.webp',
   'Baizhi': './banners/characters/baizhi/4Ztm8DCG-Baizhi-Full-Sprite.webp',
@@ -1215,8 +1215,7 @@ CHARACTER_THEMES.unshift({ id: 'jingran', name: 'Jingran', element: 'Fusion', ba
 // real gameplay calculators elsewhere in the app). Unshifted after Qingxiao
 // so she lands in front of her, per explicit request.
 CHARACTER_THEMES.unshift({ id: 'hsin', name: 'Hsin', bannerArt: './characters/hsin/Hsin_Banner.jpg', pos: { header: '50% 29%', nav: '50% 29%', bg: '66% 50%' } });
-// Suoming — also unreleased, same no-CHARACTER_DATA situation as Hsin.
-// Unshifted last so she lands in front of Hsin, per explicit request.
+// Suoming — unshifted last so she lands in front of Hsin, per explicit request.
 CHARACTER_THEMES.unshift({ id: 'suoming', name: 'Suoming', bannerArt: './characters/suoming/Suoming_Banner.webp', pos: { header: '50% 29%', nav: '50% 31%', bg: '50% 50%' } });
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1613,6 +1612,8 @@ const getConveneAnimation = (name) => CONVENE_ANIMATIONS[name] || null;
 const LUCKDRAW_STILLS = {
   Hsin: './banners/characters/hsin/Hsin-Luckdraw-Still.webp',
   Iuno: './banners/characters/iuno/Iuno-Luckdraw-Still.webp',
+  Suoming: './banners/characters/suoming/Suoming-Luckdraw-Still.webp',
+  Chisa: './banners/characters/chisa/Chisa-Luckdraw-Still.webp',
 };
 const getLuckdrawStill = (name) => LUCKDRAW_STILLS[name] || null;
 

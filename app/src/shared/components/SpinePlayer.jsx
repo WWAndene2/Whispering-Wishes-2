@@ -467,6 +467,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [2560, 1440],
     bannerViewport: { x: -3606.84, y: -1645.00, width: 5604.16, height: 3152.34 },
   },
+  // Galbrena (character 1208): bannerViewport against banners/_shared/MxSTSBX7-galbrena-banner.jpg (2560x1440): 409 inliers,
+  // mean residual 4.67 px / max 11.07 px at the art's 2560 px width, rotation 0.64 deg; aspect 1.7778.
+  jiabeilina: {
+    name: 'Galbrena', element: 'Fusion', skelUrl: 'spine/role_jiabeilina/c_jiabeilina_1.skel', atlasUrl: 'spine/role_jiabeilina/c_jiabeilina_1.atlas',
+    bannerArtSize: [2560, 1440],
+    bannerViewport: { x: -4314.91, y: -1372.94, width: 7413.20, height: 4169.93 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

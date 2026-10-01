@@ -383,6 +383,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -3378.79, y: -1334.88, width: 5396.09, height: 3035.30 },
   },
+  // Changli (character 1205): bannerViewport against banners/_shared/HDZ1LG4R-changli-banner.jpg (1920x1080): 1021 inliers,
+  // mean residual 0.69 px / max 2.79 px at the art's 1920 px width, rotation -0.01 deg; aspect 1.7778.
+  changli: {
+    name: 'Changli', element: 'Fusion', skelUrl: 'spine/role_changli/c_changli_1_luckdraw.skel', atlasUrl: 'spine/role_changli/c_changli_1_luckdraw.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -1019.99, y: -696.59, width: 2271.91, height: 1277.95 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

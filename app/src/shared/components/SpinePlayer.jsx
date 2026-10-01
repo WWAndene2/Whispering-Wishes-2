@@ -390,6 +390,13 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -1019.99, y: -696.59, width: 2271.91, height: 1277.95 },
   },
+  // Zhezhi (character 1105): bannerViewport against banners/_shared/XfkKS4dS-zhezhi-banner.jpg (1920x1080): 247 inliers,
+  // mean residual 1.20 px / max 2.85 px at the art's 1920 px width, rotation -0.07 deg; aspect 1.7778.
+  zhezhi: {
+    name: 'Zhezhi', element: 'Glacio', skelUrl: 'spine/role_zhezhi/c_zhezhi_01.skel', atlasUrl: 'spine/role_zhezhi/c_zhezhi_01.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -8748.50, y: -557.41, width: 14682.74, height: 8259.04 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

@@ -271,7 +271,14 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -11935.70, y: -4706.75, width: 19621.63, height: 11036.39 },
   },
-  younuo: { name: 'Iuno', element: 'Aero', skelUrl: 'spine/role_younuo/c_younuo_1.skel', atlasUrl: 'spine/role_younuo/c_younuo_1.atlas' },
+  // bannerViewport as for Hsin, here against banners/_shared/DPd6HgjH-iuno-banner.jpg: SIFT-matched
+  // the rig's idle frame 0 to the art (141 inliers, scale+translation fit, mean residual 1.51 px /
+  // max 3.61 px at the art's 1920 px width, rotation -0.07 deg; rectangle aspect 1.7777 vs 16:9).
+  younuo: {
+    name: 'Iuno', element: 'Aero', skelUrl: 'spine/role_younuo/c_younuo_1.skel', atlasUrl: 'spine/role_younuo/c_younuo_1.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -3483.49, y: -1247.44, width: 5742.48, height: 3230.26 },
+  },
 };
 
 // Merged view for lookup by surface-prefixed id. Keys collide between the two

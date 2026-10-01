@@ -261,7 +261,7 @@ export const SPRITE_SPINE_CHARACTERS = {
 
 // Luckdraw spine — the game's UiLuckdraw/Spine/Character/C_<Id>_01 rig,
 // sourced from encore.moe's character API (Hsin: character 1311, Iuno: character 1410,
-// Chisa: character 1508, Suoming: character 1312).
+// Chisa: character 1508, Suoming: character 1312, Lynae: character 1509, Lucilla: character 1109).
 export const LUCKDRAW_SPINE_CHARACTERS = {
   // bannerViewport: the world-space rectangle her 1920x1080 banner art (characters/hsin/
   // Hsin_Banner.jpg) covers, so BannerCard can lay the rig exactly over the art. Measured by
@@ -296,6 +296,27 @@ export const LUCKDRAW_SPINE_CHARACTERS = {
     name: 'Suoming', element: 'Electro', skelUrl: 'spine/role_suoming/c_suoming_01.skel', atlasUrl: 'spine/role_suoming/c_suoming_01.atlas',
     bannerArtSize: [1920, 1080],
     bannerViewport: { x: -3444.29, y: -1068.60, width: 5540.17, height: 3116.35 },
+  },
+  // Lynae's Luckdraw rig shares role_linnai/ with her Spine 4.2 banner rig (c_linnai_1.atlas/.json/.png),
+  // so its .atlas/.skel carry a _luckdraw suffix; its page stays c_linnai_1.webp as the atlas names it.
+  // bannerViewport as for Hsin, against banners/_shared/h1Kwq7Vj-lynae-banner.jpg: SIFT-matched the rig's
+  // idle frame 0 to the art (913 inliers, scale+translation fit, mean residual 0.80 px / max 4.19 px at
+  // the art's 1920 px width, rotation 0.07 deg; rectangle aspect 1.7778 vs 16:9).
+  linnai: {
+    name: 'Lynae', element: 'Spectro', skelUrl: 'spine/role_linnai/c_linnai_1_luckdraw.skel', atlasUrl: 'spine/role_linnai/c_linnai_1_luckdraw.atlas',
+    bannerArtSize: [1920, 1080],
+    bannerViewport: { x: -6810.28, y: -3714.54, width: 11801.05, height: 6638.09 },
+    // tileViewport: the square the Assets-section tile plays her in. spine-player's default framing
+    // (idle animation bounds + padding) left her frame-0 art at 63% x 44% of the tile; this square is
+    // centred on that art (alpha > 40) with its 1.44:1 width filling 83% of the tile, Lucilla's fill.
+    tileViewport: { x: -6055.27, y: -6968.64, width: 12808.06, height: 12808.06 },
+  },
+  // bannerViewport as for Hsin, against banners/_shared/zT91s0wt-Lucilla-banner.jpg (2048x1152): 744
+  // inliers, mean residual 0.70 px / max 2.53 px at the art's 2048 px width, rotation 0.03 deg; aspect 1.7778.
+  luosela: {
+    name: 'Lucilla', element: 'Glacio', skelUrl: 'spine/role_luosela/c_luosela_01.skel', atlasUrl: 'spine/role_luosela/c_luosela_01.atlas',
+    bannerArtSize: [2048, 1152],
+    bannerViewport: { x: -7441.08, y: -3925.82, width: 12066.28, height: 6787.28 },
   },
 };
 

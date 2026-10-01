@@ -1613,6 +1613,8 @@ const LUCKDRAW_STILLS = {
   Hsin: './banners/characters/hsin/Hsin-Luckdraw-Still.webp',
   Iuno: './banners/characters/iuno/Iuno-Luckdraw-Still.webp',
   Suoming: './banners/characters/suoming/Suoming-Luckdraw-Still.webp',
+  Lynae: './banners/characters/lynae/Lynae-Luckdraw-Still.webp',
+  Lucilla: './banners/characters/lucilla/Lucilla-Luckdraw-Still.webp',
   Chisa: './banners/characters/chisa/Chisa-Luckdraw-Still.webp',
 };
 const getLuckdrawStill = (name) => LUCKDRAW_STILLS[name] || null;

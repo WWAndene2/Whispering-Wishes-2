@@ -9,7 +9,7 @@
 import React from 'react';
 import { Play, X } from 'lucide-react';
 import { FocusTrapModal } from './FocusTrapModal.jsx';
-import { SpinePlayer, getSpineId } from './SpinePlayer.jsx';
+import { SpinePlayer, getSpineId, SPINE_CHARACTERS } from './SpinePlayer.jsx';
 import { t } from '../../utils/i18n.js';
 
 // variant="tile": renders the Sprite asset tile shown in the character
@@ -62,6 +62,7 @@ const FullSpineViewerButton = ({ name, imageUrl, className = '', variant = 'butt
             scaleOverride={1}
             txOverride={0}
             tyOverride={tileTy}
+            viewport={SPINE_CHARACTERS[fullSpineId]?.tileViewport || null}
             fallbackImgUrl={imageUrl}
             fallbackImgStyle={{ objectFit: tileFit, objectPosition: 'center' }}
           />

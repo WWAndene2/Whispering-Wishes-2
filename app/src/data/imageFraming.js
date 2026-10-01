@@ -62,7 +62,7 @@ export const DEFAULT_IMAGE_FRAMING = Object.freeze({
   // that bleed is his weapon/energy wisp, not his body), so the average zoom left him looking smaller
   // than everyone else — bumped zoom and shifted the crop up toward his torso/face.
   'collection-Jingran': { x: -2, y: -22, zoom: 250 },
-  'collection-Hsin': { x: 7, y: -25, zoom: 250 },
+  'collection-Hsin': { x: 17, y: -25, zoom: 240 },
   'collection-Solsworn Ciphers': { x: 2, y: -2, zoom: 100 },
   'collection-Blazing Justice': { x: 0, y: 0, zoom: 100 },
   // 4-star Resonators
@@ -204,7 +204,7 @@ export const DEFAULT_IMAGE_FRAMING = Object.freeze({
   'info-Yangyang: Xuanling': { x: -12, y: -59, zoom: 283 },
   'info-Qingxiao': { x: -10, y: -57, zoom: 283 },
   'info-Jingran': { x: -16, y: -56, zoom: 300 },
-  'info-Hsin': { x: -5, y: -66, zoom: 300 },
+  'info-Hsin': { x: 3, y: -62, zoom: 300 },
   // Weapon info-panel framing (WeaponDetailModal header image)
   "info-Firstlight's Herald": { x: 10, y: 0, zoom: 140 },
   'info-Azure Oath': { x: 6, y: 0, zoom: 130 },
